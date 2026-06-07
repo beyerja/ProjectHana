@@ -11,6 +11,16 @@
 		AA000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000004 /* ContentView.swift */; };
 		AA000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000006 /* Assets.xcassets */; };
 		AA000007 /* ProjectHanaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000008 /* ProjectHanaTests.swift */; };
+		AA000023 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000022 /* Country.swift */; };
+		AA000025 /* River.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000024 /* River.swift */; };
+		AA000027 /* MountainRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000026 /* MountainRange.swift */; };
+		AA000029 /* Sea.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000028 /* Sea.swift */; };
+		AA00002B /* GeographyDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00002A /* GeographyDataLoader.swift */; };
+		AA00002D /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002C /* countries.json */; };
+		AA00002F /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002E /* rivers.json */; };
+		AA000031 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = AA000030 /* mountains.json */; };
+		AA000033 /* seas.json in Resources */ = {isa = PBXBuildFile; fileRef = AA000032 /* seas.json */; };
+		AA000037 /* GeographyDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000036 /* GeographyDataLoaderTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +30,16 @@
 		AA000006 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA00000A /* ProjectHanaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProjectHanaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA000008 /* ProjectHanaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectHanaTests.swift; sourceTree = "<group>"; };
+		AA000022 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		AA000024 /* River.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = River.swift; sourceTree = "<group>"; };
+		AA000026 /* MountainRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainRange.swift; sourceTree = "<group>"; };
+		AA000028 /* Sea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sea.swift; sourceTree = "<group>"; };
+		AA00002A /* GeographyDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoader.swift; sourceTree = "<group>"; };
+		AA00002C /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
+		AA00002E /* rivers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rivers.json; sourceTree = "<group>"; };
+		AA000030 /* mountains.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mountains.json; sourceTree = "<group>"; };
+		AA000032 /* seas.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seas.json; sourceTree = "<group>"; };
+		AA000036 /* GeographyDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoaderTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,14 +84,40 @@
 				AA000002 /* ProjectHanaApp.swift */,
 				AA000004 /* ContentView.swift */,
 				AA000006 /* Assets.xcassets */,
+				AA000034 /* Models */,
+				AA000035 /* Resources */,
 			);
 			path = ProjectHana;
+			sourceTree = "<group>";
+		};
+		AA000034 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA000022 /* Country.swift */,
+				AA000024 /* River.swift */,
+				AA000026 /* MountainRange.swift */,
+				AA000028 /* Sea.swift */,
+				AA00002A /* GeographyDataLoader.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA000035 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AA00002C /* countries.json */,
+				AA00002E /* rivers.json */,
+				AA000030 /* mountains.json */,
+				AA000032 /* seas.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		AA000010 /* ProjectHanaTests */ = {
 			isa = PBXGroup;
 			children = (
 				AA000008 /* ProjectHanaTests.swift */,
+				AA000036 /* GeographyDataLoaderTests.swift */,
 			);
 			path = ProjectHanaTests;
 			sourceTree = "<group>";
@@ -161,6 +207,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA000005 /* Assets.xcassets in Resources */,
+				AA00002D /* countries.json in Resources */,
+				AA00002F /* rivers.json in Resources */,
+				AA000031 /* mountains.json in Resources */,
+				AA000033 /* seas.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +223,11 @@
 			files = (
 				AA000001 /* ProjectHanaApp.swift in Sources */,
 				AA000003 /* ContentView.swift in Sources */,
+				AA000023 /* Country.swift in Sources */,
+				AA000025 /* River.swift in Sources */,
+				AA000027 /* MountainRange.swift in Sources */,
+				AA000029 /* Sea.swift in Sources */,
+				AA00002B /* GeographyDataLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA000007 /* ProjectHanaTests.swift in Sources */,
+				AA000037 /* GeographyDataLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
