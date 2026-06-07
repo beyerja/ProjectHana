@@ -33,6 +33,12 @@
 		AA000051 /* MapQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000050 /* MapQuizSession.swift */; };
 		AA000053 /* MapQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000052 /* MapQuizView.swift */; };
 		AA000055 /* QuizSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000054 /* QuizSummaryView.swift */; };
+		AA000058 /* TextQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000057 /* TextQuizSession.swift */; };
+		AA00005A /* CapitalQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000059 /* CapitalQuizView.swift */; };
+		AA00005C /* MultipleChoiceSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00005B /* MultipleChoiceSession.swift */; };
+		AA00005E /* MultipleChoiceQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00005D /* MultipleChoiceQuizView.swift */; };
+		AA000060 /* QuizModePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00005F /* QuizModePickerView.swift */; };
+		AA000062 /* QuizLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000061 /* QuizLogicTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +70,12 @@
 		AA000050 /* MapQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizSession.swift; sourceTree = "<group>"; };
 		AA000052 /* MapQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizView.swift; sourceTree = "<group>"; };
 		AA000054 /* QuizSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSummaryView.swift; sourceTree = "<group>"; };
+		AA000057 /* TextQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextQuizSession.swift; sourceTree = "<group>"; };
+		AA000059 /* CapitalQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapitalQuizView.swift; sourceTree = "<group>"; };
+		AA00005B /* MultipleChoiceSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceSession.swift; sourceTree = "<group>"; };
+		AA00005D /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
+		AA00005F /* QuizModePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModePickerView.swift; sourceTree = "<group>"; };
+		AA000061 /* QuizLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLogicTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,9 +173,30 @@
 			isa = PBXGroup;
 			children = (
 				AA000046 /* QuizPlaceholderView.swift */,
+				AA00005F /* QuizModePickerView.swift */,
 				AA000056 /* MapQuiz */,
+				AA000063 /* TextQuiz */,
+				AA000064 /* MultipleChoice */,
 			);
 			path = Quiz;
+			sourceTree = "<group>";
+		};
+		AA000063 /* TextQuiz */ = {
+			isa = PBXGroup;
+			children = (
+				AA000057 /* TextQuizSession.swift */,
+				AA000059 /* CapitalQuizView.swift */,
+			);
+			path = TextQuiz;
+			sourceTree = "<group>";
+		};
+		AA000064 /* MultipleChoice */ = {
+			isa = PBXGroup;
+			children = (
+				AA00005B /* MultipleChoiceSession.swift */,
+				AA00005D /* MultipleChoiceQuizView.swift */,
+			);
+			path = MultipleChoice;
 			sourceTree = "<group>";
 		};
 		AA000056 /* MapQuiz */ = {
@@ -210,6 +243,7 @@
 				AA000036 /* GeographyDataLoaderTests.swift */,
 				AA00003C /* CardStoreTests.swift */,
 				AA000041 /* SM2SchedulerTests.swift */,
+				AA000061 /* QuizLogicTests.swift */,
 			);
 			path = ProjectHanaTests;
 			sourceTree = "<group>";
@@ -330,6 +364,11 @@
 				AA000051 /* MapQuizSession.swift in Sources */,
 				AA000053 /* MapQuizView.swift in Sources */,
 				AA000055 /* QuizSummaryView.swift in Sources */,
+				AA000058 /* TextQuizSession.swift in Sources */,
+				AA00005A /* CapitalQuizView.swift in Sources */,
+				AA00005C /* MultipleChoiceSession.swift in Sources */,
+				AA00005E /* MultipleChoiceQuizView.swift in Sources */,
+				AA000060 /* QuizModePickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +380,7 @@
 				AA000037 /* GeographyDataLoaderTests.swift in Sources */,
 				AA00003D /* CardStoreTests.swift in Sources */,
 				AA000042 /* SM2SchedulerTests.swift in Sources */,
+				AA000062 /* QuizLogicTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
