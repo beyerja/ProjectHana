@@ -39,6 +39,7 @@
 		AA00005E /* MultipleChoiceQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00005D /* MultipleChoiceQuizView.swift */; };
 		AA000060 /* QuizModePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00005F /* QuizModePickerView.swift */; };
 		AA000062 /* QuizLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000061 /* QuizLogicTests.swift */; };
+		AA000066 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000065 /* ViewExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		AA00005D /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
 		AA00005F /* QuizModePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModePickerView.swift; sourceTree = "<group>"; };
 		AA000061 /* QuizLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLogicTests.swift; sourceTree = "<group>"; };
+		AA000065 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 		AA00004C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				AA000065 /* ViewExtensions.swift */,
 				AA00004D /* Home */,
 				AA00004E /* Quiz */,
 				AA00004F /* Progress */,
@@ -369,6 +372,7 @@
 				AA00005C /* MultipleChoiceSession.swift in Sources */,
 				AA00005E /* MultipleChoiceQuizView.swift in Sources */,
 				AA000060 /* QuizModePickerView.swift in Sources */,
+				AA000066 /* ViewExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

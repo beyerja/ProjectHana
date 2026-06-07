@@ -14,6 +14,9 @@ For each unchecked task:
 4. Commit with a clear message
 5. Mark task checked in `tasks.md`
 
+After all tasks are done:
+6. Run `bash scripts/install-mac.sh` from the repo root to build a macOS Release build and install it to `/Applications/ProjectHana.app`. Fix any macOS-specific build errors (e.g. iOS-only APIs — wrap them with `#if os(iOS)` via the `ViewExtensions.swift` pattern already in the project) before proceeding.
+
 Append to `<story-dir>/log.md`: `<timestamp> implement-story: DONE — <tasks completed>, <issues if any>`.
 
 Output STATUS: DONE.

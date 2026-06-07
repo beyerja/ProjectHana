@@ -20,7 +20,7 @@ struct QuizPlaceholderView: View {
             description: Text("The \(title) quiz will be available in the next update.")
         )
         .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineNavigationTitle()
     }
 }
 

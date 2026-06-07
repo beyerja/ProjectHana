@@ -47,7 +47,7 @@ struct QuizSummaryView: View {
                 .padding(.bottom)
         }
         .navigationTitle("Results")
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineNavigationTitle()
         .navigationBarBackButtonHidden()
     }
 

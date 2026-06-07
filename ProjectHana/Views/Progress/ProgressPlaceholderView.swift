@@ -8,7 +8,7 @@ struct ProgressPlaceholderView: View {
             description: Text("Your learning stats will appear here.")
         )
         .navigationTitle("Progress")
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineNavigationTitle()
     }
 }
 
