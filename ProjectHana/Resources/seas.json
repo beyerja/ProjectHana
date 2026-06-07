@@ -1,0 +1,22 @@
+[
+  {"id":"pacific","name":"Pacific Ocean","lat":0.0,"lon":-150.0},
+  {"id":"atlantic","name":"Atlantic Ocean","lat":0.0,"lon":-30.0},
+  {"id":"indian","name":"Indian Ocean","lat":-20.0,"lon":80.0},
+  {"id":"southern","name":"Southern Ocean","lat":-60.0,"lon":0.0},
+  {"id":"arctic","name":"Arctic Ocean","lat":85.0,"lon":0.0},
+  {"id":"mediterranean","name":"Mediterranean Sea","lat":35.0,"lon":18.0},
+  {"id":"caribbean","name":"Caribbean Sea","lat":15.0,"lon":-73.0},
+  {"id":"south-china","name":"South China Sea","lat":12.0,"lon":114.0},
+  {"id":"bering","name":"Bering Sea","lat":58.0,"lon":-175.0},
+  {"id":"gulf-of-mexico","name":"Gulf of Mexico","lat":25.0,"lon":-90.0},
+  {"id":"north-sea","name":"North Sea","lat":56.0,"lon":4.0},
+  {"id":"red-sea","name":"Red Sea","lat":22.0,"lon":37.5},
+  {"id":"black-sea","name":"Black Sea","lat":43.0,"lon":34.0},
+  {"id":"caspian-sea","name":"Caspian Sea","lat":42.0,"lon":51.0},
+  {"id":"persian-gulf","name":"Persian Gulf","lat":26.0,"lon":52.0},
+  {"id":"east-china","name":"East China Sea","lat":29.0,"lon":124.0},
+  {"id":"bay-of-bengal","name":"Bay of Bengal","lat":15.0,"lon":88.0},
+  {"id":"arabian-sea","name":"Arabian Sea","lat":17.0,"lon":65.0},
+  {"id":"coral-sea","name":"Coral Sea","lat":-18.0,"lon":153.0},
+  {"id":"tasman-sea","name":"Tasman Sea","lat":-40.0,"lon":160.0}
+]
