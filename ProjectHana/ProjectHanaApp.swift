@@ -23,13 +23,23 @@ struct ProjectHanaApp: App {
 
 private struct AppRootView: View {
     @Environment(\.modelContext) private var modelContext
+    @State private var cardStore: CardStore?
 
     var body: some View {
-        ContentView()
-            .onAppear {
-                let store = CardStore(modelContext: modelContext)
-                let data = GeographyDataLoader.load()
-                store.seedIfNeeded(with: data)
+        Group {
+            if let store = cardStore {
+                ContentView()
+                    .environment(store)
+            } else {
+                ProgressView("Loading…")
             }
+        }
+        .onAppear {
+            guard cardStore == nil else { return }
+            let store = CardStore(modelContext: modelContext)
+            let data = GeographyDataLoader.load()
+            store.seedIfNeeded(with: data)
+            cardStore = store
+        }
     }
 }
