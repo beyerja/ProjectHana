@@ -24,6 +24,8 @@
 		AA000039 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000038 /* ReviewCard.swift */; };
 		AA00003B /* CardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00003A /* CardStore.swift */; };
 		AA00003D /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00003C /* CardStoreTests.swift */; };
+		AA000040 /* SM2Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00003F /* SM2Scheduler.swift */; };
+		AA000042 /* SM2SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000041 /* SM2SchedulerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 		AA000038 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
 		AA00003A /* CardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStore.swift; sourceTree = "<group>"; };
 		AA00003C /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
+		AA00003F /* SM2Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Scheduler.swift; sourceTree = "<group>"; };
+		AA000041 /* SM2SchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2SchedulerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,7 @@
 				AA000034 /* Models */,
 				AA000035 /* Resources */,
 				AA00003E /* Store */,
+				AA000043 /* Scheduler */,
 			);
 			path = ProjectHana;
 			sourceTree = "<group>";
@@ -118,6 +123,14 @@
 			path = Store;
 			sourceTree = "<group>";
 		};
+		AA000043 /* Scheduler */ = {
+			isa = PBXGroup;
+			children = (
+				AA00003F /* SM2Scheduler.swift */,
+			);
+			path = Scheduler;
+			sourceTree = "<group>";
+		};
 		AA000035 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +148,7 @@
 				AA000008 /* ProjectHanaTests.swift */,
 				AA000036 /* GeographyDataLoaderTests.swift */,
 				AA00003C /* CardStoreTests.swift */,
+				AA000041 /* SM2SchedulerTests.swift */,
 			);
 			path = ProjectHanaTests;
 			sourceTree = "<group>";
@@ -247,6 +261,7 @@
 				AA00002B /* GeographyDataLoader.swift in Sources */,
 				AA000039 /* ReviewCard.swift in Sources */,
 				AA00003B /* CardStore.swift in Sources */,
+				AA000040 /* SM2Scheduler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,6 +272,7 @@
 				AA000007 /* ProjectHanaTests.swift in Sources */,
 				AA000037 /* GeographyDataLoaderTests.swift in Sources */,
 				AA00003D /* CardStoreTests.swift in Sources */,
+				AA000042 /* SM2SchedulerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
