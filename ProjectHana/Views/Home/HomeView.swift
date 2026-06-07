@@ -88,9 +88,9 @@ struct HomeView: View {
     private func quizDestination(for category: CardCategory) -> some View {
         switch category {
         case .country:
-            MapQuizView(category: .country)
-        default:
-            QuizPlaceholderView(category: category)
+            QuizModePickerView()
+        case .river, .mountain, .sea:
+            MultipleChoiceQuizView(category: category)
         }
     }
 
