@@ -4,7 +4,7 @@ import SwiftData
 @main
 struct ProjectHanaApp: App {
     let modelContainer: ModelContainer = {
-        let schema = Schema([])
+        let schema = Schema([ReviewCard.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
             return try ModelContainer(for: schema, configurations: [config])
@@ -15,8 +15,21 @@ struct ProjectHanaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppRootView()
         }
         .modelContainer(modelContainer)
+    }
+}
+
+private struct AppRootView: View {
+    @Environment(\.modelContext) private var modelContext
+
+    var body: some View {
+        ContentView()
+            .onAppear {
+                let store = CardStore(modelContext: modelContext)
+                let data = GeographyDataLoader.load()
+                store.seedIfNeeded(with: data)
+            }
     }
 }

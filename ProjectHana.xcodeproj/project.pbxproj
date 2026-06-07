@@ -21,6 +21,9 @@
 		AA000031 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = AA000030 /* mountains.json */; };
 		AA000033 /* seas.json in Resources */ = {isa = PBXBuildFile; fileRef = AA000032 /* seas.json */; };
 		AA000037 /* GeographyDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000036 /* GeographyDataLoaderTests.swift */; };
+		AA000039 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000038 /* ReviewCard.swift */; };
+		AA00003B /* CardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00003A /* CardStore.swift */; };
+		AA00003D /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00003C /* CardStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,9 @@
 		AA000030 /* mountains.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mountains.json; sourceTree = "<group>"; };
 		AA000032 /* seas.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seas.json; sourceTree = "<group>"; };
 		AA000036 /* GeographyDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoaderTests.swift; sourceTree = "<group>"; };
+		AA000038 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
+		AA00003A /* CardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStore.swift; sourceTree = "<group>"; };
+		AA00003C /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +92,7 @@
 				AA000006 /* Assets.xcassets */,
 				AA000034 /* Models */,
 				AA000035 /* Resources */,
+				AA00003E /* Store */,
 			);
 			path = ProjectHana;
 			sourceTree = "<group>";
@@ -98,8 +105,17 @@
 				AA000026 /* MountainRange.swift */,
 				AA000028 /* Sea.swift */,
 				AA00002A /* GeographyDataLoader.swift */,
+				AA000038 /* ReviewCard.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		AA00003E /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				AA00003A /* CardStore.swift */,
+			);
+			path = Store;
 			sourceTree = "<group>";
 		};
 		AA000035 /* Resources */ = {
@@ -118,6 +134,7 @@
 			children = (
 				AA000008 /* ProjectHanaTests.swift */,
 				AA000036 /* GeographyDataLoaderTests.swift */,
+				AA00003C /* CardStoreTests.swift */,
 			);
 			path = ProjectHanaTests;
 			sourceTree = "<group>";
@@ -228,6 +245,8 @@
 				AA000027 /* MountainRange.swift in Sources */,
 				AA000029 /* Sea.swift in Sources */,
 				AA00002B /* GeographyDataLoader.swift in Sources */,
+				AA000039 /* ReviewCard.swift in Sources */,
+				AA00003B /* CardStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +256,7 @@
 			files = (
 				AA000007 /* ProjectHanaTests.swift in Sources */,
 				AA000037 /* GeographyDataLoaderTests.swift in Sources */,
+				AA00003D /* CardStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
