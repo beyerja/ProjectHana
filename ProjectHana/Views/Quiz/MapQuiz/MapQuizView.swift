@@ -28,7 +28,7 @@ struct MapQuizView: View {
             }
         }
         .navigationTitle("Map Quiz")
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineNavigationTitle()
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
                 Button("Exit") { dismiss() }

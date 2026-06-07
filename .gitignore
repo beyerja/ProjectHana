@@ -1,5 +1,6 @@
 # Xcode
 *.xcuserstate
+.build-mac/
 *.xcscmblueprint
 xcuserdata/
 DerivedData/

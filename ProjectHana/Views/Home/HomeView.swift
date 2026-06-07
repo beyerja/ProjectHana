@@ -14,7 +14,7 @@ struct HomeView: View {
                 .padding()
             }
             .navigationTitle("ProjectHana")
-            .navigationBarTitleDisplayMode(.large)
+            .largeNavigationTitle()
         }
     }
 

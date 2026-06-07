@@ -58,7 +58,7 @@ struct QuizModePickerView: View {
             .padding()
         }
         .navigationTitle("Countries")
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineNavigationTitle()
     }
 
     private var header: some View {

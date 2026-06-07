@@ -27,7 +27,7 @@ struct MultipleChoiceQuizView: View {
             }
         }
         .navigationTitle(navigationTitle)
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineNavigationTitle()
         .toolbar {
             ToolbarItem(placement: .cancellationAction) { Button("Exit") { dismiss() } }
         }

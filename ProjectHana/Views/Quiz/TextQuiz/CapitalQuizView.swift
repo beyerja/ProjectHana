@@ -33,7 +33,7 @@ struct CapitalQuizView: View {
             }
         }
         .navigationTitle(mode == .capitalOfCountry ? "Capital Quiz" : "Country Quiz")
-        .navigationBarTitleDisplayMode(.inline)
+        .inlineNavigationTitle()
         .toolbar {
             ToolbarItem(placement: .cancellationAction) { Button("Exit") { dismiss() } }
         }
@@ -99,7 +99,7 @@ struct CapitalQuizView: View {
                 .onSubmit { session.checkAnswer(inputText) }
                 .submitLabel(.done)
                 .autocorrectionDisabled()
-                .textInputAutocapitalization(.never)
+                .neverAutocapitalize()
 
             Button("Check") { session.checkAnswer(inputText) }
                 .font(.headline)
