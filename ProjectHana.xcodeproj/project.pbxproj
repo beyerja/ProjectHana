@@ -30,6 +30,9 @@
 		AA000047 /* QuizPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000046 /* QuizPlaceholderView.swift */; };
 		AA000049 /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000048 /* ProgressPlaceholderView.swift */; };
 		AA00004B /* PreviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00004A /* PreviewStore.swift */; };
+		AA000051 /* MapQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000050 /* MapQuizSession.swift */; };
+		AA000053 /* MapQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000052 /* MapQuizView.swift */; };
+		AA000055 /* QuizSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000054 /* QuizSummaryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +61,9 @@
 		AA000046 /* QuizPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPlaceholderView.swift; sourceTree = "<group>"; };
 		AA000048 /* ProgressPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPlaceholderView.swift; sourceTree = "<group>"; };
 		AA00004A /* PreviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewStore.swift; sourceTree = "<group>"; };
+		AA000050 /* MapQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizSession.swift; sourceTree = "<group>"; };
+		AA000052 /* MapQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizView.swift; sourceTree = "<group>"; };
+		AA000054 /* QuizSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSummaryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,8 +161,19 @@
 			isa = PBXGroup;
 			children = (
 				AA000046 /* QuizPlaceholderView.swift */,
+				AA000056 /* MapQuiz */,
 			);
 			path = Quiz;
+			sourceTree = "<group>";
+		};
+		AA000056 /* MapQuiz */ = {
+			isa = PBXGroup;
+			children = (
+				AA000050 /* MapQuizSession.swift */,
+				AA000052 /* MapQuizView.swift */,
+				AA000054 /* QuizSummaryView.swift */,
+			);
+			path = MapQuiz;
 			sourceTree = "<group>";
 		};
 		AA00004F /* Progress */ = {
@@ -310,6 +327,9 @@
 				AA000047 /* QuizPlaceholderView.swift in Sources */,
 				AA000049 /* ProgressPlaceholderView.swift in Sources */,
 				AA00004B /* PreviewStore.swift in Sources */,
+				AA000051 /* MapQuizSession.swift in Sources */,
+				AA000053 /* MapQuizView.swift in Sources */,
+				AA000055 /* QuizSummaryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

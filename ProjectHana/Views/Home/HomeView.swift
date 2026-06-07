@@ -50,7 +50,7 @@ struct HomeView: View {
             }
 
             NavigationLink {
-                QuizPlaceholderView(category: nil)
+                MapQuizView(category: .country)
             } label: {
                 Label("All Categories", systemImage: "play.fill")
                     .font(.headline)
@@ -66,7 +66,7 @@ struct HomeView: View {
     private func categoryButton(title: String, icon: String, color: Color, category: CardCategory) -> some View {
         let due = cardStore.dueCards(for: category).count
         NavigationLink {
-            QuizPlaceholderView(category: category)
+            quizDestination(for: category)
         } label: {
             VStack(spacing: 10) {
                 Image(systemName: icon)
@@ -81,6 +81,16 @@ struct HomeView: View {
             .padding(.vertical, 20)
             .background(color.opacity(0.15), in: RoundedRectangle(cornerRadius: 14))
             .foregroundStyle(color)
+        }
+    }
+
+    @ViewBuilder
+    private func quizDestination(for category: CardCategory) -> some View {
+        switch category {
+        case .country:
+            MapQuizView(category: .country)
+        default:
+            QuizPlaceholderView(category: category)
         }
     }
 
