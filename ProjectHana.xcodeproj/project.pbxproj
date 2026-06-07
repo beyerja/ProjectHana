@@ -26,6 +26,10 @@
 		AA00003D /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00003C /* CardStoreTests.swift */; };
 		AA000040 /* SM2Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00003F /* SM2Scheduler.swift */; };
 		AA000042 /* SM2SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000041 /* SM2SchedulerTests.swift */; };
+		AA000045 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000044 /* HomeView.swift */; };
+		AA000047 /* QuizPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000046 /* QuizPlaceholderView.swift */; };
+		AA000049 /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000048 /* ProgressPlaceholderView.swift */; };
+		AA00004B /* PreviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00004A /* PreviewStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +54,10 @@
 		AA00003C /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
 		AA00003F /* SM2Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Scheduler.swift; sourceTree = "<group>"; };
 		AA000041 /* SM2SchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2SchedulerTests.swift; sourceTree = "<group>"; };
+		AA000044 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		AA000046 /* QuizPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPlaceholderView.swift; sourceTree = "<group>"; };
+		AA000048 /* ProgressPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPlaceholderView.swift; sourceTree = "<group>"; };
+		AA00004A /* PreviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +106,7 @@
 				AA000035 /* Resources */,
 				AA00003E /* Store */,
 				AA000043 /* Scheduler */,
+				AA00004C /* Views */,
 			);
 			path = ProjectHana;
 			sourceTree = "<group>";
@@ -119,8 +128,43 @@
 			isa = PBXGroup;
 			children = (
 				AA00003A /* CardStore.swift */,
+				AA00004A /* PreviewStore.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		AA00004C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				AA00004D /* Home */,
+				AA00004E /* Quiz */,
+				AA00004F /* Progress */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		AA00004D /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				AA000044 /* HomeView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		AA00004E /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				AA000046 /* QuizPlaceholderView.swift */,
+			);
+			path = Quiz;
+			sourceTree = "<group>";
+		};
+		AA00004F /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				AA000048 /* ProgressPlaceholderView.swift */,
+			);
+			path = Progress;
 			sourceTree = "<group>";
 		};
 		AA000043 /* Scheduler */ = {
@@ -262,6 +306,10 @@
 				AA000039 /* ReviewCard.swift in Sources */,
 				AA00003B /* CardStore.swift in Sources */,
 				AA000040 /* SM2Scheduler.swift in Sources */,
+				AA000045 /* HomeView.swift in Sources */,
+				AA000047 /* QuizPlaceholderView.swift in Sources */,
+				AA000049 /* ProgressPlaceholderView.swift in Sources */,
+				AA00004B /* PreviewStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
