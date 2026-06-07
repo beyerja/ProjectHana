@@ -8,6 +8,8 @@ struct GeographyData {
 }
 
 struct GeographyDataLoader {
+    static let shared: GeographyData = load()
+
     static func load() -> GeographyData {
         GeographyData(
             countries: loadJSON("countries"),
