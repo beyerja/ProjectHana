@@ -1,0 +1,8 @@
+#!/bin/sh
+while read local_ref local_sha remote_ref remote_sha; do
+  if [ "$remote_ref" = "refs/heads/main" ]; then
+    echo "error: direct pushes to 'main' are not allowed."
+    echo "       Open a PR and merge via GitHub instead."
+    exit 1
+  fi
+done
