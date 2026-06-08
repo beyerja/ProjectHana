@@ -9,13 +9,25 @@ Read `<story-dir>/tasks.md`. Ensure on branch `story/<story-id>` (create from ma
 
 For each unchecked task:
 1. Implement following existing project patterns
-2. Run project checks (infer from project type: tests, lint, build, typecheck)
+2. Run project checks:
+   - `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project ProjectHana.xcodeproj -scheme ProjectHana -destination 'platform=iOS Simulator,name=iPhone 17' -configuration Debug test 2>&1 | grep "TEST SUCCEEDED\|TEST FAILED\|error:"`
 3. Fix any failures and retry until clean
 4. Commit with a clear message
 5. Mark task checked in `tasks.md`
 
+**Xcode project wiring (pbxproj)**
+Every new `.swift` file must be added to `ProjectHana.xcodeproj/project.pbxproj`:
+- Allocate the next sequential UUIDs (format `AA000001`, `AA000002`, …). Find the current max by grepping `AA0000` in the pbxproj.
+- Add a `PBXBuildFile` entry (odd UUID) and a `PBXFileReference` entry (even UUID, or follow the existing even/odd pattern).
+- Add the file reference to the correct `PBXGroup` (matching its folder path).
+- Add the build file to the correct `PBXSourcesBuildPhase` (main target or test target).
+- For resource files (JSON, assets): add to `PBXResourcesBuildPhase` instead.
+
+**iOS-only APIs**
+Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `ProjectHana/Views/ViewExtensions.swift` rather than direct calls.
+
 After all tasks are done:
-6. Run `bash scripts/install-mac.sh` from the repo root to build a macOS Release build and install it to `/Applications/ProjectHana.app`. Fix any macOS-specific build errors (e.g. iOS-only APIs — wrap them with `#if os(iOS)` via the `ViewExtensions.swift` pattern already in the project) before proceeding.
+6. Run `bash scripts/install-mac.sh` from the repo root to build a macOS Release build and install it to `/Applications/ProjectHana.app`. Fix any macOS-specific build errors before proceeding.
 
 Append to `<story-dir>/log.md`: `<timestamp> implement-story: DONE — <tasks completed>, <issues if any>`.
 
