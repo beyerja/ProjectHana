@@ -56,7 +56,7 @@ struct MapQuizView: View {
                     }
                 }
             }
-            .mapStyle(.standard(elevation: .flat))
+            .mapStyle(.imagery(elevation: .flat))
             .ignoresSafeArea(edges: .horizontal)
 
             VStack(spacing: 0) {
