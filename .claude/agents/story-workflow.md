@@ -20,9 +20,9 @@ Run the following steps in order, spawning a dedicated sub-agent for each. Pass 
    - STATUS: PASS → continue
 5. **Review loop** — spawn `review-pr` agent
    - STATUS: CHANGES_IMPLEMENTED → repeat step 5
-   - STATUS: PENDING_REVIEW → notify user that review is needed, stop here
+   - STATUS: PENDING_REVIEW → notify user to merge the PR and wait for their confirmation; resume at step 6 once they confirm
    - STATUS: APPROVED → continue
-6. **Merge** — spawn `merge-pr` agent
+6. **Merge** — if the user already merged (common in this solo project, they confirm verbally), skip `merge-pr` and proceed directly to step 7; otherwise spawn `merge-pr` agent
 7. **Wait for CI on main** — after merge, get the latest run on main and wait:
    ```
    export PATH="$HOME/.nix-profile/bin:$PATH"

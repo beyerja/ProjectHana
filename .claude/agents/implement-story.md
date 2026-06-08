@@ -40,7 +40,7 @@ Every new `.swift` file must be added to `ProjectHana.xcodeproj/project.pbxproj`
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `ProjectHana/Views/ViewExtensions.swift` rather than direct calls.
 
 After all tasks are done:
-6. Run `bash scripts/install-mac.sh` from the repo root to build a macOS Release build and install it to `/Applications/ProjectHana.app`. Fix any macOS-specific build errors before proceeding.
+6. Run `bash scripts/install-mac.sh` **only if** the story adds new Swift files, introduces new UI modifiers, or touches any API that could differ between iOS and macOS. Skip it for changes that are purely config, data, or logic with no new platform API calls — and note the skip in the telemetry notes. When in doubt, run it.
 
 **Telemetry — run before appending to log.md:**
 Count your tool calls in this run: R = Read calls, W = Write calls, E = Edit calls, B = Bash calls. Estimate total chars processed (sum of file sizes read + written). Then run (ignore errors):
