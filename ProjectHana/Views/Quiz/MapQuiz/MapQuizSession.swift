@@ -54,6 +54,7 @@ final class MapQuizSession {
         }
         let result = SM2Scheduler.schedule(card: card, quality: quality)
         SM2Scheduler.apply(result, to: card, quality: quality)
+        StreakTracker.recordReview()
 
         currentIndex += 1
         if currentIndex >= cards.count {
