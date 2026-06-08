@@ -1,0 +1,23 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/telemetry-hook.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(date -u *)",
+      "Bash(xcodebuild *)",
+      "Bash(bash scripts/telemetry-hook.sh*)",
+      "Bash(bash scripts/agent-log.sh*)"
+    ]
+  }
+}
