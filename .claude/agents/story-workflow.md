@@ -5,6 +5,11 @@ description: Orchestrate the full lifecycle of a single user story: task breakdo
 
 Requires: story directory path.
 
+**Telemetry — run at the very start (ignore errors):**
+```
+bash scripts/agent-log.sh start story-workflow "<story-id>" || true
+```
+
 Run the following steps in order, spawning a dedicated sub-agent for each. Pass the story directory as context to every agent.
 
 1. **Break tasks** — spawn `break-tasks` agent
@@ -30,5 +35,10 @@ Run the following steps in order, spawning a dedicated sub-agent for each. Pass 
    - STATUS: DONE → finish
 
 Update `<story-dir>/status.md` at each transition. If returning to a prior step, note the reason in `<story-dir>/log.md`.
+
+Before final output, run (ignore errors):
+```
+bash scripts/agent-log.sh end story-workflow "<story-id>" 0 0 0 <B> 0 "" || true
+```
 
 Output STATUS: DONE when the story is merged and verified.
