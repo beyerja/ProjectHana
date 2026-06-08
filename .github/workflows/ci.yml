@@ -3,8 +3,16 @@ name: CI
 on:
   push:
     branches: [main]
+    paths:
+      - 'ProjectHana/**'
+      - 'ProjectHanaTests/**'
+      - 'ProjectHana.xcodeproj/**'
   pull_request:
     branches: [main]
+    paths:
+      - 'ProjectHana/**'
+      - 'ProjectHanaTests/**'
+      - 'ProjectHana.xcodeproj/**'
 
 jobs:
   build-and-test:
