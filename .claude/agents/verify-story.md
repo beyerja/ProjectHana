@@ -5,10 +5,15 @@ description: Verify every acceptance criterion in a story spec is satisfied afte
 
 Requires: story directory path.
 
+**Telemetry — run at the very start (ignore errors):**
+```
+bash scripts/agent-log.sh start verify-story "<story-id>" || true
+```
+
 Read `<story-dir>/spec.md` acceptance criteria.
 
 For each criterion: run tests, inspect implementation, exercise the app if applicable.
 
 - **All pass** → update `<story-dir>/status.md` to `status: done`, mark story checked in `.workflow/stories.md`.
-  Append to log. Output STATUS: DONE.
-- **Any fail** → list failures in `<story-dir>/log.md`. Output STATUS: FAILED: <list>.
+  Append to log. Run (ignore errors): `bash scripts/agent-log.sh end verify-story "<story-id>" <R> <W> <E> <B> <est_chars> "DONE" || true`. Output STATUS: DONE.
+- **Any fail** → list failures in `<story-dir>/log.md`. Run (ignore errors): `bash scripts/agent-log.sh end verify-story "<story-id>" <R> <W> <E> <B> <est_chars> "FAILED" || true`. Output STATUS: FAILED: <list>.

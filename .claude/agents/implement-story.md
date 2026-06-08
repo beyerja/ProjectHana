@@ -5,6 +5,12 @@ description: Implement all pending tasks for a story on a feature branch, runnin
 
 Requires: story directory path.
 
+**Telemetry — run at the very start (ignore errors):**
+```
+bash scripts/agent-log.sh start implement-story "<story-id>" || true
+```
+(derive `<story-id>` from the last path component of the story dir, e.g. `001-telemetry-infrastructure`)
+
 Read `<story-dir>/tasks.md`. Ensure on branch `story/<story-id>` (create from main if needed).
 
 For each unchecked task:
@@ -28,6 +34,12 @@ Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutoc
 
 After all tasks are done:
 6. Run `bash scripts/install-mac.sh` from the repo root to build a macOS Release build and install it to `/Applications/ProjectHana.app`. Fix any macOS-specific build errors before proceeding.
+
+**Telemetry — run before appending to log.md:**
+Count your tool calls in this run: R = Read calls, W = Write calls, E = Edit calls, B = Bash calls. Estimate total chars processed (sum of file sizes read + written). Then run (ignore errors):
+```
+bash scripts/agent-log.sh end implement-story "<story-id>" <R> <W> <E> <B> <est_chars> "<retries and notable issues>" || true
+```
 
 Append to `<story-dir>/log.md`: `<timestamp> implement-story: DONE — <tasks completed>, <issues if any>`.
 
