@@ -16,7 +16,14 @@ Read `<story-dir>/tasks.md`. Ensure on branch `story/<story-id>` (create from ma
 For each unchecked task:
 1. Implement following existing project patterns
 2. Run project checks:
-   - `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project ProjectHana.xcodeproj -scheme ProjectHana -destination 'platform=iOS Simulator,name=iPhone 17' -configuration Debug test 2>&1 | grep "TEST SUCCEEDED\|TEST FAILED\|error:"`
+   ```sh
+   set -o pipefail
+   DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
+   xcodebuild -project ProjectHana.xcodeproj -scheme ProjectHana \
+     -destination 'platform=iOS Simulator,name=iPhone 17' -configuration Debug test \
+     2>&1 | tee /tmp/projecthana-test.log | grep -E "TEST SUCCEEDED|TEST FAILED|error:"
+   grep -q "TEST SUCCEEDED" /tmp/projecthana-test.log || { echo "error: tests did not succeed" >&2; exit 1; }
+   ```
 3. Fix any failures and retry until clean
 4. Commit with a clear message
 5. Mark task checked in `tasks.md`
