@@ -14,6 +14,11 @@ Read `<story-dir>/spec.md`. Inspect the codebase: CLAUDE.md if present, relevant
 
 Break the story into atomic, independently implementable tasks — each task is one focused change.
 
+Initialise `<story-dir>/log.md` with a header line if it does not already exist:
+```
+# Log — <story-title>
+```
+
 Write `<story-dir>/tasks.md`:
 ```
 ## Tasks

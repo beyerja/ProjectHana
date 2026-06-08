@@ -12,7 +12,9 @@ Read `.workflow/log.md` and every `<story-dir>/log.md`.
 
 ## Telemetry analysis
 
-Read all files matching `.workflow/telemetry/agents-*.jsonl`. For each file, parse JSONL line by line. Match `"event":"start"` records with their `"event":"end"` counterparts by (agent, story). Build this Markdown table and print it in your output:
+Read all files matching `.workflow/telemetry/agents-*.jsonl` if any exist. If no telemetry files are found, or if fewer than 2 agent end-records are present (e.g. the first workflow after instrumentation was added), note this and proceed with qualitative analysis from story logs alone — do not block.
+
+For files that exist, parse JSONL line by line. Match `"event":"start"` records with their `"event":"end"` counterparts by (agent, story). Build this Markdown table and print it in your output:
 
 ```
 | Agent                  | Runs | Avg Duration | Avg Est Tokens | Total Retries/Notes |
