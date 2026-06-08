@@ -40,6 +40,10 @@
 		AA000060 /* QuizModePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00005F /* QuizModePickerView.swift */; };
 		AA000062 /* QuizLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000061 /* QuizLogicTests.swift */; };
 		AA000066 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000065 /* ViewExtensions.swift */; };
+		AA000068 /* MasteryTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000067 /* MasteryTier.swift */; };
+		AA00006A /* StreakTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000069 /* StreakTracker.swift */; };
+		AA00006C /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00006B /* StatsView.swift */; };
+		AA00006E /* StatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00006D /* StatsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +82,10 @@
 		AA00005F /* QuizModePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModePickerView.swift; sourceTree = "<group>"; };
 		AA000061 /* QuizLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLogicTests.swift; sourceTree = "<group>"; };
 		AA000065 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		AA000067 /* MasteryTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasteryTier.swift; sourceTree = "<group>"; };
+		AA000069 /* StreakTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakTracker.swift; sourceTree = "<group>"; };
+		AA00006B /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		AA00006D /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +148,7 @@
 				AA000028 /* Sea.swift */,
 				AA00002A /* GeographyDataLoader.swift */,
 				AA000038 /* ReviewCard.swift */,
+				AA000067 /* MasteryTier.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -149,6 +158,7 @@
 			children = (
 				AA00003A /* CardStore.swift */,
 				AA00004A /* PreviewStore.swift */,
+				AA000069 /* StreakTracker.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -216,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				AA000048 /* ProgressPlaceholderView.swift */,
+				AA00006B /* StatsView.swift */,
 			);
 			path = Progress;
 			sourceTree = "<group>";
@@ -247,6 +258,7 @@
 				AA00003C /* CardStoreTests.swift */,
 				AA000041 /* SM2SchedulerTests.swift */,
 				AA000061 /* QuizLogicTests.swift */,
+				AA00006D /* StatsTests.swift */,
 			);
 			path = ProjectHanaTests;
 			sourceTree = "<group>";
@@ -373,6 +385,9 @@
 				AA00005E /* MultipleChoiceQuizView.swift in Sources */,
 				AA000060 /* QuizModePickerView.swift in Sources */,
 				AA000066 /* ViewExtensions.swift in Sources */,
+				AA000068 /* MasteryTier.swift in Sources */,
+				AA00006A /* StreakTracker.swift in Sources */,
+				AA00006C /* StatsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +400,7 @@
 				AA00003D /* CardStoreTests.swift in Sources */,
 				AA000042 /* SM2SchedulerTests.swift in Sources */,
 				AA000062 /* QuizLogicTests.swift in Sources */,
+				AA00006E /* StatsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

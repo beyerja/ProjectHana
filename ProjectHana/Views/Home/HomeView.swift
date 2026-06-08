@@ -98,7 +98,7 @@ struct HomeView: View {
 
     private var progressSection: some View {
         NavigationLink {
-            ProgressPlaceholderView()
+            StatsView()
         } label: {
             Label("View Progress", systemImage: "chart.bar.fill")
                 .font(.headline)

@@ -55,6 +55,7 @@ final class MultipleChoiceSession {
         if case .correct = answerState { quality = 4 } else { quality = 1 }
         let result = SM2Scheduler.schedule(card: q.card, quality: quality)
         SM2Scheduler.apply(result, to: q.card, quality: quality)
+        StreakTracker.recordReview()
         currentIndex += 1
         isFinished = currentIndex >= questions.count
         if !isFinished { answerState = .unanswered }

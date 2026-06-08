@@ -7,6 +7,7 @@ export DEVELOPER_DIR
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 BUILD_DIR="$REPO_ROOT/.build-mac"
+LOG="/tmp/projecthana-mac-build.log"
 
 echo "==> Building ProjectHana (macOS Release)…"
 "$DEVELOPER_DIR/usr/bin/xcodebuild" \
@@ -15,12 +16,16 @@ echo "==> Building ProjectHana (macOS Release)…"
   -destination 'platform=macOS,arch=arm64' \
   -configuration Release \
   -derivedDataPath "$BUILD_DIR" \
-  build 2>&1 | grep -E "^.*error:|BUILD SUCCEEDED|BUILD FAILED" | grep -v "^$" || true
+  build > "$LOG" 2>&1 && echo "    Build succeeded." || {
+    grep -E "error:" "$LOG" | head -20
+    echo "error: macOS build failed — full log at $LOG" >&2
+    exit 1
+  }
 
 APP_SRC="$BUILD_DIR/Build/Products/Release/ProjectHana.app"
 
 if [ ! -d "$APP_SRC" ]; then
-  echo "error: macOS build failed — app not found at $APP_SRC" >&2
+  echo "error: app not found at $APP_SRC" >&2
   exit 1
 fi
 
