@@ -31,3 +31,6 @@ fastlane/test_output
 # CocoaPods (not used, but guard against accidental addition)
 Pods/
 Podfile.lock
+
+# Workflow telemetry (local only, never committed)
+.workflow/telemetry/*.jsonl
