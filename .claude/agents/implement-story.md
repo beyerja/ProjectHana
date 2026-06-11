@@ -28,6 +28,12 @@ For each unchecked task:
 4. Commit with a clear message
 5. Mark task checked in `tasks.md`
 
+**SwiftData schema changes**
+When adding or removing fields on an `@Model` type:
+- Non-optional fields without a default value will crash on launch if the simulator's store is stale. Before running tests, wipe the store: in the simulator, long-press the app icon → Remove App (or `xcrun simctl uninstall booted <bundle-id>`). The app's `ModelContainer` catch block should already handle this in development, but the simulator must be clean.
+- After any schema change, grep all existing tests that construct the changed model type and verify they pass the new required fields. Tests that create model instances and omit new non-optional properties will produce compiler errors; tests that rely on old default values (e.g. `hasGraduated: false`) may silently produce wrong results — audit those explicitly.
+- If the story spec does not include a migration plan, use `ModelConfiguration(isStoredInMemoryOnly: true)` in tests so they never touch the on-disk store.
+
 **Xcode project wiring (pbxproj)**
 Every new `.swift` file must be added to `ProjectHana.xcodeproj/project.pbxproj`:
 - Allocate the next sequential UUIDs (format `AA000001`, `AA000002`, …). Find the current max by grepping `AA0000` in the pbxproj.
