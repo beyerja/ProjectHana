@@ -39,6 +39,8 @@ Tool call distribution (this workflow):
   Edit:   NNN calls,  ~XX k tokens
 ```
 
+Note: Edit token estimates are inflated when large files are involved (pbxproj, bundled JSON data) because the hook measures the full file content, not the diff. If Edit est_tokens is unexpectedly high (> 50k), identify the likely large-file culprit and discount that figure when assessing true agent cost.
+
 ## Qualitative analysis
 
 Based on the telemetry table and story logs, identify the top 1-2 outliers:
