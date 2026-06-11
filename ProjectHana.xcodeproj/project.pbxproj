@@ -17,6 +17,8 @@
 		AA000029 /* Sea.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000028 /* Sea.swift */; };
 		AA00002B /* GeographyDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00002A /* GeographyDataLoader.swift */; };
 		AA000072 /* CountryBorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000071 /* CountryBorderLoader.swift */; };
+		AA000074 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000073 /* LearningSession.swift */; };
+		AA000076 /* LearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000075 /* LearningTests.swift */; };
 		AA00002D /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002C /* countries.json */; };
 		AA00002F /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002E /* rivers.json */; };
 		AA000031 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = AA000030 /* mountains.json */; };
@@ -61,6 +63,7 @@
 		AA000028 /* Sea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sea.swift; sourceTree = "<group>"; };
 		AA00002A /* GeographyDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoader.swift; sourceTree = "<group>"; };
 		AA000071 /* CountryBorderLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryBorderLoader.swift; sourceTree = "<group>"; };
+		AA000073 /* LearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningSession.swift; sourceTree = "<group>"; };
 		AA00002C /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		AA00002E /* rivers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rivers.json; sourceTree = "<group>"; };
 		AA000030 /* mountains.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mountains.json; sourceTree = "<group>"; };
@@ -90,6 +93,7 @@
 		AA000069 /* StreakTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakTracker.swift; sourceTree = "<group>"; };
 		AA00006B /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		AA00006D /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
+		AA000075 /* LearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +156,7 @@
 				AA000028 /* Sea.swift */,
 				AA00002A /* GeographyDataLoader.swift */,
 				AA000071 /* CountryBorderLoader.swift */,
+				AA000073 /* LearningSession.swift */,
 				AA000038 /* ReviewCard.swift */,
 				AA000067 /* MasteryTier.swift */,
 			);
@@ -265,6 +270,7 @@
 				AA000041 /* SM2SchedulerTests.swift */,
 				AA000061 /* QuizLogicTests.swift */,
 				AA00006D /* StatsTests.swift */,
+				AA000075 /* LearningTests.swift */,
 			);
 			path = ProjectHanaTests;
 			sourceTree = "<group>";
@@ -377,6 +383,7 @@
 				AA000029 /* Sea.swift in Sources */,
 				AA00002B /* GeographyDataLoader.swift in Sources */,
 				AA000072 /* CountryBorderLoader.swift in Sources */,
+				AA000074 /* LearningSession.swift in Sources */,
 				AA000039 /* ReviewCard.swift in Sources */,
 				AA00003B /* CardStore.swift in Sources */,
 				AA000040 /* SM2Scheduler.swift in Sources */,
@@ -409,6 +416,7 @@
 				AA000042 /* SM2SchedulerTests.swift in Sources */,
 				AA000062 /* QuizLogicTests.swift in Sources */,
 				AA00006E /* StatsTests.swift in Sources */,
+				AA000076 /* LearningTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

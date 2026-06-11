@@ -8,6 +8,7 @@ final class CardStore {
 
     init(modelContext: ModelContext) {
         self.modelContext = modelContext
+        ensureGraduationConsistency()
     }
 
     var allCards: [ReviewCard] {
@@ -17,12 +18,32 @@ final class CardStore {
     func dueCards(for category: CardCategory? = nil) -> [ReviewCard] {
         let now = Date.now
         var descriptor = FetchDescriptor<ReviewCard>(
-            predicate: #Predicate { $0.nextReviewDate <= now }
+            predicate: #Predicate { $0.nextReviewDate <= now && $0.hasGraduated }
         )
         descriptor.sortBy = [SortDescriptor(\.nextReviewDate)]
         let cards = (try? modelContext.fetch(descriptor)) ?? []
         guard let category else { return cards }
         return cards.filter { $0.cardCategory == category }
+    }
+
+    func newCards(for category: CardCategory? = nil) -> [ReviewCard] {
+        var descriptor = FetchDescriptor<ReviewCard>(
+            predicate: #Predicate { !$0.hasGraduated }
+        )
+        descriptor.sortBy = [SortDescriptor(\.factID)]
+        let cards = (try? modelContext.fetch(descriptor)) ?? []
+        guard let category else { return cards }
+        return cards.filter { $0.cardCategory == category }
+    }
+
+    private func ensureGraduationConsistency() {
+        let cards = allCards
+        var changed = false
+        for card in cards where !card.hasGraduated && (card.repetitionCount > 0 || card.intervalDays > 1) {
+            card.hasGraduated = true
+            changed = true
+        }
+        if changed { try? modelContext.save() }
     }
 
     func upsert(_ card: ReviewCard) {
