@@ -8,6 +8,7 @@ struct HomeView: View {
             ScrollView {
                 VStack(spacing: 32) {
                     dueCountSection
+                    learnSection
                     categorySection
                     progressSection
                 }
@@ -32,6 +33,43 @@ struct HomeView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 24)
         .background(.quaternary, in: RoundedRectangle(cornerRadius: 20))
+    }
+
+    // MARK: – Learn new cards
+
+    private var learnSection: some View {
+        let newCount = cardStore.newCards().count
+        return VStack(spacing: 12) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("New cards")
+                        .font(.headline)
+                    Text("\(newCount) waiting to be learned")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Text("\(newCount)")
+                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .foregroundStyle(newCount > 0 ? .orange : .secondary)
+            }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 16)
+            .background(.orange.opacity(0.1), in: RoundedRectangle(cornerRadius: 16))
+
+            if newCount > 0 {
+                NavigationLink {
+                    LearningQuizView(newCards: cardStore.newCards())
+                } label: {
+                    Label("Start Learning", systemImage: "book.fill")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(.orange, in: RoundedRectangle(cornerRadius: 14))
+                        .foregroundStyle(.white)
+                }
+            }
+        }
     }
 
     // MARK: – Category buttons

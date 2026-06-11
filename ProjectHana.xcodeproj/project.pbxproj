@@ -19,6 +19,7 @@
 		AA000072 /* CountryBorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000071 /* CountryBorderLoader.swift */; };
 		AA000074 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000073 /* LearningSession.swift */; };
 		AA000076 /* LearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000075 /* LearningTests.swift */; };
+		AA000078 /* LearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000077 /* LearningQuizView.swift */; };
 		AA00002D /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002C /* countries.json */; };
 		AA00002F /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002E /* rivers.json */; };
 		AA000031 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = AA000030 /* mountains.json */; };
@@ -94,6 +95,7 @@
 		AA00006B /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		AA00006D /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
 		AA000075 /* LearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningTests.swift; sourceTree = "<group>"; };
+		AA000077 /* LearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningQuizView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +199,7 @@
 			children = (
 				AA000046 /* QuizPlaceholderView.swift */,
 				AA00005F /* QuizModePickerView.swift */,
+				AA000077 /* LearningQuizView.swift */,
 				AA000056 /* MapQuiz */,
 				AA000063 /* TextQuiz */,
 				AA000064 /* MultipleChoice */,
@@ -399,6 +402,7 @@
 				AA00005C /* MultipleChoiceSession.swift in Sources */,
 				AA00005E /* MultipleChoiceQuizView.swift in Sources */,
 				AA000060 /* QuizModePickerView.swift in Sources */,
+				AA000078 /* LearningQuizView.swift in Sources */,
 				AA000066 /* ViewExtensions.swift in Sources */,
 				AA000068 /* MasteryTier.swift in Sources */,
 				AA00006A /* StreakTracker.swift in Sources */,
