@@ -36,6 +36,13 @@ Every new `.swift` file must be added to `ProjectHana.xcodeproj/project.pbxproj`
 - Add the build file to the correct `PBXSourcesBuildPhase` (main target or test target).
 - For resource files (JSON, assets): add to `PBXResourcesBuildPhase` instead.
 
+**Avoid redeclaration before adding extensions**
+Before adding a new `extension` on any existing type (model, enum, struct), grep the codebase for existing extensions and computed properties on that type:
+```sh
+grep -r "extension <TypeName>" ProjectHana/
+```
+If a property or method you are about to add already exists in another file, reuse it — do not redeclare it. Common culprits: `displayName`, `localizedName`, `color`, `iconName` on model types used in multiple views.
+
 **iOS-only APIs**
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `ProjectHana/Views/ViewExtensions.swift` rather than direct calls.
 

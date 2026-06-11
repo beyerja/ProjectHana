@@ -14,7 +14,7 @@ Read `.workflow/log.md` and every `<story-dir>/log.md`.
 
 Read all files matching `.workflow/telemetry/agents-*.jsonl` if any exist. If no telemetry files are found, or if fewer than 2 agent end-records are present (e.g. the first workflow after instrumentation was added), note this and proceed with qualitative analysis from story logs alone — do not block.
 
-For files that exist, parse JSONL line by line. Match `"event":"start"` records with their `"event":"end"` counterparts by (agent, story). Build this Markdown table and print it in your output:
+For files that exist, parse JSONL line by line. Match `"event":"start"` records with their `"event":"end"` counterparts by (agent, story). **Note any orphaned start records** (start with no matching end) — these indicate a session that hit a context limit or was interrupted; flag them in the table with "(no end — likely context overflow)" and exclude them from duration/token averages. Build this Markdown table and print it in your output:
 
 ```
 | Agent                  | Runs | Avg Duration | Avg Est Tokens | Total Retries/Notes |
