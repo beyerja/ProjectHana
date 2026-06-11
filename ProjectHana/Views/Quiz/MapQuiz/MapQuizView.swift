@@ -11,6 +11,8 @@ struct MapQuizView: View {
     @State private var position: MapCameraPosition = .automatic
     @State private var isAdvancing = false
 
+    private let borders = CountryBorderLoader.shared
+
     var body: some View {
         Group {
             if let session {
@@ -53,6 +55,15 @@ struct MapQuizView: View {
                             CountryPinView(state: state, name: country.name)
                         }
                         .disabled(session.answerState != .unanswered || isAdvancing)
+                    }
+                }
+                ForEach(Array(borders.keys), id: \.self) { id in
+                    if let rings = borders[id] {
+                        ForEach(rings.indices, id: \.self) { i in
+                            MapPolygon(coordinates: rings[i])
+                                .foregroundStyle(.clear)
+                                .stroke(.white.opacity(0.55), lineWidth: 0.8)
+                        }
                     }
                 }
             }
