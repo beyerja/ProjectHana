@@ -18,6 +18,8 @@ final class ReviewCard {
     var intervalDays: Int
     var nextReviewDate: Date
     var lastQualityScore: Int?
+    var consecutiveCorrect: Int   // learning-phase streak; resets to 0 on wrong answer
+    var hasGraduated: Bool        // true once the card enters the SM-2 schedule
 
     init(
         id: UUID = UUID(),
@@ -27,7 +29,9 @@ final class ReviewCard {
         easeFactor: Double = 2.5,
         intervalDays: Int = 0,
         nextReviewDate: Date = .now,
-        lastQualityScore: Int? = nil
+        lastQualityScore: Int? = nil,
+        consecutiveCorrect: Int = 0,
+        hasGraduated: Bool = false
     ) {
         self.id = id
         self.factID = factID
@@ -37,6 +41,8 @@ final class ReviewCard {
         self.intervalDays = intervalDays
         self.nextReviewDate = nextReviewDate
         self.lastQualityScore = lastQualityScore
+        self.consecutiveCorrect = consecutiveCorrect
+        self.hasGraduated = hasGraduated
     }
 
     var cardCategory: CardCategory {

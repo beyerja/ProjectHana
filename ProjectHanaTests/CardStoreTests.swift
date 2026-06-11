@@ -43,8 +43,8 @@ final class CardStoreTests: XCTestCase {
     }
 
     func testDueCardsReturnsOverdueOnly() {
-        let due = ReviewCard(factID: "due", category: .country, nextReviewDate: .distantPast)
-        let future = ReviewCard(factID: "future", category: .country, nextReviewDate: .distantFuture)
+        let due = ReviewCard(factID: "due", category: .country, nextReviewDate: .distantPast, hasGraduated: true)
+        let future = ReviewCard(factID: "future", category: .country, nextReviewDate: .distantFuture, hasGraduated: true)
         store.upsert(due)
         store.upsert(future)
         let dueCards = store.dueCards()
@@ -53,8 +53,8 @@ final class CardStoreTests: XCTestCase {
     }
 
     func testDueCardsFiltersByCategory() {
-        let countryCard = ReviewCard(factID: "us", category: .country, nextReviewDate: .distantPast)
-        let riverCard = ReviewCard(factID: "nile", category: .river, nextReviewDate: .distantPast)
+        let countryCard = ReviewCard(factID: "us", category: .country, nextReviewDate: .distantPast, hasGraduated: true)
+        let riverCard = ReviewCard(factID: "nile", category: .river, nextReviewDate: .distantPast, hasGraduated: true)
         store.upsert(countryCard)
         store.upsert(riverCard)
         let countryDue = store.dueCards(for: .country)
