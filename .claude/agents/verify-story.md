@@ -12,6 +12,12 @@ bash scripts/agent-log.sh start verify-story "<story-id>" || true
 
 Read `<story-dir>/spec.md` acceptance criteria.
 
+If the story modified any `@Model` type, boot the simulator and uninstall the app before running tests to avoid a stale-schema crash:
+```sh
+xcrun simctl boot "iPhone 17" 2>/dev/null || true
+xcrun simctl uninstall booted com.private.ProjectHana 2>/dev/null || true
+```
+
 For each criterion: run tests, inspect implementation, exercise the app if applicable.
 
 - **All pass** → update `<story-dir>/status.md` to `status: done`, mark story checked in `.workflow/stories.md`.

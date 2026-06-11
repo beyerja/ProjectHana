@@ -17,6 +17,8 @@ Break the story into atomic, independently implementable tasks — each task is 
 **Extension collision check**: if any task adds presentation helpers (computed properties like `displayName`, `color`, `iconName`) to an existing model or enum type, add a preceding task:
 - `000: Audit existing extensions on <TypeName> — grep for "extension <TypeName>" across the project and note any properties that must be reused rather than re-declared`
 
+If the story modifies an existing `@Model` type (SwiftData), always include an explicit task: "Audit existing tests that construct `<ModelName>` and update them for any new required fields or changed defaults." Place this task immediately after the model-definition task, before any UI or logic tasks.
+
 Initialise `<story-dir>/log.md` with a header line if it does not already exist:
 ```
 # Log — <story-title>
