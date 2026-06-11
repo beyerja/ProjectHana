@@ -20,6 +20,7 @@
 		AA000074 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000073 /* LearningSession.swift */; };
 		AA000076 /* LearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000075 /* LearningTests.swift */; };
 		AA000078 /* LearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000077 /* LearningQuizView.swift */; };
+		AA00007A /* CategoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000079 /* CategoryDetailView.swift */; };
 		AA00002D /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002C /* countries.json */; };
 		AA00002F /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002E /* rivers.json */; };
 		AA000031 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = AA000030 /* mountains.json */; };
@@ -96,6 +97,7 @@
 		AA00006D /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
 		AA000075 /* LearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningTests.swift; sourceTree = "<group>"; };
 		AA000077 /* LearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningQuizView.swift; sourceTree = "<group>"; };
+		AA000079 /* CategoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				AA000044 /* HomeView.swift */,
+				AA000079 /* CategoryDetailView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				AA00003B /* CardStore.swift in Sources */,
 				AA000040 /* SM2Scheduler.swift in Sources */,
 				AA000045 /* HomeView.swift in Sources */,
+				AA00007A /* CategoryDetailView.swift in Sources */,
 				AA000047 /* QuizPlaceholderView.swift in Sources */,
 				AA000049 /* ProgressPlaceholderView.swift in Sources */,
 				AA00004B /* PreviewStore.swift in Sources */,
