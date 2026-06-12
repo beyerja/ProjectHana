@@ -7,7 +7,7 @@ Requires: story directory path.
 
 **Telemetry — run at the very start (ignore errors):**
 ```
-bash scripts/agent-log.sh start review-pr "<story-id>" || true
+just log start review-pr "<story-id>" || true
 ```
 
 Read `<story-dir>/pr.md`. Fetch review status via `gh pr view` and `gh pr reviews`.
@@ -23,5 +23,5 @@ Read `<story-dir>/pr.md`. Fetch review status via `gh pr view` and `gh pr review
 
 Before exiting, run (ignore errors):
 ```
-bash scripts/agent-log.sh end review-pr "<story-id>" <R> <W> <E> <B> <est_chars> "<outcome>" || true
+just log end review-pr "<story-id>" <R> <W> <E> <B> <est_chars> "<outcome>" || true
 ```

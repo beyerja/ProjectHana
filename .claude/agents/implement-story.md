@@ -7,7 +7,7 @@ Requires: story directory path.
 
 **Telemetry — run at the very start (ignore errors):**
 ```
-bash scripts/agent-log.sh start implement-story "<story-id>" || true
+just log start implement-story "<story-id>" || true
 ```
 (derive `<story-id>` from the last path component of the story dir, e.g. `001-telemetry-infrastructure`)
 
@@ -45,13 +45,7 @@ grep -r "extension <TypeName>" ProjectHana/
 If a property or method you are about to add already exists in another file, reuse it — do not redeclare it. Common culprits: `displayName`, `localizedName`, `color`, `iconName` on model types used in multiple views.
 
 **Shell-integration tools (direnv, starship, etc.)**
-When a story installs a tool that requires a shell hook to function (direnv, starship, zoxide, etc.), installing the binary is not enough — the user's shell config also needs updating. After installing such a tool, explicitly tell the user to add the hook to their `~/.zshrc` (or `~/.bashrc`). For direnv specifically:
-```sh
-# add to ~/.zshrc:
-export PATH="$HOME/.nix-profile/bin:$PATH"
-eval "$(direnv hook zsh)"
-```
-Without the hook, the tool will be "installed" but silently non-functional in interactive shells.
+When a story installs a tool that requires a shell hook (direnv, starship, zoxide, etc.), installing the binary is not enough — tell the user to add the hook to `~/.zshrc` (or `~/.bashrc`) explicitly, or the tool will be silently non-functional in interactive shells.
 
 **iOS-only APIs**
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `ProjectHana/Views/ViewExtensions.swift` rather than direct calls.
@@ -62,7 +56,7 @@ After all tasks are done:
 **Telemetry — run before appending to log.md:**
 Count your tool calls in this run: R = Read calls, W = Write calls, E = Edit calls, B = Bash calls. Estimate total chars processed (sum of file sizes read + written). Then run (ignore errors):
 ```
-bash scripts/agent-log.sh end implement-story "<story-id>" <R> <W> <E> <B> <est_chars> "<retries and notable issues>" || true
+just log end implement-story "<story-id>" <R> <W> <E> <B> <est_chars> "<retries and notable issues>" || true
 ```
 
 Append to `<story-dir>/log.md`: `<timestamp> implement-story: DONE — <tasks completed>, <issues if any>`.

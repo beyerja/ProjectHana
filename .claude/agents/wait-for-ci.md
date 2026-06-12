@@ -7,7 +7,7 @@ Requires: PR number (or branch name to find the PR from).
 
 **Telemetry — run at the very start (ignore errors):**
 ```
-bash scripts/agent-log.sh start wait-for-ci "<story-id>" || true
+just log start wait-for-ci "<story-id>" || true
 ```
 
 Steps:
@@ -34,5 +34,5 @@ Notes:
 
 Before exiting, run (ignore errors):
 ```
-bash scripts/agent-log.sh end wait-for-ci "<story-id>" 0 0 0 <B> 0 "<PASS|FAIL>" || true
+just log end wait-for-ci "<story-id>" 0 0 0 <B> 0 "<PASS|FAIL>" || true
 ```

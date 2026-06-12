@@ -5,7 +5,7 @@ description: Audit the project for missing quality infrastructure and prepend se
 
 **Telemetry — run at the very start (ignore errors):**
 ```
-bash scripts/agent-log.sh start assess-project-health "feature" || true
+just log start assess-project-health "feature" || true
 ```
 
 Inspect the project to determine what quality tooling is warranted but absent. Consider: testing framework, linting, formatting, type-checking, and CI — infer the appropriate tools from the project's language and platform.
@@ -16,7 +16,7 @@ If no gaps are found, do nothing.
 
 Run (ignore errors):
 ```
-bash scripts/agent-log.sh end assess-project-health "feature" <R> <W> 0 <B> <est_chars> "" || true
+just log end assess-project-health "feature" <R> <W> 0 <B> <est_chars> "" || true
 ```
 
 Append to `.workflow/log.md`: `<timestamp> assess-project-health: DONE — <gaps found or "none">`.

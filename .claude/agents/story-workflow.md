@@ -7,7 +7,7 @@ Requires: story directory path.
 
 **Telemetry — run at the very start (ignore errors):**
 ```
-bash scripts/agent-log.sh start story-workflow "<story-id>" || true
+just log start story-workflow "<story-id>" || true
 ```
 
 Run the following steps in order, spawning a dedicated sub-agent for each. Pass the story directory as context to every agent.
@@ -38,7 +38,7 @@ Update `<story-dir>/status.md` at each transition. If returning to a prior step,
 
 Before final output, run (ignore errors):
 ```
-bash scripts/agent-log.sh end story-workflow "<story-id>" 0 0 0 <B> 0 "" || true
+just log end story-workflow "<story-id>" 0 0 0 <B> 0 "" || true
 ```
 
 Output STATUS: DONE when the story is merged and verified.

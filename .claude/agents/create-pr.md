@@ -7,7 +7,7 @@ Requires: story directory path.
 
 **Telemetry — run at the very start (ignore errors):**
 ```
-bash scripts/agent-log.sh start create-pr "<story-id>" || true
+just log start create-pr "<story-id>" || true
 ```
 
 Read `<story-dir>/spec.md` and recent commits. Push the current branch:
@@ -26,7 +26,7 @@ gh pr create --base main --head <branch> --title "<story title>" --body "..."
 Write PR URL and number to `<story-dir>/pr.md`.
 Count tool calls (R/W/E/B) and estimate chars, then run (ignore errors):
 ```
-bash scripts/agent-log.sh end create-pr "<story-id>" <R> <W> <E> <B> <est_chars> "" || true
+just log end create-pr "<story-id>" <R> <W> <E> <B> <est_chars> "" || true
 ```
 Append to `<story-dir>/log.md`: `<timestamp> create-pr: DONE — <URL>`.
 
