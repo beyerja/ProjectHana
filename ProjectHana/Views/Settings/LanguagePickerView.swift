@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct LanguagePickerView: View {
-    private var languageManager: LanguageManager = .shared
+    @Environment(LanguageManager.self) private var languageManager
 
     var body: some View {
         localeList
@@ -38,5 +38,6 @@ struct LanguagePickerView: View {
 #Preview {
     NavigationStack {
         LanguagePickerView()
+            .environment(LanguageManager.shared)
     }
 }

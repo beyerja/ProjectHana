@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State private var showingLanguagePicker = false
-
     var body: some View {
         NavigationStack {
             ScrollView {
