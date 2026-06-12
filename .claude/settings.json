@@ -30,7 +30,15 @@
       "Bash(set -o pipefail && DEVELOPER_DIR=* xcodebuild *)",
       "Bash(bash scripts/install-mac.sh*)",
       "Bash(export PATH=* && gh pr checks *)",
-      "Bash(export PATH=* && gh run list *)"
+      "Bash(export PATH=* && gh run list *)",
+      "Bash(export PATH=* && gh run watch *)",
+      "Bash(export PATH=* && gh help *)",
+      "Bash(just --list*)",
+      "Bash(git push *)",
+      "Bash(bash /Users/*/scripts/install-mac.sh*)",
+      "Bash(export PATH=* DEVELOPER_DIR=* && just test*)",
+      "Bash(export PATH=* DEVELOPER_DIR=* && just pr-list*)",
+      "Bash(export PATH=* && direnv allow*)"
     ]
   }
 }
