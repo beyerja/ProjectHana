@@ -133,16 +133,16 @@ final class QuizLogicTests: XCTestCase {
 
     private func sampleCountries() -> [Country] {
         [
-            Country(id: "fr", name: "France", capital: "Paris", continent: "Europe", lat: 46, lon: 2),
-            Country(id: "de", name: "Germany", capital: "Berlin", continent: "Europe", lat: 51, lon: 10),
-            Country(id: "es", name: "Spain", capital: "Madrid", continent: "Europe", lat: 40, lon: -4),
-            Country(id: "it", name: "Italy", capital: "Rome", continent: "Europe", lat: 42, lon: 12),
-            Country(id: "pt", name: "Portugal", capital: "Lisbon", continent: "Europe", lat: 39, lon: -8),
+            Country(id: "fr", name: "France", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Paris", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 46, lon: 2),
+            Country(id: "de", name: "Germany", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Berlin", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 51, lon: 10),
+            Country(id: "es", name: "Spain", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Madrid", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 40, lon: -4),
+            Country(id: "it", name: "Italy", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Rome", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 42, lon: 12),
+            Country(id: "pt", name: "Portugal", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Lisbon", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 39, lon: -8),
         ]
     }
 
     private func sampleRivers() -> [River] {
-        [River(id: "rhine", name: "Rhine", continent: "Europe",
+        [River(id: "rhine", name: "Rhine", nameFr: nil, nameDe: nil, nameEs: nil, continent: "Europe",
                sourceLat: 46.8, sourceLon: 9.2, mouthLat: 51.9, mouthLon: 4.0)]
     }
 }
