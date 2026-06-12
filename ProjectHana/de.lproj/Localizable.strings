@@ -101,3 +101,11 @@
 "quiz_placeholder.coming_soon" = "Quiz demnächst";
 "quiz_placeholder.desc" = "Das %@-Quiz wird im nächsten Update verfügbar sein.";
 "quiz_placeholder.all_categories" = "Alle Kategorien";
+
+/* Continent labels */
+"continent.africa" = "Afrika";
+"continent.asia" = "Asien";
+"continent.europe" = "Europa";
+"continent.north_america" = "Nordamerika";
+"continent.oceania" = "Ozeanien";
+"continent.south_america" = "Südamerika";
