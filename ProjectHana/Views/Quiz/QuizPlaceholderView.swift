@@ -4,20 +4,15 @@ struct QuizPlaceholderView: View {
     let category: CardCategory?
 
     var title: String {
-        guard let category else { return "All Categories" }
-        switch category {
-        case .country:  return "Countries"
-        case .river:    return "Rivers"
-        case .mountain: return "Mountains"
-        case .sea:      return "Seas"
-        }
+        guard let category else { return L10n["quiz_placeholder.all_categories"] }
+        return category.displayName
     }
 
     var body: some View {
         ContentUnavailableView(
-            "Quiz Coming Soon",
+            L10n["quiz_placeholder.coming_soon"],
             systemImage: "questionmark.bubble",
-            description: Text("The \(title) quiz will be available in the next update.")
+            description: Text(String(format: L10n["quiz_placeholder.desc"], title))
         )
         .navigationTitle(title)
         .inlineNavigationTitle()

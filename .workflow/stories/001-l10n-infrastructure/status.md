@@ -1,1 +1,1 @@
-status: pr-open
+status: merged

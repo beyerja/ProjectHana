@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct HomeView: View {
+    @Environment(LanguageManager.self) private var languageManager
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -22,21 +24,23 @@ struct HomeView: View {
                 }
             }
         }
+        // Re-render when language changes.
+        .id(languageManager.current)
     }
 
     // MARK: – Category grid
 
     private var categoryGrid: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Categories")
+            Text(L10n["home.categories"])
                 .font(.headline)
                 .foregroundStyle(.secondary)
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
-                categoryTile(title: "Countries", icon: "globe",       color: .blue,  category: .country)
-                categoryTile(title: "Rivers",    icon: "water.waves", color: .cyan,  category: .river)
-                categoryTile(title: "Mountains", icon: "mountain.2",  color: .brown, category: .mountain)
-                categoryTile(title: "Seas",      icon: "drop.fill",   color: .teal,  category: .sea)
+                categoryTile(title: L10n["home.category.countries"], icon: "globe",       color: .blue,  category: .country)
+                categoryTile(title: L10n["home.category.rivers"],    icon: "water.waves", color: .cyan,  category: .river)
+                categoryTile(title: L10n["home.category.mountains"], icon: "mountain.2",  color: .brown, category: .mountain)
+                categoryTile(title: L10n["home.category.seas"],      icon: "drop.fill",   color: .teal,  category: .sea)
             }
         }
     }
@@ -64,7 +68,7 @@ struct HomeView: View {
         NavigationLink {
             StatsView()
         } label: {
-            Label("View Progress", systemImage: "chart.bar.fill")
+            Label(L10n["home.view_progress"], systemImage: "chart.bar.fill")
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -77,4 +81,5 @@ struct HomeView: View {
 #Preview {
     HomeView()
         .withPreviewStore()
+        .environment(LanguageManager.shared)
 }
