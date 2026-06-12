@@ -7,6 +7,8 @@
 "home.category.mountains" = "Gebirge";
 "home.category.seas" = "Meere";
 "home.view_progress" = "Fortschritt anzeigen";
+"home.tile.new" = "Neu";
+"home.tile.pending" = "Ausstehend";
 
 /* QuizModePickerView */
 "quiz.mode.map_tap.title" = "Karten-Quiz";

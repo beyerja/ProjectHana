@@ -7,6 +7,8 @@
 "home.category.mountains" = "Mountains";
 "home.category.seas" = "Seas";
 "home.view_progress" = "View Progress";
+"home.tile.new" = "New";
+"home.tile.pending" = "Pending";
 
 /* QuizModePickerView */
 "quiz.mode.map_tap.title" = "Map Tap Quiz";

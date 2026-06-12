@@ -2,6 +2,7 @@ import SwiftUI
 
 struct CategoryDetailView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(LanguageManager.self) private var lang
 
     let category: CardCategory
 
@@ -32,7 +33,7 @@ struct CategoryDetailView: View {
             LearningQuizView(newCards: cards)
         } label: {
             tileLabel(
-                title: "New",
+                title: L10n["home.tile.new"],
                 count: cards.count,
                 icon: "plus.circle.fill",
                 color: .orange,
@@ -48,7 +49,7 @@ struct CategoryDetailView: View {
             pendingDestination
         } label: {
             tileLabel(
-                title: "Pending",
+                title: L10n["home.tile.pending"],
                 count: count,
                 icon: "clock.fill",
                 color: .blue,
@@ -94,7 +95,7 @@ struct CategoryDetailView: View {
         NavigationLink {
             StatsView()
         } label: {
-            Label("View Progress", systemImage: "chart.bar.fill")
+            Label(L10n["home.view_progress"], systemImage: "chart.bar.fill")
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
