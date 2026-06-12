@@ -63,19 +63,24 @@ final class MultipleChoiceSession {
 
     // MARK: – Factory methods
 
-    static func countryCapitalQuestions(cards: [ReviewCard], countries: [Country]) -> [MCQQuestion] {
+    static func countryCapitalQuestions(
+        cards: [ReviewCard],
+        countries: [Country],
+        locale: AppLocale = .en
+    ) -> [MCQQuestion] {
         cards.compactMap { card in
             guard let country = countries.first(where: { $0.id == card.factID }) else { return nil }
             let distractors = countries
                 .filter { $0.continent == country.continent && $0.id != country.id }
                 .shuffled()
                 .prefix(3)
-                .map { MCQOption(label: $0.capital, isCorrect: false) }
+                .map { MCQOption(label: $0.localizedCapital(for: locale), isCorrect: false) }
             guard distractors.count == 3 else { return nil }
-            let options = ([MCQOption(label: country.capital, isCorrect: true)] + distractors).shuffled()
+            let options = ([MCQOption(label: country.localizedCapital(for: locale), isCorrect: true)] + distractors).shuffled()
+            let promptTemplate = L10n.string("quiz.prompt.capital_of", locale: locale)
             return MCQQuestion(
                 card: card,
-                prompt: "What is the capital of \(country.name)?",
+                prompt: String(format: promptTemplate, country.localizedName(for: locale)),
                 options: options
             )
         }
@@ -87,31 +92,41 @@ final class MultipleChoiceSession {
         factID: (T) -> String,
         factName: (T) -> String,
         factContinent: (T) -> String,
-        categoryLabel: String
+        categoryLabel: String,
+        locale: AppLocale = .en,
+        factLocalizedName: ((T, AppLocale) -> String)? = nil
     ) -> [MCQQuestion] {
-        let allContinents = ["Africa", "Asia", "Europe", "North America", "Oceania", "South America"]
+        // All canonical English continent names for distractor selection
+        let allContinentsEnglish = ["Africa", "Asia", "Europe", "North America", "Oceania", "South America"]
         return cards.compactMap { card in
             guard let fact = facts.first(where: { factID($0) == card.factID }) else { return nil }
-            let correct = factContinent(fact)
-            let distractors = allContinents.filter { $0 != correct }.shuffled().prefix(3)
-            guard distractors.count == 3 else { return nil }
-            let options = ([MCQOption(label: correct, isCorrect: true)] +
-                           distractors.map { MCQOption(label: $0, isCorrect: false) }).shuffled()
+            let correctEnglish = factContinent(fact)
+            let distractorEnglish = allContinentsEnglish.filter { $0 != correctEnglish }.shuffled().prefix(3)
+            guard distractorEnglish.count == 3 else { return nil }
+            let correctLabel = localizedContinent(correctEnglish, locale: locale)
+            let options = ([MCQOption(label: correctLabel, isCorrect: true)] +
+                           distractorEnglish.map { MCQOption(label: localizedContinent($0, locale: locale), isCorrect: false) }).shuffled()
+            let displayName = factLocalizedName?(fact, locale) ?? factName(fact)
+            let promptTemplate = L10n.string("quiz.prompt.continent_of", locale: locale)
             return MCQQuestion(
                 card: card,
-                prompt: "On which continent is \(factName(fact)) located?",
+                prompt: String(format: promptTemplate, displayName),
                 options: options
             )
         }
     }
 
-    static func seaIdentificationQuestions(cards: [ReviewCard], seas: [Sea]) -> [MCQQuestion] {
+    static func seaIdentificationQuestions(
+        cards: [ReviewCard],
+        seas: [Sea],
+        locale: AppLocale = .en
+    ) -> [MCQQuestion] {
         cards.compactMap { card in
             guard let sea = seas.first(where: { $0.id == card.factID }) else { return nil }
             let distractors = seas.filter { $0.id != sea.id }.shuffled().prefix(3)
             guard distractors.count == 3 else { return nil }
-            let options = ([MCQOption(label: sea.name, isCorrect: true)] +
-                           distractors.map { MCQOption(label: $0.name, isCorrect: false) }).shuffled()
+            let options = ([MCQOption(label: sea.localizedName(for: locale), isCorrect: true)] +
+                           distractors.map { MCQOption(label: $0.localizedName(for: locale), isCorrect: false) }).shuffled()
             let region = approximateRegion(lat: sea.lat, lon: sea.lon)
             return MCQQuestion(
                 card: card,
@@ -121,9 +136,26 @@ final class MultipleChoiceSession {
         }
     }
 
+    // MARK: – Private helpers
+
     private static func approximateRegion(lat: Double, lon: Double) -> String {
         let ns = lat >= 0 ? "N" : "S"
         let ew = lon >= 0 ? "E" : "W"
         return "\(Int(abs(lat)))°\(ns), \(Int(abs(lon)))°\(ew)"
+    }
+
+    /// Map an English continent name to its localized string.
+    private static func localizedContinent(_ english: String, locale: AppLocale) -> String {
+        let key: String
+        switch english {
+        case "Africa":        key = "continent.africa"
+        case "Asia":          key = "continent.asia"
+        case "Europe":        key = "continent.europe"
+        case "North America": key = "continent.north_america"
+        case "Oceania":       key = "continent.oceania"
+        case "South America": key = "continent.south_america"
+        default:              return english
+        }
+        return L10n.string(key, locale: locale)
     }
 }

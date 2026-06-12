@@ -3,6 +3,7 @@ import MapKit
 
 struct MapQuizView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
     let category: CardCategory?
@@ -52,7 +53,7 @@ struct MapQuizView: View {
                             guard !isAdvancing else { return }
                             session.handleTap(countryID: country.id)
                         } label: {
-                            CountryPinView(state: state, name: country.name)
+                            CountryPinView(state: state, name: country.localizedName(for: languageManager.current))
                         }
                         .disabled(session.answerState != .unanswered || isAdvancing)
                     }
@@ -108,7 +109,7 @@ struct MapQuizView: View {
             Text(L10n["map_quiz.tap_on_map"])
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Text(session.currentCountry?.name ?? "")
+            Text(session.currentCountry?.localizedName(for: languageManager.current) ?? "")
                 .font(.title2.bold())
             Text("\(session.reviewedCount + 1) / \(session.cards.count)")
                 .font(.caption)
@@ -130,7 +131,7 @@ struct MapQuizView: View {
             case .correct:
                 return (L10n["map_quiz.feedback.correct"], .green)
             case .incorrect(let tappedID, _):
-                let name = session.allCountries.first { $0.id == tappedID }?.name ?? tappedID
+                let name = session.allCountries.first { $0.id == tappedID }?.localizedName(for: languageManager.current) ?? tappedID
                 return ("\(L10n["map_quiz.feedback.incorrect_prefix"]) \(name)", .red)
             case .unanswered:
                 return ("", .clear)

@@ -109,3 +109,8 @@
 "continent.north_america" = "Nordamerika";
 "continent.oceania" = "Ozeanien";
 "continent.south_america" = "Südamerika";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "Was ist die Hauptstadt von %@?";
+"quiz.prompt.continent_of" = "Auf welchem Kontinent liegt %@?";
+"quiz.prompt.country_of_capital" = "Welches Land hat %@ als Hauptstadt?";
