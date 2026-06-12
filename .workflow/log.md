@@ -14,3 +14,4 @@ Improvements:
   1. implement-story.md — added pre-extension grep rule: check for existing extensions/computed properties on a type before adding new ones to prevent "invalid redeclaration" compile errors (e.g. displayName on CardCategory)
   2. break-tasks.md — added extension collision check: when a task adds presentation helpers to an existing type, prepend an audit task to grep existing extensions first
   3. evaluate-workflow.md — added orphaned-start detection: flag start records with no matching end as likely context-overflow sessions and exclude them from averages
+2026-06-12T00:00:00Z clarify-feature: DONE
