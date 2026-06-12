@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MultipleChoiceQuizView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
     let category: CardCategory
@@ -138,22 +139,27 @@ struct MultipleChoiceQuizView: View {
         let due = cardStore.dueCards(for: category)
         guard !due.isEmpty else { session = nil; return }
         let geo = GeographyDataLoader.shared
+        let locale = languageManager.current
         let questions: [MCQQuestion]
         switch category {
         case .country:
-            questions = MultipleChoiceSession.countryCapitalQuestions(cards: due, countries: geo.countries)
+            questions = MultipleChoiceSession.countryCapitalQuestions(
+                cards: due, countries: geo.countries, locale: locale)
         case .river:
             questions = MultipleChoiceSession.continentQuestions(
                 cards: due, facts: geo.rivers,
                 factID: \.id, factName: \.name, factContinent: \.continent,
-                categoryLabel: "river")
+                categoryLabel: "river", locale: locale,
+                factLocalizedName: { $0.localizedName(for: $1) })
         case .mountain:
             questions = MultipleChoiceSession.continentQuestions(
                 cards: due, facts: geo.mountains,
                 factID: \.id, factName: \.name, factContinent: \.continent,
-                categoryLabel: "mountain range")
+                categoryLabel: "mountain range", locale: locale,
+                factLocalizedName: { $0.localizedName(for: $1) })
         case .sea:
-            questions = MultipleChoiceSession.seaIdentificationQuestions(cards: due, seas: geo.seas)
+            questions = MultipleChoiceSession.seaIdentificationQuestions(
+                cards: due, seas: geo.seas, locale: locale)
         }
         session = questions.isEmpty ? nil : MultipleChoiceSession(questions: questions)
     }

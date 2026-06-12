@@ -7,6 +7,7 @@ enum CapitalQuizMode {
 
 struct CapitalQuizView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
     let mode: CapitalQuizMode
@@ -138,9 +139,10 @@ struct CapitalQuizView: View {
         let due = cardStore.dueCards(for: .country)
         guard !due.isEmpty else { session = nil; return }
         let countries = GeographyDataLoader.shared.countries
+        let locale = languageManager.current
         let questions = mode == .capitalOfCountry
-            ? TextQuizSession.capitalQuestions(cards: due, countries: countries)
-            : TextQuizSession.reverseCapitalQuestions(cards: due, countries: countries)
+            ? TextQuizSession.capitalQuestions(cards: due, countries: countries, locale: locale)
+            : TextQuizSession.reverseCapitalQuestions(cards: due, countries: countries, locale: locale)
         session = TextQuizSession(questions: questions)
     }
 }

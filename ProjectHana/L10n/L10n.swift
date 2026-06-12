@@ -17,6 +17,11 @@ enum L10n {
         bundle(for: LanguageManager.shared.current).localizedString(forKey: key, value: nil, table: nil)
     }
 
+    /// Return the localized string for `key` in the bundle matching the given `locale`.
+    static func string(_ key: String, locale: AppLocale) -> String {
+        bundle(for: locale).localizedString(forKey: key, value: nil, table: nil)
+    }
+
     static subscript(_ key: String) -> String {
         string(key)
     }
