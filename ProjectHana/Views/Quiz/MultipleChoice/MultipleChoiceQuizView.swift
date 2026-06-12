@@ -22,14 +22,14 @@ struct MultipleChoiceQuizView: View {
                     quizBody(session: session)
                 }
             } else {
-                ContentUnavailableView("Nothing Due", systemImage: "checkmark.circle",
-                    description: Text("No cards are due right now."))
+                ContentUnavailableView(L10n["mcq_quiz.nothing_due_title"], systemImage: "checkmark.circle",
+                    description: Text(L10n["mcq_quiz.nothing_due_desc"]))
             }
         }
         .navigationTitle(navigationTitle)
         .inlineNavigationTitle()
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button("Exit") { dismiss() } }
+            ToolbarItem(placement: .cancellationAction) { Button(L10n["mcq_quiz.exit"]) { dismiss() } }
         }
         .onAppear { buildSession() }
     }
@@ -57,7 +57,7 @@ struct MultipleChoiceQuizView: View {
             Text("\(session.reviewedCount + 1) / \(session.questions.count)")
                 .font(.subheadline).foregroundStyle(.secondary)
             Spacer()
-            Text("\(session.correctCount) correct")
+            Text(String(format: L10n["mcq_quiz.correct_count"], session.correctCount))
                 .font(.subheadline).foregroundStyle(.green)
         }
     }
@@ -160,10 +160,10 @@ struct MultipleChoiceQuizView: View {
 
     private var navigationTitle: String {
         switch category {
-        case .country:  return "Country Quiz"
-        case .river:    return "Rivers Quiz"
-        case .mountain: return "Mountains Quiz"
-        case .sea:      return "Seas Quiz"
+        case .country:  return L10n["mcq_quiz.nav.country"]
+        case .river:    return L10n["mcq_quiz.nav.river"]
+        case .mountain: return L10n["mcq_quiz.nav.mountain"]
+        case .sea:      return L10n["mcq_quiz.nav.sea"]
         }
     }
 }

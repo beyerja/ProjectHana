@@ -1,1 +1,101 @@
-/* English — stub; strings will be populated in story 002 */
+/* English */
+
+/* HomeView */
+"home.categories" = "Categories";
+"home.category.countries" = "Countries";
+"home.category.rivers" = "Rivers";
+"home.category.mountains" = "Mountains";
+"home.category.seas" = "Seas";
+"home.view_progress" = "View Progress";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Map Tap Quiz";
+"quiz.mode.map_tap.desc" = "Tap the correct country on the map";
+"quiz.mode.type_capital.title" = "Type the Capital";
+"quiz.mode.type_capital.desc" = "\"What is the capital of X?\"";
+"quiz.mode.name_country.title" = "Name the Country";
+"quiz.mode.name_country.desc" = "\"Which country has X as its capital?\"";
+"quiz.mode.multiple_choice.title" = "Multiple Choice";
+"quiz.mode.multiple_choice.desc" = "Pick the capital from 4 options";
+"quiz.cards_due.singular" = "card due";
+"quiz.cards_due.plural" = "cards due";
+
+/* LanguagePickerView */
+"settings.language" = "Language";
+"settings.language.picker_title" = "App Language";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Progress Coming Soon";
+"progress.placeholder_desc" = "Your learning stats will appear here.";
+"progress.title" = "Progress";
+
+/* StatsView */
+"stats.title" = "Progress";
+"stats.cards_reviewed" = "Cards reviewed";
+"stats.due_today" = "Due today";
+"stats.day_streak" = "Day streak";
+"stats.by_category" = "By Category";
+"stats.category_header" = "Category";
+"stats.mastery_tiers" = "Mastery Tiers";
+"stats.tier.not_started" = "Not started";
+"stats.tier.reps_1_2" = "Reps 1–2";
+"stats.tier.reps_3_4" = "Reps 3–4";
+"stats.tier.mastered" = "Reps ≥ 5, EF ≥ 2.0";
+
+/* LearningQuizView */
+"learn.title" = "Learn";
+"learn.results" = "Results";
+"learn.exit" = "Exit";
+"learn.done" = "Done";
+"learn.no_cards_title" = "No cards to learn";
+"learn.no_cards_desc" = "All cards are already in your review schedule.";
+"learn.graduated_count" = "%d / %d graduated";
+"learn.active_count" = "%d active";
+"learn.complete_title" = "Learning Complete!";
+"learn.complete_desc" = "All cards have been added to your review schedule.";
+"learn.cards_graduated" = "Cards graduated";
+
+/* MapQuizView */
+"map_quiz.title" = "Map Quiz";
+"map_quiz.exit" = "Exit";
+"map_quiz.tap_on_map" = "Tap on the map";
+"map_quiz.nothing_due_title" = "Nothing Due";
+"map_quiz.nothing_due_desc" = "No cards are due right now. Come back later!";
+"map_quiz.feedback.correct" = "Correct!";
+"map_quiz.feedback.incorrect_prefix" = "Incorrect — that was";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Results";
+"quiz_summary.session_complete" = "Session Complete!";
+"quiz_summary.cards_reviewed" = "Cards reviewed";
+"quiz_summary.correct" = "Correct";
+"quiz_summary.next_review" = "Next review";
+"quiz_summary.done" = "Done";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Nothing Due";
+"mcq_quiz.nothing_due_desc" = "No cards are due right now.";
+"mcq_quiz.exit" = "Exit";
+"mcq_quiz.correct_count" = "%d correct";
+"mcq_quiz.nav.country" = "Country Quiz";
+"mcq_quiz.nav.river" = "Rivers Quiz";
+"mcq_quiz.nav.mountain" = "Mountains Quiz";
+"mcq_quiz.nav.sea" = "Seas Quiz";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Nothing Due";
+"capital_quiz.nothing_due_desc" = "No cards are due right now.";
+"capital_quiz.exit" = "Exit";
+"capital_quiz.check" = "Check";
+"capital_quiz.next" = "Next →";
+"capital_quiz.placeholder" = "Type your answer…";
+"capital_quiz.feedback.correct" = "Correct! ✓";
+"capital_quiz.feedback.wrong_prefix" = "The answer is:";
+"capital_quiz.nav.capital" = "Capital Quiz";
+"capital_quiz.nav.country" = "Country Quiz";
+"capital_quiz.correct_count" = "%d correct";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Quiz Coming Soon";
+"quiz_placeholder.desc" = "The %@ quiz will be available in the next update.";
+"quiz_placeholder.all_categories" = "All Categories";

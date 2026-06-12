@@ -29,11 +29,11 @@ struct MapQuizView: View {
                 emptyState
             }
         }
-        .navigationTitle("Map Quiz")
+        .navigationTitle(L10n["map_quiz.title"])
         .inlineNavigationTitle()
         .toolbar {
             ToolbarItem(placement: .cancellationAction) {
-                Button("Exit") { dismiss() }
+                Button(L10n["map_quiz.exit"]) { dismiss() }
             }
         }
         .onAppear { buildSession() }
@@ -105,7 +105,7 @@ struct MapQuizView: View {
 
     private func promptBanner(session: MapQuizSession) -> some View {
         VStack(spacing: 4) {
-            Text("Tap on the map")
+            Text(L10n["map_quiz.tap_on_map"])
                 .font(.caption)
                 .foregroundStyle(.secondary)
             Text(session.currentCountry?.name ?? "")
@@ -128,10 +128,10 @@ struct MapQuizView: View {
         let (text, color): (String, Color) = {
             switch session.answerState {
             case .correct:
-                return ("Correct!", .green)
+                return (L10n["map_quiz.feedback.correct"], .green)
             case .incorrect(let tappedID, _):
                 let name = session.allCountries.first { $0.id == tappedID }?.name ?? tappedID
-                return ("Incorrect — that was \(name)", .red)
+                return ("\(L10n["map_quiz.feedback.incorrect_prefix"]) \(name)", .red)
             case .unanswered:
                 return ("", .clear)
             }
@@ -150,9 +150,9 @@ struct MapQuizView: View {
 
     private var emptyState: some View {
         ContentUnavailableView(
-            "Nothing Due",
+            L10n["map_quiz.nothing_due_title"],
             systemImage: "checkmark.circle",
-            description: Text("No cards are due right now. Come back later!")
+            description: Text(L10n["map_quiz.nothing_due_desc"])
         )
     }
 

@@ -1,1 +1,101 @@
-/* German — stub; strings will be populated in story 002 */
+/* German */
+
+/* HomeView */
+"home.categories" = "Kategorien";
+"home.category.countries" = "Länder";
+"home.category.rivers" = "Flüsse";
+"home.category.mountains" = "Gebirge";
+"home.category.seas" = "Meere";
+"home.view_progress" = "Fortschritt anzeigen";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Karten-Quiz";
+"quiz.mode.map_tap.desc" = "Tippen Sie auf das richtige Land auf der Karte";
+"quiz.mode.type_capital.title" = "Hauptstadt eingeben";
+"quiz.mode.type_capital.desc" = "\"Was ist die Hauptstadt von X?\"";
+"quiz.mode.name_country.title" = "Land benennen";
+"quiz.mode.name_country.desc" = "\"Welches Land hat X als Hauptstadt?\"";
+"quiz.mode.multiple_choice.title" = "Multiple Choice";
+"quiz.mode.multiple_choice.desc" = "Wählen Sie die Hauptstadt aus 4 Optionen";
+"quiz.cards_due.singular" = "Karte fällig";
+"quiz.cards_due.plural" = "Karten fällig";
+
+/* LanguagePickerView */
+"settings.language" = "Sprache";
+"settings.language.picker_title" = "App-Sprache";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Fortschritt demnächst";
+"progress.placeholder_desc" = "Ihre Lernstatistiken werden hier angezeigt.";
+"progress.title" = "Fortschritt";
+
+/* StatsView */
+"stats.title" = "Fortschritt";
+"stats.cards_reviewed" = "Karten gelernt";
+"stats.due_today" = "Heute fällig";
+"stats.day_streak" = "Tages-Streak";
+"stats.by_category" = "Nach Kategorie";
+"stats.category_header" = "Kategorie";
+"stats.mastery_tiers" = "Beherrschungsstufen";
+"stats.tier.not_started" = "Nicht begonnen";
+"stats.tier.reps_1_2" = "Wdh. 1–2";
+"stats.tier.reps_3_4" = "Wdh. 3–4";
+"stats.tier.mastered" = "Wdh. ≥ 5, EF ≥ 2,0";
+
+/* LearningQuizView */
+"learn.title" = "Lernen";
+"learn.results" = "Ergebnisse";
+"learn.exit" = "Beenden";
+"learn.done" = "Fertig";
+"learn.no_cards_title" = "Keine Karten zu lernen";
+"learn.no_cards_desc" = "Alle Karten befinden sich bereits in Ihrem Wiederholungsplan.";
+"learn.graduated_count" = "%d / %d abgeschlossen";
+"learn.active_count" = "%d aktiv";
+"learn.complete_title" = "Lernen abgeschlossen!";
+"learn.complete_desc" = "Alle Karten wurden Ihrem Wiederholungsplan hinzugefügt.";
+"learn.cards_graduated" = "Abgeschlossene Karten";
+
+/* MapQuizView */
+"map_quiz.title" = "Karten-Quiz";
+"map_quiz.exit" = "Beenden";
+"map_quiz.tap_on_map" = "Auf die Karte tippen";
+"map_quiz.nothing_due_title" = "Nichts fällig";
+"map_quiz.nothing_due_desc" = "Im Moment sind keine Karten fällig. Kommen Sie später wieder!";
+"map_quiz.feedback.correct" = "Richtig!";
+"map_quiz.feedback.incorrect_prefix" = "Falsch — das war";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Ergebnisse";
+"quiz_summary.session_complete" = "Sitzung abgeschlossen!";
+"quiz_summary.cards_reviewed" = "Karten gelernt";
+"quiz_summary.correct" = "Richtig";
+"quiz_summary.next_review" = "Nächste Wiederholung";
+"quiz_summary.done" = "Fertig";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Nichts fällig";
+"mcq_quiz.nothing_due_desc" = "Im Moment sind keine Karten fällig.";
+"mcq_quiz.exit" = "Beenden";
+"mcq_quiz.correct_count" = "%d richtig";
+"mcq_quiz.nav.country" = "Länder-Quiz";
+"mcq_quiz.nav.river" = "Flüsse-Quiz";
+"mcq_quiz.nav.mountain" = "Gebirge-Quiz";
+"mcq_quiz.nav.sea" = "Meere-Quiz";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Nichts fällig";
+"capital_quiz.nothing_due_desc" = "Im Moment sind keine Karten fällig.";
+"capital_quiz.exit" = "Beenden";
+"capital_quiz.check" = "Prüfen";
+"capital_quiz.next" = "Weiter →";
+"capital_quiz.placeholder" = "Antwort eingeben…";
+"capital_quiz.feedback.correct" = "Richtig! ✓";
+"capital_quiz.feedback.wrong_prefix" = "Die Antwort ist:";
+"capital_quiz.nav.capital" = "Hauptstadt-Quiz";
+"capital_quiz.nav.country" = "Länder-Quiz";
+"capital_quiz.correct_count" = "%d richtig";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Quiz demnächst";
+"quiz_placeholder.desc" = "Das %@-Quiz wird im nächsten Update verfügbar sein.";
+"quiz_placeholder.all_categories" = "Alle Kategorien";

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct QuizModePickerView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
     private var dueCount: Int { cardStore.dueCards(for: .country).count }
@@ -17,8 +18,8 @@ struct QuizModePickerView: View {
                     modeCard(
                         icon: "map.fill",
                         color: .blue,
-                        title: "Map Tap Quiz",
-                        description: "Tap the correct country on the map"
+                        title: L10n["quiz.mode.map_tap.title"],
+                        description: L10n["quiz.mode.map_tap.desc"]
                     )
                 }
 
@@ -28,8 +29,8 @@ struct QuizModePickerView: View {
                     modeCard(
                         icon: "building.columns.fill",
                         color: .purple,
-                        title: "Type the Capital",
-                        description: "\"What is the capital of X?\""
+                        title: L10n["quiz.mode.type_capital.title"],
+                        description: L10n["quiz.mode.type_capital.desc"]
                     )
                 }
 
@@ -39,8 +40,8 @@ struct QuizModePickerView: View {
                     modeCard(
                         icon: "globe.europe.africa.fill",
                         color: .indigo,
-                        title: "Name the Country",
-                        description: "\"Which country has X as its capital?\""
+                        title: L10n["quiz.mode.name_country.title"],
+                        description: L10n["quiz.mode.name_country.desc"]
                     )
                 }
 
@@ -50,22 +51,24 @@ struct QuizModePickerView: View {
                     modeCard(
                         icon: "list.bullet.circle.fill",
                         color: .orange,
-                        title: "Multiple Choice",
-                        description: "Pick the capital from 4 options"
+                        title: L10n["quiz.mode.multiple_choice.title"],
+                        description: L10n["quiz.mode.multiple_choice.desc"]
                     )
                 }
             }
             .padding()
         }
-        .navigationTitle("Countries")
+        .navigationTitle(L10n["home.category.countries"])
         .inlineNavigationTitle()
+        // Re-render when language changes.
+        .id(languageManager.current)
     }
 
     private var header: some View {
         VStack(spacing: 4) {
             Text("\(dueCount)")
                 .font(.system(size: 48, weight: .bold, design: .rounded))
-            Text(dueCount == 1 ? "card due" : "cards due")
+            Text(dueCount == 1 ? L10n["quiz.cards_due.singular"] : L10n["quiz.cards_due.plural"])
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
         }
@@ -106,5 +109,6 @@ struct QuizModePickerView: View {
     NavigationStack {
         QuizModePickerView()
             .withPreviewStore()
+            .environment(LanguageManager.shared)
     }
 }

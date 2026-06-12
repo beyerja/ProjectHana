@@ -24,7 +24,13 @@
       "Bash(just pr-list*)",
       "Bash(just ci *)",
       "Bash(just log *)",
-      "Bash(direnv allow*)"
+      "Bash(direnv allow*)",
+      "Bash(xcodegen *)",
+      "Bash(DEVELOPER_DIR=* xcodebuild *)",
+      "Bash(set -o pipefail && DEVELOPER_DIR=* xcodebuild *)",
+      "Bash(bash scripts/install-mac.sh*)",
+      "Bash(export PATH=* && gh pr checks *)",
+      "Bash(export PATH=* && gh run list *)"
     ]
   }
 }

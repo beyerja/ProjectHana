@@ -5,15 +5,17 @@ struct LanguagePickerView: View {
 
     var body: some View {
         localeList
-            .navigationTitle("Language")
+            .navigationTitle(L10n["settings.language"])
             .navigationBarTitleDisplayMode(.inline)
     }
 
     @ViewBuilder
     private var localeList: some View {
         List {
-            ForEach(AppLocale.allCases, id: \.rawValue) { locale in
-                localRow(locale)
+            Section(L10n["settings.language.picker_title"]) {
+                ForEach(AppLocale.allCases, id: \.rawValue) { locale in
+                    localRow(locale)
+                }
             }
         }
     }

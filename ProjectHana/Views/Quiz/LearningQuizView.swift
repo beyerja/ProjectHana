@@ -22,16 +22,16 @@ struct LearningQuizView: View {
                 quizBody(question: question)
             } else {
                 ContentUnavailableView(
-                    "No cards to learn",
+                    L10n["learn.no_cards_title"],
                     systemImage: "checkmark.circle",
-                    description: Text("All cards are already in your review schedule.")
+                    description: Text(L10n["learn.no_cards_desc"])
                 )
             }
         }
-        .navigationTitle("Learn")
+        .navigationTitle(L10n["learn.title"])
         .inlineNavigationTitle()
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button("Exit") { dismiss() } }
+            ToolbarItem(placement: .cancellationAction) { Button(L10n["learn.exit"]) { dismiss() } }
         }
         .onAppear { refreshQuestion() }
     }
@@ -56,10 +56,10 @@ struct LearningQuizView: View {
 
     private var progressHeader: some View {
         HStack {
-            Text("\(session.graduatedCount) / \(session.totalNewCards) graduated")
+            Text(String(format: L10n["learn.graduated_count"], session.graduatedCount, session.totalNewCards))
                 .font(.subheadline).foregroundStyle(.secondary)
             Spacer()
-            Text("\(session.activeSet.count) active")
+            Text(String(format: L10n["learn.active_count"], session.activeSet.count))
                 .font(.subheadline).foregroundStyle(.secondary)
         }
     }
@@ -136,9 +136,9 @@ struct LearningQuizView: View {
                 Image(systemName: "graduationcap.fill")
                     .font(.system(size: 64))
                     .foregroundStyle(.yellow)
-                Text("Learning Complete!")
+                Text(L10n["learn.complete_title"])
                     .font(.title.bold())
-                Text("All cards have been added to your review schedule.")
+                Text(L10n["learn.complete_desc"])
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
@@ -146,7 +146,7 @@ struct LearningQuizView: View {
             }
 
             HStack {
-                Text("Cards graduated").foregroundStyle(.secondary)
+                Text(L10n["learn.cards_graduated"]).foregroundStyle(.secondary)
                 Spacer()
                 Text("\(session.graduatedCount)").bold()
             }
@@ -156,7 +156,7 @@ struct LearningQuizView: View {
 
             Spacer()
 
-            Button("Done") { dismiss() }
+            Button(L10n["learn.done"]) { dismiss() }
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -165,7 +165,7 @@ struct LearningQuizView: View {
                 .padding(.horizontal)
                 .padding(.bottom)
         }
-        .navigationTitle("Results")
+        .navigationTitle(L10n["learn.results"])
         .inlineNavigationTitle()
         .navigationBarBackButtonHidden()
     }

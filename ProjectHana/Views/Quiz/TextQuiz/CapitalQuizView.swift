@@ -28,14 +28,14 @@ struct CapitalQuizView: View {
                     quizBody(session: session)
                 }
             } else {
-                ContentUnavailableView("Nothing Due", systemImage: "checkmark.circle",
-                    description: Text("No cards are due right now."))
+                ContentUnavailableView(L10n["capital_quiz.nothing_due_title"], systemImage: "checkmark.circle",
+                    description: Text(L10n["capital_quiz.nothing_due_desc"]))
             }
         }
-        .navigationTitle(mode == .capitalOfCountry ? "Capital Quiz" : "Country Quiz")
+        .navigationTitle(mode == .capitalOfCountry ? L10n["capital_quiz.nav.capital"] : L10n["capital_quiz.nav.country"])
         .inlineNavigationTitle()
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button("Exit") { dismiss() } }
+            ToolbarItem(placement: .cancellationAction) { Button(L10n["capital_quiz.exit"]) { dismiss() } }
         }
         .onAppear { buildSession() }
     }
@@ -63,7 +63,7 @@ struct CapitalQuizView: View {
             Text("\(session.reviewedCount + 1) / \(session.questions.count)")
                 .font(.subheadline).foregroundStyle(.secondary)
             Spacer()
-            Text("\(session.correctCount) correct")
+            Text(String(format: L10n["capital_quiz.correct_count"], session.correctCount))
                 .font(.subheadline).foregroundStyle(.green)
         }
     }
@@ -83,17 +83,17 @@ struct CapitalQuizView: View {
         case .unanswered:
             unansweredInput(session: session)
         case .correct:
-            feedbackView(text: "Correct! ✓", color: .green, session: session)
+            feedbackView(text: L10n["capital_quiz.feedback.correct"], color: .green, session: session)
         case .incorrect(let correctAnswer):
             VStack(spacing: 12) {
-                feedbackView(text: "The answer is: \(correctAnswer)", color: .red, session: session)
+                feedbackView(text: "\(L10n["capital_quiz.feedback.wrong_prefix"]) \(correctAnswer)", color: .red, session: session)
             }
         }
     }
 
     private func unansweredInput(session: TextQuizSession) -> some View {
         VStack(spacing: 16) {
-            TextField("Type your answer…", text: $inputText)
+            TextField(L10n["capital_quiz.placeholder"], text: $inputText)
                 .textFieldStyle(.roundedBorder)
                 .focused($fieldFocused)
                 .onSubmit { session.checkAnswer(inputText) }
@@ -101,7 +101,7 @@ struct CapitalQuizView: View {
                 .autocorrectionDisabled()
                 .neverAutocapitalize()
 
-            Button("Check") { session.checkAnswer(inputText) }
+            Button(L10n["capital_quiz.check"]) { session.checkAnswer(inputText) }
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -123,7 +123,7 @@ struct CapitalQuizView: View {
                 .frame(maxWidth: .infinity)
                 .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: 14))
 
-            Button("Next →") { session.advance() }
+            Button(L10n["capital_quiz.next"]) { session.advance() }
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()

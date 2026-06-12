@@ -2,6 +2,7 @@ import SwiftUI
 
 struct StatsView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(LanguageManager.self) private var languageManager
     @State private var streak: Int = StreakTracker.currentStreak()
 
     private var all: [ReviewCard] { cardStore.allCards }
@@ -17,9 +18,10 @@ struct StatsView: View {
             }
             .padding()
         }
-        .navigationTitle("Progress")
+        .navigationTitle(L10n["stats.title"])
         .inlineNavigationTitle()
         .onAppear { streak = StreakTracker.currentStreak() }
+        .id(languageManager.current)
     }
 
     // MARK: – Summary
@@ -27,9 +29,9 @@ struct StatsView: View {
     private var summarySection: some View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
-                statCard(value: "\(reviewedCount)", label: "Cards reviewed", color: .blue)
-                statCard(value: "\(dueCount)", label: "Due today", color: .orange)
-                statCard(value: "\(streak)", label: "Day streak", color: .green)
+                statCard(value: "\(reviewedCount)", label: L10n["stats.cards_reviewed"], color: .blue)
+                statCard(value: "\(dueCount)", label: L10n["stats.due_today"], color: .orange)
+                statCard(value: "\(streak)", label: L10n["stats.day_streak"], color: .green)
             }
         }
     }
@@ -53,7 +55,7 @@ struct StatsView: View {
 
     private var categoryBreakdownSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("By Category")
+            Text(L10n["stats.by_category"])
                 .font(.headline)
                 .foregroundStyle(.secondary)
 
@@ -70,7 +72,7 @@ struct StatsView: View {
 
     private var categoryHeader: some View {
         HStack {
-            Text("Category").frame(maxWidth: .infinity, alignment: .leading)
+            Text(L10n["stats.category_header"]).frame(maxWidth: .infinity, alignment: .leading)
             ForEach(MasteryTier.allCases, id: \.self) { tier in
                 Image(systemName: tier.icon)
                     .foregroundStyle(tier.color)
@@ -108,7 +110,7 @@ struct StatsView: View {
 
     private var tierLegendSection: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Mastery Tiers")
+            Text(L10n["stats.mastery_tiers"])
                 .font(.headline)
                 .foregroundStyle(.secondary)
 
@@ -138,10 +140,10 @@ struct StatsView: View {
 extension MasteryTier {
     var description: String {
         switch self {
-        case .new:      return "Not started"
-        case .learning: return "Reps 1–2"
-        case .review:   return "Reps 3–4"
-        case .mastered: return "Reps ≥ 5, EF ≥ 2.0"
+        case .new:      return L10n["stats.tier.not_started"]
+        case .learning: return L10n["stats.tier.reps_1_2"]
+        case .review:   return L10n["stats.tier.reps_3_4"]
+        case .mastered: return L10n["stats.tier.mastered"]
         }
     }
 }
@@ -151,10 +153,10 @@ extension CardCategory: CaseIterable {
 
     var displayName: String {
         switch self {
-        case .country:  return "Countries"
-        case .river:    return "Rivers"
-        case .mountain: return "Mountains"
-        case .sea:      return "Seas"
+        case .country:  return L10n["home.category.countries"]
+        case .river:    return L10n["home.category.rivers"]
+        case .mountain: return L10n["home.category.mountains"]
+        case .sea:      return L10n["home.category.seas"]
         }
     }
 }
@@ -163,5 +165,6 @@ extension CardCategory: CaseIterable {
     NavigationStack {
         StatsView()
             .withPreviewStore()
+            .environment(LanguageManager.shared)
     }
 }

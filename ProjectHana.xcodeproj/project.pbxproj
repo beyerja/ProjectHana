@@ -15,6 +15,7 @@
 		AA000104 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000105 /* LanguagePickerView.swift */; };
 		AA000106 /* AppLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000107 /* AppLocaleTests.swift */; };
 		AA000108 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA000109 /* Localizable.strings */; };
+		AA000110 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000111 /* L10n.swift */; };
 		AA000007 /* ProjectHanaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000008 /* ProjectHanaTests.swift */; };
 		AA000023 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000022 /* Country.swift */; };
 		AA000025 /* River.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000024 /* River.swift */; };
@@ -105,6 +106,7 @@
 		AA000079 /* CategoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailView.swift; sourceTree = "<group>"; };
 		AA000101 /* AppLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocale.swift; sourceTree = "<group>"; };
 		AA000103 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		AA000111 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		AA000105 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		AA000107 /* AppLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocaleTests.swift; sourceTree = "<group>"; };
 		AA00010A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "en.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 			children = (
 				AA000101 /* AppLocale.swift */,
 				AA000103 /* LanguageManager.swift */,
+				AA000111 /* L10n.swift */,
 			);
 			path = L10n;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				AA00006C /* StatsView.swift in Sources */,
 				AA000100 /* AppLocale.swift in Sources */,
 				AA000102 /* LanguageManager.swift in Sources */,
+				AA000110 /* L10n.swift in Sources */,
 				AA000104 /* LanguagePickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

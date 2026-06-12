@@ -1,14 +1,17 @@
 import SwiftUI
 
 struct ProgressPlaceholderView: View {
+    @Environment(LanguageManager.self) private var languageManager
+
     var body: some View {
         ContentUnavailableView(
-            "Progress Coming Soon",
+            L10n["progress.coming_soon"],
             systemImage: "chart.bar",
-            description: Text("Your learning stats will appear here.")
+            description: Text(L10n["progress.placeholder_desc"])
         )
-        .navigationTitle("Progress")
+        .navigationTitle(L10n["progress.title"])
         .inlineNavigationTitle()
+        .id(languageManager.current)
     }
 }
 

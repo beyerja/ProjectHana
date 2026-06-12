@@ -1,1 +1,101 @@
-/* Mexican Spanish — stub; strings will be populated in story 002 */
+/* Mexican Spanish */
+
+/* HomeView */
+"home.categories" = "Categorías";
+"home.category.countries" = "Países";
+"home.category.rivers" = "Ríos";
+"home.category.mountains" = "Montañas";
+"home.category.seas" = "Mares";
+"home.view_progress" = "Ver progreso";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Quiz de Mapa";
+"quiz.mode.map_tap.desc" = "Toca el país correcto en el mapa";
+"quiz.mode.type_capital.title" = "Escribe la Capital";
+"quiz.mode.type_capital.desc" = "\"¿Cuál es la capital de X?\"";
+"quiz.mode.name_country.title" = "Nombra el País";
+"quiz.mode.name_country.desc" = "\"¿Qué país tiene a X como capital?\"";
+"quiz.mode.multiple_choice.title" = "Opción Múltiple";
+"quiz.mode.multiple_choice.desc" = "Elige la capital entre 4 opciones";
+"quiz.cards_due.singular" = "tarjeta pendiente";
+"quiz.cards_due.plural" = "tarjetas pendientes";
+
+/* LanguagePickerView */
+"settings.language" = "Idioma";
+"settings.language.picker_title" = "Idioma de la app";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Progreso próximamente";
+"progress.placeholder_desc" = "Tus estadísticas de aprendizaje aparecerán aquí.";
+"progress.title" = "Progreso";
+
+/* StatsView */
+"stats.title" = "Progreso";
+"stats.cards_reviewed" = "Tarjetas estudiadas";
+"stats.due_today" = "Vencen hoy";
+"stats.day_streak" = "Racha de días";
+"stats.by_category" = "Por categoría";
+"stats.category_header" = "Categoría";
+"stats.mastery_tiers" = "Niveles de dominio";
+"stats.tier.not_started" = "Sin comenzar";
+"stats.tier.reps_1_2" = "Reps. 1–2";
+"stats.tier.reps_3_4" = "Reps. 3–4";
+"stats.tier.mastered" = "Reps. ≥ 5, EF ≥ 2.0";
+
+/* LearningQuizView */
+"learn.title" = "Aprender";
+"learn.results" = "Resultados";
+"learn.exit" = "Salir";
+"learn.done" = "Listo";
+"learn.no_cards_title" = "No hay tarjetas para aprender";
+"learn.no_cards_desc" = "Todas las tarjetas ya están en tu plan de repaso.";
+"learn.graduated_count" = "%d / %d graduadas";
+"learn.active_count" = "%d activas";
+"learn.complete_title" = "¡Aprendizaje completo!";
+"learn.complete_desc" = "Todas las tarjetas han sido añadidas a tu plan de repaso.";
+"learn.cards_graduated" = "Tarjetas graduadas";
+
+/* MapQuizView */
+"map_quiz.title" = "Quiz de Mapa";
+"map_quiz.exit" = "Salir";
+"map_quiz.tap_on_map" = "Toca el mapa";
+"map_quiz.nothing_due_title" = "Nada pendiente";
+"map_quiz.nothing_due_desc" = "No hay tarjetas pendientes por ahora. ¡Vuelve más tarde!";
+"map_quiz.feedback.correct" = "¡Correcto!";
+"map_quiz.feedback.incorrect_prefix" = "Incorrecto — ese era";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Resultados";
+"quiz_summary.session_complete" = "¡Sesión completa!";
+"quiz_summary.cards_reviewed" = "Tarjetas estudiadas";
+"quiz_summary.correct" = "Correcto";
+"quiz_summary.next_review" = "Próxima revisión";
+"quiz_summary.done" = "Listo";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Nada pendiente";
+"mcq_quiz.nothing_due_desc" = "No hay tarjetas pendientes por ahora.";
+"mcq_quiz.exit" = "Salir";
+"mcq_quiz.correct_count" = "%d correcto";
+"mcq_quiz.nav.country" = "Quiz de Países";
+"mcq_quiz.nav.river" = "Quiz de Ríos";
+"mcq_quiz.nav.mountain" = "Quiz de Montañas";
+"mcq_quiz.nav.sea" = "Quiz de Mares";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Nada pendiente";
+"capital_quiz.nothing_due_desc" = "No hay tarjetas pendientes por ahora.";
+"capital_quiz.exit" = "Salir";
+"capital_quiz.check" = "Verificar";
+"capital_quiz.next" = "Siguiente →";
+"capital_quiz.placeholder" = "Escribe tu respuesta…";
+"capital_quiz.feedback.correct" = "¡Correcto! ✓";
+"capital_quiz.feedback.wrong_prefix" = "La respuesta es:";
+"capital_quiz.nav.capital" = "Quiz de Capitales";
+"capital_quiz.nav.country" = "Quiz de Países";
+"capital_quiz.correct_count" = "%d correcto";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Quiz próximamente";
+"quiz_placeholder.desc" = "El quiz de %@ estará disponible en la próxima actualización.";
+"quiz_placeholder.all_categories" = "Todas las categorías";

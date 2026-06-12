@@ -20,15 +20,15 @@ struct QuizSummaryView: View {
                 Image(systemName: accuracy >= 70 ? "star.fill" : "checkmark.circle.fill")
                     .font(.system(size: 64))
                     .foregroundStyle(accuracy >= 70 ? .yellow : .blue)
-                Text("Session Complete!")
+                Text(L10n["quiz_summary.session_complete"])
                     .font(.title.bold())
             }
 
             VStack(spacing: 16) {
-                statRow(label: "Cards reviewed", value: "\(reviewed)")
-                statRow(label: "Correct", value: "\(correct) (\(accuracy)%)")
+                statRow(label: L10n["quiz_summary.cards_reviewed"], value: "\(reviewed)")
+                statRow(label: L10n["quiz_summary.correct"], value: "\(correct) (\(accuracy)%)")
                 if let next = nextDue {
-                    statRow(label: "Next review", value: next.formatted(.relative(presentation: .named)))
+                    statRow(label: L10n["quiz_summary.next_review"], value: next.formatted(.relative(presentation: .named)))
                 }
             }
             .padding()
@@ -37,7 +37,7 @@ struct QuizSummaryView: View {
 
             Spacer()
 
-            Button("Done") { dismiss() }
+            Button(L10n["quiz_summary.done"]) { dismiss() }
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -46,7 +46,7 @@ struct QuizSummaryView: View {
                 .padding(.horizontal)
                 .padding(.bottom)
         }
-        .navigationTitle("Results")
+        .navigationTitle(L10n["quiz_summary.results"])
         .inlineNavigationTitle()
         .navigationBarBackButtonHidden()
     }
