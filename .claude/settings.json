@@ -17,7 +17,14 @@
       "Bash(date -u *)",
       "Bash(xcodebuild *)",
       "Bash(bash scripts/telemetry-hook.sh*)",
-      "Bash(bash scripts/agent-log.sh*)"
+      "Bash(bash scripts/agent-log.sh*)",
+      "Bash(just test*)",
+      "Bash(just build-mac*)",
+      "Bash(just install*)",
+      "Bash(just pr-list*)",
+      "Bash(just ci *)",
+      "Bash(just log *)",
+      "Bash(direnv allow*)"
     ]
   }
 }
