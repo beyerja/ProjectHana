@@ -5,7 +5,7 @@ description: Engage the user to clarify a feature request and write the finalize
 
 **Telemetry — run at the very start (ignore errors):**
 ```
-bash scripts/agent-log.sh start clarify-feature "feature" || true
+just log start clarify-feature "feature" || true
 ```
 
 Read `.workflow/feature.md` if it exists (prior context).
@@ -24,7 +24,7 @@ Write `.workflow/feature.md`:
 
 Run (ignore errors):
 ```
-bash scripts/agent-log.sh end clarify-feature "feature" <R> <W> 0 <B> <est_chars> "" || true
+just log end clarify-feature "feature" <R> <W> 0 <B> <est_chars> "" || true
 ```
 
 Append to `.workflow/log.md`: `<timestamp> clarify-feature: DONE`.

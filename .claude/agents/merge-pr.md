@@ -7,7 +7,7 @@ Requires: story directory path.
 
 **Telemetry — run at the very start (ignore errors):**
 ```
-bash scripts/agent-log.sh start merge-pr "<story-id>" || true
+just log start merge-pr "<story-id>" || true
 ```
 
 Read `<story-dir>/pr.md`. Confirm PR is approved and all CI checks pass.
@@ -17,7 +17,7 @@ Run: `gh pr merge --squash --delete-branch`
 Update `<story-dir>/status.md` to `status: merged`.
 Run (ignore errors):
 ```
-bash scripts/agent-log.sh end merge-pr "<story-id>" <R> 0 0 <B> 0 "" || true
+just log end merge-pr "<story-id>" <R> 0 0 <B> 0 "" || true
 ```
 Append to `<story-dir>/log.md`: `<timestamp> merge-pr: DONE`.
 

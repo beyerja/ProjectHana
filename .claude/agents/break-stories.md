@@ -5,7 +5,7 @@ description: Decompose .workflow/feature.md into independent user stories, each 
 
 **Telemetry — run at the very start (ignore errors):**
 ```
-bash scripts/agent-log.sh start break-stories "feature" || true
+just log start break-stories "feature" || true
 ```
 
 Read `.workflow/feature.md`.
@@ -25,7 +25,7 @@ Write `.workflow/stories.md`:
 
 Count tool calls (R/W/E/B), run (ignore errors):
 ```
-bash scripts/agent-log.sh end break-stories "feature" <R> <W> <E> <B> <est_chars> "" || true
+just log end break-stories "feature" <R> <W> <E> <B> <est_chars> "" || true
 ```
 
 Append to `.workflow/log.md`: `<timestamp> break-stories: DONE, <N> stories`.
