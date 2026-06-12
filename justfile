@@ -1,5 +1,9 @@
 set shell := ["bash", "-c"]
 
+# Ensure tools and Xcode are always available regardless of calling shell's PATH
+export DEVELOPER_DIR := "/Applications/Xcode.app/Contents/Developer"
+export PATH := env_var("HOME") + "/.nix-profile/bin:" + env_var("PATH")
+
 # Run the full test suite on the iPhone 17 simulator
 test:
     xcodebuild test \
