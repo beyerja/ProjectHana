@@ -26,6 +26,7 @@ struct ProjectHanaApp: App {
     var body: some Scene {
         WindowGroup {
             AppRootView()
+                .environment(LanguageManager.shared)
         }
         .modelContainer(modelContainer)
     }

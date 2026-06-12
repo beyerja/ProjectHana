@@ -20,6 +20,11 @@ targets:
     deploymentTarget: "17.0"
     sources:
       - path: ProjectHana
+    resources:
+      - path: ProjectHana/en.lproj
+      - path: ProjectHana/fr.lproj
+      - path: ProjectHana/de.lproj
+      - path: ProjectHana/es-MX.lproj
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.projecthana.app

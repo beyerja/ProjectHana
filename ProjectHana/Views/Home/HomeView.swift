@@ -12,6 +12,15 @@ struct HomeView: View {
             }
             .navigationTitle("ProjectHana")
             .largeNavigationTitle()
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        LanguagePickerView()
+                    } label: {
+                        Image(systemName: "gear")
+                    }
+                }
+            }
         }
     }
 
