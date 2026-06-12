@@ -10,6 +10,11 @@
 		AA000001 /* ProjectHanaApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000002 /* ProjectHanaApp.swift */; };
 		AA000003 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000004 /* ContentView.swift */; };
 		AA000005 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA000006 /* Assets.xcassets */; };
+		AA000100 /* AppLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000101 /* AppLocale.swift */; };
+		AA000102 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000103 /* LanguageManager.swift */; };
+		AA000104 /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000105 /* LanguagePickerView.swift */; };
+		AA000106 /* AppLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000107 /* AppLocaleTests.swift */; };
+		AA000108 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = AA000109 /* Localizable.strings */; };
 		AA000007 /* ProjectHanaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000008 /* ProjectHanaTests.swift */; };
 		AA000023 /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000022 /* Country.swift */; };
 		AA000025 /* River.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000024 /* River.swift */; };
@@ -98,7 +103,29 @@
 		AA000075 /* LearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningTests.swift; sourceTree = "<group>"; };
 		AA000077 /* LearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningQuizView.swift; sourceTree = "<group>"; };
 		AA000079 /* CategoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailView.swift; sourceTree = "<group>"; };
+		AA000101 /* AppLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocale.swift; sourceTree = "<group>"; };
+		AA000103 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		AA000105 /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
+		AA000107 /* AppLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocaleTests.swift; sourceTree = "<group>"; };
+		AA00010A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = "en.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		AA00010B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "fr.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		AA00010C /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		AA00010D /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXVariantGroup section */
+		AA000109 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				AA00010A /* en */,
+				AA00010B /* fr */,
+				AA00010C /* de */,
+				AA00010D /* es-MX */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AA00000B /* Frameworks */ = {
@@ -144,8 +171,10 @@
 				AA000006 /* Assets.xcassets */,
 				AA000034 /* Models */,
 				AA000035 /* Resources */,
+				AA000109 /* Localizable.strings */,
 				AA00003E /* Store */,
 				AA000043 /* Scheduler */,
+				AA00010E /* L10n */,
 				AA00004C /* Views */,
 			);
 			path = ProjectHana;
@@ -184,8 +213,17 @@
 				AA00004D /* Home */,
 				AA00004E /* Quiz */,
 				AA00004F /* Progress */,
+				AA00010F /* Settings */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		AA00010F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				AA000105 /* LanguagePickerView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		AA00004D /* Home */ = {
@@ -267,6 +305,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		AA00010E /* L10n */ = {
+			isa = PBXGroup;
+			children = (
+				AA000101 /* AppLocale.swift */,
+				AA000103 /* LanguageManager.swift */,
+			);
+			path = L10n;
+			sourceTree = "<group>";
+		};
 		AA000010 /* ProjectHanaTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -277,6 +324,7 @@
 				AA000061 /* QuizLogicTests.swift */,
 				AA00006D /* StatsTests.swift */,
 				AA000075 /* LearningTests.swift */,
+				AA000107 /* AppLocaleTests.swift */,
 			);
 			path = ProjectHanaTests;
 			sourceTree = "<group>";
@@ -346,6 +394,9 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				de,
+				"es-MX",
 			);
 			mainGroup = AA00000E /* RootGroup */;
 			packageReferences = (
@@ -371,6 +422,7 @@
 				AA000031 /* mountains.json in Resources */,
 				AA000033 /* seas.json in Resources */,
 				AA000070 /* country-borders.json in Resources */,
+				AA000108 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +463,9 @@
 				AA000068 /* MasteryTier.swift in Sources */,
 				AA00006A /* StreakTracker.swift in Sources */,
 				AA00006C /* StatsView.swift in Sources */,
+				AA000100 /* AppLocale.swift in Sources */,
+				AA000102 /* LanguageManager.swift in Sources */,
+				AA000104 /* LanguagePickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +480,7 @@
 				AA000062 /* QuizLogicTests.swift in Sources */,
 				AA00006E /* StatsTests.swift in Sources */,
 				AA000076 /* LearningTests.swift in Sources */,
+				AA000106 /* AppLocaleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
