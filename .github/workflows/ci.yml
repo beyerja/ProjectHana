@@ -32,7 +32,8 @@ jobs:
             -project ProjectHana.xcodeproj \
             -scheme ProjectHana \
             -destination 'platform=macOS,variant=Mac Catalyst' \
-            -configuration Debug
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
       - name: Test
         run: |
@@ -41,4 +42,5 @@ jobs:
             -project ProjectHana.xcodeproj \
             -scheme ProjectHana \
             -destination 'platform=macOS,variant=Mac Catalyst' \
-            -configuration Debug
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
