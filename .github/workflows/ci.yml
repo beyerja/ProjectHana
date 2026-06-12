@@ -7,12 +7,14 @@ on:
       - 'ProjectHana/**'
       - 'ProjectHanaTests/**'
       - 'ProjectHana.xcodeproj/**'
+      - '.github/workflows/**'
   pull_request:
     branches: [main]
     paths:
       - 'ProjectHana/**'
       - 'ProjectHanaTests/**'
       - 'ProjectHana.xcodeproj/**'
+      - '.github/workflows/**'
 
 jobs:
   build-and-test:
@@ -29,7 +31,7 @@ jobs:
           xcodebuild build \
             -project ProjectHana.xcodeproj \
             -scheme ProjectHana \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -destination 'platform=macOS,variant=Mac Catalyst' \
             -configuration Debug
 
       - name: Test
@@ -38,5 +40,5 @@ jobs:
           xcodebuild test \
             -project ProjectHana.xcodeproj \
             -scheme ProjectHana \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
+            -destination 'platform=macOS,variant=Mac Catalyst' \
             -configuration Debug
