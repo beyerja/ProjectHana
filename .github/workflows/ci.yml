@@ -7,12 +7,14 @@ on:
       - 'ProjectHana/**'
       - 'ProjectHanaTests/**'
       - 'ProjectHana.xcodeproj/**'
+      - '.github/workflows/**'
   pull_request:
     branches: [main]
     paths:
       - 'ProjectHana/**'
       - 'ProjectHanaTests/**'
       - 'ProjectHana.xcodeproj/**'
+      - '.github/workflows/**'
 
 jobs:
   build-and-test:
@@ -29,8 +31,9 @@ jobs:
           xcodebuild build \
             -project ProjectHana.xcodeproj \
             -scheme ProjectHana \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-            -configuration Debug
+            -destination 'platform=macOS,variant=Mac Catalyst' \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
       - name: Test
         run: |
@@ -38,5 +41,6 @@ jobs:
           xcodebuild test \
             -project ProjectHana.xcodeproj \
             -scheme ProjectHana \
-            -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
-            -configuration Debug
+            -destination 'platform=macOS,variant=Mac Catalyst' \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
