@@ -17,12 +17,7 @@ For each unchecked task:
 1. Implement following existing project patterns
 2. Run project checks:
    ```sh
-   set -o pipefail
-   DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer \
-   xcodebuild -project ProjectHana.xcodeproj -scheme ProjectHana \
-     -destination 'platform=iOS Simulator,name=iPhone 17' -configuration Debug test \
-     2>&1 | tee /tmp/projecthana-test.log | grep -E "TEST SUCCEEDED|TEST FAILED|error:"
-   grep -q "TEST SUCCEEDED" /tmp/projecthana-test.log || { echo "error: tests did not succeed" >&2; exit 1; }
+   just test
    ```
 3. Fix any failures and retry until clean
 4. Commit with a clear message
