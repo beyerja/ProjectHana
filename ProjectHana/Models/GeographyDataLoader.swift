@@ -25,7 +25,9 @@ struct GeographyDataLoader {
         }
         do {
             let data = try Data(contentsOf: url)
-            return try JSONDecoder().decode([T].self, from: data)
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            return try decoder.decode([T].self, from: data)
         } catch {
             fatalError("Failed to decode \(filename).json: \(error)")
         }
