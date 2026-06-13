@@ -34,3 +34,6 @@ Podfile.lock
 
 # Workflow telemetry (local only, never committed)
 .workflow/telemetry/*.jsonl
+
+# Workflow screenshots (binary, large, local only)
+.workflow/screenshots/
