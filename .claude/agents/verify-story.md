@@ -34,35 +34,26 @@ If `<story-dir>/spec.md` contains a `## Visual Verification` section, perform th
 
 **Visual verification steps:**
 
-1. **Boot simulator** (skip if already booted):
+1. **Boot simulator** (no-op if already booted):
    ```sh
-   xcrun simctl boot "iPhone 17" 2>/dev/null || true
+   just boot-sim
    ```
 
 2. **Build and install the app** to the simulator:
    ```sh
-   export PATH="$HOME/.nix-profile/bin:$PATH"
-   export DEVELOPER_DIR="/Applications/Xcode.app/Contents/Developer"
-   xcodebuild build \
-     -project ProjectHana.xcodeproj \
-     -scheme ProjectHana \
-     -destination 'platform=iOS Simulator,name=iPhone 17' \
-     -derivedDataPath /tmp/ProjectHana-sim-build \
-     2>&1 | tail -5
-   APP=$(find /tmp/ProjectHana-sim-build -name "ProjectHana.app" -maxdepth 10 | head -1)
-   xcrun simctl install booted "$APP"
+   just install-sim
    ```
 
 3. **Launch the app:**
    ```sh
-   xcrun simctl launch booted com.private.ProjectHana
+   just launch-sim
    sleep 2
    ```
 
 4. **Take a screenshot** and save it:
    ```sh
    mkdir -p .workflow/screenshots/<story-id>
-   xcrun simctl io booted screenshot .workflow/screenshots/<story-id>/verify-1.png
+   just screenshot-sim .workflow/screenshots/<story-id>/verify-1.png
    ```
 
 5. **Inspect the screenshot** using Claude's vision against the expected behavior described in the `## Visual Verification` section of `<story-dir>/spec.md`.

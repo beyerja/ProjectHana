@@ -12,22 +12,7 @@ Read `.workflow/log.md` and every `<story-dir>/log.md`.
 
 ## Phase 1 — Telemetry analysis
 
-Read all files matching `.workflow/telemetry/agents-*.jsonl` if any exist. If no telemetry files are found, or if fewer than 2 agent end-records are present (e.g. the first workflow after instrumentation was added), note this and proceed with qualitative analysis from story logs alone — do not block.
-
-For files that exist, parse JSONL line by line. Match `"event":"start"` records with their `"event":"end"` counterparts by (agent, story). **Note any orphaned start records** (start with no matching end) — these indicate a session that hit a context limit or was interrupted; flag them in the table with "(no end — likely context overflow)" and exclude them from duration/token averages. Build this Markdown table and print it in your output:
-
-```
-| Agent                  | Runs | Avg Duration | Avg Est Tokens | Total Retries/Notes |
-|------------------------|------|-------------|----------------|---------------------|
-| implement-story        |  N   |  XX min     |  XX 000        |  N                  |
-| break-tasks            |  N   |  XX min     |  XX 000        |  N                  |
-| ...                    |      |             |                |                     |
-```
-
-Where:
-- **Avg Duration** = mean of `duration_s` across end records for that agent, converted to minutes
-- **Avg Est Tokens** = mean of `est_tokens` across end records (est_chars / 4)
-- **Total Retries/Notes** = count of end records where `notes` is non-empty
+Run `just telemetry` to get the agent summary table. If it prints "No telemetry found." or "No completed agent records found.", note this and proceed with qualitative analysis from story logs alone — do not block.
 
 Also read all `.workflow/telemetry/hooks-*.jsonl` if present. Aggregate by tool type (Read, Write, Edit, Bash, Agent) and report total call counts per tool type:
 
