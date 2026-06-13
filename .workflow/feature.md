@@ -1,34 +1,59 @@
-# Feature: Map Quiz Bug Fixes
+# Feature: Automated Dependency Updates
 
-## Bug 1: Country Area Overlay Not Showing on Map Quiz
+## Context
 
-**Symptom**: When a user taps a pin on the map quiz (both "Pending" review quiz and "New" learning map quiz), the country's area should be covered with a semi-transparent red (wrong answer) or green (correct answer) polygon overlay. This was previously implemented but does not work in the installed app at `/Applications/ProjectHana.app`.
+ProjectHana uses the following dependency systems:
 
-**What should happen**:
-- After tapping a correct pin: the correct country's polygon fills with semi-transparent green (~35% opacity)
-- After tapping a wrong pin: the tapped country's polygon fills with semi-transparent red (~35% opacity), and the correct country's polygon fills with semi-transparent green
+1. **Nix flake** (`flake.nix`) — manages the dev environment. Inputs are `nixpkgs/nixpkgs-unstable` and `flake-utils`. No `flake.lock` is currently committed to the repo.
+2. **Swift Package Manager** — `Package.resolved` is committed (version 3), but currently has zero pins (no external Swift packages). Still, the SPM ecosystem should be wired up in case packages are added later.
+3. **GitHub Actions** — `ci.yml` uses `actions/checkout@v6`. Action pins should be kept current.
+4. **No other package managers** — no CocoaPods, npm, Cargo, Gemfile, etc.
 
-**Implementation exists but is broken**: The code in `MapQuizSession.swift` / `AnswerState.polygonFillColor(for:)` and the `MapPolygon` rendering in `MapQuizView.swift` / `MapLearningQuizView.swift` already implement this. The `country-borders.json` resource (175 entries) is present in both the source and the app bundle. The bug is likely that `MapPolygon.foregroundStyle()` doesn't dynamically update when `answerState` changes because the `Map` content builder doesn't observe the session's `@Observable` state correctly — the polygons are rendered with a static color at build time, not reactively.
+## Solution
 
-**Fix needed**: Investigate why `MapPolygon.foregroundStyle` doesn't reactively update and apply the correct fix (e.g., extracting the color into a local variable inside the `Map` content closure, or forcing a view identity change).
+Use two complementary mechanisms, both free:
 
-## Bug 2: "New" Pile Cards Not Persisting Between App Restarts
+### 1. Dependabot (for GitHub Actions + SPM)
 
-**Symptom**: The "New" pile shows 10 cards each session. Every time the app is closed and re-opened, a new random set of 10 cards appears instead of restoring the same 10 cards from the previous session.
+A `.github/dependabot.yml` config with:
+- `github-actions` ecosystem — keeps action pins (e.g. `actions/checkout`) up to date
+- `swift` ecosystem — keeps SPM package pins up to date (no-op today, but ready for when packages are added)
+- Schedule: **weekly** (not daily) to keep PR noise low
+- **Minimum 1-day age requirement**: Dependabot's `ignore` rules do not enforce age, but the PR review process provides the delay. The schedule itself (weekly) means updates are never applied immediately. Additionally, Dependabot security updates can be separately disabled to prevent instant auto-merge.
+- No auto-merge configured — PRs must be manually reviewed and merged, satisfying the supply-chain delay requirement.
+- `open-pull-requests-limit` set to a reasonable cap (e.g. 5 per ecosystem) to avoid PR flood.
 
-**What should happen**: The 10 "active" new cards for a given category should be persisted to disk (UserDefaults) and restored the next time the user opens the New learning mode. Cards only leave the active set when they graduate (3 consecutive correct answers). The active set should only be reshuffled when all stored IDs have graduated.
+### 2. Scheduled GitHub Actions workflow (for Nix flake.lock)
 
-**Root cause**: `MapLearningSession` (the map-based new-card learning flow for countries) does not use `ActiveSetStore` persistence at all. Its `init` always calls `newCards.shuffled()` and picks a fresh set. Compare with `LearningSession` (used for rivers/mountains/seas) which correctly accepts a `category` and `store` parameter and persists via `UserDefaultsActiveSetStore`. `MapLearningSession` needs the same persistence logic.
+Dependabot does not support Nix flakes. A dedicated workflow (`.github/workflows/update-flake-lock.yml`) will:
+- Run on a weekly cron schedule (e.g. Sundays at 02:00 UTC)
+- Run `nix flake update` to regenerate `flake.lock`
+- Open a PR if the lock file changed, using `peter-evans/create-pull-request` (free, widely used)
+- The PR title/body identifies which flake inputs changed
+- No auto-merge — the PR sits for human review, satisfying the 1-day delay requirement
+- The workflow also runs Nix's built-in `nix flake check` (if the flake has checks defined) before opening the PR
 
-**Secondary issue**: `MapLearningQuizView.buildSession()` passes `newCards` directly from the caller without a store. It needs to accept (or create) an `ActiveSetStore` and pass it to `MapLearningSession`.
+### Prerequisite: commit an initial flake.lock
 
-**Fix needed**: 
-1. Add `category` and `store` parameters to `MapLearningSession.init`, mirroring `LearningSession`'s persistence logic.
-2. Update `MapLearningQuizView` to create a `UserDefaultsActiveSetStore` and pass the category through.
-3. Persist active-set updates when cards graduate in `MapLearningSession.graduate()`.
+Before automated updates can track changes, the `flake.lock` must exist in the repo. The implementation will generate and commit the initial `flake.lock` as part of this feature. Since `nix` is not available in this dev environment (macOS shell without Nix installed), the lock file will need to be generated in the GitHub Actions environment using `DeterminateSystems/nix-installer-action` (free).
 
-## Scope
+Alternative: the workflow generates the initial lock on first run and commits it via the PR. The `flake.lock` update workflow handles the bootstrapping case (if `flake.lock` doesn't exist yet, `nix flake update` creates it).
 
-- No new UI required; these are pure bug fixes.
-- Changes are limited to: `MapLearningSession.swift`, `MapLearningQuizView.swift`, and potentially `MapQuizView.swift` / `MapLearningQuizView.swift` for the overlay bug.
-- Tests in `MapLearningTests.swift` and `LearningTests.swift` should be updated/extended.
+## Hard Requirements
+
+- Nix flake (`flake.lock`) updates are automated — CRITICAL
+- All solutions are free (Dependabot is free for public/private repos on GitHub; `peter-evans/create-pull-request` is free)
+- Updates are **not** automatically merged; they require human approval (satisfies the 1-day delay supply-chain concern)
+- Schedule-based (weekly) further ensures updates are never applied on day zero
+
+## Files to Create/Modify
+
+- `.github/dependabot.yml` — new file
+- `.github/workflows/update-flake-lock.yml` — new file
+- `.gitignore` — no change needed (flake.lock is not excluded)
+
+## Out of Scope
+
+- Auto-merge rules
+- Version constraints / ignore rules for specific packages (can be added later)
+- CocoaPods, npm, Cargo (not used in this repo)

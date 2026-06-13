@@ -1,44 +1,54 @@
 # Stories
 
-## Story 001 — Fix Country Polygon Overlay on Map Quiz
-- **Dir**: `.workflow/stories/001-fix-polygon-overlay`
+## Story 001 — Add Dependabot configuration
+- **Dir**: `.workflow/stories/001-dependabot-config`
 - **Status**: done
 
-**Problem**: After tapping a pin in the map quiz (both Pending and New/learning flows), the country area should highlight green (correct) or red (wrong) via `MapPolygon.foregroundStyle`. The implementation exists but never renders the color because SwiftUI's `Map` content builder (`@MapContentBuilder`) does not track `@Observable` changes — reading `session.answerState` inside the `Map` closure does not register an observation, so polygons always render with `.clear`.
+**Problem**: No automated dependency updates exist for GitHub Actions pins (e.g. `actions/checkout@v6`) or Swift Package Manager packages. If Swift packages are added in the future, they will never receive automated update PRs.
 
-**Fix**: Extract the `answerState` value into a local variable (or a dedicated `@State`/computed property) outside the `Map` closure so that SwiftUI's observation system tracks it and triggers a view update. Then pass that extracted value into the `Map` content builder so the `MapPolygon.foregroundStyle` color is computed from the tracked value.
+**Fix**: Create `.github/dependabot.yml` with:
+- `github-actions` ecosystem targeting `.github/workflows`; weekly schedule (Mondays 09:00 UTC); open-pull-requests-limit 5
+- `swift` ecosystem targeting the repo root; weekly schedule (Mondays 09:00 UTC); open-pull-requests-limit 5
+- No auto-merge — PRs must be manually reviewed (satisfies the supply-chain delay requirement)
 
-**Files to change**:
-- `ProjectHana/Views/Quiz/MapQuiz/MapQuizView.swift`
-- `ProjectHana/Views/Quiz/MapQuiz/MapLearningQuizView.swift`
+**Files to create**:
+- `.github/dependabot.yml`
 
 **Acceptance criteria**:
-- After tapping the correct pin, the correct country's polygon shows green fill (~35% opacity).
-- After tapping the wrong pin, the wrong country shows red fill and the correct country shows green fill.
-- On advance to the next question, all fills clear.
-- Both `MapQuizView` (Pending) and `MapLearningQuizView` (New/learning) are fixed.
+- `.github/dependabot.yml` is valid YAML and passes `gh` schema checks (or manual review)
+- Both `github-actions` and `swift` ecosystems are configured
+- Schedule is weekly (not daily/hourly)
+- No auto-merge rules are configured
 
 ---
 
-## Story 002 — Persist "New" Pile Card Selection Across App Restarts
-- **Dir**: `.workflow/stories/002-fix-new-pile-persistence`
+## Story 002 — Add Nix flake.lock update workflow
+- **Dir**: `.workflow/stories/002-nix-flake-update-workflow`
 - **Status**: done
 
-**Problem**: `MapLearningSession` always shuffles `newCards` fresh on every init. It does not use `ActiveSetStore`, so every app launch picks a random new set of 10 country cards. Compare with `LearningSession` (used for rivers/mountains/seas) which correctly uses `UserDefaultsActiveSetStore` to persist and restore the active set.
+**Problem**: Dependabot does not support Nix flakes. The `flake.lock` (which pins exact revisions of `nixpkgs` and `flake-utils`) has no automated update mechanism. Without one, the Nix dev environment will silently fall behind upstream and receive security fixes late.
 
-**Fix**:
-1. Add `category: CardCategory?` and `store: ActiveSetStore?` parameters to `MapLearningSession.init`, mirroring the persistence logic already in `LearningSession.init`.
-2. In `MapLearningSession.graduate()`, call `store.save(activeSet.map(\.factID), for: category)` after updating the active set (and `store.clear` when it empties), mirroring `LearningSession.graduate()`.
-3. In `MapLearningQuizView.buildSession()`, create a `UserDefaultsActiveSetStore()` and pass the category through to `MapLearningSession`.
-4. Update `MapLearningQuizView` to accept (or derive) a `category` parameter — currently it receives `newCards: [ReviewCard]` with no category. The caller in `LearningModePickerView` (or wherever `MapLearningQuizView` is instantiated) should pass `.country`.
+**Fix**: Create `.github/workflows/update-flake-lock.yml` that:
+1. Runs on a weekly cron (Sundays 02:00 UTC) and can also be triggered manually (`workflow_dispatch`)
+2. Installs Nix using `DeterminateSystems/nix-installer-action` (free, widely used)
+3. Runs `nix flake update` to regenerate (or create) `flake.lock`
+4. If `flake.lock` changed (or is new), opens a PR using `peter-evans/create-pull-request` with:
+   - Title: "chore(nix): update flake.lock"
+   - Body including which inputs changed
+   - Branch name: `automated/update-flake-lock`
+   - Labels: `dependencies`
+5. No auto-merge — PR requires human approval before merging
 
-**Files to change**:
-- `ProjectHana/Views/Quiz/MapQuiz/MapLearningSession.swift`
-- `ProjectHana/Views/Quiz/MapQuiz/MapLearningQuizView.swift`
-- Possibly the caller that instantiates `MapLearningQuizView`
+Also commit an initial `flake.lock` to the repository by running the workflow's logic locally... but since Nix is not available locally, the initial `flake.lock` will be bootstrapped on the first automated workflow run. Add a note in the PR body when it is a bootstrap (first-time creation).
+
+**Files to create**:
+- `.github/workflows/update-flake-lock.yml`
 
 **Acceptance criteria**:
-- Starting the New (map) learning flow picks 10 cards and saves them.
-- Closing and reopening the app, then entering the New flow again shows the same 10 cards.
-- When a card graduates (3 consecutive correct), it leaves the active set and the next pending card fills in; the updated set is persisted.
-- Tests in `MapLearningTests.swift` cover the persistence behavior.
+- Workflow YAML is valid
+- Cron schedule is weekly (not daily)
+- Uses `DeterminateSystems/nix-installer-action` to install Nix
+- Runs `nix flake update`
+- Creates a PR via `peter-evans/create-pull-request` if `flake.lock` changed
+- No auto-merge step present
+- `workflow_dispatch` trigger present for manual runs

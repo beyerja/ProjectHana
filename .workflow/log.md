@@ -55,3 +55,36 @@
 - Status: DONE
 
 2026-06-13T18:32:01Z merge-pr: DONE
+
+## 2026-06-13 — automated-dependency-updates
+
+### Phase: Assess Project Health
+- Build succeeds (just build-mac: BUILD SUCCEEDED)
+- Feature is pure infrastructure (YAML files only) — no Swift code changes, no setup stories needed
+- No blockers; project is healthy
+- Status: DONE
+
+### Phase: Break Stories
+- Story 001: Add Dependabot configuration (.github/dependabot.yml) for github-actions + swift ecosystems
+- Story 002: Add Nix flake.lock update workflow (.github/workflows/update-flake-lock.yml) — weekly cron, opens PR via peter-evans/create-pull-request, no auto-merge
+- Status: DONE
+
+### Phase: Clarify
+- Explored codebase: only Nix flake (flake.nix, no flake.lock yet) and SPM (Package.resolved, no current pins) plus GitHub Actions (ci.yml with actions/checkout@v6). No CocoaPods/npm/Cargo.
+- Decision: Dependabot for github-actions + swift ecosystems; dedicated GitHub Actions workflow for Nix flake.lock updates (Dependabot does not support Nix).
+- Supply-chain delay satisfied by: weekly schedule + no auto-merge (human review required before merge).
+- Prerequisite: flake.lock bootstrapped on first workflow run (nix flake update creates it if absent).
+- Feature spec written to .workflow/feature.md.
+- Status: DONE
+
+### Phase: Story Loop — Story 001 (Dependabot config)
+- Created .github/dependabot.yml with github-actions + swift ecosystems, weekly Monday 09:00 UTC schedule, open-pull-requests-limit 5, no auto-merge
+- Status: DONE
+
+### Phase: Story Loop — Story 002 (Nix flake.lock update workflow)
+- Created .github/workflows/update-flake-lock.yml
+- Weekly cron Sundays 02:00 UTC + workflow_dispatch
+- DeterminateSystems/nix-installer-action@v22 installs Nix; nix flake update regenerates lock
+- peter-evans/create-pull-request@v8 opens PR on automated/update-flake-lock branch
+- No auto-merge; PR body explains supply-chain rationale
+- Status: DONE
