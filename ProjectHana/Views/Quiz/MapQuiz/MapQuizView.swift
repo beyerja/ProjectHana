@@ -11,6 +11,7 @@ struct MapQuizView: View {
     @State private var session: MapQuizSession?
     @State private var position: MapCameraPosition = .automatic
     @State private var isAdvancing = false
+    @State private var isPinching = false
 
     private let borders = CountryBorderLoader.shared
 
@@ -50,12 +51,12 @@ struct MapQuizView: View {
                     let state = pinState(for: country, in: session)
                     Annotation("", coordinate: CLLocationCoordinate2D(latitude: country.lat, longitude: country.lon)) {
                         Button {
-                            guard !isAdvancing else { return }
+                            guard !isAdvancing, !isPinching else { return }
                             session.handleTap(countryID: country.id)
                         } label: {
                             CountryPinView(state: state, name: country.localizedName(for: languageManager.current))
                         }
-                        .disabled(session.answerState != .unanswered || isAdvancing)
+                        .disabled(session.answerState != .unanswered || isAdvancing || isPinching)
                     }
                 }
                 ForEach(Array(borders.keys), id: \.self) { id in
@@ -70,6 +71,11 @@ struct MapQuizView: View {
             }
             .mapStyle(.imagery(elevation: .flat))
             .ignoresSafeArea(edges: .horizontal)
+            .simultaneousGesture(
+                MagnificationGesture()
+                    .onChanged { _ in isPinching = true }
+                    .onEnded { _ in isPinching = false }
+            )
 
             VStack(spacing: 0) {
                 promptBanner(session: session)

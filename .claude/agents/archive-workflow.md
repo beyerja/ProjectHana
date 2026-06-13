@@ -14,6 +14,11 @@ Move `.workflow/feature.md`, `.workflow/stories.md`, `.workflow/log.md`, and `.w
 
 Leave `.workflow/` empty except for `README.md`.
 
+Install the app to the user's Applications folder:
+```
+just install
+```
+
 Run (ignore errors):
 ```
 just log end archive-workflow "feature" <R> <W> 0 <B> 0 "" || true

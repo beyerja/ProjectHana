@@ -1,42 +1,29 @@
-# Feature: Map Quiz Learning Phase + Session Card Persistence
+# Feature: Map Quiz Improvements
 
 ## Goal
 
-Two related correctness/UX fixes to the learning model introduced in the learning-phase feature:
-
-1. **Map quiz in the learning phase** — The map quiz was always an available mode for country cards, but the learning phase (New cards) is currently MCQ-only. The map quiz must also be a valid learning path so users can learn new country cards via the map. Furthermore, the map quiz session must apply the same 3-consecutive-correct graduation mechanic that `LearningSession` uses, rather than the one-and-done SM-2 scheduling currently used in `MapQuizSession`.
-
-2. **Stable active-set selection** — `LearningSession` re-shuffles and picks a new random 10 cards every time a `LearningQuizView` is created. If the user dismisses mid-session and returns, they get a different 10 cards. The selection of which 10 (or fewer) cards form the active set for a category must be persisted so it stays the same until those cards graduate out of it.
-
-## Current State (from codebase exploration)
-
-- `CategoryDetailView` routes the "New" tile for all categories to `LearningQuizView`, which uses MCQ questions only.
-- `MapQuizView` / `MapQuizSession` is only reachable from the "Pending" tile via `QuizModePickerView` (for countries with due SM-2 cards). It is completely absent from the learning/New path.
-- `MapQuizSession.advance()` calls `SM2Scheduler.apply()` directly (one-and-done), with no 3-streak graduation mechanic.
-- `LearningSession` selects its active set in `init` via `newCards.shuffled().prefix(10)` with no persistence — every construction produces a different 10.
-- `ReviewCard` already carries `consecutiveCorrect` and `hasGraduated` fields.
+Improve the map quiz experience across four areas: gesture accuracy, penalty fairness, visual feedback richness, and zoom difficulty calibration. These changes apply to both `MapQuizView` (review/due mode) and `MapLearningQuizView` (learning mode), and their backing sessions.
 
 ## Acceptance Criteria
 
-- [ ] The "New" tile for the Countries category offers the user a choice between the map quiz mode and the MCQ mode to learn new cards.
-- [ ] When a user picks "Map" in the learning path, they are presented with a map quiz that uses the 3-consecutive-correct graduation mechanic (same as `LearningSession`): a card only graduates (marks `hasGraduated = true` and schedules via SM-2) after it has been answered correctly 3 times in a row; a wrong answer resets `consecutiveCorrect` to 0 and reinserts the card later.
-- [ ] When a user picks "MCQ" in the learning path, the existing `LearningQuizView` / `LearningSession` behavior is unchanged.
-- [ ] The active set of up to 10 cards chosen from a category's New pile is persisted across app launches and session re-entries (for the same category). Re-opening the learning session for that category always shows the same active set until cards graduate out.
-- [ ] When all cards in the active set graduate, the session finishes and up to 10 more ungraduated cards are drawn into the new active set (normal pool-refill already works intra-session; this requires the persisted selection to be updated too).
-- [ ] The graduation mechanic in the map learning path resets `consecutiveCorrect` to 0 on wrong answer and increments it on correct answer, identical to the MCQ learning path.
-- [ ] Existing `LearningTests` continue to pass. New unit tests cover: map-quiz graduation mechanic (3-streak graduates, wrong resets), and active-set persistence (same IDs returned across session constructions).
-- [ ] The app builds without warnings in CI.
+- [ ] Pinch-to-zoom gesture on a country pin is no longer misinterpreted as a tap/click on that pin. Two-finger zoom works cleanly without triggering `handleTap`.
+- [ ] When the user taps the wrong country, both the quizzed country (currently being asked) and the incorrectly tapped country have a failure penalty recorded in the SM2 scheduler (quality score penalized for both). In the learning mode, the wrong-tapped country's streak is also reset.
+- [ ] When a pin answer is revealed (correct or incorrect), the filled polygon area of the relevant country/countries lights up with a semi-transparent color overlay: green for correct, red for incorrect/wrong-tapped. This uses the existing `CountryBorderLoader` polygon data.
+- [ ] The map region shown during the quiz displays a minimum of 10 neighbouring countries visible at once (annotation pins + border polygons). The correct country can appear anywhere in the visible area (center or edges), not always at the center. The minimum visible span is enforced such that the user must know the country's true location and cannot rely on process of elimination from a short list.
 
 ## Constraints
 
-- Use SwiftData / `UserDefaults` for persistence; do not add new third-party dependencies.
-- Persist the active-set selection per category (at minimum `.country`; the other categories already go through `LearningQuizView` so they benefit from the same fix).
-- The map quiz learning path is only meaningful for the `.country` category (map quiz only covers countries). Other categories keep MCQ.
-- Preserve the existing `MapQuizView` / `MapQuizSession` for the Pending/due-cards path — do not break the SM-2-scheduled review quiz.
+- Changes must apply consistently to both `MapQuizView` / `MapQuizSession` and `MapLearningQuizView` / `MapLearningSession`.
+- The country highlight overlay must use the existing `CountryBorderLoader.shared` polygon data; no new data files.
+- Pinch gesture fix must not break the existing tap-to-answer interaction on device.
+- SM2 penalty for wrong-tapped country: apply `quality = 1` to any card in the current deck matching the incorrectly tapped country's ID. If no matching card exists in the deck, record the penalty silently (no crash).
+- The 10-country minimum refers to annotation pins shown on the map; the region span must be large enough to show at least 10 countries naturally.
+- Zoom/span logic must be shared between `MapQuizSession` and `MapLearningSession` (no duplication).
 
 ## Out of Scope
 
-- Redesigning the map quiz UI or adding new map features.
-- Changing the quiz mode picker for the Pending tile.
-- iCloud sync.
-- Any UI/UX redesign.
+- Changing the quiz flow, card ordering, or SM2 scheduling algorithm beyond the wrong-click dual-penalty.
+- Adding new map styles or visual themes.
+- Multi-player or networked features.
+- Changing the learning graduation mechanic (3-consecutive-correct streak).
+- Localization changes beyond what the existing L10n system already supports.
