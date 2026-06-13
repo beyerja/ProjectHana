@@ -1,10 +1,27 @@
 import Foundation
 import MapKit
+import SwiftUI
 
 enum AnswerState: Equatable {
     case unanswered
     case correct(id: String)
     case incorrect(tappedID: String, correctID: String)
+}
+
+extension AnswerState {
+    /// Semi-transparent fill color for a country polygon given the current answer state.
+    func polygonFillColor(for countryID: String) -> Color {
+        switch self {
+        case .unanswered:
+            return .clear
+        case .correct(let id):
+            return countryID == id ? .green.opacity(0.35) : .clear
+        case .incorrect(let tappedID, let correctID):
+            if countryID == tappedID  { return .red.opacity(0.35) }
+            if countryID == correctID { return .green.opacity(0.35) }
+            return .clear
+        }
+    }
 }
 
 @Observable
