@@ -30,7 +30,7 @@ struct CategoryDetailView: View {
     private var newTile: some View {
         let cards = cardStore.newCards(for: category)
         return NavigationLink {
-            LearningQuizView(newCards: cards)
+            LearningQuizView(newCards: cards, category: category)
         } label: {
             tileLabel(
                 title: L10n["home.tile.new"],
