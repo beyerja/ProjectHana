@@ -1,10 +1,27 @@
 import Foundation
 import MapKit
+import SwiftUI
 
 enum AnswerState: Equatable {
     case unanswered
     case correct(id: String)
     case incorrect(tappedID: String, correctID: String)
+}
+
+extension AnswerState {
+    /// Semi-transparent fill color for a country polygon given the current answer state.
+    func polygonFillColor(for countryID: String) -> Color {
+        switch self {
+        case .unanswered:
+            return .clear
+        case .correct(let id):
+            return countryID == id ? .green.opacity(0.35) : .clear
+        case .incorrect(let tappedID, let correctID):
+            if countryID == tappedID  { return .red.opacity(0.35) }
+            if countryID == correctID { return .green.opacity(0.35) }
+            return .clear
+        }
+    }
 }
 
 @Observable
@@ -54,6 +71,15 @@ final class MapQuizSession {
         }
         let result = SM2Scheduler.schedule(card: card, quality: quality)
         SM2Scheduler.apply(result, to: card, quality: quality)
+
+        // Dual penalty: also penalise the incorrectly-tapped card if it's in the deck.
+        if case .incorrect(let tappedID, _) = answerState, tappedID != card.factID {
+            if let tappedCard = cards.first(where: { $0.factID == tappedID }) {
+                let tappedResult = SM2Scheduler.schedule(card: tappedCard, quality: 1)
+                SM2Scheduler.apply(tappedResult, to: tappedCard, quality: 1)
+            }
+        }
+
         StreakTracker.recordReview()
 
         currentIndex += 1
@@ -69,33 +95,8 @@ final class MapQuizSession {
 
     private func refreshAnnotations() {
         guard let correct = currentCountry else { return }
-        let continent = allCountries.filter {
-            $0.continent == correct.continent && $0.id != correct.id
-        }
-        let nearest = continent
-            .sorted { distance($0, from: correct) < distance($1, from: correct) }
-            .prefix(5)
-        annotationCountries = ([correct] + nearest).shuffled()
-        mapRegion = region(for: annotationCountries)
-    }
-
-    private func distance(_ a: Country, from b: Country) -> Double {
-        let dLat = a.lat - b.lat
-        let dLon = a.lon - b.lon
-        return sqrt(dLat * dLat + dLon * dLon)
-    }
-
-    private func region(for countries: [Country]) -> MKCoordinateRegion {
-        guard !countries.isEmpty else { return MKCoordinateRegion() }
-        let lats = countries.map(\.lat)
-        let lons = countries.map(\.lon)
-        let centerLat = (lats.min()! + lats.max()!) / 2
-        let centerLon = (lons.min()! + lons.max()!) / 2
-        let spanLat = max(12, (lats.max()! - lats.min()!) * 1.6)
-        let spanLon = max(12, (lons.max()! - lons.min()!) * 1.6)
-        return MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: centerLat, longitude: centerLon),
-            span: MKCoordinateSpan(latitudeDelta: spanLat, longitudeDelta: spanLon)
-        )
+        let result = makeQuizAnnotations(correct: correct, allCountries: allCountries)
+        annotationCountries = result.countries
+        mapRegion = result.region
     }
 }

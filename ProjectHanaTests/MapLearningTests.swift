@@ -174,4 +174,67 @@ final class MapLearningTests: XCTestCase {
         XCTAssertFalse(updatedStored.contains(current.factID),
                        "Graduated card's ID must be removed from the persisted active set")
     }
+
+    // MARK: - Wrong-click dual penalty (MapQuizSession)
+
+    private func makeCountry(id: String) -> Country {
+        Country(id: id, name: id, nameFr: nil, nameDe: nil, nameEs: nil,
+                capital: "Cap", capitalFr: nil, capitalDe: nil, capitalEs: nil,
+                continent: "EU", lat: 0, lon: 0)
+    }
+
+    func testMapQuizDualPenaltyAppliedToBothCards() {
+        let quizzedCard = makeCard(factID: "correct")
+        let tappedCard = makeCard(factID: "wrong")
+        let countries = [makeCountry(id: "correct"), makeCountry(id: "wrong")]
+        let session = MapQuizSession(cards: [quizzedCard, tappedCard], allCountries: countries)
+        // Determine which card is current after shuffle; tap the other one
+        let currentID = session.currentCard!.factID
+        let otherID = currentID == "correct" ? "wrong" : "correct"
+        let currentCard = currentID == "correct" ? quizzedCard : tappedCard
+        let otherCard = currentID == "correct" ? tappedCard : quizzedCard
+        session.handleTap(countryID: otherID)
+        session.advance()
+        // lastQualityScore is set to 1 for both cards on an incorrect answer
+        XCTAssertEqual(currentCard.lastQualityScore, 1, "Quizzed card must receive quality=1 penalty")
+        XCTAssertEqual(otherCard.lastQualityScore, 1, "Tapped card must receive quality=1 penalty")
+    }
+
+    func testMapQuizDualPenaltyNoopWhenTappedCardAbsent() {
+        let quizzedCard = makeCard(factID: "correct")
+        let countries = [makeCountry(id: "correct"), makeCountry(id: "absent")]
+        // Only quizzedCard is in the deck; "absent" country has no card
+        let session = MapQuizSession(cards: [quizzedCard], allCountries: countries)
+        session.handleTap(countryID: "absent")
+        // Advance must not crash even though "absent" has no card in the deck
+        XCTAssertNoThrow(session.advance())
+        XCTAssertEqual(quizzedCard.lastQualityScore, 1)
+    }
+
+    // MARK: - Wrong-click dual streak-reset (MapLearningSession)
+
+    func testMapLearningWrongResetsStreakOfTappedCard() {
+        let correctCard = makeCard(factID: "correct")
+        let tappedCard = makeCard(factID: "wrong")
+        tappedCard.consecutiveCorrect = 2
+        let countries = [makeCountry(id: "correct"), makeCountry(id: "wrong")]
+        let session = MapLearningSession(newCards: [correctCard, tappedCard], allCountries: countries)
+        // Find which card is current and tap the other one
+        let current = session.current!
+        let otherID = current.factID == "correct" ? "wrong" : "correct"
+        let otherCard = otherID == "wrong" ? tappedCard : correctCard
+        otherCard.consecutiveCorrect = 2
+        session.handleTap(countryID: otherID)
+        session.recordWrong()
+        XCTAssertEqual(otherCard.consecutiveCorrect, 0, "Tapped card's streak must be reset on wrong click")
+    }
+
+    func testMapLearningWrongStreakResetNoopWhenTappedCardAbsent() {
+        let card = makeCard(factID: "correct")
+        let countries = [makeCountry(id: "correct"), makeCountry(id: "absent")]
+        let session = MapLearningSession(newCards: [card], allCountries: countries)
+        session.handleTap(countryID: "absent")
+        // recordWrong must not crash when tapped country has no card in active set
+        XCTAssertNoThrow(session.recordWrong())
+    }
 }

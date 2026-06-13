@@ -51,7 +51,7 @@ When a story installs a tool that requires a shell hook (direnv, starship, zoxid
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `ProjectHana/Views/ViewExtensions.swift` rather than direct calls.
 
 After all tasks are done:
-6. Run `bash scripts/install-mac.sh` **only if** the story adds new Swift files, introduces new UI modifiers, or touches any API that could differ between iOS and macOS. Skip it for changes that are purely config, data, or logic with no new platform API calls — and note the skip in the telemetry notes. When in doubt, run it.
+6. Run `bash scripts/install-mac.sh` **only if** the story adds new Swift files or introduces UI modifiers / APIs not already present in the codebase. Skip it for changes that only modify existing logic, geometry, or data within SwiftUI view bodies using patterns already in the project — and note the skip in the telemetry notes. When in doubt, run it.
 
 **Telemetry — run before appending to log.md:**
 Count your tool calls in this run: R = Read calls, W = Write calls, E = Edit calls, B = Bash calls. Estimate total chars processed (sum of file sizes read + written). Then run (ignore errors):

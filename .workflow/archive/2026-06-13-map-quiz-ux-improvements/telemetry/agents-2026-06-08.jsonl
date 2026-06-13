@@ -1,0 +1,14 @@
+{"ts":"2026-06-08T05:09:43Z","event":"start","agent":"test-agent","story":"story-001"}
+{"ts":"2026-06-08T05:09:43Z","event":"end","agent":"test-agent","story":"story-001","duration_s":0,"reads":5,"writes":2,"edits":3,"bashes":8,"est_chars":12000,"est_tokens":3000,"notes":"no issues"}
+{"ts":"2026-06-08T05:30:27Z","event":"start","agent":"evaluate-workflow","story":"feature"}
+{"ts":"2026-06-08T05:33:03Z","event":"end","agent":"evaluate-workflow","story":"feature","duration_s":156,"reads":15,"writes":1,"edits":3,"bashes":8,"est_chars":32000,"est_tokens":8000,"notes":"sparse telemetry; first instrumented workflow"}
+{"ts":"2026-06-08T05:33:14Z","event":"start","agent":"archive-workflow","story":"feature"}
+{"ts":"2026-06-08T05:33:50Z","event":"end","agent":"archive-workflow","story":"feature","duration_s":36,"reads":2,"writes":0,"edits":0,"bashes":3,"est_chars":5000,"est_tokens":1250,"notes":""}
+{"ts":"2026-06-08T10:19:28Z","event":"start","agent":"implement-story","story":"001-hide-map-labels"}
+{"ts":"2026-06-08T10:20:55Z","event":"end","agent":"implement-story","story":"001-hide-map-labels","duration_s":87,"reads":1,"writes":0,"edits":1,"bashes":2,"est_chars":8000,"est_tokens":2000,"notes":""}
+{"ts":"2026-06-08T10:37:10Z","event":"start","agent":"evaluate-workflow","story":"feature"}
+{"ts":"2026-06-08T10:38:52Z","event":"end","agent":"evaluate-workflow","story":"feature","duration_s":102,"reads":2,"writes":0,"edits":2,"bashes":3,"est_chars":12000,"est_tokens":3000,"notes":""}
+{"ts":"2026-06-08T10:38:52Z","event":"start","agent":"archive-workflow","story":"feature"}
+{"ts":"2026-06-08T10:39:08Z","event":"end","agent":"archive-workflow","story":"feature","duration_s":16,"reads":1,"writes":0,"edits":0,"bashes":2,"est_chars":2000,"est_tokens":500,"notes":""}
+{"ts":"2026-06-08T10:48:48Z","event":"start","agent":"implement-story","story":"001-country-borders"}
+{"ts":"2026-06-08T10:55:18Z","event":"end","agent":"implement-story","story":"001-country-borders","duration_s":390,"reads":4,"writes":2,"edits":4,"bashes":6,"est_chars":28000,"est_tokens":7000,"notes":""}

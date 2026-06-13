@@ -6,12 +6,14 @@ import MapKit
 struct MapLearningQuizView: View {
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
 
     let newCards: [ReviewCard]
 
     @State private var session: MapLearningSession?
     @State private var position: MapCameraPosition = .automatic
     @State private var isAdvancing = false
+    @State private var isPinching = false
 
     private let borders = CountryBorderLoader.shared
 
@@ -47,19 +49,19 @@ struct MapLearningQuizView: View {
                     let state = pinState(for: country, in: session)
                     Annotation("", coordinate: CLLocationCoordinate2D(latitude: country.lat, longitude: country.lon)) {
                         Button {
-                            guard !isAdvancing else { return }
+                            guard !isAdvancing, !isPinching else { return }
                             session.handleTap(countryID: country.id)
                         } label: {
                             CountryPinView(state: state, name: country.localizedName(for: languageManager.current))
                         }
-                        .disabled(session.answerState != .unanswered || isAdvancing)
+                        .disabled(session.answerState != .unanswered || isAdvancing || isPinching)
                     }
                 }
                 ForEach(Array(borders.keys), id: \.self) { id in
                     if let rings = borders[id] {
                         ForEach(rings.indices, id: \.self) { i in
                             MapPolygon(coordinates: rings[i])
-                                .foregroundStyle(.clear)
+                                .foregroundStyle(session.answerState.polygonFillColor(for: id))
                                 .stroke(.white.opacity(0.55), lineWidth: 0.8)
                         }
                     }
@@ -67,6 +69,11 @@ struct MapLearningQuizView: View {
             }
             .mapStyle(.imagery(elevation: .flat))
             .ignoresSafeArea(edges: .horizontal)
+            .simultaneousGesture(
+                MagnificationGesture()
+                    .onChanged { _ in isPinching = true }
+                    .onEnded { _ in isPinching = false }
+            )
 
             VStack(spacing: 0) {
                 promptBanner(session: session)
@@ -100,6 +107,11 @@ struct MapLearningQuizView: View {
         }
         .onChange(of: session.currentIndex) { _, _ in
             position = .region(session.mapRegion)
+        }
+        // Reset isPinching if the app is backgrounded or interrupted mid-pinch,
+        // because MagnificationGesture.onEnded does not fire on cancellation.
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active { isPinching = false }
         }
     }
 

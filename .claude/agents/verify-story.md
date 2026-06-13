@@ -26,6 +26,50 @@ xcrun simctl uninstall booted com.private.ProjectHana 2>/dev/null || true
 
 For each criterion: run tests, inspect implementation, exercise the app if applicable.
 
-- **All pass** → update `<story-dir>/status.md` to `status: done`, mark story checked in `.workflow/stories.md`.
+---
+
+## Visual Verification
+
+If `<story-dir>/spec.md` contains a `## Visual Verification` section, perform the following steps after the functional checks above. If no such section exists, skip this entire block (pure tooling stories do not need visual verification).
+
+**Visual verification steps:**
+
+1. **Boot simulator** (no-op if already booted):
+   ```sh
+   just boot-sim
+   ```
+
+2. **Build and install the app** to the simulator:
+   ```sh
+   just install-sim
+   ```
+
+3. **Launch the app:**
+   ```sh
+   just launch-sim
+   sleep 2
+   ```
+
+4. **Take a screenshot** and save it:
+   ```sh
+   mkdir -p .workflow/screenshots/<story-id>
+   just screenshot-sim .workflow/screenshots/<story-id>/verify-1.png
+   ```
+
+5. **Inspect the screenshot** using Claude's vision against the expected behavior described in the `## Visual Verification` section of `<story-dir>/spec.md`.
+
+6. **If visual check passes:** proceed to mark the story done (see Outcomes below).
+
+7. **If visual check fails:**
+   a. Log the failure in `<story-dir>/log.md`: `<timestamp> visual-verify: FAILED attempt 1 — <description of what was wrong>`
+   b. Attempt a targeted fix: diagnose the root cause from the screenshot, edit the relevant source file(s), rebuild (step 2), re-launch (step 3), take a new screenshot (save as `verify-2.png`), re-inspect.
+   c. If the second attempt passes: proceed to mark the story done.
+   d. If the second attempt also fails: log it in `<story-dir>/log.md`. Output STATUS: FAILED with visual failure details so the story loop can re-run implement-story with this context.
+
+---
+
+## Outcomes
+
+- **All checks pass (functional + visual if applicable)** → update `<story-dir>/status.md` to `status: done`, mark story checked in `.workflow/stories.md`.
   Append to log. Run (ignore errors): `just log end verify-story "<story-id>" <R> <W> <E> <B> <est_chars> "DONE" || true`. Output STATUS: DONE.
-- **Any fail** → list failures in `<story-dir>/log.md`. Run (ignore errors): `just log end verify-story "<story-id>" <R> <W> <E> <B> <est_chars> "FAILED" || true`. Output STATUS: FAILED: <list>.
+- **Any check fails** → list failures in `<story-dir>/log.md`. Run (ignore errors): `just log end verify-story "<story-id>" <R> <W> <E> <B> <est_chars> "FAILED" || true`. Output STATUS: FAILED: <list>.
