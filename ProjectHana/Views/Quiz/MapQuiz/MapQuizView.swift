@@ -46,10 +46,14 @@ struct MapQuizView: View {
 
     @ViewBuilder
     private func quizBody(session: MapQuizSession) -> some View {
+        // Capture answerState here (in the @ViewBuilder body) so SwiftUI's @Observable
+        // tracking registers a dependency. Reading it inside the Map content builder
+        // closure does not register observation and the polygons would never update.
+        let answerState = session.answerState
         ZStack(alignment: .bottom) {
             Map(position: $position) {
                 ForEach(session.annotationCountries, id: \.id) { country in
-                    let state = pinState(for: country, in: session)
+                    let state = pinState(for: country, answerState: answerState)
                     Annotation("", coordinate: CLLocationCoordinate2D(latitude: country.lat, longitude: country.lon)) {
                         Button {
                             guard !isAdvancing, !isPinching else { return }
@@ -57,14 +61,14 @@ struct MapQuizView: View {
                         } label: {
                             CountryPinView(state: state, name: country.localizedName(for: languageManager.current))
                         }
-                        .disabled(session.answerState != .unanswered || isAdvancing || isPinching)
+                        .disabled(answerState != .unanswered || isAdvancing || isPinching)
                     }
                 }
                 ForEach(Array(borders.keys), id: \.self) { id in
                     if let rings = borders[id] {
                         ForEach(rings.indices, id: \.self) { i in
                             MapPolygon(coordinates: rings[i])
-                                .foregroundStyle(session.answerState.polygonFillColor(for: id))
+                                .foregroundStyle(answerState.polygonFillColor(for: id))
                                 .stroke(.white.opacity(0.55), lineWidth: 0.8)
                         }
                     }
@@ -180,8 +184,8 @@ struct MapQuizView: View {
         if let s = session { position = .region(s.mapRegion) }
     }
 
-    private func pinState(for country: Country, in session: MapQuizSession) -> CountryPinView.State {
-        switch session.answerState {
+    private func pinState(for country: Country, answerState: AnswerState) -> CountryPinView.State {
+        switch answerState {
         case .unanswered:
             return .neutral
         case .correct(let id):

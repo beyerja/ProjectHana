@@ -237,4 +237,86 @@ final class MapLearningTests: XCTestCase {
         // recordWrong must not crash when tapped country has no card in active set
         XCTAssertNoThrow(session.recordWrong())
     }
+
+    // MARK: - MapLearningSession active-set persistence
+
+    func testMapLearningPersistenceSameIDsOnSecondConstruction() {
+        let cards = makeCards(count: 5)
+        let store = InMemoryActiveSetStore()
+
+        let session1 = MapLearningSession(newCards: cards, allCountries: [],
+                                          category: .country, store: store)
+        let ids1 = session1.activeSet.map(\.factID)
+        XCTAssertFalse(ids1.isEmpty)
+
+        let session2 = MapLearningSession(newCards: cards, allCountries: [],
+                                          category: .country, store: store)
+        let ids2 = session2.activeSet.map(\.factID)
+        XCTAssertEqual(ids1, ids2, "Second construction must resume the same active set")
+    }
+
+    func testMapLearningPersistenceFiltersGraduatedIDs() {
+        let cards = makeCards(count: 3)
+        let store = InMemoryActiveSetStore()
+
+        let session1 = MapLearningSession(newCards: cards, allCountries: [],
+                                          category: .country, store: store)
+        // Graduate the first card outside the session
+        let firstID = session1.activeSet.first!.factID
+        cards.first { $0.factID == firstID }!.hasGraduated = true
+
+        let remaining = cards.filter { !$0.hasGraduated }
+        let session2 = MapLearningSession(newCards: remaining, allCountries: [],
+                                          category: .country, store: store)
+        XCTAssertFalse(session2.activeSet.contains { $0.factID == firstID },
+                       "Graduated card must be excluded from rehydrated active set")
+    }
+
+    func testMapLearningPersistenceEmptyAfterFilterTriggersFreshDraw() {
+        let cards = makeCards(count: 2)
+        let store = InMemoryActiveSetStore()
+
+        // First session — persists IDs
+        _ = MapLearningSession(newCards: cards, allCountries: [],
+                               category: .country, store: store)
+
+        // Mark all persisted cards as graduated
+        cards.forEach { $0.hasGraduated = true }
+
+        // Second construction with only graduated cards — should draw fresh set
+        let newCards = (0..<2).map { makeCard(factID: "fresh\($0)") }
+        let session2 = MapLearningSession(newCards: newCards, allCountries: [],
+                                          category: .country, store: store)
+        XCTAssertFalse(session2.activeSet.isEmpty, "Fresh draw must produce a non-empty active set")
+        let freshIDs = session2.activeSet.map(\.factID)
+        XCTAssertTrue(freshIDs.allSatisfy { $0.hasPrefix("fresh") },
+                      "Fresh draw must use new ungraduated cards")
+    }
+
+    func testMapLearningPersistenceUpdatedAfterGraduation() {
+        let cards = makeCards(count: 5)
+        let store = InMemoryActiveSetStore()
+        let session = MapLearningSession(newCards: cards, allCountries: [],
+                                         category: .country, store: store)
+        let initialStoredCount = store.load(for: .country).count
+        XCTAssertGreaterThan(initialStoredCount, 0)
+
+        let current = session.current!
+        current.consecutiveCorrect = MapLearningSession.requiredStreak - 1
+        session.recordCorrect()  // graduates the card
+
+        let updatedStored = store.load(for: .country)
+        XCTAssertFalse(updatedStored.contains(current.factID),
+                       "Graduated card's ID must be removed from the persisted active set")
+    }
+
+    func testMapLearningNoPersistenceWithoutStore() {
+        // Without a store, two sessions with the same cards may produce different orderings
+        // but the second session must still function without crashing.
+        let cards = makeCards(count: 5)
+        let session1 = MapLearningSession(newCards: cards, allCountries: [])
+        let session2 = MapLearningSession(newCards: cards, allCountries: [])
+        XCTAssertFalse(session1.activeSet.isEmpty)
+        XCTAssertFalse(session2.activeSet.isEmpty)
+    }
 }

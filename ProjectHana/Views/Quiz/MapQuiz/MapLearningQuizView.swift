@@ -9,6 +9,8 @@ struct MapLearningQuizView: View {
     @Environment(\.scenePhase) private var scenePhase
 
     let newCards: [ReviewCard]
+    /// Category used for persisting the active set. Pass `nil` only in tests / previews.
+    let category: CardCategory?
 
     @State private var session: MapLearningSession?
     @State private var position: MapCameraPosition = .automatic
@@ -43,10 +45,14 @@ struct MapLearningQuizView: View {
 
     @ViewBuilder
     private func quizBody(session: MapLearningSession) -> some View {
+        // Capture answerState here (in the @ViewBuilder body) so SwiftUI's @Observable
+        // tracking registers a dependency. Reading it inside the Map content builder
+        // closure does not register observation and the polygons would never update.
+        let answerState = session.answerState
         ZStack(alignment: .bottom) {
             Map(position: $position) {
                 ForEach(session.annotationCountries, id: \.id) { country in
-                    let state = pinState(for: country, in: session)
+                    let state = pinState(for: country, answerState: answerState)
                     Annotation("", coordinate: CLLocationCoordinate2D(latitude: country.lat, longitude: country.lon)) {
                         Button {
                             guard !isAdvancing, !isPinching else { return }
@@ -54,14 +60,14 @@ struct MapLearningQuizView: View {
                         } label: {
                             CountryPinView(state: state, name: country.localizedName(for: languageManager.current))
                         }
-                        .disabled(session.answerState != .unanswered || isAdvancing || isPinching)
+                        .disabled(answerState != .unanswered || isAdvancing || isPinching)
                     }
                 }
                 ForEach(Array(borders.keys), id: \.self) { id in
                     if let rings = borders[id] {
                         ForEach(rings.indices, id: \.self) { i in
                             MapPolygon(coordinates: rings[i])
-                                .foregroundStyle(session.answerState.polygonFillColor(for: id))
+                                .foregroundStyle(answerState.polygonFillColor(for: id))
                                 .stroke(.white.opacity(0.55), lineWidth: 0.8)
                         }
                     }
@@ -79,7 +85,7 @@ struct MapLearningQuizView: View {
                 promptBanner(session: session)
                     .frame(maxWidth: .infinity)
                 Spacer()
-                if session.answerState != .unanswered {
+                if answerState != .unanswered {
                     feedbackBanner(session: session)
                         .transition(.move(edge: .bottom).combined(with: .opacity))
                 }
@@ -225,14 +231,19 @@ struct MapLearningQuizView: View {
     // MARK: - Helpers
 
     private func buildSession() {
-        guard !newCards.isEmpty else { session = MapLearningSession(newCards: [], allCountries: []); return }
+        guard !newCards.isEmpty else {
+            session = MapLearningSession(newCards: [], allCountries: [], category: nil, store: nil)
+            return
+        }
         let geoData = GeographyDataLoader.shared
-        session = MapLearningSession(newCards: newCards, allCountries: geoData.countries)
+        let store: ActiveSetStore? = category != nil ? UserDefaultsActiveSetStore() : nil
+        session = MapLearningSession(newCards: newCards, allCountries: geoData.countries,
+                                     category: category, store: store)
         if let s = session { position = .region(s.mapRegion) }
     }
 
-    private func pinState(for country: Country, in session: MapLearningSession) -> CountryPinView.State {
-        switch session.answerState {
+    private func pinState(for country: Country, answerState: AnswerState) -> CountryPinView.State {
+        switch answerState {
         case .unanswered:
             return .neutral
         case .correct(let id):
@@ -247,7 +258,7 @@ struct MapLearningQuizView: View {
 
 #Preview {
     NavigationStack {
-        MapLearningQuizView(newCards: [])
+        MapLearningQuizView(newCards: [], category: nil)
             .withPreviewStore()
             .environment(LanguageManager.shared)
     }

@@ -15,7 +15,7 @@ struct LearningModePickerView: View {
                 header
 
                 NavigationLink {
-                    MapLearningQuizView(newCards: newCards)
+                    MapLearningQuizView(newCards: newCards, category: .country)
                 } label: {
                     modeCard(
                         icon: "map.fill",
