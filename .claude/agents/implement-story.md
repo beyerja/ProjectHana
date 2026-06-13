@@ -31,8 +31,8 @@ When adding or removing fields on an `@Model` type:
 
 **Xcode project wiring (pbxproj)**
 Every new `.swift` file must be added to `ProjectHana.xcodeproj/project.pbxproj`:
-- Allocate the next sequential UUIDs (format `AA000001`, `AA000002`, …). Find the current max by grepping `AA0000` in the pbxproj.
-- Add a `PBXBuildFile` entry (odd UUID) and a `PBXFileReference` entry (even UUID, or follow the existing even/odd pattern).
+- Allocate the next two sequential UUIDs. Find the current max by grepping `AA0000` in the pbxproj; use max+1 and max+2 (UUID ordering does not matter to Xcode).
+- Add a `PBXBuildFile` entry (one UUID) and a `PBXFileReference` entry (the other UUID).
 - Add the file reference to the correct `PBXGroup` (matching its folder path).
 - Add the build file to the correct `PBXSourcesBuildPhase` (main target or test target).
 - For resource files (JSON, assets): add to `PBXResourcesBuildPhase` instead.
