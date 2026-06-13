@@ -5,6 +5,7 @@ struct MapQuizView: View {
     @Environment(CardStore.self) private var cardStore
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
 
     let category: CardCategory?
 
@@ -105,6 +106,11 @@ struct MapQuizView: View {
         }
         .onChange(of: session.currentIndex) { _, _ in
             position = .region(session.mapRegion)
+        }
+        // Reset isPinching if the app is backgrounded or interrupted mid-pinch,
+        // because MagnificationGesture.onEnded does not fire on cancellation.
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active { isPinching = false }
         }
     }
 
