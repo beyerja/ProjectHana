@@ -29,17 +29,18 @@ Where:
 - **Avg Est Tokens** = mean of `est_tokens` across end records (est_chars / 4)
 - **Total Retries/Notes** = count of end records where `notes` is non-empty
 
-Also read all `.workflow/telemetry/hooks-*.jsonl` if present. Aggregate by tool type (Read, Write, Edit, Bash, Agent) and report total call counts and total estimated tokens per tool type:
+Also read all `.workflow/telemetry/hooks-*.jsonl` if present. Aggregate by tool type (Read, Write, Edit, Bash, Agent) and report total call counts per tool type:
 
 ```
 Tool call distribution (this workflow):
-  Read:   NNN calls,  ~XX k tokens
-  Bash:   NNN calls,  ~XX k tokens
-  Write:  NNN calls,  ~XX k tokens
-  Edit:   NNN calls,  ~XX k tokens
+  Read:   NNN calls
+  Bash:   NNN calls
+  Write:  NNN calls
+  Edit:   NNN calls
+  Agent:  NNN calls
 ```
 
-Note: Edit token estimates are inflated when large files are involved (pbxproj, bundled JSON data) because the hook measures the full file content, not the diff. If Edit est_tokens is unexpectedly high (> 50k), identify the likely large-file culprit and discount that figure when assessing true agent cost.
+Note: `est_chars` in hooks records is 0 in this project (the hook does not capture content size), so skip token estimates for hooks — use only call counts. If a future hooks format adds non-zero est_chars, report tokens then and note if Edit is inflated by large-file edits (pbxproj, bundled JSON).
 
 Based on the telemetry table and story logs, identify the top 1-2 outliers:
 - Highest avg estimated tokens → its prompt likely over-reads or over-generates

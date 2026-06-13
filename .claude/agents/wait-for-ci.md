@@ -3,12 +3,13 @@ name: wait-for-ci
 description: Wait for all GitHub Actions CI checks to pass on a PR or branch. Exits with STATUS: PASS or STATUS: FAIL.
 ---
 
-Requires: PR number (or branch name to find the PR from).
+Requires: PR number (or branch name to find the PR from). Optionally a story-id for telemetry — if not provided, derive it from the branch name (e.g. `story/001-foo` → `001-foo`) or use `"unknown"`.
 
 **Telemetry — run at the very start (ignore errors):**
 ```
 just log start wait-for-ci "<story-id>" || true
 ```
+(`<story-id>` = last path component of the story directory, e.g. `001-l10n-infrastructure`; use "unknown" only if truly unavailable)
 
 Steps:
 
