@@ -11,4 +11,5 @@
 | Assess health | DONE | No gaps — XCTest + GitHub Actions CI already present |
 | Story 001 | DONE | PR #34 merged — active-set persistence implemented |
 | Story 002 | DONE | PR #35 merged — MapLearningSession with 3-streak graduation |
-| Story 003 | IN PROGRESS | Map learning UI: mode picker + MapLearningQuizView |
+| Story 003 | DONE | PR #36 merged — mode picker + MapLearningQuizView |
+| Story 004 | IN PROGRESS | Unit tests for MapLearningSession + active-set persistence |
