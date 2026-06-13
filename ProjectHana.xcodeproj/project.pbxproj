@@ -25,6 +25,7 @@
 		AA000072 /* CountryBorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000071 /* CountryBorderLoader.swift */; };
 		AA000074 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000073 /* LearningSession.swift */; };
 		AA000076 /* LearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000075 /* LearningTests.swift */; };
+		AA000118 /* MapLearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000119 /* MapLearningTests.swift */; };
 		AA000078 /* LearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000077 /* LearningQuizView.swift */; };
 		AA00007A /* CategoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000079 /* CategoryDetailView.swift */; };
 		AA00007B /* ActiveSetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00007C /* ActiveSetStore.swift */; };
@@ -110,6 +111,7 @@
 		AA00006B /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		AA00006D /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
 		AA000075 /* LearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningTests.swift; sourceTree = "<group>"; };
+		AA000119 /* MapLearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningTests.swift; sourceTree = "<group>"; };
 		AA000077 /* LearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningQuizView.swift; sourceTree = "<group>"; };
 		AA000079 /* CategoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailView.swift; sourceTree = "<group>"; };
 		AA000101 /* AppLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocale.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				AA000061 /* QuizLogicTests.swift */,
 				AA00006D /* StatsTests.swift */,
 				AA000075 /* LearningTests.swift */,
+				AA000119 /* MapLearningTests.swift */,
 				AA000107 /* AppLocaleTests.swift */,
 			);
 			path = ProjectHanaTests;
@@ -500,6 +503,7 @@
 				AA000062 /* QuizLogicTests.swift in Sources */,
 				AA00006E /* StatsTests.swift in Sources */,
 				AA000076 /* LearningTests.swift in Sources */,
+				AA000118 /* MapLearningTests.swift in Sources */,
 				AA000106 /* AppLocaleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
