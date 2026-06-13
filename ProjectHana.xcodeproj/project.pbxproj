@@ -28,6 +28,7 @@
 		AA000078 /* LearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000077 /* LearningQuizView.swift */; };
 		AA00007A /* CategoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000079 /* CategoryDetailView.swift */; };
 		AA00007B /* ActiveSetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00007C /* ActiveSetStore.swift */; };
+		AA000112 /* MapLearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000113 /* MapLearningSession.swift */; };
 		AA00002D /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002C /* countries.json */; };
 		AA00002F /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002E /* rivers.json */; };
 		AA000031 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = AA000030 /* mountains.json */; };
@@ -90,6 +91,7 @@
 		AA000048 /* ProgressPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPlaceholderView.swift; sourceTree = "<group>"; };
 		AA00004A /* PreviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewStore.swift; sourceTree = "<group>"; };
 		AA000050 /* MapQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizSession.swift; sourceTree = "<group>"; };
+		AA000113 /* MapLearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningSession.swift; sourceTree = "<group>"; };
 		AA000052 /* MapQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizView.swift; sourceTree = "<group>"; };
 		AA000054 /* QuizSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSummaryView.swift; sourceTree = "<group>"; };
 		AA000057 /* TextQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextQuizSession.swift; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 			isa = PBXGroup;
 			children = (
 				AA000050 /* MapQuizSession.swift */,
+				AA000113 /* MapLearningSession.swift */,
 				AA000052 /* MapQuizView.swift */,
 				AA000054 /* QuizSummaryView.swift */,
 			);
@@ -458,6 +461,7 @@
 				AA000049 /* ProgressPlaceholderView.swift in Sources */,
 				AA00004B /* PreviewStore.swift in Sources */,
 				AA000051 /* MapQuizSession.swift in Sources */,
+				AA000112 /* MapLearningSession.swift in Sources */,
 				AA000053 /* MapQuizView.swift in Sources */,
 				AA000055 /* QuizSummaryView.swift in Sources */,
 				AA000058 /* TextQuizSession.swift in Sources */,
