@@ -12,4 +12,6 @@
 | Story 001 | DONE | PR #34 merged — active-set persistence implemented |
 | Story 002 | DONE | PR #35 merged — MapLearningSession with 3-streak graduation |
 | Story 003 | DONE | PR #36 merged — mode picker + MapLearningQuizView |
-| Story 004 | IN PROGRESS | Unit tests for MapLearningSession + active-set persistence |
+| Story 004 | DONE | PR #37 merged — 11 new unit tests, all CI green |
+| Verify feature | DONE | All 7 acceptance criteria verified; CI green; Pending tile intact |
+| Evaluate workflow | DONE | 2 improvements applied; evaluate-workflow.md flagged (bloat); Phase 2b: insufficient per-story telemetry for this workflow |

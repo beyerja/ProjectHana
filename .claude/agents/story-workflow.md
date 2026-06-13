@@ -23,14 +23,7 @@ Run the following steps in order, spawning a dedicated sub-agent for each. Pass 
    - STATUS: PENDING_REVIEW → notify user to merge the PR and wait for their confirmation; resume at step 6 once they confirm
    - STATUS: APPROVED → continue
 6. **Merge** — if the user already merged (common in this solo project, they confirm verbally), skip `merge-pr` and proceed directly to step 7; otherwise spawn `merge-pr` agent
-7. **Wait for CI on main** — after merge, get the latest run on main and wait:
-   ```
-   export PATH="$HOME/.nix-profile/bin:$PATH"
-   run_id=$(gh run list --branch main --limit 1 --json databaseId -q '.[0].databaseId')
-   gh run watch "$run_id" --exit-status
-   ```
-   If this fails, report it but do not block the story from being marked done — a CI failure on main is a separate incident.
-8. **Verify** — spawn `verify-story` agent
+7. **Verify** — spawn `verify-story` agent
    - STATUS: FAILED → go to step 2 (re-implement with failure context)
    - STATUS: DONE → finish
 
