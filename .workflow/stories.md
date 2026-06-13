@@ -1,54 +1,65 @@
-# Stories
+# Stories: Quiz Type Selection on Home Screen
 
-## Story 001 — Add Dependabot configuration
-- **Dir**: `.workflow/stories/001-dependabot-config`
-- **Status**: done
+## Story 001 — Rewrite HomeView with per-category quiz-mode buttons
+- **Dir**: `.workflow/stories/001-home-view-redesign`
+- **Status**: pending
 
-**Problem**: No automated dependency updates exist for GitHub Actions pins (e.g. `actions/checkout@v6`) or Swift Package Manager packages. If Swift packages are added in the future, they will never receive automated update PRs.
+Replace the 2×2 category grid on HomeView with a vertical list of category sections. Each section shows the category header and quiz-mode buttons with inline new/pending card counts. Buttons are disabled when no cards exist for that mode in either pile.
 
-**Fix**: Create `.github/dependabot.yml` with:
-- `github-actions` ecosystem targeting `.github/workflows`; weekly schedule (Mondays 09:00 UTC); open-pull-requests-limit 5
-- `swift` ecosystem targeting the repo root; weekly schedule (Mondays 09:00 UTC); open-pull-requests-limit 5
-- No auto-merge — PRs must be manually reviewed (satisfies the supply-chain delay requirement)
+**Quiz modes per category:**
+- Countries: Map Quiz, Multiple Choice, Type Capital, Name Country
+- Rivers / Mountains / Seas: Multiple Choice
 
-**Files to create**:
-- `.github/dependabot.yml`
+**Each button shows:**
+- Mode name + icon
+- "New: N" label if new count > 0
+- "Pending: N" label if pending count > 0
+- Disabled/greyed if both counts are zero
+- Type Capital / Name Country are greyed if no pending cards (they are pending-only modes)
 
-**Acceptance criteria**:
-- `.github/dependabot.yml` is valid YAML and passes `gh` schema checks (or manual review)
-- Both `github-actions` and `swift` ecosystems are configured
-- Schedule is weekly (not daily/hourly)
-- No auto-merge rules are configured
+**Files to change:**
+- `Views/Home/HomeView.swift` — rewrite
+
+**Acceptance criteria:**
+- Home screen shows quiz-mode buttons for all categories
+- New/pending counts visible on each button
+- Buttons with zero cards are disabled
 
 ---
 
-## Story 002 — Add Nix flake.lock update workflow
-- **Dir**: `.workflow/stories/002-nix-flake-update-workflow`
-- **Status**: done
+## Story 002 — PilePickerView and end-to-end navigation
+- **Dir**: `.workflow/stories/002-navigation-pile-picker`
+- **Status**: pending
 
-**Problem**: Dependabot does not support Nix flakes. The `flake.lock` (which pins exact revisions of `nixpkgs` and `flake-utils`) has no automated update mechanism. Without one, the Nix dev environment will silently fall behind upstream and receive security fixes late.
+Create `PilePickerView`. Wire navigation from HomeView quiz buttons:
+- Only new cards → navigate directly to appropriate quiz view (1 tap)
+- Only pending → navigate directly (1 tap)
+- Both → navigate to PilePickerView, then to quiz (2 taps)
 
-**Fix**: Create `.github/workflows/update-flake-lock.yml` that:
-1. Runs on a weekly cron (Sundays 02:00 UTC) and can also be triggered manually (`workflow_dispatch`)
-2. Installs Nix using `DeterminateSystems/nix-installer-action` (free, widely used)
-3. Runs `nix flake update` to regenerate (or create) `flake.lock`
-4. If `flake.lock` changed (or is new), opens a PR using `peter-evans/create-pull-request` with:
-   - Title: "chore(nix): update flake.lock"
-   - Body including which inputs changed
-   - Branch name: `automated/update-flake-lock`
-   - Labels: `dependencies`
-5. No auto-merge — PR requires human approval before merging
+See `feature.md` navigation destination mapping table for exact view targets.
 
-Also commit an initial `flake.lock` to the repository by running the workflow's logic locally... but since Nix is not available locally, the initial `flake.lock` will be bootstrapped on the first automated workflow run. Add a note in the PR body when it is a bootstrap (first-time creation).
+**Files to change:**
+- `Views/Home/HomeView.swift` — add NavigationLink destinations
+- `Views/Home/PilePickerView.swift` — new file
 
-**Files to create**:
-- `.github/workflows/update-flake-lock.yml`
+**Acceptance criteria:**
+- 1-tap flow works for single-pile cases across all categories/modes
+- 2-tap flow works (PilePickerView) when both piles are non-empty
+- Correct quiz views are launched in all combinations
 
-**Acceptance criteria**:
-- Workflow YAML is valid
-- Cron schedule is weekly (not daily)
-- Uses `DeterminateSystems/nix-installer-action` to install Nix
-- Runs `nix flake update`
-- Creates a PR via `peter-evans/create-pull-request` if `flake.lock` changed
-- No auto-merge step present
-- `workflow_dispatch` trigger present for manual runs
+---
+
+## Story 003 — Remove obsolete screens
+- **Dir**: `.workflow/stories/003-cleanup`
+- **Status**: pending
+
+Delete CategoryDetailView, LearningModePickerView, and QuizModePickerView. Fix any dangling references.
+
+**Files to delete:**
+- `Views/Home/CategoryDetailView.swift`
+- `Views/Quiz/LearningModePickerView.swift`
+- `Views/Quiz/QuizModePickerView.swift`
+
+**Acceptance criteria:**
+- Project compiles without errors
+- No references to deleted views remain

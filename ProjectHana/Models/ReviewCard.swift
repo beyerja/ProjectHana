@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 
-enum CardCategory: String, Codable {
+enum CardCategory: String, Codable, Hashable {
     case country
     case river
     case mountain
