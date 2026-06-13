@@ -27,10 +27,11 @@
 		AA000076 /* LearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000075 /* LearningTests.swift */; };
 		AA000118 /* MapLearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000119 /* MapLearningTests.swift */; };
 		AA000078 /* LearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000077 /* LearningQuizView.swift */; };
-		AA00007A /* CategoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000079 /* CategoryDetailView.swift */; };
+		AA000125 /* PilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000124 /* PilePickerView.swift */; };
+		AA000127 /* QuizRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000126 /* QuizRoute.swift */; };
 		AA00007B /* ActiveSetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00007C /* ActiveSetStore.swift */; };
 		AA000112 /* MapLearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000113 /* MapLearningSession.swift */; };
-		AA000114 /* LearningModePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000115 /* LearningModePickerView.swift */; };
+
 		AA000116 /* MapLearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000117 /* MapLearningQuizView.swift */; };
 		AA000120 /* MapQuizRegionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000121 /* MapQuizRegionHelper.swift */; };
 		AA000122 /* MapQuizRegionHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000123 /* MapQuizRegionHelperTests.swift */; };
@@ -56,7 +57,7 @@
 		AA00005A /* CapitalQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000059 /* CapitalQuizView.swift */; };
 		AA00005C /* MultipleChoiceSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00005B /* MultipleChoiceSession.swift */; };
 		AA00005E /* MultipleChoiceQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00005D /* MultipleChoiceQuizView.swift */; };
-		AA000060 /* QuizModePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00005F /* QuizModePickerView.swift */; };
+
 		AA000062 /* QuizLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000061 /* QuizLogicTests.swift */; };
 		AA000066 /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000065 /* ViewExtensions.swift */; };
 		AA000068 /* MasteryTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000067 /* MasteryTier.swift */; };
@@ -104,8 +105,8 @@
 		AA000059 /* CapitalQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapitalQuizView.swift; sourceTree = "<group>"; };
 		AA00005B /* MultipleChoiceSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceSession.swift; sourceTree = "<group>"; };
 		AA00005D /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
-		AA00005F /* QuizModePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModePickerView.swift; sourceTree = "<group>"; };
-		AA000115 /* LearningModePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningModePickerView.swift; sourceTree = "<group>"; };
+		AA000124 /* PilePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilePickerView.swift; sourceTree = "<group>"; };
+		AA000126 /* QuizRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizRoute.swift; sourceTree = "<group>"; };
 		AA000061 /* QuizLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLogicTests.swift; sourceTree = "<group>"; };
 		AA000065 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		AA000067 /* MasteryTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasteryTier.swift; sourceTree = "<group>"; };
@@ -117,7 +118,7 @@
 		AA000121 /* MapQuizRegionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelper.swift; sourceTree = "<group>"; };
 		AA000123 /* MapQuizRegionHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelperTests.swift; sourceTree = "<group>"; };
 		AA000077 /* LearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningQuizView.swift; sourceTree = "<group>"; };
-		AA000079 /* CategoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailView.swift; sourceTree = "<group>"; };
+
 		AA000101 /* AppLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocale.swift; sourceTree = "<group>"; };
 		AA000103 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		AA000111 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
@@ -247,7 +248,8 @@
 			isa = PBXGroup;
 			children = (
 				AA000044 /* HomeView.swift */,
-				AA000079 /* CategoryDetailView.swift */,
+				AA000124 /* PilePickerView.swift */,
+				AA000126 /* QuizRoute.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -256,8 +258,6 @@
 			isa = PBXGroup;
 			children = (
 				AA000046 /* QuizPlaceholderView.swift */,
-				AA00005F /* QuizModePickerView.swift */,
-				AA000115 /* LearningModePickerView.swift */,
 				AA000077 /* LearningQuizView.swift */,
 				AA000056 /* MapQuiz */,
 				AA000063 /* TextQuiz */,
@@ -471,7 +471,8 @@
 				AA00003B /* CardStore.swift in Sources */,
 				AA000040 /* SM2Scheduler.swift in Sources */,
 				AA000045 /* HomeView.swift in Sources */,
-				AA00007A /* CategoryDetailView.swift in Sources */,
+				AA000125 /* PilePickerView.swift in Sources */,
+				AA000127 /* QuizRoute.swift in Sources */,
 				AA000047 /* QuizPlaceholderView.swift in Sources */,
 				AA000049 /* ProgressPlaceholderView.swift in Sources */,
 				AA00004B /* PreviewStore.swift in Sources */,
@@ -485,8 +486,6 @@
 				AA00005A /* CapitalQuizView.swift in Sources */,
 				AA00005C /* MultipleChoiceSession.swift in Sources */,
 				AA00005E /* MultipleChoiceQuizView.swift in Sources */,
-				AA000060 /* QuizModePickerView.swift in Sources */,
-				AA000114 /* LearningModePickerView.swift in Sources */,
 				AA000078 /* LearningQuizView.swift in Sources */,
 				AA000066 /* ViewExtensions.swift in Sources */,
 				AA000068 /* MasteryTier.swift in Sources */,
