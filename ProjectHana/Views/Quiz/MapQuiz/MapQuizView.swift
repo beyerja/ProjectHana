@@ -62,7 +62,7 @@ struct MapQuizView: View {
                     if let rings = borders[id] {
                         ForEach(rings.indices, id: \.self) { i in
                             MapPolygon(coordinates: rings[i])
-                                .foregroundStyle(.clear)
+                                .foregroundStyle(session.answerState.polygonFillColor(for: id))
                                 .stroke(.white.opacity(0.55), lineWidth: 0.8)
                         }
                     }
