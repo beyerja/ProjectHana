@@ -1,0 +1,47 @@
+name: Update flake.lock
+
+on:
+  schedule:
+    # Runs every Sunday at 02:00 UTC
+    # Weekly cadence satisfies the 1-day delay supply-chain requirement:
+    # updates are never applied on day zero — a PR is opened and must be
+    # manually reviewed and merged before any change takes effect.
+    - cron: "0 2 * * 0"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-flake-lock:
+    name: Update flake.lock
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v22
+
+      - name: Update flake.lock
+        run: nix flake update
+
+      - name: Open PR if flake.lock changed
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automated/update-flake-lock
+          commit-message: "chore(nix): update flake.lock"
+          title: "chore(nix): update flake.lock"
+          body: |
+            Automated weekly update of `flake.lock`.
+
+            This PR was opened by the [Update flake.lock](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) workflow.
+
+            **Supply-chain safety**: this PR must be reviewed and manually merged — it is never auto-merged. At least 1 day elapses between the upstream change and it landing in this repo.
+
+            Review the diff in `flake.lock` to confirm the updated input revisions look legitimate before merging.
+          labels: dependencies
+          delete-branch: true
