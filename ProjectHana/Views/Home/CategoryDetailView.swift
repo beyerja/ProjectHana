@@ -30,7 +30,7 @@ struct CategoryDetailView: View {
     private var newTile: some View {
         let cards = cardStore.newCards(for: category)
         return NavigationLink {
-            LearningQuizView(newCards: cards, category: category)
+            newDestination(cards: cards)
         } label: {
             tileLabel(
                 title: L10n["home.tile.new"],
@@ -41,6 +41,16 @@ struct CategoryDetailView: View {
             )
         }
         .disabled(cards.isEmpty)
+    }
+
+    @ViewBuilder
+    private func newDestination(cards: [ReviewCard]) -> some View {
+        switch category {
+        case .country:
+            LearningModePickerView()
+        case .river, .mountain, .sea:
+            LearningQuizView(newCards: cards, category: category)
+        }
     }
 
     private var pendingTile: some View {

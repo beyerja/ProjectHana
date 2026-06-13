@@ -29,6 +29,8 @@
 		AA00007A /* CategoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000079 /* CategoryDetailView.swift */; };
 		AA00007B /* ActiveSetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00007C /* ActiveSetStore.swift */; };
 		AA000112 /* MapLearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000113 /* MapLearningSession.swift */; };
+		AA000114 /* LearningModePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000115 /* LearningModePickerView.swift */; };
+		AA000116 /* MapLearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000117 /* MapLearningQuizView.swift */; };
 		AA00002D /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002C /* countries.json */; };
 		AA00002F /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = AA00002E /* rivers.json */; };
 		AA000031 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = AA000030 /* mountains.json */; };
@@ -92,6 +94,7 @@
 		AA00004A /* PreviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewStore.swift; sourceTree = "<group>"; };
 		AA000050 /* MapQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizSession.swift; sourceTree = "<group>"; };
 		AA000113 /* MapLearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningSession.swift; sourceTree = "<group>"; };
+		AA000117 /* MapLearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningQuizView.swift; sourceTree = "<group>"; };
 		AA000052 /* MapQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizView.swift; sourceTree = "<group>"; };
 		AA000054 /* QuizSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSummaryView.swift; sourceTree = "<group>"; };
 		AA000057 /* TextQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextQuizSession.swift; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 		AA00005B /* MultipleChoiceSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceSession.swift; sourceTree = "<group>"; };
 		AA00005D /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
 		AA00005F /* QuizModePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModePickerView.swift; sourceTree = "<group>"; };
+		AA000115 /* LearningModePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningModePickerView.swift; sourceTree = "<group>"; };
 		AA000061 /* QuizLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLogicTests.swift; sourceTree = "<group>"; };
 		AA000065 /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		AA000067 /* MasteryTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasteryTier.swift; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 			children = (
 				AA000046 /* QuizPlaceholderView.swift */,
 				AA00005F /* QuizModePickerView.swift */,
+				AA000115 /* LearningModePickerView.swift */,
 				AA000077 /* LearningQuizView.swift */,
 				AA000056 /* MapQuiz */,
 				AA000063 /* TextQuiz */,
@@ -278,6 +283,7 @@
 			children = (
 				AA000050 /* MapQuizSession.swift */,
 				AA000113 /* MapLearningSession.swift */,
+				AA000117 /* MapLearningQuizView.swift */,
 				AA000052 /* MapQuizView.swift */,
 				AA000054 /* QuizSummaryView.swift */,
 			);
@@ -462,6 +468,7 @@
 				AA00004B /* PreviewStore.swift in Sources */,
 				AA000051 /* MapQuizSession.swift in Sources */,
 				AA000112 /* MapLearningSession.swift in Sources */,
+				AA000116 /* MapLearningQuizView.swift in Sources */,
 				AA000053 /* MapQuizView.swift in Sources */,
 				AA000055 /* QuizSummaryView.swift in Sources */,
 				AA000058 /* TextQuizSession.swift in Sources */,
@@ -469,6 +476,7 @@
 				AA00005C /* MultipleChoiceSession.swift in Sources */,
 				AA00005E /* MultipleChoiceQuizView.swift in Sources */,
 				AA000060 /* QuizModePickerView.swift in Sources */,
+				AA000114 /* LearningModePickerView.swift in Sources */,
 				AA000078 /* LearningQuizView.swift in Sources */,
 				AA000066 /* ViewExtensions.swift in Sources */,
 				AA000068 /* MasteryTier.swift in Sources */,

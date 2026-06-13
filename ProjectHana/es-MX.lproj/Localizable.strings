@@ -114,3 +114,14 @@
 "quiz.prompt.capital_of" = "¿Cuál es la capital de %@?";
 "quiz.prompt.continent_of" = "¿En qué continente se encuentra %@?";
 "quiz.prompt.country_of_capital" = "¿Qué país tiene a %@ como capital?";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "Aprender tarjetas nuevas";
+"learn.mode_picker.map.title" = "Quiz de mapa";
+"learn.mode_picker.map.desc" = "Toca el país correcto en el mapa";
+"learn.mode_picker.mcq.title" = "Opción múltiple";
+"learn.mode_picker.mcq.desc" = "Elige la respuesta entre 4 opciones";
+
+/* Map learning quiz */
+"learn_map.title" = "Aprendizaje en mapa";
+"learn_map.streak" = "%d / 3";
