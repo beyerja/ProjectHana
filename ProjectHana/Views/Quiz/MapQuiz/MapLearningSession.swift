@@ -7,6 +7,8 @@ import Observation
 ///
 /// - `recordCorrect()` / `recordWrong()` drive the streak; 3 in a row graduates a card.
 /// - The existing `MapQuizSession` (used for due/Pending cards) is unchanged.
+/// - Pass a `category` and `store` to persist the active set across app restarts,
+///   matching the behaviour of `LearningSession` for non-country categories.
 @Observable
 final class MapLearningSession {
     static let activeSetSize = 10
@@ -28,6 +30,9 @@ final class MapLearningSession {
     private(set) var annotationCountries: [Country] = []
     private(set) var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
 
+    private let category: CardCategory?
+    private let store: ActiveSetStore?
+
     var current: ReviewCard? {
         activeSet.indices.contains(currentIndex) ? activeSet[currentIndex] : nil
     }
@@ -39,13 +44,45 @@ final class MapLearningSession {
 
     // MARK: - Init
 
-    init(newCards: [ReviewCard], allCountries: [Country]) {
+    /// Convenience init (no persistence) — used by tests and paths with no category.
+    convenience init(newCards: [ReviewCard], allCountries: [Country]) {
+        self.init(newCards: newCards, allCountries: allCountries, category: nil, store: nil)
+    }
+
+    /// Designated init with optional active-set persistence.
+    init(newCards: [ReviewCard], allCountries: [Country], category: CardCategory?, store: ActiveSetStore?) {
         totalNewCards = newCards.count
         self.allCountries = allCountries
+        self.category = category
+        self.store = store
 
-        let shuffled = newCards.shuffled()
-        activeSet = Array(shuffled.prefix(MapLearningSession.activeSetSize))
-        pendingPool = Array(shuffled.dropFirst(MapLearningSession.activeSetSize))
+        // Build a lookup from factID → ReviewCard for rehydration.
+        let byID = Dictionary(uniqueKeysWithValues: newCards.map { ($0.factID, $0) })
+
+        if let category, let store {
+            let storedIDs = store.load(for: category)
+            let rehydrated = storedIDs.compactMap { byID[$0] }.filter { !$0.hasGraduated }
+
+            if !rehydrated.isEmpty {
+                // Resume the previously persisted active set.
+                activeSet = rehydrated
+                let activeIDs = Set(rehydrated.map(\.factID))
+                let remaining = newCards.filter { !activeIDs.contains($0.factID) && !$0.hasGraduated }
+                pendingPool = remaining.shuffled()
+            } else {
+                // Stored IDs all graduated (or store was empty); draw a fresh set.
+                store.clear(for: category)
+                let shuffled = newCards.shuffled()
+                activeSet = Array(shuffled.prefix(MapLearningSession.activeSetSize))
+                pendingPool = Array(shuffled.dropFirst(MapLearningSession.activeSetSize))
+                store.save(activeSet.map(\.factID), for: category)
+            }
+        } else {
+            // No persistence.
+            let shuffled = newCards.shuffled()
+            activeSet = Array(shuffled.prefix(MapLearningSession.activeSetSize))
+            pendingPool = Array(shuffled.dropFirst(MapLearningSession.activeSetSize))
+        }
 
         refreshAnnotations()
     }
@@ -109,6 +146,15 @@ final class MapLearningSession {
         if let next = pendingPool.first {
             pendingPool.removeFirst()
             activeSet.append(next)
+        }
+
+        // Persist updated active-set membership.
+        if let category, let store {
+            if activeSet.isEmpty {
+                store.clear(for: category)
+            } else {
+                store.save(activeSet.map(\.factID), for: category)
+            }
         }
 
         if activeSet.isEmpty {
