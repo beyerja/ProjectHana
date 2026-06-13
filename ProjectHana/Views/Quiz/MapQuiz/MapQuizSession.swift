@@ -54,6 +54,15 @@ final class MapQuizSession {
         }
         let result = SM2Scheduler.schedule(card: card, quality: quality)
         SM2Scheduler.apply(result, to: card, quality: quality)
+
+        // Dual penalty: also penalise the incorrectly-tapped card if it's in the deck.
+        if case .incorrect(let tappedID, _) = answerState, tappedID != card.factID {
+            if let tappedCard = cards.first(where: { $0.factID == tappedID }) {
+                let tappedResult = SM2Scheduler.schedule(card: tappedCard, quality: 1)
+                SM2Scheduler.apply(tappedResult, to: tappedCard, quality: 1)
+            }
+        }
+
         StreakTracker.recordReview()
 
         currentIndex += 1

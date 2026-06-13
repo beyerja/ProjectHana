@@ -79,6 +79,14 @@ final class MapLearningSession {
     func recordWrong() {
         guard let card = current else { return }
         card.consecutiveCorrect = 0
+
+        // Dual-penalty: also reset the streak of the incorrectly-tapped country's card if present.
+        if case .incorrect(let tappedID, _) = answerState, tappedID != card.factID {
+            if let tappedCard = activeSet.first(where: { $0.factID == tappedID }) {
+                tappedCard.consecutiveCorrect = 0
+            }
+        }
+
         // Reinsert later in the queue (same as LearningSession)
         activeSet.remove(at: currentIndex)
         let insertAt = Int.random(in: max(1, currentIndex)..<max(2, activeSet.count + 1))
