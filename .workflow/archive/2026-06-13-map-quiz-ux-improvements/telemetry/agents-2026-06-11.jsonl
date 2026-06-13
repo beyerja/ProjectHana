@@ -1,0 +1,14 @@
+{"ts":"2026-06-11T17:14:35Z","event":"start","agent":"evaluate-workflow","story":"feature"}
+{"ts":"2026-06-11T17:15:56Z","event":"end","agent":"evaluate-workflow","story":"feature","duration_s":81,"reads":2,"writes":0,"edits":1,"bashes":2,"est_chars":8000,"est_tokens":2000,"notes":""}
+{"ts":"2026-06-11T17:15:56Z","event":"start","agent":"archive-workflow","story":"feature"}
+{"ts":"2026-06-11T17:16:06Z","event":"end","agent":"archive-workflow","story":"feature","duration_s":10,"reads":1,"writes":0,"edits":0,"bashes":2,"est_chars":1000,"est_tokens":250,"notes":""}
+{"ts":"2026-06-11T17:21:24Z","event":"start","agent":"implement-story","story":"001-learning-phase-model"}
+{"ts":"2026-06-11T21:28:36Z","event":"start","agent":"evaluate-workflow","story":"feature"}
+{"ts":"2026-06-11T21:32:00Z","event":"end","agent":"evaluate-workflow","story":"feature","duration_s":204,"reads":12,"writes":1,"edits":3,"bashes":5,"est_chars":45000,"est_tokens":11250,"notes":""}
+{"ts":"2026-06-11T21:44:29Z","event":"start","agent":"clarify-feature","story":"feature"}
+{"ts":"2026-06-11T21:44:55Z","event":"end","agent":"clarify-feature","story":"feature","duration_s":26,"reads":1,"writes":1,"edits":0,"bashes":0,"est_chars":2100,"est_tokens":525,"notes":""}
+{"ts":"2026-06-11T21:45:30Z","event":"start","agent":"break-stories","story":"feature"}
+{"ts":"2026-06-11T21:46:23Z","event":"end","agent":"break-stories","story":"feature","duration_s":53,"reads":4,"writes":6,"edits":1,"bashes":1,"est_chars":3200,"est_tokens":800,"notes":""}
+{"ts":"2026-06-11T22:28:48Z","event":"start","agent":"evaluate-workflow","story":"feature"}
+{"ts":"2026-06-11T22:31:13Z","event":"end","agent":"evaluate-workflow","story":"feature","duration_s":145,"reads":12,"writes":0,"edits":3,"bashes":8,"est_chars":52000,"est_tokens":13000,"notes":""}
+{"ts":"2026-06-11T22:47:14Z","event":"start","agent":"clarify-feature","story":"feature"}
