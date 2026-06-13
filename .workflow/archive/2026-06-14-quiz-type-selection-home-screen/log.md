@@ -126,3 +126,53 @@
 ### Phase: Archive
 - Closing artifacts committed and pushed to main
 - Status: DONE
+
+## 2026-06-14 — quiz-type-selection-home-screen
+
+### Phase: Clarify
+- Explored full navigation stack: HomeView → CategoryDetailView → LearningModePickerView / QuizModePickerView (3 taps for Countries; 2 for other categories)
+- User clarified: show all quiz modes on home screen, pile picker only when both new AND pending have cards, 1 tap otherwise; all categories; counts visible on buttons
+- Feature spec written to .workflow/feature.md
+- Status: DONE
+
+### Phase: Break Stories
+- Story 001: Rewrite HomeView with per-category quiz-mode buttons and pile counts
+- Story 002: PilePickerView and end-to-end navigation
+- Story 003: Remove obsolete screens (CategoryDetailView, LearningModePickerView, QuizModePickerView)
+- Implemented all three stories in a single commit (tightly coupled)
+- Status: DONE
+
+### Phase: Implementation
+- Added `Hashable` to `CardCategory`
+- Added `QuizRoute.swift`: `HomeQuizMode`, `Pile`, `QuizRoute` enums for type-safe NavigationStack path navigation
+- Rewrote `HomeView.swift`: per-category sections with quiz-mode buttons; new/pending pill counts; `NavigationStack(path:)` with `navigationDestination(for: QuizRoute.self)`
+- Added `PilePickerView.swift`: shows New / Pending pile buttons using `NavigationLink(value:)` routing into the same navigation stack
+- Deleted `CategoryDetailView.swift`, `LearningModePickerView.swift`, `QuizModePickerView.swift`
+- Updated `project.pbxproj`: removed 3 old files, added 2 new files
+- Status: DONE
+
+### Phase: Create PR
+- PR #55 opened: feat(home): quiz type selection on start screen (1–2 taps)
+- Branch: feat/quiz-type-selection-home-screen → main
+- Status: DONE
+
+### Phase: Wait for CI
+- CI run 27480860176: Build & Test SUCCEEDED (56s, macos-15)
+- Status: DONE
+
+### Phase: Merge PR
+- PR #55 squash-merged to main at 2026-06-14 (commit 6f8e442)
+- Status: DONE
+
+### Phase: Evaluate Workflow
+- Subagent workflow hit a permissions wall (Write/Edit denied) and could not complete the clarify-feature step; had to fall back to direct implementation in the main conversation. This was slower but worked correctly. Root cause: subagent lacked the auto-approved permissions the parent conversation had.
+- Navigation architecture decision: used `NavigationStack(path:)` + `navigationDestination(for: QuizRoute.self)` + programmatic path appending rather than closure-based `NavigationLink`. This avoids nested `@ViewBuilder` conditional type issues and keeps PilePickerView navigating via `NavigationLink(value:)` into the same stack cleanly.
+- All 3 stories were implemented in one commit because they were logically inseparable — deleting the old views only makes sense once the new flow is fully wired up.
+- No new L10n keys were needed; all existing keys (`home.tile.new`, `home.tile.pending`, `quiz.mode.*.title`) were reused.
+- The `project.pbxproj` required manual editing to register new files and remove deleted ones — this is a recurring friction point.
+- Improvement for future workflows: when subagent permissions fail, fall back to main conversation immediately rather than retrying.
+- Improvement: when multiple stories are inseparable (delete-only story depends entirely on add-new-code story), merge them into one story upfront.
+- Status: DONE
+
+### Phase: Archive
+- Status: DONE
