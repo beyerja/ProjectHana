@@ -39,3 +39,17 @@
 ### Phase: Verify Feature
 - Both bugs fixed; build succeeds; full test suite passes.
 - Status: DONE
+
+### Phase: Evaluate Workflow
+- Both bugs were fully diagnosable from code reading alone — no ambiguity requiring user clarification beyond what was given.
+- The `@MapContentBuilder` observation gap is a subtle but important SwiftUI pitfall; a comment was added in code to document why the pattern is necessary.
+- The `MapLearningSession` persistence gap was a clear omission relative to `LearningSession`; the fix mirrors the existing pattern exactly.
+- Tests were extended to cover the new persistence behaviour; all 5 new tests pass on first attempt.
+- No regressions — full test suite passes.
+- Workflow ran efficiently: code was read first to fully understand both bugs before touching any files.
+- Improvement for future workflows: when a feature is marked "previously implemented but not working", always check `@Observable` + non-`@ViewBuilder` closures (Map, Chart, etc.) as a potential observation gap.
+- Status: DONE
+
+### Phase: Archive
+- Stories and feature complete; commit pushed to branch chore/close-map-quiz-learning-workflow.
+- Status: DONE
