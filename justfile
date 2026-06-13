@@ -45,3 +45,47 @@ ci branch:
 # Delegate to agent telemetry logger
 log *args:
     bash scripts/agent-log.sh {{args}}
+
+# Parse .workflow/telemetry/agents-*.jsonl and print a summary table (agent, runs, avg duration, avg est tokens, retries)
+telemetry:
+    python3 scripts/telemetry-summary.py
+
+# Build the app for the iOS Simulator (iPhone 17); prints the .app bundle path on success
+build-sim:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    xcodebuild build \
+        -project ProjectHana.xcodeproj \
+        -scheme ProjectHana \
+        -destination 'platform=iOS Simulator,name=iPhone 17' \
+        -derivedDataPath /tmp/ProjectHana-sim-build \
+        2>&1 | tail -5
+    APP=$(find /tmp/ProjectHana-sim-build -name "ProjectHana.app" -maxdepth 10 | head -1)
+    echo "Built: $APP"
+
+# Install the app to the booted simulator (depends on build-sim)
+install-sim: build-sim
+    #!/usr/bin/env bash
+    set -euo pipefail
+    APP=$(find /tmp/ProjectHana-sim-build -name "ProjectHana.app" -maxdepth 10 | head -1)
+    xcrun simctl install booted "$APP"
+    echo "Installed: $APP"
+
+# Boot the iPhone 17 simulator (no-op if already booted)
+boot-sim:
+    xcrun simctl boot "iPhone 17" 2>/dev/null || true
+
+# Launch the installed app on the booted simulator
+launch-sim:
+    xcrun simctl launch booted com.private.ProjectHana
+
+# Take a screenshot of the booted simulator and save it to the given path; exits non-zero on failure
+screenshot-sim path:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    xcrun simctl io booted screenshot "{{path}}"
+    if [[ ! -s "{{path}}" ]]; then
+        echo "ERROR: screenshot file missing or empty at {{path}}" >&2
+        exit 1
+    fi
+    echo "Screenshot saved to {{path}}"
