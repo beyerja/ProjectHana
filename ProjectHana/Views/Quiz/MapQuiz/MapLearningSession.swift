@@ -116,33 +116,8 @@ final class MapLearningSession {
 
     private func refreshAnnotations() {
         guard let correct = currentCountry else { return }
-        let continent = allCountries.filter {
-            $0.continent == correct.continent && $0.id != correct.id
-        }
-        let nearest = continent
-            .sorted { distance($0, from: correct) < distance($1, from: correct) }
-            .prefix(5)
-        annotationCountries = ([correct] + nearest).shuffled()
-        mapRegion = region(for: annotationCountries)
-    }
-
-    private func distance(_ a: Country, from b: Country) -> Double {
-        let dLat = a.lat - b.lat
-        let dLon = a.lon - b.lon
-        return sqrt(dLat * dLat + dLon * dLon)
-    }
-
-    private func region(for countries: [Country]) -> MKCoordinateRegion {
-        guard !countries.isEmpty else { return MKCoordinateRegion() }
-        let lats = countries.map(\.lat)
-        let lons = countries.map(\.lon)
-        let centerLat = (lats.min()! + lats.max()!) / 2
-        let centerLon = (lons.min()! + lons.max()!) / 2
-        let spanLat = max(12, (lats.max()! - lats.min()!) * 1.6)
-        let spanLon = max(12, (lons.max()! - lons.min()!) * 1.6)
-        return MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: centerLat, longitude: centerLon),
-            span: MKCoordinateSpan(latitudeDelta: spanLat, longitudeDelta: spanLon)
-        )
+        let result = makeQuizAnnotations(correct: correct, allCountries: allCountries)
+        annotationCountries = result.countries
+        mapRegion = result.region
     }
 }
