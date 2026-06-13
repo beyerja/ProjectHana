@@ -6,6 +6,7 @@ import MapKit
 struct MapLearningQuizView: View {
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.scenePhase) private var scenePhase
 
     let newCards: [ReviewCard]
 
@@ -106,6 +107,11 @@ struct MapLearningQuizView: View {
         }
         .onChange(of: session.currentIndex) { _, _ in
             position = .region(session.mapRegion)
+        }
+        // Reset isPinching if the app is backgrounded or interrupted mid-pinch,
+        // because MagnificationGesture.onEnded does not fire on cancellation.
+        .onChange(of: scenePhase) { _, phase in
+            if phase != .active { isPinching = false }
         }
     }
 
