@@ -19,7 +19,7 @@ Read `<story-dir>/pr.md`. Fetch review status via `gh pr view` and `gh pr review
   - Reply to each review comment marking it resolved
   - Append to `<story-dir>/log.md`: `<timestamp> review-pr: changes implemented`
   - Output STATUS: CHANGES_IMPLEMENTED
-- **Awaiting review** → append to log, output STATUS: PENDING_REVIEW
+- **Awaiting review** → append to `<story-dir>/log.md`: `<timestamp> review-pr: PENDING_REVIEW — awaiting human review`, output STATUS: PENDING_REVIEW
 
 Before exiting, run (ignore errors):
 ```

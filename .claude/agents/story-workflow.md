@@ -20,7 +20,7 @@ Run the following steps in order, spawning a dedicated sub-agent for each. Pass 
    - STATUS: PASS → continue
 5. **Review loop** — spawn `review-pr` agent
    - STATUS: CHANGES_IMPLEMENTED → repeat step 5
-   - STATUS: PENDING_REVIEW → notify user to merge the PR and wait for their confirmation; resume at step 6 once they confirm
+   - STATUS: PENDING_REVIEW → notify the user that the PR needs review and they should merge it when ready. Wait for the user's confirmation that the PR is merged, then skip step 6 and go directly to step 7.
    - STATUS: APPROVED → continue
 6. **Merge** — if the user already merged (common in this solo project, they confirm verbally), skip `merge-pr` and proceed directly to step 7; otherwise spawn `merge-pr` agent
 7. **Verify** — spawn `verify-story` agent
