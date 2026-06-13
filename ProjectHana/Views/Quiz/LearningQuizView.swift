@@ -10,8 +10,9 @@ struct LearningQuizView: View {
 
     private let geo = GeographyDataLoader.shared
 
-    init(newCards: [ReviewCard]) {
-        _session = State(initialValue: LearningSession(newCards: newCards))
+    init(newCards: [ReviewCard], category: CardCategory? = nil) {
+        let store: ActiveSetStore? = category != nil ? UserDefaultsActiveSetStore() : nil
+        _session = State(initialValue: LearningSession(newCards: newCards, category: category, store: store))
     }
 
     var body: some View {

@@ -14,15 +14,51 @@ final class LearningSession {
 
     let totalNewCards: Int
 
+    private let category: CardCategory?
+    private let store: ActiveSetStore?
+
     var current: ReviewCard? {
         activeSet.indices.contains(currentIndex) ? activeSet[currentIndex] : nil
     }
 
-    init(newCards: [ReviewCard]) {
+    /// Convenience init (no persistence) — used by tests and non-category paths.
+    convenience init(newCards: [ReviewCard]) {
+        self.init(newCards: newCards, category: nil, store: nil)
+    }
+
+    /// Designated init with optional active-set persistence.
+    init(newCards: [ReviewCard], category: CardCategory?, store: ActiveSetStore?) {
         totalNewCards = newCards.count
-        let shuffled = newCards.shuffled()
-        activeSet = Array(shuffled.prefix(LearningSession.activeSetSize))
-        pendingPool = Array(shuffled.dropFirst(LearningSession.activeSetSize))
+        self.category = category
+        self.store = store
+
+        // Build a lookup from factID → ReviewCard for rehydration.
+        let byID = Dictionary(uniqueKeysWithValues: newCards.map { ($0.factID, $0) })
+
+        if let category, let store {
+            let storedIDs = store.load(for: category)
+            let rehydrated = storedIDs.compactMap { byID[$0] }.filter { !$0.hasGraduated }
+
+            if !rehydrated.isEmpty {
+                // Resume the previously persisted active set.
+                activeSet = rehydrated
+                let activeIDs = Set(rehydrated.map(\.factID))
+                let remaining = newCards.filter { !activeIDs.contains($0.factID) && !$0.hasGraduated }
+                pendingPool = remaining.shuffled()
+            } else {
+                // Stored IDs all graduated (or store was empty); draw a fresh set.
+                store.clear(for: category)
+                let shuffled = newCards.shuffled()
+                activeSet = Array(shuffled.prefix(LearningSession.activeSetSize))
+                pendingPool = Array(shuffled.dropFirst(LearningSession.activeSetSize))
+                store.save(activeSet.map(\.factID), for: category)
+            }
+        } else {
+            // No persistence.
+            let shuffled = newCards.shuffled()
+            activeSet = Array(shuffled.prefix(LearningSession.activeSetSize))
+            pendingPool = Array(shuffled.dropFirst(LearningSession.activeSetSize))
+        }
     }
 
     func recordCorrect() {
@@ -59,6 +95,15 @@ final class LearningSession {
         if let next = pendingPool.first {
             pendingPool.removeFirst()
             activeSet.append(next)
+        }
+
+        // Persist updated active-set membership.
+        if let category, let store {
+            if activeSet.isEmpty {
+                store.clear(for: category)
+            } else {
+                store.save(activeSet.map(\.factID), for: category)
+            }
         }
 
         if activeSet.isEmpty {
