@@ -23,7 +23,7 @@ xcrun simctl boot "iPhone 17" 2>/dev/null || true
 xcrun simctl uninstall booted com.private.ProjectHana 2>/dev/null || true
 ```
 
-For each criterion: run tests, inspect implementation, exercise the app if applicable.
+For each criterion: run tests if the story touches Swift source files, inspect implementation, exercise the app if applicable. For pure tooling/config/workflow stories (no Swift files changed), skip `just test` — verify the criteria directly by inspecting the changed files and confirming they match the spec.
 
 ---
 
