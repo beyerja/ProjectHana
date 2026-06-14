@@ -18,6 +18,7 @@
 		2AE1D2E426F022C999D475F9 /* HanahuacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */; };
 		31E53F4FFE9E7836BF041B92 /* MountainRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DCF2D94E310309B851816E /* MountainRange.swift */; };
 		336381EEDC9A560F046C30C2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108E300896C44A17DFF98AED /* HomeView.swift */; };
+		349F2725D5ABAE6225537557 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EDCEF7B89BAFA774D2290F /* Theme.swift */; };
 		39E70882FFB1F0CD0D62FE90 /* GeographyDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56B267CB810DA87B1D70D42 /* GeographyDataLoader.swift */; };
 		3BBC403170A14E326775578F /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B33F57D3ABE2A906E747101 /* L10n.swift */; };
 		3FED385A8C9B097850517F7F /* CardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69AF0C2DECD04EE4B147777 /* CardStore.swift */; };
@@ -33,6 +34,7 @@
 		708666E64532C95080761670 /* Sea.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */; };
 		714D2A18568B15E855DEB64E /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C067B5B526D874D731E4EE9D /* StatsView.swift */; };
 		746B09167C861A24BC5F5CB7 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = FDBB60735040472DC32CCCC4 /* mountains.json */; };
+		79BEDF36CA641A0AB2262AA5 /* HanahuacLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2512100D917D9763B4ABB694 /* HanahuacLogo.swift */; };
 		7CDA86A9E84DA8D1EEB1C188 /* CountryPinCoordinateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */; };
 		85AE02B97BA161330D662BDA /* River.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983C356AE304785D4A76665B /* River.swift */; };
 		866338A08A8637603AB53C2E /* QuizSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D781685E371E70F4ACB23A6 /* QuizSummaryView.swift */; };
@@ -80,6 +82,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02EDCEF7B89BAFA774D2290F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		108E300896C44A17DFF98AED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
 		132EB6CB2BB0B527A3C57527 /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
@@ -87,6 +90,7 @@
 		1BE902F9973E13AC591CEBF4 /* seas.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seas.json; sourceTree = "<group>"; };
 		1F3DE116C4E72605CC5529EB /* LocalizedGeoNameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedGeoNameTests.swift; sourceTree = "<group>"; };
 		24E8429BB7FEDE82E96359FF /* TextQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextQuizSession.swift; sourceTree = "<group>"; };
+		2512100D917D9763B4ABB694 /* HanahuacLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacLogo.swift; sourceTree = "<group>"; };
 		28541D220A20441BA2942BE5 /* LanguageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManagerTests.swift; sourceTree = "<group>"; };
 		2BE10D9C12442D7186628F76 /* MapQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizView.swift; sourceTree = "<group>"; };
 		2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacApp.swift; sourceTree = "<group>"; };
@@ -177,6 +181,14 @@
 			path = HanahuacTests;
 			sourceTree = "<group>";
 		};
+		10153568AEDF02888D64A940 /* Brand */ = {
+			isa = PBXGroup;
+			children = (
+				2512100D917D9763B4ABB694 /* HanahuacLogo.swift */,
+			);
+			path = Brand;
+			sourceTree = "<group>";
+		};
 		12A8B4FAFBA6E561810539E8 /* Store */ = {
 			isa = PBXGroup;
 			children = (
@@ -260,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				9716AF7F0E3C9128332682BD /* ViewExtensions.swift */,
+				10153568AEDF02888D64A940 /* Brand */,
 				98672772106AC8210F2F63F0 /* Home */,
 				B0C9E55D8F6E10C673C56345 /* Progress */,
 				702C9C8B778771F084B1E9D5 /* Quiz */,
@@ -303,6 +316,7 @@
 				78FDCB200865136E842DB317 /* ContentView.swift */,
 				2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */,
 				59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */,
+				02EDCEF7B89BAFA774D2290F /* Theme.swift */,
 				A6B3B0ECC243484FDB1A137F /* L10n */,
 				963BDC31BD0B0D1A170DD0F9 /* Models */,
 				26BDE4E7EA764A146870B244 /* Resources */,
@@ -447,6 +461,7 @@
 				7CDA86A9E84DA8D1EEB1C188 /* CountryPinCoordinateProvider.swift in Sources */,
 				39E70882FFB1F0CD0D62FE90 /* GeographyDataLoader.swift in Sources */,
 				41C5CE10A2A9DAB859E21887 /* HanahuacApp.swift in Sources */,
+				79BEDF36CA641A0AB2262AA5 /* HanahuacLogo.swift in Sources */,
 				336381EEDC9A560F046C30C2 /* HomeView.swift in Sources */,
 				3BBC403170A14E326775578F /* L10n.swift in Sources */,
 				ABA0A32BD133FC613F22CF09 /* LanguageManager.swift in Sources */,
@@ -476,6 +491,7 @@
 				714D2A18568B15E855DEB64E /* StatsView.swift in Sources */,
 				BEE55C74826C50C921997462 /* StreakTracker.swift in Sources */,
 				D16B30980B2CA326DD430AF5 /* TextQuizSession.swift in Sources */,
+				349F2725D5ABAE6225537557 /* Theme.swift in Sources */,
 				C6DC0F0BF19452DB23A0E48E /* ViewExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

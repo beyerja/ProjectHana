@@ -24,10 +24,10 @@ enum HomeQuizMode: Hashable {
 
     var color: Color {
         switch self {
-        case .mapQuiz: return .blue
-        case .multipleChoice: return .orange
-        case .typeCapital: return .purple
-        case .nameCountry: return .indigo
+        case .mapQuiz: return Theme.Palette.country
+        case .multipleChoice: return Theme.Palette.accentDeep
+        case .typeCapital: return Theme.Palette.mountain
+        case .nameCountry: return Theme.Palette.sea
         }
     }
 

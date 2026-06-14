@@ -4,6 +4,10 @@ set shell := ["bash", "-c"]
 export DEVELOPER_DIR := "/Applications/Xcode.app/Contents/Developer"
 export PATH := env_var("HOME") + "/.nix-profile/bin:" + env_var("PATH")
 
+# Regenerate Hanahuac.xcodeproj from project.yml (xcodegen comes from the flake dev shell via direnv)
+generate:
+    direnv exec . xcodegen generate
+
 # Run the full test suite on the iPhone 17 simulator
 test:
     xcodebuild test \

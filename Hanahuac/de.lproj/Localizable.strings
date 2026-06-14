@@ -1,6 +1,7 @@
 /* German */
 
 /* HomeView */
+"home.tagline" = "Eine Welt, ein Quiz nach dem anderen";
 "home.categories" = "Kategorien";
 "home.category.countries" = "Länder";
 "home.category.rivers" = "Flüsse";
@@ -9,6 +10,7 @@
 "home.view_progress" = "Fortschritt anzeigen";
 "home.tile.new" = "Neu";
 "home.tile.pending" = "Ausstehend";
+"home.tile.all_done" = "Alles erledigt";
 
 /* QuizModePickerView */
 "quiz.mode.map_tap.title" = "Karten-Quiz";

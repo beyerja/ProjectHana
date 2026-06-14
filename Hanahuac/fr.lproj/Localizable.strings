@@ -1,6 +1,7 @@
 /* French */
 
 /* HomeView */
+"home.tagline" = "Le monde entier, un quiz à la fois";
 "home.categories" = "Catégories";
 "home.category.countries" = "Pays";
 "home.category.rivers" = "Fleuves";
@@ -9,6 +10,7 @@
 "home.view_progress" = "Voir la progression";
 "home.tile.new" = "Nouveau";
 "home.tile.pending" = "En attente";
+"home.tile.all_done" = "Tout est à jour";
 
 /* QuizModePickerView */
 "quiz.mode.map_tap.title" = "Quiz Carte";

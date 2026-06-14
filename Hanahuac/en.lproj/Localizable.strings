@@ -1,6 +1,7 @@
 /* English */
 
 /* HomeView */
+"home.tagline" = "One world, one quiz at a time";
 "home.categories" = "Categories";
 "home.category.countries" = "Countries";
 "home.category.rivers" = "Rivers";
@@ -9,6 +10,7 @@
 "home.view_progress" = "View Progress";
 "home.tile.new" = "New";
 "home.tile.pending" = "Pending";
+"home.tile.all_done" = "All caught up";
 
 /* QuizModePickerView */
 "quiz.mode.map_tap.title" = "Map Tap Quiz";

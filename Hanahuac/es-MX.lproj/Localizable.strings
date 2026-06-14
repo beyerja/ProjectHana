@@ -1,6 +1,7 @@
 /* Mexican Spanish */
 
 /* HomeView */
+"home.tagline" = "Un mundo, un quiz a la vez";
 "home.categories" = "Categorías";
 "home.category.countries" = "Países";
 "home.category.rivers" = "Ríos";
@@ -9,6 +10,7 @@
 "home.view_progress" = "Ver progreso";
 "home.tile.new" = "Nuevo";
 "home.tile.pending" = "Pendiente";
+"home.tile.all_done" = "Todo al día";
 
 /* QuizModePickerView */
 "quiz.mode.map_tap.title" = "Quiz de Mapa";
