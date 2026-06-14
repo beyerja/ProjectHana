@@ -4,16 +4,16 @@ on:
   push:
     branches: [main]
     paths:
-      - 'ProjectHana/**'
-      - 'ProjectHanaTests/**'
-      - 'ProjectHana.xcodeproj/**'
+      - 'Hanahuac/**'
+      - 'HanahuacTests/**'
+      - 'Hanahuac.xcodeproj/**'
       - '.github/workflows/**'
   pull_request:
     branches: [main]
     paths:
-      - 'ProjectHana/**'
-      - 'ProjectHanaTests/**'
-      - 'ProjectHana.xcodeproj/**'
+      - 'Hanahuac/**'
+      - 'HanahuacTests/**'
+      - 'Hanahuac.xcodeproj/**'
       - '.github/workflows/**'
 
 jobs:
@@ -29,8 +29,8 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild build \
-            -project ProjectHana.xcodeproj \
-            -scheme ProjectHana \
+            -project Hanahuac.xcodeproj \
+            -scheme Hanahuac \
             -destination 'platform=macOS,variant=Mac Catalyst' \
             -configuration Debug \
             CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
@@ -39,8 +39,8 @@ jobs:
         run: |
           set -o pipefail
           xcodebuild test \
-            -project ProjectHana.xcodeproj \
-            -scheme ProjectHana \
+            -project Hanahuac.xcodeproj \
+            -scheme Hanahuac \
             -destination 'platform=macOS,variant=Mac Catalyst' \
             -configuration Debug \
             CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO

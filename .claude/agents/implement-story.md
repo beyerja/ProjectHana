@@ -29,26 +29,35 @@ When adding or removing fields on an `@Model` type:
 - After any schema change, grep all existing tests that construct the changed model type and verify they pass the new required fields. Tests that create model instances and omit new non-optional properties will produce compiler errors; tests that rely on old default values (e.g. `hasGraduated: false`) may silently produce wrong results — audit those explicitly.
 - If the story spec does not include a migration plan, use `ModelConfiguration(isStoredInMemoryOnly: true)` in tests so they never touch the on-disk store.
 
-**Xcode project wiring (pbxproj)**
-Every new `.swift` file must be added to `ProjectHana.xcodeproj/project.pbxproj`:
-- Allocate the next two sequential UUIDs. Find the current max by grepping `AA0000` in the pbxproj; use max+1 and max+2 (UUID ordering does not matter to Xcode).
-- Add a `PBXBuildFile` entry (one UUID) and a `PBXFileReference` entry (the other UUID).
-- Add the file reference to the correct `PBXGroup` (matching its folder path).
-- Add the build file to the correct `PBXSourcesBuildPhase` (main target or test target).
-- For resource files (JSON, assets): add to `PBXResourcesBuildPhase` instead.
+**Xcode project is generated — never hand-edit the pbxproj**
+The project is generated from `project.yml` by xcodegen. Source/resource files are enumerated
+from folder paths (`Hanahuac/`, `HanahuacTests/`), so after **adding or removing any file** run:
+```sh
+just generate
+```
+Then `just test`. Do NOT manually edit `Hanahuac.xcodeproj/project.pbxproj` — it is overwritten by
+`just generate`. To change targets, settings, schemes, or the bundle id, edit `project.yml` and
+regenerate. (Files inside `*.xcassets` — e.g. app-icon PNGs — are folder-referenced and need no
+regeneration.)
+
+**Builds and tests go through `just` — no manual env**
+Use `just build-sim`, `just test`, `just build-mac`, `just generate`, `just icon`. These carry the
+correct toolchain via flake + direnv. Never prefix commands with `DEVELOPER_DIR=…`, `ZDOTDIR=…`, or
+`export PATH=/nix/…` — the environment is already wired (see `.envrc`, `flake.nix` `mkShellNoCC`,
+and `.claude/shell/.zshenv`).
 
 **Avoid redeclaration before adding extensions**
 Before adding a new `extension` on any existing type (model, enum, struct), grep the codebase for existing extensions and computed properties on that type:
 ```sh
-grep -r "extension <TypeName>" ProjectHana/
+grep -r "extension <TypeName>" Hanahuac/
 ```
 If a property or method you are about to add already exists in another file, reuse it — do not redeclare it. Common culprits: `displayName`, `localizedName`, `color`, `iconName` on model types used in multiple views.
 
 **iOS-only APIs**
-Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `ProjectHana/Views/ViewExtensions.swift` rather than direct calls.
+Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `Hanahuac/Views/ViewExtensions.swift` rather than direct calls.
 
 After all tasks are done:
-6. Run `bash scripts/install-mac.sh` **only if** the story adds new Swift files or introduces UI modifiers / APIs not already present in the codebase. Skip it for changes that only modify existing logic, geometry, or data within SwiftUI view bodies using patterns already in the project — and note the skip in the telemetry notes. When in doubt, run it.
+6. Run `just install` **only if** the story adds new Swift files or introduces UI modifiers / APIs not already present in the codebase. Skip it for changes that only modify existing logic, geometry, or data within SwiftUI view bodies using patterns already in the project — and note the skip in the telemetry notes. When in doubt, run it.
 
 **Telemetry — run before appending to log.md:**
 Count your tool calls in this run: R = Read calls, W = Write calls, E = Edit calls, B = Bash calls. Estimate total chars processed (sum of file sizes read + written). Then run (ignore errors):

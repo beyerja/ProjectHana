@@ -10,6 +10,9 @@ build/
 *.mode2v3
 *.perspectivev3
 
+# direnv (flake dev-shell cache)
+.direnv/
+
 # Swift Package Manager
 .build/
 .swiftpm/

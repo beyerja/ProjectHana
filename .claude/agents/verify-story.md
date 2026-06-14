@@ -20,7 +20,7 @@ git checkout main && git pull origin main
 If the story modified any `@Model` type, boot the simulator and uninstall the app before running tests to avoid a stale-schema crash:
 ```sh
 xcrun simctl boot "iPhone 17" 2>/dev/null || true
-xcrun simctl uninstall booted com.private.ProjectHana 2>/dev/null || true
+xcrun simctl uninstall booted com.hanahuac.app 2>/dev/null || true
 ```
 
 For each criterion: run tests if the story touches Swift source files, inspect implementation, exercise the app if applicable. For pure tooling/config/workflow stories (no Swift files changed), skip `just test` — verify the criteria directly by inspecting the changed files and confirming they match the spec.
@@ -46,7 +46,7 @@ If `<story-dir>/spec.md` contains a `## Visual Verification` section, perform th
 3. **Launch the app:**
    ```sh
    just launch-sim || {
-     BUNDLE=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' ProjectHana.xcodeproj/project.pbxproj | sed 's/.*= "//;s/";//')
+     BUNDLE=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' Hanahuac.xcodeproj/project.pbxproj | sed 's/.*= "//;s/";//')
      xcrun simctl launch booted "$BUNDLE"
    }
    sleep 2

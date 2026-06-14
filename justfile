@@ -4,11 +4,19 @@ set shell := ["bash", "-c"]
 export DEVELOPER_DIR := "/Applications/Xcode.app/Contents/Developer"
 export PATH := env_var("HOME") + "/.nix-profile/bin:" + env_var("PATH")
 
+# Regenerate Hanahuac.xcodeproj from project.yml (xcodegen comes from the flake dev shell via direnv)
+generate:
+    direnv exec . xcodegen generate
+
+# Render the 1024x1024 app icon PNG from the SwiftUI brand mark
+icon:
+    xcrun swift scripts/make-icon.swift
+
 # Run the full test suite on the iPhone 17 simulator
 test:
     xcodebuild test \
-        -project ProjectHana.xcodeproj \
-        -scheme ProjectHana \
+        -project Hanahuac.xcodeproj \
+        -scheme Hanahuac \
         -destination 'platform=iOS Simulator,name=iPhone 17' \
         2>&1 | grep -E "TEST SUCCEEDED|TEST FAILED|error:|Test Case.*failed" \
              | grep -v "CoreData|simctl|appintents"
@@ -16,10 +24,10 @@ test:
 # Build the Mac Catalyst app (ad-hoc signed)
 build-mac:
     xcodebuild build \
-        -project ProjectHana.xcodeproj \
-        -scheme ProjectHana \
+        -project Hanahuac.xcodeproj \
+        -scheme Hanahuac \
         -destination 'platform=macOS,variant=Mac Catalyst' \
-        -derivedDataPath /tmp/ProjectHana-mac-build \
+        -derivedDataPath /tmp/Hanahuac-mac-build \
         CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
         2>&1 | tail -3
 
@@ -27,12 +35,12 @@ build-mac:
 install: build-mac
     #!/usr/bin/env bash
     set -euo pipefail
-    APP=$(find /tmp/ProjectHana-mac-build -name "ProjectHana.app" -maxdepth 6 | head -1)
-    pkill -x ProjectHana 2>/dev/null || true
+    APP=$(find /tmp/Hanahuac-mac-build -name "Hanahuac.app" -maxdepth 6 | head -1)
+    pkill -x Hanahuac 2>/dev/null || true
     sleep 1
-    rm -rf /Applications/ProjectHana.app
+    rm -rf /Applications/Hanahuac.app
     cp -R "$APP" /Applications/
-    open /Applications/ProjectHana.app
+    open /Applications/Hanahuac.app
 
 # List open PRs
 pr-list:
@@ -55,19 +63,19 @@ build-sim:
     #!/usr/bin/env bash
     set -euo pipefail
     xcodebuild build \
-        -project ProjectHana.xcodeproj \
-        -scheme ProjectHana \
+        -project Hanahuac.xcodeproj \
+        -scheme Hanahuac \
         -destination 'platform=iOS Simulator,name=iPhone 17' \
-        -derivedDataPath /tmp/ProjectHana-sim-build \
+        -derivedDataPath /tmp/Hanahuac-sim-build \
         2>&1 | tail -5
-    APP=$(find /tmp/ProjectHana-sim-build -name "ProjectHana.app" -maxdepth 10 | head -1)
+    APP=$(find /tmp/Hanahuac-sim-build -name "Hanahuac.app" -maxdepth 10 | head -1)
     echo "Built: $APP"
 
 # Install the app to the booted simulator (depends on build-sim)
 install-sim: build-sim
     #!/usr/bin/env bash
     set -euo pipefail
-    APP=$(find /tmp/ProjectHana-sim-build -name "ProjectHana.app" -maxdepth 10 | head -1)
+    APP=$(find /tmp/Hanahuac-sim-build -name "Hanahuac.app" -maxdepth 10 | head -1)
     xcrun simctl install booted "$APP"
     echo "Installed: $APP"
 
@@ -77,7 +85,7 @@ boot-sim:
 
 # Launch the installed app on the booted simulator
 launch-sim:
-    xcrun simctl launch booted com.projecthana.app
+    xcrun simctl launch booted com.hanahuac.app
 
 # Take a screenshot of the booted simulator and save it to the given path; exits non-zero on failure
 screenshot-sim path:

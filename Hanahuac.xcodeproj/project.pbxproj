@@ -1,0 +1,786 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0114442720969F5864F55E6D /* PilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96647996ABAD24F4AB1F1941 /* PilePickerView.swift */; };
+		0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */; };
+		16A319228D8757B6F595F322 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C30D9ED535AEDD850E02807 /* LearningSession.swift */; };
+		17EDC98B738E0A1FF613B15F /* AppLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A287A2E1964EE9A8ECFAB7 /* AppLocale.swift */; };
+		190B6EF7CCCBA8FBF190F761 /* MultipleChoiceQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */; };
+		1BBF3DAD7B746BF4D4AD594B /* MapLearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46B3C69015B149060636051F /* MapLearningQuizView.swift */; };
+		2180297825B2EE4291F570E2 /* PreviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A0BDD7AD08FB4D44215D35 /* PreviewStore.swift */; };
+		24ED5005ECE65AA9F7BB2B9E /* seas.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BE902F9973E13AC591CEBF4 /* seas.json */; };
+		2AE1D2E426F022C999D475F9 /* HanahuacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */; };
+		31E53F4FFE9E7836BF041B92 /* MountainRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DCF2D94E310309B851816E /* MountainRange.swift */; };
+		336381EEDC9A560F046C30C2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108E300896C44A17DFF98AED /* HomeView.swift */; };
+		349F2725D5ABAE6225537557 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EDCEF7B89BAFA774D2290F /* Theme.swift */; };
+		39E70882FFB1F0CD0D62FE90 /* GeographyDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56B267CB810DA87B1D70D42 /* GeographyDataLoader.swift */; };
+		3BBC403170A14E326775578F /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B33F57D3ABE2A906E747101 /* L10n.swift */; };
+		3FED385A8C9B097850517F7F /* CardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69AF0C2DECD04EE4B147777 /* CardStore.swift */; };
+		41C5CE10A2A9DAB859E21887 /* HanahuacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */; };
+		420F469B2440869A0BC557C3 /* SM2Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFCAD670B510A8E79864C5F /* SM2Scheduler.swift */; };
+		50738B4C009D70A58A9AEBE8 /* country-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = 6D8E85F2AA5FFFC3920B316C /* country-borders.json */; };
+		50B17A2F93D184FEAED3D88D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FDCB200865136E842DB317 /* ContentView.swift */; };
+		53C2E037B85C8C89A414C2D4 /* PoleLabelCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */; };
+		58EC26C66D332F8E7B88B468 /* MapLearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */; };
+		5C3F3A38388D7D8C23D5E66F /* MapQuizRegionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */; };
+		64BA046A2AA02BABA9422B62 /* MultipleChoiceSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F092FAD49DC2860FC69F0E8 /* MultipleChoiceSession.swift */; };
+		6E1791FD0E30A196559956B8 /* ActiveSetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A920142B5EE81A611BBC5C /* ActiveSetStore.swift */; };
+		708666E64532C95080761670 /* Sea.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */; };
+		714D2A18568B15E855DEB64E /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C067B5B526D874D731E4EE9D /* StatsView.swift */; };
+		746B09167C861A24BC5F5CB7 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = FDBB60735040472DC32CCCC4 /* mountains.json */; };
+		79BEDF36CA641A0AB2262AA5 /* HanahuacLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2512100D917D9763B4ABB694 /* HanahuacLogo.swift */; };
+		7CDA86A9E84DA8D1EEB1C188 /* CountryPinCoordinateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */; };
+		85AE02B97BA161330D662BDA /* River.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983C356AE304785D4A76665B /* River.swift */; };
+		866338A08A8637603AB53C2E /* QuizSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D781685E371E70F4ACB23A6 /* QuizSummaryView.swift */; };
+		89BAB351841F9FF51443F22D /* QuizPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF2AEB96E37A3798632C4A8 /* QuizPlaceholderView.swift */; };
+		8BD76201C8B44BDBE5A83E8B /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C79D6B37134580FEAE9AD70 /* Country.swift */; };
+		8D0E371BF5449F8DC3E68A81 /* LearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A6378C2D06D307933A42E1 /* LearningTests.swift */; };
+		8FF3959B891ECBCF499BCEE3 /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */; };
+		91BF4999F0EC34D6D1AB3271 /* MasteryTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */; };
+		92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */; };
+		9E799E4670DC8E021D1C97B9 /* MapQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE603D47A5DB8ED986C7F0 /* MapQuizSession.swift */; };
+		9F0CD581EDE922EAF670F9A8 /* MapLearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */; };
+		A8993F9B6F5EE4D9BF4EB35F /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DF698B124B767490E9361E /* LanguagePickerView.swift */; };
+		A8A94D2FDC44E49B9B0443FD /* QuizRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421BD7E949578F4FFA0BF9CF /* QuizRoute.swift */; };
+		ABA0A32BD133FC613F22CF09 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57AFB83614F6804D3671A1 /* LanguageManager.swift */; };
+		AEC45EB17BDE7F455C1CB7AE /* GeographyDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */; };
+		B144EBDC8C5F79A95B883FB5 /* AppLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C96CAC8649DD9B837C7678 /* AppLocaleTests.swift */; };
+		BEE55C74826C50C921997462 /* StreakTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758AF9EF8095AC6033447A90 /* StreakTracker.swift */; };
+		C68CFF1817E61FD869159D72 /* LocalizedQuizPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C092259C29945C5CE6C89A2 /* LocalizedQuizPromptTests.swift */; };
+		C6C390DA85F5759C498E9345 /* StatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132EB6CB2BB0B527A3C57527 /* StatsTests.swift */; };
+		C6DC0F0BF19452DB23A0E48E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9716AF7F0E3C9128332682BD /* ViewExtensions.swift */; };
+		CB1BC56B0D4FF4D335F98ADD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */; };
+		CDC0C11EC4692BC78215E08F /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = C24D1F0D98466C85ACE2D994 /* countries.json */; };
+		D16B30980B2CA326DD430AF5 /* TextQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E8429BB7FEDE82E96359FF /* TextQuizSession.swift */; };
+		D1B5CF9272BC39C196371B53 /* LanguageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28541D220A20441BA2942BE5 /* LanguageManagerTests.swift */; };
+		D1D468680D674A6511855845 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6065359AA37AEFC736E0B30 /* Assets.xcassets */; };
+		D271184A77C56BA40576BA3D /* LocalizedGeoNameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3DE116C4E72605CC5529EB /* LocalizedGeoNameTests.swift */; };
+		D81EDE85F2EF406BCE8CAA1C /* MapQuizRegionHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */; };
+		D8B11A241DC46B0A17B182E2 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB32874B4CD59E7A7B15526 /* ReviewCard.swift */; };
+		ED9937F2AC4E976EA91CB3C1 /* LearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9ED59834EB421065830ED /* LearningQuizView.swift */; };
+		F27547F2B084E91E0D7BE4E1 /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = F11FD6C85244DEBF7904B118 /* rivers.json */; };
+		F3E4BC54608032C208888F95 /* CountryBorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412DC824A749D0667C05943 /* CountryBorderLoader.swift */; };
+		F5FC0DE759E57E9892B08EE5 /* MapQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE10D9C12442D7186628F76 /* MapQuizView.swift */; };
+		F85BD5459DFBA29F33879E88 /* CapitalQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */; };
+		FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3E4834B4B983971B3274E655 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A4FCCB285781971ABB70E95B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D8A85CDAEC6C117A3F2428D;
+			remoteInfo = Hanahuac;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02EDCEF7B89BAFA774D2290F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		108E300896C44A17DFF98AED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
+		132EB6CB2BB0B527A3C57527 /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
+		16C96CAC8649DD9B837C7678 /* AppLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocaleTests.swift; sourceTree = "<group>"; };
+		1BE902F9973E13AC591CEBF4 /* seas.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seas.json; sourceTree = "<group>"; };
+		1F3DE116C4E72605CC5529EB /* LocalizedGeoNameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedGeoNameTests.swift; sourceTree = "<group>"; };
+		24E8429BB7FEDE82E96359FF /* TextQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextQuizSession.swift; sourceTree = "<group>"; };
+		2512100D917D9763B4ABB694 /* HanahuacLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacLogo.swift; sourceTree = "<group>"; };
+		28541D220A20441BA2942BE5 /* LanguageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManagerTests.swift; sourceTree = "<group>"; };
+		2BE10D9C12442D7186628F76 /* MapQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizView.swift; sourceTree = "<group>"; };
+		2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacApp.swift; sourceTree = "<group>"; };
+		2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningTests.swift; sourceTree = "<group>"; };
+		33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningSession.swift; sourceTree = "<group>"; };
+		3C79D6B37134580FEAE9AD70 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		41380920DBE818A192AD116A /* HanahuacTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HanahuacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		421BD7E949578F4FFA0BF9CF /* QuizRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizRoute.swift; sourceTree = "<group>"; };
+		46B3C69015B149060636051F /* MapLearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningQuizView.swift; sourceTree = "<group>"; };
+		4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapitalQuizView.swift; sourceTree = "<group>"; };
+		5F092FAD49DC2860FC69F0E8 /* MultipleChoiceSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceSession.swift; sourceTree = "<group>"; };
+		633F2484D956811A774A989B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelper.swift; sourceTree = "<group>"; };
+		6B33F57D3ABE2A906E747101 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
+		6C092259C29945C5CE6C89A2 /* LocalizedQuizPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedQuizPromptTests.swift; sourceTree = "<group>"; };
+		6C30D9ED535AEDD850E02807 /* LearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningSession.swift; sourceTree = "<group>"; };
+		6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPinCoordinateProvider.swift; sourceTree = "<group>"; };
+		6D781685E371E70F4ACB23A6 /* QuizSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSummaryView.swift; sourceTree = "<group>"; };
+		6D8E85F2AA5FFFC3920B316C /* country-borders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "country-borders.json"; sourceTree = "<group>"; };
+		758AF9EF8095AC6033447A90 /* StreakTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakTracker.swift; sourceTree = "<group>"; };
+		78FDCB200865136E842DB317 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacTests.swift; sourceTree = "<group>"; };
+		7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLogicTests.swift; sourceTree = "<group>"; };
+		879A10791B45594CB569EDAA /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		8DB32874B4CD59E7A7B15526 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
+		96647996ABAD24F4AB1F1941 /* PilePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PilePickerView.swift; sourceTree = "<group>"; };
+		96A6378C2D06D307933A42E1 /* LearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningTests.swift; sourceTree = "<group>"; };
+		9716AF7F0E3C9128332682BD /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		983C356AE304785D4A76665B /* River.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = River.swift; sourceTree = "<group>"; };
+		9E7710CFEA52939B5CC38E2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		A8A920142B5EE81A611BBC5C /* ActiveSetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSetStore.swift; sourceTree = "<group>"; };
+		B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
+		B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoaderTests.swift; sourceTree = "<group>"; };
+		BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2SchedulerTests.swift; sourceTree = "<group>"; };
+		C067B5B526D874D731E4EE9D /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
+		C1A0BDD7AD08FB4D44215D35 /* PreviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewStore.swift; sourceTree = "<group>"; };
+		C24D1F0D98466C85ACE2D994 /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
+		C412DC824A749D0667C05943 /* CountryBorderLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryBorderLoader.swift; sourceTree = "<group>"; };
+		C4A287A2E1964EE9A8ECFAB7 /* AppLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocale.swift; sourceTree = "<group>"; };
+		C56B267CB810DA87B1D70D42 /* GeographyDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoader.swift; sourceTree = "<group>"; };
+		C7DF698B124B767490E9361E /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
+		C7E2B565AEAAD1F772460F00 /* Hanahuac.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Hanahuac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0AE603D47A5DB8ED986C7F0 /* MapQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizSession.swift; sourceTree = "<group>"; };
+		DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasteryTier.swift; sourceTree = "<group>"; };
+		E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoleLabelCalculator.swift; sourceTree = "<group>"; };
+		E6065359AA37AEFC736E0B30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E69AF0C2DECD04EE4B147777 /* CardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStore.swift; sourceTree = "<group>"; };
+		E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPlaceholderView.swift; sourceTree = "<group>"; };
+		EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sea.swift; sourceTree = "<group>"; };
+		EAFCAD670B510A8E79864C5F /* SM2Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Scheduler.swift; sourceTree = "<group>"; };
+		EC57AFB83614F6804D3671A1 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
+		EEF2AEB96E37A3798632C4A8 /* QuizPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPlaceholderView.swift; sourceTree = "<group>"; };
+		F0DCF2D94E310309B851816E /* MountainRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainRange.swift; sourceTree = "<group>"; };
+		F11FD6C85244DEBF7904B118 /* rivers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rivers.json; sourceTree = "<group>"; };
+		F2A9ED59834EB421065830ED /* LearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningQuizView.swift; sourceTree = "<group>"; };
+		F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelperTests.swift; sourceTree = "<group>"; };
+		FDBB60735040472DC32CCCC4 /* mountains.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mountains.json; sourceTree = "<group>"; };
+		FDE760ADFAE4DF5B9A730C37 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		02C2AAFBA2FD1C7801BEBDAE /* TextQuiz */ = {
+			isa = PBXGroup;
+			children = (
+				4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */,
+				24E8429BB7FEDE82E96359FF /* TextQuizSession.swift */,
+			);
+			path = TextQuiz;
+			sourceTree = "<group>";
+		};
+		09DFEA148296A9DBE8F59372 /* HanahuacTests */ = {
+			isa = PBXGroup;
+			children = (
+				16C96CAC8649DD9B837C7678 /* AppLocaleTests.swift */,
+				B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */,
+				B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */,
+				7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */,
+				28541D220A20441BA2942BE5 /* LanguageManagerTests.swift */,
+				96A6378C2D06D307933A42E1 /* LearningTests.swift */,
+				1F3DE116C4E72605CC5529EB /* LocalizedGeoNameTests.swift */,
+				6C092259C29945C5CE6C89A2 /* LocalizedQuizPromptTests.swift */,
+				2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */,
+				F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */,
+				7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */,
+				BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */,
+				132EB6CB2BB0B527A3C57527 /* StatsTests.swift */,
+			);
+			path = HanahuacTests;
+			sourceTree = "<group>";
+		};
+		10153568AEDF02888D64A940 /* Brand */ = {
+			isa = PBXGroup;
+			children = (
+				2512100D917D9763B4ABB694 /* HanahuacLogo.swift */,
+			);
+			path = Brand;
+			sourceTree = "<group>";
+		};
+		12A8B4FAFBA6E561810539E8 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				E69AF0C2DECD04EE4B147777 /* CardStore.swift */,
+				C1A0BDD7AD08FB4D44215D35 /* PreviewStore.swift */,
+				758AF9EF8095AC6033447A90 /* StreakTracker.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		26BDE4E7EA764A146870B244 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C24D1F0D98466C85ACE2D994 /* countries.json */,
+				6D8E85F2AA5FFFC3920B316C /* country-borders.json */,
+				FDBB60735040472DC32CCCC4 /* mountains.json */,
+				F11FD6C85244DEBF7904B118 /* rivers.json */,
+				1BE902F9973E13AC591CEBF4 /* seas.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2E9B684694FE3C52422A83AE /* MultipleChoice */ = {
+			isa = PBXGroup;
+			children = (
+				11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */,
+				5F092FAD49DC2860FC69F0E8 /* MultipleChoiceSession.swift */,
+			);
+			path = MultipleChoice;
+			sourceTree = "<group>";
+		};
+		51A884E61CB86E3B2324D636 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C7E2B565AEAAD1F772460F00 /* Hanahuac.app */,
+				41380920DBE818A192AD116A /* HanahuacTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6CB4D1FD21A55029214EDBAB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C7DF698B124B767490E9361E /* LanguagePickerView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		702C9C8B778771F084B1E9D5 /* Quiz */ = {
+			isa = PBXGroup;
+			children = (
+				F2A9ED59834EB421065830ED /* LearningQuizView.swift */,
+				EEF2AEB96E37A3798632C4A8 /* QuizPlaceholderView.swift */,
+				B2D6418EB07DE5AA00414C4F /* MapQuiz */,
+				2E9B684694FE3C52422A83AE /* MultipleChoice */,
+				02C2AAFBA2FD1C7801BEBDAE /* TextQuiz */,
+			);
+			path = Quiz;
+			sourceTree = "<group>";
+		};
+		963BDC31BD0B0D1A170DD0F9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A8A920142B5EE81A611BBC5C /* ActiveSetStore.swift */,
+				3C79D6B37134580FEAE9AD70 /* Country.swift */,
+				C412DC824A749D0667C05943 /* CountryBorderLoader.swift */,
+				6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */,
+				C56B267CB810DA87B1D70D42 /* GeographyDataLoader.swift */,
+				6C30D9ED535AEDD850E02807 /* LearningSession.swift */,
+				DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */,
+				F0DCF2D94E310309B851816E /* MountainRange.swift */,
+				E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */,
+				8DB32874B4CD59E7A7B15526 /* ReviewCard.swift */,
+				983C356AE304785D4A76665B /* River.swift */,
+				EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		97DF77E078CD225DB0B34666 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9716AF7F0E3C9128332682BD /* ViewExtensions.swift */,
+				10153568AEDF02888D64A940 /* Brand */,
+				98672772106AC8210F2F63F0 /* Home */,
+				B0C9E55D8F6E10C673C56345 /* Progress */,
+				702C9C8B778771F084B1E9D5 /* Quiz */,
+				6CB4D1FD21A55029214EDBAB /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		98672772106AC8210F2F63F0 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				108E300896C44A17DFF98AED /* HomeView.swift */,
+				96647996ABAD24F4AB1F1941 /* PilePickerView.swift */,
+				421BD7E949578F4FFA0BF9CF /* QuizRoute.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A1EE3E6857E6E868CE39F7A7 /* Scheduler */ = {
+			isa = PBXGroup;
+			children = (
+				EAFCAD670B510A8E79864C5F /* SM2Scheduler.swift */,
+			);
+			path = Scheduler;
+			sourceTree = "<group>";
+		};
+		A6B3B0ECC243484FDB1A137F /* L10n */ = {
+			isa = PBXGroup;
+			children = (
+				C4A287A2E1964EE9A8ECFAB7 /* AppLocale.swift */,
+				6B33F57D3ABE2A906E747101 /* L10n.swift */,
+				EC57AFB83614F6804D3671A1 /* LanguageManager.swift */,
+			);
+			path = L10n;
+			sourceTree = "<group>";
+		};
+		AD0F2B4580824DC77DDF6185 /* Hanahuac */ = {
+			isa = PBXGroup;
+			children = (
+				E6065359AA37AEFC736E0B30 /* Assets.xcassets */,
+				78FDCB200865136E842DB317 /* ContentView.swift */,
+				2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */,
+				59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */,
+				02EDCEF7B89BAFA774D2290F /* Theme.swift */,
+				A6B3B0ECC243484FDB1A137F /* L10n */,
+				963BDC31BD0B0D1A170DD0F9 /* Models */,
+				26BDE4E7EA764A146870B244 /* Resources */,
+				A1EE3E6857E6E868CE39F7A7 /* Scheduler */,
+				12A8B4FAFBA6E561810539E8 /* Store */,
+				97DF77E078CD225DB0B34666 /* Views */,
+			);
+			path = Hanahuac;
+			sourceTree = "<group>";
+		};
+		B0C9E55D8F6E10C673C56345 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */,
+				C067B5B526D874D731E4EE9D /* StatsView.swift */,
+			);
+			path = Progress;
+			sourceTree = "<group>";
+		};
+		B2D6418EB07DE5AA00414C4F /* MapQuiz */ = {
+			isa = PBXGroup;
+			children = (
+				46B3C69015B149060636051F /* MapLearningQuizView.swift */,
+				33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */,
+				6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */,
+				D0AE603D47A5DB8ED986C7F0 /* MapQuizSession.swift */,
+				2BE10D9C12442D7186628F76 /* MapQuizView.swift */,
+				6D781685E371E70F4ACB23A6 /* QuizSummaryView.swift */,
+			);
+			path = MapQuiz;
+			sourceTree = "<group>";
+		};
+		FC85180E538FE13CB2C2E1C4 = {
+			isa = PBXGroup;
+			children = (
+				AD0F2B4580824DC77DDF6185 /* Hanahuac */,
+				09DFEA148296A9DBE8F59372 /* HanahuacTests */,
+				51A884E61CB86E3B2324D636 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9D8A85CDAEC6C117A3F2428D /* Hanahuac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3DE504E80D19D31EE3B46D99 /* Build configuration list for PBXNativeTarget "Hanahuac" */;
+			buildPhases = (
+				CE9B7631E8A8CAE35D451175 /* Sources */,
+				A451571413C598B33CD29192 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Hanahuac;
+			packageProductDependencies = (
+			);
+			productName = Hanahuac;
+			productReference = C7E2B565AEAAD1F772460F00 /* Hanahuac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AD1C92BBBEFBDEC1088CDC68 /* HanahuacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E6CCFE5016B25B6706B936A7 /* Build configuration list for PBXNativeTarget "HanahuacTests" */;
+			buildPhases = (
+				E4FED9FF3E70DAAED9E26EFF /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7FB4E6E629CE8E0B2F2781A1 /* PBXTargetDependency */,
+			);
+			name = HanahuacTests;
+			packageProductDependencies = (
+			);
+			productName = HanahuacTests;
+			productReference = 41380920DBE818A192AD116A /* HanahuacTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A4FCCB285781971ABB70E95B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 8914428039F7DD0E012286E9 /* Build configuration list for PBXProject "Hanahuac" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				de,
+				en,
+				"es-MX",
+				fr,
+			);
+			mainGroup = FC85180E538FE13CB2C2E1C4;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9D8A85CDAEC6C117A3F2428D /* Hanahuac */,
+				AD1C92BBBEFBDEC1088CDC68 /* HanahuacTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A451571413C598B33CD29192 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1D468680D674A6511855845 /* Assets.xcassets in Resources */,
+				CB1BC56B0D4FF4D335F98ADD /* Localizable.strings in Resources */,
+				CDC0C11EC4692BC78215E08F /* countries.json in Resources */,
+				50738B4C009D70A58A9AEBE8 /* country-borders.json in Resources */,
+				746B09167C861A24BC5F5CB7 /* mountains.json in Resources */,
+				F27547F2B084E91E0D7BE4E1 /* rivers.json in Resources */,
+				24ED5005ECE65AA9F7BB2B9E /* seas.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CE9B7631E8A8CAE35D451175 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E1791FD0E30A196559956B8 /* ActiveSetStore.swift in Sources */,
+				17EDC98B738E0A1FF613B15F /* AppLocale.swift in Sources */,
+				F85BD5459DFBA29F33879E88 /* CapitalQuizView.swift in Sources */,
+				3FED385A8C9B097850517F7F /* CardStore.swift in Sources */,
+				50B17A2F93D184FEAED3D88D /* ContentView.swift in Sources */,
+				8BD76201C8B44BDBE5A83E8B /* Country.swift in Sources */,
+				F3E4BC54608032C208888F95 /* CountryBorderLoader.swift in Sources */,
+				7CDA86A9E84DA8D1EEB1C188 /* CountryPinCoordinateProvider.swift in Sources */,
+				39E70882FFB1F0CD0D62FE90 /* GeographyDataLoader.swift in Sources */,
+				41C5CE10A2A9DAB859E21887 /* HanahuacApp.swift in Sources */,
+				79BEDF36CA641A0AB2262AA5 /* HanahuacLogo.swift in Sources */,
+				336381EEDC9A560F046C30C2 /* HomeView.swift in Sources */,
+				3BBC403170A14E326775578F /* L10n.swift in Sources */,
+				ABA0A32BD133FC613F22CF09 /* LanguageManager.swift in Sources */,
+				A8993F9B6F5EE4D9BF4EB35F /* LanguagePickerView.swift in Sources */,
+				ED9937F2AC4E976EA91CB3C1 /* LearningQuizView.swift in Sources */,
+				16A319228D8757B6F595F322 /* LearningSession.swift in Sources */,
+				1BBF3DAD7B746BF4D4AD594B /* MapLearningQuizView.swift in Sources */,
+				58EC26C66D332F8E7B88B468 /* MapLearningSession.swift in Sources */,
+				5C3F3A38388D7D8C23D5E66F /* MapQuizRegionHelper.swift in Sources */,
+				9E799E4670DC8E021D1C97B9 /* MapQuizSession.swift in Sources */,
+				F5FC0DE759E57E9892B08EE5 /* MapQuizView.swift in Sources */,
+				91BF4999F0EC34D6D1AB3271 /* MasteryTier.swift in Sources */,
+				31E53F4FFE9E7836BF041B92 /* MountainRange.swift in Sources */,
+				190B6EF7CCCBA8FBF190F761 /* MultipleChoiceQuizView.swift in Sources */,
+				64BA046A2AA02BABA9422B62 /* MultipleChoiceSession.swift in Sources */,
+				0114442720969F5864F55E6D /* PilePickerView.swift in Sources */,
+				53C2E037B85C8C89A414C2D4 /* PoleLabelCalculator.swift in Sources */,
+				2180297825B2EE4291F570E2 /* PreviewStore.swift in Sources */,
+				92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */,
+				89BAB351841F9FF51443F22D /* QuizPlaceholderView.swift in Sources */,
+				A8A94D2FDC44E49B9B0443FD /* QuizRoute.swift in Sources */,
+				866338A08A8637603AB53C2E /* QuizSummaryView.swift in Sources */,
+				D8B11A241DC46B0A17B182E2 /* ReviewCard.swift in Sources */,
+				85AE02B97BA161330D662BDA /* River.swift in Sources */,
+				420F469B2440869A0BC557C3 /* SM2Scheduler.swift in Sources */,
+				708666E64532C95080761670 /* Sea.swift in Sources */,
+				714D2A18568B15E855DEB64E /* StatsView.swift in Sources */,
+				BEE55C74826C50C921997462 /* StreakTracker.swift in Sources */,
+				D16B30980B2CA326DD430AF5 /* TextQuizSession.swift in Sources */,
+				349F2725D5ABAE6225537557 /* Theme.swift in Sources */,
+				C6DC0F0BF19452DB23A0E48E /* ViewExtensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E4FED9FF3E70DAAED9E26EFF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B144EBDC8C5F79A95B883FB5 /* AppLocaleTests.swift in Sources */,
+				8FF3959B891ECBCF499BCEE3 /* CardStoreTests.swift in Sources */,
+				AEC45EB17BDE7F455C1CB7AE /* GeographyDataLoaderTests.swift in Sources */,
+				2AE1D2E426F022C999D475F9 /* HanahuacTests.swift in Sources */,
+				D1B5CF9272BC39C196371B53 /* LanguageManagerTests.swift in Sources */,
+				8D0E371BF5449F8DC3E68A81 /* LearningTests.swift in Sources */,
+				D271184A77C56BA40576BA3D /* LocalizedGeoNameTests.swift in Sources */,
+				C68CFF1817E61FD869159D72 /* LocalizedQuizPromptTests.swift in Sources */,
+				9F0CD581EDE922EAF670F9A8 /* MapLearningTests.swift in Sources */,
+				D81EDE85F2EF406BCE8CAA1C /* MapQuizRegionHelperTests.swift in Sources */,
+				FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */,
+				0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */,
+				C6C390DA85F5759C498E9345 /* StatsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7FB4E6E629CE8E0B2F2781A1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9D8A85CDAEC6C117A3F2428D /* Hanahuac */;
+			targetProxy = 3E4834B4B983971B3274E655 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FDE760ADFAE4DF5B9A730C37 /* de */,
+				9E7710CFEA52939B5CC38E2E /* en */,
+				879A10791B45594CB569EDAA /* es-MX */,
+				633F2484D956811A774A989B /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4D1BEE2044AA8A9CCB44CDA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Hanahuac;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hanahuac.app;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6CC9EAB3F84A07787DDEFC9A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Release;
+		};
+		944256DB2ED912505D12C5FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hanahuac.app.tests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hanahuac.app/Hanahuac";
+			};
+			name = Debug;
+		};
+		98A34E7A12329BA7BBB17DC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Hanahuac;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hanahuac.app;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DC13DAAA34FCC369D6E00E93 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hanahuac.app.tests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Hanahuac.app/Hanahuac";
+			};
+			name = Release;
+		};
+		F505DE6558515F5EEB6F9136 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.10;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3DE504E80D19D31EE3B46D99 /* Build configuration list for PBXNativeTarget "Hanahuac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D1BEE2044AA8A9CCB44CDA1 /* Debug */,
+				98A34E7A12329BA7BBB17DC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8914428039F7DD0E012286E9 /* Build configuration list for PBXProject "Hanahuac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F505DE6558515F5EEB6F9136 /* Debug */,
+				6CC9EAB3F84A07787DDEFC9A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E6CCFE5016B25B6706B936A7 /* Build configuration list for PBXNativeTarget "HanahuacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				944256DB2ED912505D12C5FC /* Debug */,
+				DC13DAAA34FCC369D6E00E93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A4FCCB285781971ABB70E95B /* Project object */;
+}
