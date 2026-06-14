@@ -8,18 +8,27 @@ enum CardCategory: String, Codable, Hashable {
     case sea
 }
 
+/// CloudKit compatibility: this `@Model` is designed so the *same* schema can later back a
+/// CloudKit-mirrored SwiftData container with no further model changes (see `docs/icloud-sync.md`).
+/// CloudKit requires every stored attribute to be optional or carry a default value, and it
+/// forbids `@Attribute(.unique)`. Therefore:
+/// - every stored property below has an explicit model-level default value, and
+/// - there is intentionally NO `@Attribute(.unique)` on `factID` (or anything else).
+///   Uniqueness-per-fact is enforced in app logic instead (see `CardStore.deduplicate(...)`
+///   and `CardStore.seedIfNeeded(...)`), because two devices can independently seed the same
+///   catalog and CloudKit will not reject the duplicate at the store layer.
 @Model
 final class ReviewCard {
-    var id: UUID
-    var factID: String
-    var category: String          // CardCategory rawValue — SwiftData needs primitive types
-    var repetitionCount: Int
-    var easeFactor: Double
-    var intervalDays: Int
-    var nextReviewDate: Date
+    var id: UUID = UUID()
+    var factID: String = ""
+    var category: String = CardCategory.country.rawValue  // CardCategory rawValue — SwiftData needs primitive types
+    var repetitionCount: Int = 0
+    var easeFactor: Double = 2.5
+    var intervalDays: Int = 0
+    var nextReviewDate: Date = Date.now
     var lastQualityScore: Int?
-    var consecutiveCorrect: Int   // learning-phase streak; resets to 0 on wrong answer
-    var hasGraduated: Bool        // true once the card enters the SM-2 schedule
+    var consecutiveCorrect: Int = 0   // learning-phase streak; resets to 0 on wrong answer
+    var hasGraduated: Bool = false    // true once the card enters the SM-2 schedule
 
     init(
         id: UUID = UUID(),
