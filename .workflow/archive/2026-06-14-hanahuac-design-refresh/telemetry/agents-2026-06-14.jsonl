@@ -1,0 +1,9 @@
+{"ts":"2026-06-14T07:19:29Z","event":"end","agent":"archive-workflow","story":"feature","duration_s":0,"reads":2,"writes":0,"edits":0,"bashes":2,"est_chars":0,"est_tokens":0,"notes":""}
+{"ts":"2026-06-14T07:34:27Z","event":"start","agent":"break-stories","story":"feature"}
+{"ts":"2026-06-14T10:05:48Z","event":"end","agent":"break-stories","story":"feature","duration_s":9081,"reads":8,"writes":12,"edits":0,"bashes":5,"est_chars":6000,"est_tokens":1500,"notes":""}
+{"ts":"2026-06-14T10:05:48Z","event":"start","agent":"assess-project-health","story":"feature"}
+{"ts":"2026-06-14T10:06:28Z","event":"end","agent":"assess-project-health","story":"feature","duration_s":40,"reads":6,"writes":0,"edits":1,"bashes":3,"est_chars":1500,"est_tokens":375,"notes":""}
+{"ts":"2026-06-14T10:06:42Z","event":"start","agent":"story-workflow","story":"001-rename-hanahuac"}
+{"ts":"2026-06-14T12:51:22Z","event":"start","agent":"evaluate-workflow","story":"feature"}
+{"ts":"2026-06-14T12:56:34Z","event":"end","agent":"evaluate-workflow","story":"feature","duration_s":312,"reads":20,"writes":0,"edits":6,"bashes":5,"est_chars":8000,"est_tokens":2000,"notes":""}
+{"ts":"2026-06-14T12:56:35Z","event":"start","agent":"archive-workflow","story":"feature"}

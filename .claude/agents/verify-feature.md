@@ -33,7 +33,7 @@ If `.workflow/feature.md` contains a `## Acceptance Criteria` section with any v
 3. **Launch the app:**
    ```sh
    just launch-sim || {
-     BUNDLE=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' ProjectHana.xcodeproj/project.pbxproj | sed 's/.*= "//;s/";//')
+     BUNDLE=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' Hanahuac.xcodeproj/project.pbxproj | sed 's/.*= "//;s/";//')
      xcrun simctl launch booted "$BUNDLE"
    }
    sleep 2
