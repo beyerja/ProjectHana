@@ -44,9 +44,6 @@ grep -r "extension <TypeName>" ProjectHana/
 ```
 If a property or method you are about to add already exists in another file, reuse it — do not redeclare it. Common culprits: `displayName`, `localizedName`, `color`, `iconName` on model types used in multiple views.
 
-**Shell-integration tools (direnv, starship, etc.)**
-When a story installs a tool that requires a shell hook (direnv, starship, zoxide, etc.), installing the binary is not enough — tell the user to add the hook to `~/.zshrc` (or `~/.bashrc`) explicitly, or the tool will be silently non-functional in interactive shells.
-
 **iOS-only APIs**
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `ProjectHana/Views/ViewExtensions.swift` rather than direct calls.
 

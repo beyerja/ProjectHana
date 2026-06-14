@@ -15,3 +15,5 @@
 | create-pr | DONE | PR #58 opened: https://github.com/beyerja/ProjectHana/pull/58 |
 | wait-for-ci | DONE | CI passed (success) |
 | story-loop 001 | PENDING_REVIEW | PR #58 awaiting merge |
+| verify-feature | DONE | All acceptance criteria satisfied; TEST SUCCEEDED |
+| evaluate-workflow | DONE | Telemetry: Bash=107, Read=46, Edit=23, Write=20. Phase 2a: implement-story.md flagged (shell-integration section removed — irrelevant for Swift). Phase 2b: insufficient prior runs for quantitative comparison. 1 agent improved. |
