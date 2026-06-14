@@ -173,6 +173,7 @@ struct HomeView: View {
             PilePickerView(mode: mode, category: category)
         case .quiz(let mode, let category, let pile):
             directQuizView(mode: mode, category: category, pile: pile)
+                .background(Theme.Palette.canvas.ignoresSafeArea())
         }
     }
 
