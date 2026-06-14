@@ -8,3 +8,12 @@
 2026-06-14T22:32:00Z story 003-branch-protection-docs: DONE — wrote SECURITY.md (scanner inventory, speed-split blocking policy, triage guide, owner instructions). Branch protection APPLIED on main via gh api: required checks = [gitleaks, Build & Test], strict=true; CodeQL deliberately excluded (not a PR check). Verified via API.
 2026-06-14T22:38:00Z create-pr: DONE — PR #67 opened against main (CodeQL schedule-only + SECURITY.md + workflow artifacts). Feature spans merged PRs #65 (CodeQL), #66 (gitleaks), and #67 (policy correction + docs).
 2026-06-14T22:45:00Z wait-for-ci: STATUS PASS — PR #67 checks green (Build & Test: pass, gitleaks: pass in 6s). Critically, NO "Analyze (swift)" CodeQL check ran on the PR, confirming the schedule-only change works and contributors are no longer gated on the >20min scan.
+2026-06-14T22:50:00Z PR #67 MERGED to main.
+2026-06-14T22:52:00Z verify-feature: STATUS DONE — all acceptance criteria met on main: codeql.yml (push+weekly schedule, no PR trigger, Security-tab upload), secret-scan.yml (PR+push, hard-block), SECURITY.md present, one-tool-per-concern (no SCA — zero deps), action versions pinned to verified latest majors (codeql-action@v4, gitleaks-action@v3, checkout@v6), no /nix/ paths, existing Build & Test passes, branch protection on main requires [gitleaks, Build & Test] (CodeQL excluded by design). Speed-split blocking policy honored.
+
+2026-06-14T22:58:00Z evaluate-workflow: DONE
+Tool call distribution (this workflow): Bash: 86  Read: 24  Write: 21  Edit: 10  TaskUpdate: 16  TaskCreate: 9  ToolSearch: 6  Agent: 2  Monitor: 2  WebSearch: 1  WebFetch: 1
+Telemetry outliers: story-workflow (32.5m avg) and wait-for-ci (22.2m avg) — both dominated by waiting on the CodeQL per-PR check (>20min). Root cause: clarify-feature/break-stories set a "block on everything" policy without accounting for per-PR runtime cost, forcing a mid-feature rework (story 004 removed CodeQL's PR trigger).
+Phase 2a flags: none — all .claude/agents/ files pass bloat heuristics (<=80 lines, 1-sentence descriptions, <=5 top-level sections).
+Phase 2b: skipped — insufficient telemetry (agents-*.jsonl has only one distinct workflow date, 2026-06-14).
+Improvements: clarify-feature.md — added guidance to probe runtime/throughput cost when a feature adds per-PR CI automation and to capture the blocking-vs-async (scheduled/push-to-default-branch) split in the spec. This directly addresses the rework cost seen this run.
