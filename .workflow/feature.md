@@ -3,10 +3,16 @@
 ## Goal
 
 Add free, automated security scanning to the Hanahuac repository, fully integrated into
-CI so that relevant pull requests are scanned and security findings block (or are otherwise
-guaranteed to be addressed before) merge. Use one tool per security concern — no two
-scanners covering the same thing — and add only scanners that scan something relevant to
+CI so that security findings are reliably addressed. Use one tool per security concern — no
+two scanners covering the same thing — and add only scanners that scan something relevant to
 this project.
+
+Throughput constraint (added 2026-06-14): scanners are split by speed so contributors are
+never blocked waiting on slow analysis. FAST scanners run as blocking per-PR checks. SLOW
+scanners (notably CodeQL, which takes >20 min on this Swift project) do NOT run on every PR;
+they run on a weekly schedule and on push to `main`, surfacing findings as GitHub
+code-scanning alerts in the Security tab so they are tracked and addressed over time without
+gating PR throughput.
 
 ## Context & Scanner Selection (decided from repo inspection)
 
@@ -23,11 +29,11 @@ The repo was inspected to decide which scanners are applicable:
 Selected scanners (one per concern, all free for public repos, verified latest major
 action versions on 2026-06-14):
 
-| Concern         | Tool                              | Action (latest major) | Blocking policy |
-|-----------------|-----------------------------------|-----------------------|-----------------|
-| SAST (code)     | CodeQL (Swift)                    | `github/codeql-action@v4` | Block PR on high-severity (error) code-scanning alerts |
-| Secret scanning | gitleaks                          | `gitleaks/gitleaks-action@v3` | Hard-block: any leaked secret fails the check |
-| Dependency/SCA  | none (no dependencies to scan)    | —                     | N/A — out of scope |
+| Concern         | Tool                              | Action (latest major) | Triggers | Blocking policy |
+|-----------------|-----------------------------------|-----------------------|----------|-----------------|
+| SAST (code)     | CodeQL (Swift)                    | `github/codeql-action@v4` | weekly `schedule` + `push` to `main` (NOT per-PR — too slow, >20 min) | Non-blocking for PRs. Findings surface as code-scanning alerts in the Security tab and are tracked/triaged over time. |
+| Secret scanning | gitleaks                          | `gitleaks/gitleaks-action@v3` | `pull_request` to `main` + `push` to `main` | FAST → hard-block: any leaked secret fails the PR check |
+| Dependency/SCA  | none (no dependencies to scan)    | —                     | — | N/A — out of scope |
 
 CodeQL fully supports Swift (Swift 6.x as of CodeQL 2.25.x; this project uses Swift 5.10).
 gitleaks-action v3 is free for public repositories.
@@ -35,16 +41,17 @@ gitleaks-action v3 is free for public repositories.
 ## Acceptance Criteria
 
 - [ ] A CodeQL workflow exists at `.github/workflows/codeql.yml` that analyzes the Swift
-      code, builds via the project's `just`/`xcodebuild` toolchain on `macos-15`, runs on
-      pull requests targeting `main` and on pushes to `main`, and uploads results to the
-      GitHub Security tab.
+      code, builds via the project's `just`/`xcodebuild` toolchain on `macos-15`, runs on a
+      weekly `schedule` and on pushes to `main` (NOT on `pull_request` — CodeQL is too slow,
+      >20 min, to gate PRs), and uploads results to the GitHub Security tab as tracked
+      code-scanning alerts.
 - [ ] A secret-scanning workflow exists (gitleaks) that runs on pull requests targeting
       `main` and on pushes to `main`, and fails the check if a secret is detected.
-- [ ] Both scanners run on all relevant PRs (any PR that touches Swift source or workflow
-      files), and their checks are configured so that findings block merge — secrets always
-      block; CodeQL blocks on high-severity findings. Where hard-blocking every CodeQL
-      finding would be too strict, lower-severity findings are still surfaced in the
-      Security tab and tracked, never silently dropped.
+- [ ] Scanners are split by speed: the FAST secret scanner runs on every relevant PR and
+      hard-blocks merge on any leaked secret. The SLOW SAST scanner (CodeQL) does NOT gate
+      PRs; it runs on schedule + push-to-main and its findings surface as Security-tab
+      code-scanning alerts so they are tracked and addressed over time, never silently
+      dropped.
 - [ ] No duplicate scanners: exactly one tool per concern; no dependency scanner is added
       because there are no dependencies to scan.
 - [ ] All GitHub Actions are pinned to the latest verified major version (checked at
@@ -64,9 +71,10 @@ gitleaks-action v3 is free for public repositories.
 - Honor project memory: do not assume GitHub Actions versions — pin to the latest verified
   major; never hardcode `/nix/...` paths (use flake + direnv / `just`).
 - Xcode project is generated from `project.yml`; never hand-edit `project.pbxproj`.
-- Blocking is preferred; if hard-blocking a given scanner is judged too strict, choose an
-  alternative that still guarantees findings are addressed (e.g. block on high-severity,
-  surface the rest in the Security tab with tracked alerts).
+- Split scanners by speed, never by importance: FAST scanners (e.g. gitleaks) are blocking
+  per-PR checks; SLOW scanners (e.g. CodeQL, >20 min on this Swift project) run on schedule
+  + push-to-main and surface findings as tracked Security-tab alerts. Contributors must not
+  wait ~20 min on every PR, yet every finding must reliably get addressed at some point.
 
 ## Out of Scope
 

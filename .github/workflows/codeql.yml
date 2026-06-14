@@ -1,9 +1,12 @@
 name: "CodeQL"
 
+# CodeQL Swift analysis takes >20 min on this project (it must build via xcodebuild on a
+# macOS runner). That is too slow to gate every PR, so there is intentionally NO
+# `pull_request` trigger. Instead CodeQL runs on push to `main` and on a weekly schedule;
+# findings surface as code-scanning alerts in the Security tab and are triaged over time.
+# Fast scanners (e.g. gitleaks secret scanning) remain the blocking per-PR checks.
 on:
   push:
-    branches: [main]
-  pull_request:
     branches: [main]
   schedule:
     # Weekly baseline scan of the default branch (Mondays 06:00 UTC).
