@@ -1,6 +1,6 @@
 ---
 name: evaluate-workflow
-description: Analyze the completed workflow execution and improve agent files in .claude/agents/ based on observed inefficiencies
+description: Analyze the completed workflow and make surgical improvements to agent files in .claude/agents/
 ---
 
 **Telemetry — run at the very start (ignore errors):**
@@ -10,95 +10,34 @@ just log start evaluate-workflow "feature" || true
 
 Read `.workflow/log.md` and every `<story-dir>/log.md`.
 
-## Phase 1 — Telemetry analysis
+## Phase 1 — Telemetry analysis & improvements
 
-Run `just telemetry` to get the agent summary table. If it prints "No telemetry found." or "No completed agent records found.", note this and proceed with qualitative analysis from story logs alone — do not block.
+Run `just telemetry` for the agent summary table. If it reports no telemetry, note that and proceed qualitatively from story logs — do not block.
 
-Also read all `.workflow/telemetry/hooks-*.jsonl` if present. Aggregate by tool type (Read, Write, Edit, Bash, Agent) and report total call counts per tool type:
-
+Read all `.workflow/telemetry/hooks-*.jsonl` if present and report call counts per tool type (`est_chars` is 0 in this project, so skip token estimates from hooks — use counts only):
 ```
 Tool call distribution (this workflow):
-  Read:   NNN calls
-  Bash:   NNN calls
-  Write:  NNN calls
-  Edit:   NNN calls
-  Agent:  NNN calls
+  Read: NNN   Bash: NNN   Write: NNN   Edit: NNN   Agent: NNN
 ```
 
-Note: `est_chars` in hooks records is 0 in this project (the hook does not capture content size), so skip token estimates for hooks — use only call counts. If a future hooks format adds non-zero est_chars, report tokens then and note if Edit is inflated by large-file edits (pbxproj, bundled JSON).
+Identify the top 1-2 outliers (highest avg estimated tokens → over-reads/over-generates; most retries or non-empty notes → ambiguous instructions or scope too large). Then read all `.claude/agents/` files in one parallel batch, pick up to 3 concrete high-impact improvements, and apply them as targeted, surgical edits (no rewrites).
 
-Based on the telemetry table and story logs, identify the top 1-2 outliers:
-- Highest avg estimated tokens → its prompt likely over-reads or over-generates
-- Most retries/non-empty notes → its instructions are ambiguous or its scope is too large
+## Phase 2a — Agent bloat audit
 
-Read all files in `.claude/agents/` in a single parallel batch (issue all Read calls at once). Identify up to 3 concrete, high-impact improvements informed by the telemetry and story logs. Edit the relevant agent files directly with each improvement. Prefer targeted, surgical changes over rewrites.
+Read every `.claude/agents/` file and flag any that fails one or more heuristics: >80 lines, description >2 sentences, or >5 top-level rules/sections (`##` headings + bold rule paragraphs + top-level numbered lists).
 
----
+- Passing file: output `✓ <filename> — OK`.
+- Flagged file: output `⚠ <filename> — flagged: <heuristics>`, then its current content, then a proposed trimmed version (same intent, shorter — merge redundant rules, cut examples that restate the rule, description to 1 sentence), then `Apply this simplification? (no edit without explicit approval)`.
 
-## Phase 2a — Agent Bloat Audit
+Do **not** Edit any agent file in Phase 2a. Output proposals and wait; apply on confirmation in a follow-up turn.
 
-Read every file in `.claude/agents/`. For each file, check all three bloat heuristics:
-1. **Line count** > 80 lines
-2. **Description** front-matter field longer than 2 sentences
-3. **Distinct rules or numbered sections** > 5 (count `##` headings, bold rule paragraphs, and numbered lists at the top level)
+## Phase 2b — Meta-evaluation
 
-For each file that passes all three checks, output a single line: `✓ <filename> — OK`.
+**Skip if** `.workflow/telemetry/agents-*.jsonl` has fewer than 2 distinct workflow dates: output `Skipping Phase 2b — insufficient telemetry (fewer than 2 prior runs).` and stop.
 
-For each **flagged** file (fails one or more heuristics), output:
-
-```
-⚠ <filename> — flagged: <which heuristics failed>
-
-### Current content
-<full current file content>
-
-### Proposed trimmed version
-<rewritten version — same intent, shorter: merge redundant rules, cut examples that duplicate the rule itself, shorten description to 1 sentence>
-
-Apply this simplification? (confirm to proceed — no edit will be made without your explicit approval)
-```
-
-Do **not** call the Edit tool on any agent file during Phase 2a. Output the proposals and wait. If the user confirms, apply the edit in a follow-up turn.
-
----
-
-## Phase 2b — Meta-Evaluation
-
-**Skip condition:** If `.workflow/telemetry/agents-*.jsonl` contains fewer than 2 distinct workflow dates (i.e. only one prior run exists), output: `Skipping Phase 2b — insufficient telemetry (fewer than 2 prior runs).` and stop this phase.
-
-### 1. Applied-edit detection
-
-Run:
-```sh
-git log --oneline --follow -- .claude/agents/ | head -20
-```
-
-Identify which agent files were modified since the last evaluation run (use the most recent commit touching `.claude/agents/` before today's evaluation). For each modified file, extract the commit message summary to understand what was recommended and applied.
-
-Flag any agent file that was flagged for improvement in a previous evaluation commit message but shows **no** subsequent modification in git log: output `⚠ <filename>: previous recommendation not applied`.
-
-### 2. Telemetry before/after comparison
-
-For each agent file that WAS edited, use the git commit timestamp as a before/after boundary. Split the telemetry JSONL records into:
-- **Before**: records dated before the commit
-- **After**: records dated after the commit
-
-Compare per-agent averages for: `avg_duration_min`, `avg_est_tokens`, `retry_count`. Report each as one of:
-- **Improved** (after < before by > 10%)
-- **Flat** (within 10%)
-- **Regressed** (after > before by > 10%)
-- **Insufficient data** (fewer than 2 records on either side)
-
-If no records exist on one side, report `Insufficient data` — do not fabricate a trend.
-
-### 2. Qualitative finding accuracy
-
-Retrieve qualitative findings from commit messages on `.claude/agents/` changes (the "why" lines from previous evaluation commits). For each finding:
-- State the original claim (e.g. "implement-story retries too much due to ambiguous pbxproj instructions")
-- Check subsequent telemetry: did retry counts for that agent go down after the edit?
-- Output: **Supported**, **Contradicted**, or **Inconclusive** with one sentence of evidence
-
----
+1. **Applied-edit detection** — run `git log --oneline --follow -- .claude/agents/ | head -20`. Identify files modified since the last evaluation. Flag any file recommended in a prior evaluation commit but never subsequently modified: `⚠ <filename>: previous recommendation not applied`.
+2. **Before/after telemetry** — for each edited file, use its commit timestamp as the boundary and compare per-agent `avg_duration_min`, `avg_est_tokens`, `retry_count`: **Improved** (>10% better), **Flat** (±10%), **Regressed** (>10% worse), or **Insufficient data** (<2 records on a side). Never fabricate a trend.
+3. **Qualitative finding accuracy** — for each "why" line in prior evaluation commits, state the original claim, check whether the relevant telemetry moved as predicted, and output **Supported**, **Contradicted**, or **Inconclusive** with one sentence of evidence.
 
 ## Finish
 
@@ -111,8 +50,8 @@ Append to `.workflow/log.md`:
 ```
 <timestamp> evaluate-workflow: DONE
 Telemetry outliers: <agents>
-Phase 2a flags: <list of flagged files or "none">
-Phase 2b: <"skipped" or summary of before/after findings>
+Phase 2a flags: <flagged files or "none">
+Phase 2b: <"skipped" or summary>
 Improvements: <list>
 ```
 
