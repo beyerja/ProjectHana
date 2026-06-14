@@ -59,7 +59,7 @@ struct MultipleChoiceQuizView: View {
                 .font(.subheadline).foregroundStyle(.secondary)
             Spacer()
             Text(String(format: L10n["mcq_quiz.correct_count"], session.correctCount))
-                .font(.subheadline).foregroundStyle(.green)
+                .font(.subheadline).foregroundStyle(Theme.Palette.correct)
         }
     }
 
@@ -69,7 +69,7 @@ struct MultipleChoiceQuizView: View {
             .multilineTextAlignment(.center)
             .padding(24)
             .frame(maxWidth: .infinity)
-            .background(.quaternary, in: RoundedRectangle(cornerRadius: 16))
+            .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
     }
 
     private func optionButtons(session: MultipleChoiceSession) -> some View {
@@ -98,19 +98,19 @@ struct MultipleChoiceQuizView: View {
     private func buttonColor(for option: MCQOption, in session: MultipleChoiceSession) -> Color {
         switch session.answerState {
         case .unanswered:
-            return .blue.opacity(0.15)
+            return Theme.Palette.accent.opacity(0.15)
         case .correct(let id):
-            return option.id == id ? .green : .blue.opacity(0.1)
+            return option.id == id ? Theme.Palette.correct : Theme.Palette.accent.opacity(0.1)
         case .incorrect(let chosenID, let correctID):
-            if option.id == chosenID { return .red }
-            if option.id == correctID { return .green }
-            return .blue.opacity(0.1)
+            if option.id == chosenID { return Theme.Palette.wrong }
+            if option.id == correctID { return Theme.Palette.correct }
+            return Theme.Palette.accent.opacity(0.1)
         }
     }
 
     private func buttonForeground(for option: MCQOption, in session: MultipleChoiceSession) -> Color {
         switch session.answerState {
-        case .unanswered: return .blue
+        case .unanswered: return Theme.Palette.accent
         case .correct(let id): return option.id == id ? .white : .secondary
         case .incorrect(let chosenID, let correctID):
             if option.id == chosenID || option.id == correctID { return .white }

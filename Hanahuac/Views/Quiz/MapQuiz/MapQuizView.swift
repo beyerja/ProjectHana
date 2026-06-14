@@ -146,10 +146,10 @@ struct MapQuizView: View {
         let (text, color): (String, Color) = {
             switch session.answerState {
             case .correct:
-                return (L10n["map_quiz.feedback.correct"], .green)
+                return (L10n["map_quiz.feedback.correct"], Theme.Palette.correct)
             case .incorrect(let tappedID, _):
                 let name = session.allCountries.first { $0.id == tappedID }?.localizedName(for: languageManager.current) ?? tappedID
-                return ("\(L10n["map_quiz.feedback.incorrect_prefix"]) \(name)", .red)
+                return ("\(L10n["map_quiz.feedback.incorrect_prefix"]) \(name)", Theme.Palette.wrong)
             case .unanswered:
                 return ("", .clear)
             }
@@ -209,10 +209,10 @@ struct CountryPinView: View {
 
     private var color: Color {
         switch state {
-        case .neutral:          return .blue
-        case .correct:          return .green
-        case .incorrectTapped:  return .red
-        case .correctRevealed:  return .green
+        case .neutral:          return Theme.Palette.accent
+        case .correct:          return Theme.Palette.correct
+        case .incorrectTapped:  return Theme.Palette.wrong
+        case .correctRevealed:  return Theme.Palette.correct
         }
     }
 

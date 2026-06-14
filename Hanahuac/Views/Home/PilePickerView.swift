@@ -24,7 +24,7 @@ struct PilePickerView: View {
                             title: L10n["home.tile.new"],
                             count: newCount,
                             icon: "plus.circle.fill",
-                            color: .orange
+                            color: Theme.Palette.new
                         )
                     }
                 }
@@ -35,13 +35,14 @@ struct PilePickerView: View {
                             title: L10n["home.tile.pending"],
                             count: pendingCount,
                             icon: "clock.fill",
-                            color: .blue
+                            color: Theme.Palette.accent
                         )
                     }
                 }
             }
             .padding()
         }
+        .background(Theme.Palette.canvas.ignoresSafeArea())
         .navigationTitle(L10n[mode.titleKey])
         .inlineNavigationTitle()
         .id(languageManager.current)
@@ -71,7 +72,12 @@ struct PilePickerView: View {
                 .foregroundStyle(.tertiary)
         }
         .padding()
-        .background(.quaternary, in: RoundedRectangle(cornerRadius: 14))
+        .background(Theme.Palette.surface, in: RoundedRectangle(cornerRadius: Theme.Metrics.tileRadius, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: Theme.Metrics.tileRadius, style: .continuous)
+                .strokeBorder(Theme.Palette.hairline, lineWidth: 1)
+        )
+        .shadow(color: Theme.cardShadow, radius: 8, x: 0, y: 4)
     }
 }
 

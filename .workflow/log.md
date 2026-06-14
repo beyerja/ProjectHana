@@ -4,3 +4,4 @@
 2026-06-14 13:10:00 RESUME after session-limit interruption — skipping steps 1-3 (already DONE). Starting story loop at step 4.
 2026-06-14 13:10:01 story-loop: starting 001-rename-hanahuac (status pending)
 2026-06-14 14:00:07 story-loop: 001-rename-hanahuac DONE & committed (2f8c839). Full rename verified building; nix dev-shell fixed (mkShellNoCC). Next: 002-theme-palette.
+2026-06-14 14:41:47 story-loop: 002/003/004/005 DONE — pastel theme app-wide, globe logo, app icon PNG, branded home. build+test green.

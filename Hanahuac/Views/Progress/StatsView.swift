@@ -18,6 +18,7 @@ struct StatsView: View {
             }
             .padding()
         }
+        .background(Theme.Palette.canvas.ignoresSafeArea())
         .navigationTitle(L10n["stats.title"])
         .inlineNavigationTitle()
         .onAppear { streak = StreakTracker.currentStreak() }
@@ -29,9 +30,9 @@ struct StatsView: View {
     private var summarySection: some View {
         VStack(spacing: 12) {
             HStack(spacing: 12) {
-                statCard(value: "\(reviewedCount)", label: L10n["stats.cards_reviewed"], color: .blue)
-                statCard(value: "\(dueCount)", label: L10n["stats.due_today"], color: .orange)
-                statCard(value: "\(streak)", label: L10n["stats.day_streak"], color: .green)
+                statCard(value: "\(reviewedCount)", label: L10n["stats.cards_reviewed"], color: Theme.Palette.accent)
+                statCard(value: "\(dueCount)", label: L10n["stats.due_today"], color: Theme.Palette.new)
+                statCard(value: "\(streak)", label: L10n["stats.day_streak"], color: Theme.Palette.correct)
             }
         }
     }
@@ -65,7 +66,7 @@ struct StatsView: View {
                     categoryRow(category)
                 }
             }
-            .background(.quaternary, in: RoundedRectangle(cornerRadius: 14))
+            .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 14))
             .clipShape(RoundedRectangle(cornerRadius: 14))
         }
     }
@@ -83,7 +84,7 @@ struct StatsView: View {
         .foregroundStyle(.secondary)
         .padding(.horizontal, 12)
         .padding(.vertical, 8)
-        .background(.quaternary)
+        .background(Theme.Palette.surfaceAlt)
     }
 
     private func categoryRow(_ category: CardCategory) -> some View {

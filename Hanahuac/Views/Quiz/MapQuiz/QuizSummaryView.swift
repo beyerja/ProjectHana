@@ -19,7 +19,7 @@ struct QuizSummaryView: View {
             VStack(spacing: 8) {
                 Image(systemName: accuracy >= 70 ? "star.fill" : "checkmark.circle.fill")
                     .font(.system(size: 64))
-                    .foregroundStyle(accuracy >= 70 ? .yellow : .blue)
+                    .foregroundStyle(accuracy >= 70 ? Theme.Palette.accent : Theme.Palette.accent)
                 Text(L10n["quiz_summary.session_complete"])
                     .font(.title.bold())
             }
@@ -32,7 +32,7 @@ struct QuizSummaryView: View {
                 }
             }
             .padding()
-            .background(.quaternary, in: RoundedRectangle(cornerRadius: 16))
+            .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal)
 
             Spacer()
@@ -41,7 +41,7 @@ struct QuizSummaryView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(.blue, in: RoundedRectangle(cornerRadius: 14))
+                .background(Theme.Palette.accent, in: RoundedRectangle(cornerRadius: 14))
                 .foregroundStyle(.white)
                 .padding(.horizontal)
                 .padding(.bottom)

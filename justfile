@@ -8,6 +8,10 @@ export PATH := env_var("HOME") + "/.nix-profile/bin:" + env_var("PATH")
 generate:
     direnv exec . xcodegen generate
 
+# Render the 1024x1024 app icon PNG from the SwiftUI brand mark
+icon:
+    xcrun swift scripts/make-icon.swift
+
 # Run the full test suite on the iPhone 17 simulator
 test:
     xcodebuild test \

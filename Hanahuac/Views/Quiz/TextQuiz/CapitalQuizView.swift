@@ -65,7 +65,7 @@ struct CapitalQuizView: View {
                 .font(.subheadline).foregroundStyle(.secondary)
             Spacer()
             Text(String(format: L10n["capital_quiz.correct_count"], session.correctCount))
-                .font(.subheadline).foregroundStyle(.green)
+                .font(.subheadline).foregroundStyle(Theme.Palette.correct)
         }
     }
 
@@ -75,7 +75,7 @@ struct CapitalQuizView: View {
             .multilineTextAlignment(.center)
             .padding(24)
             .frame(maxWidth: .infinity)
-            .background(.quaternary, in: RoundedRectangle(cornerRadius: 16))
+            .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
     }
 
     @ViewBuilder
@@ -84,10 +84,10 @@ struct CapitalQuizView: View {
         case .unanswered:
             unansweredInput(session: session)
         case .correct:
-            feedbackView(text: L10n["capital_quiz.feedback.correct"], color: .green, session: session)
+            feedbackView(text: L10n["capital_quiz.feedback.correct"], color: Theme.Palette.correct, session: session)
         case .incorrect(let correctAnswer):
             VStack(spacing: 12) {
-                feedbackView(text: "\(L10n["capital_quiz.feedback.wrong_prefix"]) \(correctAnswer)", color: .red, session: session)
+                feedbackView(text: "\(L10n["capital_quiz.feedback.wrong_prefix"]) \(correctAnswer)", color: Theme.Palette.wrong, session: session)
             }
         }
     }
@@ -106,7 +106,7 @@ struct CapitalQuizView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(inputText.isEmpty ? Color.secondary.opacity(0.3) : Color.blue,
+                .background(inputText.isEmpty ? Color.secondary.opacity(0.3) : Theme.Palette.accent,
                             in: RoundedRectangle(cornerRadius: 14))
                 .foregroundStyle(.white)
                 .disabled(inputText.isEmpty)
@@ -128,7 +128,7 @@ struct CapitalQuizView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(.blue, in: RoundedRectangle(cornerRadius: 14))
+                .background(Theme.Palette.accent, in: RoundedRectangle(cornerRadius: 14))
                 .foregroundStyle(.white)
         }
     }

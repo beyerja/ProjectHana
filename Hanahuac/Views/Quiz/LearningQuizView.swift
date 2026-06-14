@@ -71,7 +71,7 @@ struct LearningQuizView: View {
             .multilineTextAlignment(.center)
             .padding(24)
             .frame(maxWidth: .infinity)
-            .background(.quaternary, in: RoundedRectangle(cornerRadius: 16))
+            .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
     }
 
     private func optionButtons(question: MCQQuestion) -> some View {
@@ -136,7 +136,7 @@ struct LearningQuizView: View {
             VStack(spacing: 8) {
                 Image(systemName: "graduationcap.fill")
                     .font(.system(size: 64))
-                    .foregroundStyle(.yellow)
+                    .foregroundStyle(Theme.Palette.accent)
                 Text(L10n["learn.complete_title"])
                     .font(.title.bold())
                 Text(L10n["learn.complete_desc"])
@@ -152,7 +152,7 @@ struct LearningQuizView: View {
                 Text("\(session.graduatedCount)").bold()
             }
             .padding()
-            .background(.quaternary, in: RoundedRectangle(cornerRadius: 16))
+            .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal)
 
             Spacer()
@@ -161,7 +161,7 @@ struct LearningQuizView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(.blue, in: RoundedRectangle(cornerRadius: 14))
+                .background(Theme.Palette.accent, in: RoundedRectangle(cornerRadius: 14))
                 .foregroundStyle(.white)
                 .padding(.horizontal)
                 .padding(.bottom)
@@ -176,20 +176,20 @@ struct LearningQuizView: View {
     private func buttonColor(for option: MCQOption) -> Color {
         switch answerState {
         case .unanswered:
-            return .blue.opacity(0.15)
+            return Theme.Palette.accent.opacity(0.15)
         case .correct(let id):
-            return option.id == id ? .green : .blue.opacity(0.1)
+            return option.id == id ? Theme.Palette.correct : Theme.Palette.accent.opacity(0.1)
         case .incorrect(let chosenID, let correctID):
-            if option.id == chosenID { return .red }
-            if option.id == correctID { return .green }
-            return .blue.opacity(0.1)
+            if option.id == chosenID { return Theme.Palette.wrong }
+            if option.id == correctID { return Theme.Palette.correct }
+            return Theme.Palette.accent.opacity(0.1)
         }
     }
 
     private func buttonForeground(for option: MCQOption) -> Color {
         switch answerState {
         case .unanswered:
-            return .blue
+            return Theme.Palette.accent
         case .correct(let id):
             return option.id == id ? .white : .secondary
         case .incorrect(let chosenID, let correctID):

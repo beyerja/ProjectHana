@@ -15,10 +15,10 @@ extension AnswerState {
         case .unanswered:
             return .clear
         case .correct(let id):
-            return countryID == id ? .green.opacity(0.35) : .clear
+            return countryID == id ? Theme.Palette.correct.opacity(0.35) : .clear
         case .incorrect(let tappedID, let correctID):
-            if countryID == tappedID  { return .red.opacity(0.35) }
-            if countryID == correctID { return .green.opacity(0.35) }
+            if countryID == tappedID  { return Theme.Palette.wrong.opacity(0.35) }
+            if countryID == correctID { return Theme.Palette.correct.opacity(0.35) }
             return .clear
         }
     }

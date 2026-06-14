@@ -138,7 +138,7 @@ struct MapLearningQuizView: View {
                 if let card = session.current {
                     Text(String(format: L10n["learn_map.streak"], card.consecutiveCorrect))
                         .font(.caption.bold())
-                        .foregroundStyle(.orange)
+                        .foregroundStyle(Theme.Palette.new)
                 }
             }
         }
@@ -156,11 +156,11 @@ struct MapLearningQuizView: View {
         let (text, color): (String, Color) = {
             switch session.answerState {
             case .correct:
-                return (L10n["map_quiz.feedback.correct"], .green)
+                return (L10n["map_quiz.feedback.correct"], Theme.Palette.correct)
             case .incorrect(let tappedID, _):
                 let geoData = GeographyDataLoader.shared
                 let name = geoData.countries.first { $0.id == tappedID }?.localizedName(for: languageManager.current) ?? tappedID
-                return ("\(L10n["map_quiz.feedback.incorrect_prefix"]) \(name)", .red)
+                return ("\(L10n["map_quiz.feedback.incorrect_prefix"]) \(name)", Theme.Palette.wrong)
             case .unanswered:
                 return ("", .clear)
             }
@@ -184,7 +184,7 @@ struct MapLearningQuizView: View {
             VStack(spacing: 8) {
                 Image(systemName: "graduationcap.fill")
                     .font(.system(size: 64))
-                    .foregroundStyle(.yellow)
+                    .foregroundStyle(Theme.Palette.accent)
                 Text(L10n["learn.complete_title"])
                     .font(.title.bold())
                 Text(L10n["learn.complete_desc"])
@@ -200,7 +200,7 @@ struct MapLearningQuizView: View {
                 Text("\(session.graduatedCount)").bold()
             }
             .padding()
-            .background(.quaternary, in: RoundedRectangle(cornerRadius: 16))
+            .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal)
 
             Spacer()
@@ -209,7 +209,7 @@ struct MapLearningQuizView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(.blue, in: RoundedRectangle(cornerRadius: 14))
+                .background(Theme.Palette.accent, in: RoundedRectangle(cornerRadius: 14))
                 .foregroundStyle(.white)
                 .padding(.horizontal)
                 .padding(.bottom)
