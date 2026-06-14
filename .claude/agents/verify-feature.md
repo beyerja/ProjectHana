@@ -8,6 +8,11 @@ description: Verify the complete feature satisfies all acceptance criteria in .w
 just log start verify-feature "feature" || true
 ```
 
+**Telemetry note string:** the final `notes` argument to `just log end` is passed through the
+shell unquoted by `just`, so any `;`, `&`, `|`, or `()` in it will be parsed as shell syntax and
+break the call (e.g. `bash: CI: command not found`). Keep the note a single short hyphen/space
+token (e.g. `"all-AC-pass-CI-green"`), with no semicolons or parentheses.
+
 Read `.workflow/feature.md` acceptance criteria and all story specs for full scope context.
 
 Run the full test suite. Exercise the feature end-to-end. Check each acceptance criterion explicitly.
@@ -46,6 +51,13 @@ If `.workflow/feature.md` contains a `## Acceptance Criteria` section with any v
    ```
 
 5. **Inspect the screenshot** using Claude's vision against the visual acceptance criteria in `.workflow/feature.md`.
+
+   **No tap automation available:** this toolset can launch + screenshot but cannot tap/navigate.
+   If a visual criterion lives behind navigation (e.g. a Settings screen reached by tapping a
+   toolbar item), verify what you can — that the app launches without crashing and the entry point
+   (e.g. the gear button) renders — and treat the deeper screen as verified when its presentation
+   logic is unit-tested AND it compiles into the shipped bundle. Record this as the verification
+   method; do not block the workflow waiting for a tap you cannot perform.
 
 6. **If all visual criteria pass:** proceed to mark the feature done (see Outcomes below).
 

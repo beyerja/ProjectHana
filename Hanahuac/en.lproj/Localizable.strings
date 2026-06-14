@@ -24,9 +24,23 @@
 "quiz.cards_due.singular" = "card due";
 "quiz.cards_due.plural" = "cards due";
 
-/* LanguagePickerView */
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Settings";
+"settings.section.general" = "General";
+"settings.section.icloud" = "iCloud";
 "settings.language" = "Language";
 "settings.language.picker_title" = "App Language";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud Sync";
+"settings.sync.status_label" = "Status";
+"settings.sync.status.off" = "Off";
+"settings.sync.status.unavailable" = "Unavailable";
+"settings.sync.status.on" = "On";
+"settings.sync.status.syncing" = "Syncing…";
+"settings.sync.status.idle" = "Up to date";
+"settings.sync.status.error" = "Error";
+"settings.sync.unavailable_note" = "iCloud sync is unavailable. Sign in to iCloud and use a build with sync enabled.";
 
 /* ProgressPlaceholderView */
 "progress.coming_soon" = "Progress Coming Soon";

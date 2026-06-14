@@ -6,3 +6,8 @@ Hanahuac (*ha-na-wak*, "One World") is a personalized geography learning app for
 
 **Platform:** iOS 17+ / macOS 14+  
 **Stack:** SwiftUI · SwiftData · MapKit · zero external dependencies
+
+## Documentation
+- [iCloud Progress Sync (CloudKit-ready)](docs/icloud-sync.md) — the sync architecture ships
+  disabled by default; this doc lists the exact steps to enable live sync once a paid Apple
+  Developer account exists.
