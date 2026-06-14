@@ -12,7 +12,6 @@ just log start create-pr "<story-id>" || true
 
 Read `<story-dir>/spec.md` and recent commits. Push the current branch:
 ```
-export PATH="$HOME/.nix-profile/bin:$PATH"
 git push -u origin <branch>
 ```
 

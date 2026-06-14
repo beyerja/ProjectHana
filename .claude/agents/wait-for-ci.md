@@ -20,7 +20,6 @@ Steps:
 
 2. Wait for all checks on the PR to complete:
    ```
-   export PATH="$HOME/.nix-profile/bin:$PATH"
    gh pr checks <number> --watch --fail-fast
    ```
    This blocks until all checks finish. Exit code 0 = all passed; non-zero = at least one failed or is still pending after timeout.
@@ -30,7 +29,6 @@ Steps:
 4. If checks fail: run `gh pr checks <number>` (without --watch) to get the current check summary, include it in the output, then output STATUS: FAIL.
 
 Notes:
-- `gh` is at `~/.nix-profile/bin/gh`; always prepend `export PATH="$HOME/.nix-profile/bin:$PATH"` before `gh` calls.
 - For post-merge CI on main: instead of a PR number, use `gh run list --branch main --limit 1 --json databaseId,status -q '.[0]'` to get the latest run, then `gh run watch <id> --exit-status`.
 
 Before exiting, run (ignore errors):
