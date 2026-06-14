@@ -1,6 +1,6 @@
-name: ProjectHana
+name: Hanahuac
 options:
-  bundleIdPrefix: com.projecthana
+  bundleIdPrefix: com.hanahuac
   deploymentTarget:
     iOS: "17.0"
     macOS: "14.0"
@@ -14,38 +14,57 @@ settings:
     DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER: YES
 
 targets:
-  ProjectHana:
+  Hanahuac:
     type: application
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: ProjectHana
+      - path: Hanahuac
     resources:
-      - path: ProjectHana/en.lproj
-      - path: ProjectHana/fr.lproj
-      - path: ProjectHana/de.lproj
-      - path: ProjectHana/es-MX.lproj
+      - path: Hanahuac/en.lproj
+      - path: Hanahuac/fr.lproj
+      - path: Hanahuac/de.lproj
+      - path: Hanahuac/es-MX.lproj
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.projecthana.app
-        INFOPLIST_FILE: ProjectHana/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.hanahuac.app
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Hanahuac
         SUPPORTS_MACCATALYST: YES
         MACOSX_DEPLOYMENT_TARGET: "14.0"
         SWIFT_VERSION: "5.10"
     dependencies: []
 
-  ProjectHanaTests:
+  HanahuacTests:
     type: bundle.unit-test
     platform: iOS
     deploymentTarget: "17.0"
     sources:
-      - path: ProjectHanaTests
+      - path: HanahuacTests
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.projecthana.app.tests
-        INFOPLIST_FILE: ProjectHanaTests/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.hanahuac.app.tests
+        GENERATE_INFOPLIST_FILE: YES
         SUPPORTS_MACCATALYST: YES
         MACOSX_DEPLOYMENT_TARGET: "14.0"
         SWIFT_VERSION: "5.10"
     dependencies:
-      - target: ProjectHana
+      - target: Hanahuac
+
+schemes:
+  Hanahuac:
+    build:
+      targets:
+        Hanahuac: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - HanahuacTests
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
