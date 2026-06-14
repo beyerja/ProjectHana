@@ -18,6 +18,7 @@ struct MapLearningQuizView: View {
     @State private var isPinching = false
 
     private let borders = CountryBorderLoader.shared
+    private let pinCoordinates = CountryPinCoordinateProvider.shared
 
     var body: some View {
         Group {
@@ -53,7 +54,7 @@ struct MapLearningQuizView: View {
             Map(position: $position) {
                 ForEach(session.annotationCountries, id: \.id) { country in
                     let state = pinState(for: country, answerState: answerState)
-                    Annotation("", coordinate: CLLocationCoordinate2D(latitude: country.lat, longitude: country.lon)) {
+                    Annotation("", coordinate: pinCoordinates.coordinate(for: country)) {
                         Button {
                             guard !isAdvancing, !isPinching else { return }
                             session.handleTap(countryID: country.id)
