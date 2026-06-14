@@ -1,0 +1,13 @@
+{"ts":"2026-06-14T06:20:59Z","event":"end","agent":"implement-story","story":"001-fix-norway-sweden-pin-coordinates","duration_s":0,"reads":8,"writes":3,"edits":4,"bashes":10,"est_chars":8000,"est_tokens":2000,"notes":""}
+{"ts":"2026-06-14T06:21:08Z","event":"start","agent":"create-pr","story":"001-fix-norway-sweden-pin-coordinates"}
+{"ts":"2026-06-14T06:21:45Z","event":"end","agent":"create-pr","story":"001-fix-norway-sweden-pin-coordinates","duration_s":37,"reads":2,"writes":2,"edits":0,"bashes":3,"est_chars":1500,"est_tokens":375,"notes":""}
+{"ts":"2026-06-14T06:21:58Z","event":"start","agent":"wait-for-ci","story":"001-fix-norway-sweden-pin-coordinates"}
+{"ts":"2026-06-14T06:23:10Z","event":"end","agent":"wait-for-ci","story":"001-fix-norway-sweden-pin-coordinates","duration_s":72,"reads":0,"writes":0,"edits":0,"bashes":2,"est_chars":0,"est_tokens":0,"notes":"PASS"}
+{"ts":"2026-06-14T06:23:22Z","event":"start","agent":"review-pr","story":"001-fix-norway-sweden-pin-coordinates"}
+{"ts":"2026-06-14T06:23:30Z","event":"end","agent":"review-pr","story":"001-fix-norway-sweden-pin-coordinates","duration_s":8,"reads":1,"writes":0,"edits":0,"bashes":1,"est_chars":200,"est_tokens":50,"notes":"PENDING_REVIEW"}
+{"ts":"2026-06-14T06:43:31Z","event":"end","agent":"evaluate-workflow","story":"feature","duration_s":0,"reads":12,"writes":0,"edits":1,"bashes":5,"est_chars":0,"est_tokens":0,"notes":""}
+{"ts":"2026-06-14T06:46:40Z","event":"start","agent":"verify-feature","story":"feature"}
+{"ts":"2026-06-14T06:50:41Z","event":"end","agent":"verify-feature","story":"feature","duration_s":241,"reads":4,"writes":0,"edits":0,"bashes":0,"est_chars":0,"est_tokens":0,"notes":"DONE"}
+{"ts":"2026-06-14T06:51:10Z","event":"start","agent":"evaluate-workflow","story":"feature"}
+{"ts":"2026-06-14T06:53:21Z","event":"end","agent":"evaluate-workflow","story":"feature","duration_s":131,"reads":18,"writes":2,"edits":2,"bashes":4,"est_chars":0,"est_tokens":0,"notes":""}
+{"ts":"2026-06-14T06:53:32Z","event":"start","agent":"archive-workflow","story":"feature"}
