@@ -24,6 +24,8 @@ Steps:
    ```
    This blocks until all checks finish. Exit code 0 = all passed; non-zero = at least one failed or is still pending after timeout.
 
+   **If no checks are found** (e.g. the PR only modifies files outside CI path filters such as `.claude/` or `.workflow/`), `gh pr checks` will report nothing. Treat this as STATUS: PASS — no CI path triggered.
+
 3. If checks pass: output STATUS: PASS.
 
 4. If checks fail: run `gh pr checks <number>` (without --watch) to get the current check summary, include it in the output, then output STATUS: FAIL.

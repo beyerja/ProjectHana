@@ -14,7 +14,7 @@ Move `.workflow/feature.md`, `.workflow/stories.md`, `.workflow/log.md`, `.workf
 
 Leave `.workflow/` empty except for `README.md`.
 
-Install the app to the user's Applications folder:
+Install the app to the user's Applications folder **only if** the feature modified Swift source files or UI. Skip for pure tooling/workflow/config-only features (check by reviewing `.workflow/feature.md` — if the Goal mentions only agent files, CI config, or workflow scripts, skip this step):
 ```
 just install
 ```
