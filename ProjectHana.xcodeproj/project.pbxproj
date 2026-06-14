@@ -64,6 +64,8 @@
 		AA00006A /* StreakTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000069 /* StreakTracker.swift */; };
 		AA00006C /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00006B /* StatsView.swift */; };
 		AA00006E /* StatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA00006D /* StatsTests.swift */; };
+		AA000128 /* PoleLabelCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000129 /* PoleLabelCalculator.swift */; };
+		AA000130 /* CountryPinCoordinateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000131 /* CountryPinCoordinateProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -114,6 +116,8 @@
 		AA00006B /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		AA00006D /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
 		AA000075 /* LearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningTests.swift; sourceTree = "<group>"; };
+		AA000129 /* PoleLabelCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoleLabelCalculator.swift; sourceTree = "<group>"; };
+		AA000131 /* CountryPinCoordinateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPinCoordinateProvider.swift; sourceTree = "<group>"; };
 		AA000119 /* MapLearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningTests.swift; sourceTree = "<group>"; };
 		AA000121 /* MapQuizRegionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelper.swift; sourceTree = "<group>"; };
 		AA000123 /* MapQuizRegionHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelperTests.swift; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 				AA00007C /* ActiveSetStore.swift */,
 				AA000038 /* ReviewCard.swift */,
 				AA000067 /* MasteryTier.swift */,
+				AA000129 /* PoleLabelCalculator.swift */,
+				AA000131 /* CountryPinCoordinateProvider.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -495,6 +501,8 @@
 				AA000102 /* LanguageManager.swift in Sources */,
 				AA000110 /* L10n.swift in Sources */,
 				AA000104 /* LanguagePickerView.swift in Sources */,
+				AA000128 /* PoleLabelCalculator.swift in Sources */,
+				AA000130 /* CountryPinCoordinateProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

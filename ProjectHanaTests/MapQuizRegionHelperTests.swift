@@ -82,4 +82,35 @@ final class MapQuizRegionHelperTests: XCTestCase {
         let result = makeQuizAnnotations(correct: correct, allCountries: countries)
         XCTAssertEqual(result.countries.count, countries.count)
     }
+
+    // MARK: - Generic pin-in-polygon tests
+
+    /// Verifies that every country with border data gets a computed pin coordinate that
+    /// lies strictly inside its mainland polygon (largest ring). This test covers all
+    /// countries generically — no per-country hardcoding required.
+    func testAllCountryPinsAreInsideTheirMainlandBorderPolygon() {
+        let borders = CountryBorderLoader.shared
+        let provider = CountryPinCoordinateProvider(borders: borders)
+        let geoData = GeographyDataLoader.load()
+
+        // Only test countries that have border data; others fall back to raw lat/lon.
+        let countriesWithBorders = geoData.countries.filter { borders[$0.id] != nil }
+        XCTAssertFalse(countriesWithBorders.isEmpty,
+                       "Expected at least some countries to have border data")
+
+        var failures: [String] = []
+        for country in countriesWithBorders {
+            guard let rings = borders[country.id],
+                  let mainland = rings.max(by: { $0.count < $1.count }) else { continue }
+            let coord = provider.coordinate(for: country)
+            let inside = PoleLabelCalculator.pointInPolygon(
+                lon: coord.longitude, lat: coord.latitude, ring: mainland)
+            if !inside {
+                failures.append("\(country.id) (lat=\(coord.latitude), lon=\(coord.longitude))")
+            }
+        }
+
+        XCTAssertTrue(failures.isEmpty,
+            "These country pins are outside their mainland border polygon: \(failures.joined(separator: ", "))")
+    }
 }
