@@ -64,6 +64,8 @@ Count your tool calls in this run: R = Read calls, W = Write calls, E = Edit cal
 ```
 just log end implement-story "<story-id>" <R> <W> <E> <B> <est_chars> "<retries and notable issues>" || true
 ```
+The `notes` argument is passed through the shell unquoted by `just`; `;`, `&`, `|`, and `()`
+inside it break the call. Keep notes to plain hyphen/space tokens (e.g. `"1-retry-schema-wipe"`).
 
 Append to `<story-dir>/log.md`: `<timestamp> implement-story: DONE — <tasks completed>, <issues if any>`.
 
