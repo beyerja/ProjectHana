@@ -24,9 +24,23 @@
 "quiz.cards_due.singular" = "tarjeta pendiente";
 "quiz.cards_due.plural" = "tarjetas pendientes";
 
-/* LanguagePickerView */
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Ajustes";
+"settings.section.general" = "General";
+"settings.section.icloud" = "iCloud";
 "settings.language" = "Idioma";
 "settings.language.picker_title" = "Idioma de la app";
+
+/* iCloud sync */
+"settings.sync.toggle" = "Sincronización con iCloud";
+"settings.sync.status_label" = "Estado";
+"settings.sync.status.off" = "Desactivada";
+"settings.sync.status.unavailable" = "No disponible";
+"settings.sync.status.on" = "Activada";
+"settings.sync.status.syncing" = "Sincronizando…";
+"settings.sync.status.idle" = "Actualizado";
+"settings.sync.status.error" = "Error";
+"settings.sync.unavailable_note" = "La sincronización con iCloud no está disponible. Inicia sesión en iCloud y usa una versión con la sincronización habilitada.";
 
 /* ProgressPlaceholderView */
 "progress.coming_soon" = "Progreso próximamente";

@@ -3,3 +3,4 @@
 2026-06-14T14:00:31Z assess-project-health: DONE — none (XCTest, CI, Nix flake+direnv all present; no linter by project convention/zero-dep rule)
 2026-06-14T14:02:50Z story-workflow 001: DONE (build+test pass; model defaults + dedup-by-factID + per-fact idempotent seed verified)
 2026-06-14T14:05:30Z story-workflow 002: DONE (build+test pass; KeyValueStore facade, ubiquitous+local active-set & preference stores, LanguageManager via injected PreferenceStore, local default preserved)
+2026-06-14T14:07:40Z story-workflow 003: DONE (build+test pass; SyncFeatureFlag single switch, SyncStatus + availability provider, SyncCoordinator container factory + store selection + sign-out fallback, HanahuacApp delegates; CloudKit gated behind #if CLOUDKIT_SYNC, default OFF, no entitlements added)

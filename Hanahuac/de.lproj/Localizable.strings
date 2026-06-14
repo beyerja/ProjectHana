@@ -24,9 +24,23 @@
 "quiz.cards_due.singular" = "Karte fällig";
 "quiz.cards_due.plural" = "Karten fällig";
 
-/* LanguagePickerView */
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Einstellungen";
+"settings.section.general" = "Allgemein";
+"settings.section.icloud" = "iCloud";
 "settings.language" = "Sprache";
 "settings.language.picker_title" = "App-Sprache";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud-Synchronisierung";
+"settings.sync.status_label" = "Status";
+"settings.sync.status.off" = "Aus";
+"settings.sync.status.unavailable" = "Nicht verfügbar";
+"settings.sync.status.on" = "Ein";
+"settings.sync.status.syncing" = "Synchronisieren…";
+"settings.sync.status.idle" = "Aktuell";
+"settings.sync.status.error" = "Fehler";
+"settings.sync.unavailable_note" = "iCloud-Synchronisierung ist nicht verfügbar. Melde dich bei iCloud an und verwende eine Version mit aktivierter Synchronisierung.";
 
 /* ProgressPlaceholderView */
 "progress.coming_soon" = "Fortschritt demnächst";

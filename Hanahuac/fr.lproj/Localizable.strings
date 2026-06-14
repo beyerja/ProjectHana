@@ -24,9 +24,23 @@
 "quiz.cards_due.singular" = "carte à réviser";
 "quiz.cards_due.plural" = "cartes à réviser";
 
-/* LanguagePickerView */
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Réglages";
+"settings.section.general" = "Général";
+"settings.section.icloud" = "iCloud";
 "settings.language" = "Langue";
 "settings.language.picker_title" = "Langue de l'application";
+
+/* iCloud sync */
+"settings.sync.toggle" = "Synchronisation iCloud";
+"settings.sync.status_label" = "État";
+"settings.sync.status.off" = "Désactivée";
+"settings.sync.status.unavailable" = "Indisponible";
+"settings.sync.status.on" = "Activée";
+"settings.sync.status.syncing" = "Synchronisation…";
+"settings.sync.status.idle" = "À jour";
+"settings.sync.status.error" = "Erreur";
+"settings.sync.unavailable_note" = "La synchronisation iCloud est indisponible. Connectez-vous à iCloud et utilisez une version avec la synchronisation activée.";
 
 /* ProgressPlaceholderView */
 "progress.coming_soon" = "Progression bientôt disponible";

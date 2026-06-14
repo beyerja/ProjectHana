@@ -21,7 +21,7 @@ struct HomeView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
-                        LanguagePickerView()
+                        SettingsView()
                     } label: {
                         Image(systemName: "gearshape.fill")
                             .foregroundStyle(Theme.Palette.textSecondary)
@@ -232,4 +232,7 @@ struct PressableCardButtonStyle: ButtonStyle {
     HomeView()
         .withPreviewStore()
         .environment(LanguageManager.shared)
+        .environment(SyncCoordinator(
+            availability: FixedICloudAvailabilityProvider(isICloudAccountAvailable: false)
+        ))
 }
