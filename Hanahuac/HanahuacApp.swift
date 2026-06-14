@@ -3,30 +3,17 @@ import SwiftData
 
 @main
 struct HanahuacApp: App {
-    let modelContainer: ModelContainer = {
-        let schema = Schema([ReviewCard.self])
-        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-        do {
-            return try ModelContainer(for: schema, configurations: [config])
-        } catch {
-            // Schema changed without a migration plan — wipe the store and start fresh.
-            // All data is re-seeded from bundled JSON on next launch.
-            let storeURL = URL.applicationSupportDirectory.appending(path: "default.store")
-            for suffix in ["", "-shm", "-wal"] {
-                try? FileManager.default.removeItem(at: URL(fileURLWithPath: storeURL.path + suffix))
-            }
-            do {
-                return try ModelContainer(for: schema, configurations: [config])
-            } catch {
-                fatalError("Failed to create ModelContainer: \(error)")
-            }
-        }
-    }()
+    // Container creation is delegated to the sync coordinator so the local-only vs CloudKit-backed
+    // configuration is chosen in one place behind a single flag (default OFF → local-only).
+    let modelContainer: ModelContainer = SyncCoordinator.makeModelContainer()
+
+    @State private var syncCoordinator = SyncCoordinator()
 
     var body: some Scene {
         WindowGroup {
             AppRootView()
                 .environment(LanguageManager.shared)
+                .environment(syncCoordinator)
         }
         .modelContainer(modelContainer)
     }
