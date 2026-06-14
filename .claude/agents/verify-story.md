@@ -14,7 +14,6 @@ Read `<story-dir>/spec.md` acceptance criteria.
 
 Ensure the local repo is on `main` and up to date before verifying (the PR may have been merged by the user):
 ```sh
-export PATH="$HOME/.nix-profile/bin:$PATH"
 git checkout main && git pull origin main
 ```
 
