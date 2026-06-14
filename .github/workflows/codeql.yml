@@ -1,0 +1,58 @@
+name: "CodeQL"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Weekly baseline scan of the default branch (Mondays 06:00 UTC).
+    - cron: "0 6 * * 1"
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: Analyze (swift)
+    # Swift is a compiled language: CodeQL must observe a build, which requires macOS + Xcode.
+    runs-on: macos-15
+    timeout-minutes: 60
+
+    permissions:
+      # Required to upload results to the GitHub Security tab.
+      security-events: write
+      # Required for the action to read the repository.
+      contents: read
+      # Allows the action to attach analysis results to PRs.
+      actions: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: swift
+          # Use the default + security-extended query suite for broader coverage.
+          queries: security-extended
+
+      # Manual build mirroring .github/workflows/ci.yml so CodeQL traces the Swift
+      # compilation. The system Xcode on macos-15 provides the toolchain.
+      - name: Build for CodeQL
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project Hanahuac.xcodeproj \
+            -scheme Hanahuac \
+            -destination 'platform=macOS,variant=Mac Catalyst' \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:swift"
