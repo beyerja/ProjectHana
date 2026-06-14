@@ -77,7 +77,7 @@ boot-sim:
 
 # Launch the installed app on the booted simulator
 launch-sim:
-    xcrun simctl launch booted com.private.ProjectHana
+    xcrun simctl launch booted com.projecthana.app
 
 # Take a screenshot of the booted simulator and save it to the given path; exits non-zero on failure
 screenshot-sim path:

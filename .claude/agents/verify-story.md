@@ -46,7 +46,10 @@ If `<story-dir>/spec.md` contains a `## Visual Verification` section, perform th
 
 3. **Launch the app:**
    ```sh
-   just launch-sim
+   just launch-sim || {
+     BUNDLE=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' ProjectHana.xcodeproj/project.pbxproj | sed 's/.*= "//;s/";//')
+     xcrun simctl launch booted "$BUNDLE"
+   }
    sleep 2
    ```
 
