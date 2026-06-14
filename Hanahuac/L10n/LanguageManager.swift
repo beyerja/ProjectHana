@@ -1,21 +1,26 @@
 import Foundation
 import Observation
 
-private let userDefaultsKey = "appLocale"
-
 @Observable final class LanguageManager {
     static let shared = LanguageManager()
 
-    /// The currently selected locale. Setting this value persists it to `UserDefaults`.
+    /// Backing store for the synced preference. Defaults to the local (`UserDefaults`) store so
+    /// behavior is identical to before. `SyncCoordinator` can hand in a sync-capable store.
+    @ObservationIgnored private let preferences: PreferenceStore
+
+    /// The currently selected locale. Setting this value persists it through `preferences`.
     var current: AppLocale {
         didSet {
-            UserDefaults.standard.set(current.rawValue, forKey: userDefaultsKey)
+            preferences.setString(current.rawValue, forKey: .appLocale)
         }
     }
 
-    private init() {
+    /// - Parameter preferences: where the selection is persisted. Defaults to the local store,
+    ///   preserving the historical `UserDefaults`-backed behavior and key.
+    init(preferences: PreferenceStore = makeLocalPreferenceStore()) {
+        self.preferences = preferences
         // Restore a previously persisted selection, or resolve from the device locale.
-        if let stored = UserDefaults.standard.string(forKey: userDefaultsKey),
+        if let stored = preferences.string(forKey: .appLocale),
            let restored = AppLocale(rawValue: stored) {
             current = restored
         } else {
