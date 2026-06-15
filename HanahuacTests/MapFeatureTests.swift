@@ -170,6 +170,48 @@ final class MapFeatureTests: XCTestCase {
         XCTAssertNotNil(withBorder.borderRings)
     }
 
+    // MARK: - River path data (real Natural Earth centerlines)
+
+    func testRiverPathLoaderIDsAllMatchKnownRivers() {
+        let paths = RiverPathLoader.shared
+        let rivers = GeographyDataLoader.load().rivers
+        XCTAssertFalse(paths.isEmpty, "Expected bundled river-paths.json to load")
+        let riverIDs = Set(rivers.map(\.id))
+        for id in paths.keys {
+            XCTAssertTrue(riverIDs.contains(id), "River path id '\(id)' has no matching river")
+        }
+    }
+
+    func testEveryMatchedRiverHasMultiPointParts() {
+        // Each bundled path must be real geometry: every part has >2 vertices.
+        for (id, parts) in RiverPathLoader.shared {
+            XCTAssertFalse(parts.isEmpty, "River '\(id)' has no path parts")
+            for part in parts {
+                XCTAssertGreaterThan(part.count, 2, "River '\(id)' part is not a real centerline")
+            }
+        }
+    }
+
+    func testMajorRiverHasRealCurvedPathNotStraightLine() {
+        // A flagship river (Nile) must come back as a real multi-point course from
+        // the loader, not the two-point straight fallback.
+        let paths = RiverPathLoader.shared
+        let nile = try? XCTUnwrap(paths["nile"])
+        XCTAssertNotNil(nile)
+        let total = nile?.reduce(0) { $0 + $1.count } ?? 0
+        XCTAssertGreaterThan(total, 50, "Nile should be a detailed centerline, got \(total) vertices")
+    }
+
+    func testMatchedRiverLinePathComesFromLoaderNotFallback() {
+        // River.linePath returns the bundled centerline for a matched river, and
+        // that path is not the trivial 2-point source→mouth fallback.
+        let nile = makeRiver(id: "nile", sLat: 4, sLon: 31.6, mLat: 31.5, mLon: 31.3)
+        let path = nile.linePath
+        XCTAssertNotNil(path)
+        let total = path?.reduce(0) { $0 + $1.count } ?? 0
+        XCTAssertGreaterThan(total, 2, "matched river must not use the 2-point fallback")
+    }
+
     // MARK: - Catalog
 
     func testCatalogReturnsFeaturesForEveryCategory() {
