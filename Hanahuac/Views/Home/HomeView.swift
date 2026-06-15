@@ -48,17 +48,17 @@ struct HomeView: View {
             categorySection(
                 name: L10n["home.category.rivers"],
                 icon: "water.waves", color: Theme.Palette.river, category: .river,
-                modes: [.multipleChoice]
+                modes: [.mapQuiz, .multipleChoice]
             )
             categorySection(
                 name: L10n["home.category.mountains"],
                 icon: "mountain.2.fill", color: Theme.Palette.mountain, category: .mountain,
-                modes: [.multipleChoice]
+                modes: [.mapQuiz, .multipleChoice]
             )
             categorySection(
                 name: L10n["home.category.seas"],
                 icon: "drop.fill", color: Theme.Palette.sea, category: .sea,
-                modes: [.multipleChoice]
+                modes: [.mapQuiz, .multipleChoice]
             )
         }
     }
