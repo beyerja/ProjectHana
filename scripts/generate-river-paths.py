@@ -16,13 +16,14 @@ Natural Earth splits each river into MANY short line segments (≈1473 features 
      Amazon -> "Amazonas". Dnieper is matched via its NE alt names (Dnipro/
      Dnieper) and is explicitly NOT allowed to match "Dniester" (a different
      river). Irrawaddy excludes the delta-only segments so we keep the main river.
-  2. Stitch the matched segments into one ordered path by repeatedly chaining the
-     segment whose endpoint is nearest the current path tail, then orient the
-     whole path so it runs from the end nearest our stored source to the end
-     nearest our stored mouth. Segments too far from any current chain end start a
-     new part (genuinely disjoint/braided rivers keep multiple parts).
-  3. Round coordinates to COORD_DECIMALS and drop near-duplicate consecutive
-     vertices.
+  2. Stitch the matched segments into ordered parts by chaining only segments whose
+     endpoints (near-)coincide (JOIN_TOLERANCE), then orient each part source->mouth.
+     A small tolerance is deliberate: genuinely-separate pieces stay separate parts
+     and render as separate polylines, rather than being bridged by a long straight
+     "teleport" line. Disjoint/braided rivers therefore keep multiple parts.
+  3. Round coordinates to COORD_DECIMALS, drop near-duplicate consecutive vertices,
+     and split any part at gaps wider than GAP_SPLIT_DEG so no rendered segment is a
+     long straight line (handles sparsely-sampled within-segment NE reaches too).
 
 Output schema (one object per line):
     [ {"id": "<our id>", "parts": [[[lon, lat], ...], ...]}, ... ]
@@ -47,8 +48,16 @@ NE_BASE = "https://naturalearth.s3.amazonaws.com"
 LAYER = "10m_physical/ne_10m_rivers_lake_centerlines"
 COORD_DECIMALS = 3
 # Max gap (degrees) between a segment endpoint and a chain end for them to join.
-# NE segments share exact endpoints, but rounding/gaps mean we allow a little slack.
-JOIN_TOLERANCE = 1.5
+# NE segments of one continuous river share (near-)exact endpoints, so this is
+# deliberately tiny: a larger value bridges genuinely-separate pieces with a long
+# straight "teleport" line (the Niger boomerang, the Volga X, etc.). Pieces that
+# don't share an endpoint stay separate parts and render as separate polylines.
+JOIN_TOLERANCE = 0.05
+# After assembly, split a part wherever two consecutive vertices are farther apart
+# than this — catches sparsely-sampled within-segment NE gaps (e.g. a 1.36° hop in
+# the Lena) that would otherwise draw a long straight line. The part breaks into
+# separate rendered polylines at the gap; no drawn segment then exceeds this.
+GAP_SPLIT_DEG = 0.4
 # Consecutive vertices closer than this (degrees) are de-duplicated.
 DEDUP_EPS = 0.0005
 
@@ -225,6 +234,23 @@ def dedup_round(part):
     return out
 
 
+def gap_split(part):
+    """Break a part wherever consecutive vertices are > GAP_SPLIT_DEG apart.
+
+    Guarantees no rendered segment is a long straight line, whether the gap came
+    from a sparse within-segment NE reach or a residual stitch join.
+    """
+    pieces, cur = [], [part[0]]
+    for prev, p in zip(part, part[1:]):
+        if dist(prev, p) > GAP_SPLIT_DEG:
+            pieces.append(cur)
+            cur = [p]
+        else:
+            cur.append(p)
+    pieces.append(cur)
+    return pieces
+
+
 def build_rivers():
     reader = fetch_layer()
     shapes, recs = reader.shapes(), reader.records()
@@ -279,8 +305,10 @@ def build_rivers():
             parts.sort(key=len, reverse=True)
             parts = [orient(p, src, mth) for p in parts]
         cleaned = [dedup_round(p) for p in parts]
-        # Drop degenerate stubs: a 2-vertex part is a stray NE fragment that didn't
-        # join, not a real centerline. Keep only parts with >= 3 vertices.
+        # Break any long-straight-line gaps into separate parts (see GAP_SPLIT_DEG).
+        cleaned = [piece for p in cleaned for piece in gap_split(p)]
+        # Drop degenerate stubs: a <3-vertex part is a stray NE fragment, not a real
+        # centerline. Keep only parts with >= 3 vertices.
         cleaned = [p for p in cleaned if len(p) >= 3]
         if not cleaned:
             print(f"  WARN river {rid}: matched but produced no usable path -> fallback")
