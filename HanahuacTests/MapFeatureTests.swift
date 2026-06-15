@@ -35,14 +35,19 @@ final class MapFeatureTests: XCTestCase {
         XCTAssertEqual(pin.longitude, 10, accuracy: 1e-9)
     }
 
-    func testRiverExposesSourceAndMouthAsLineEndpoints() {
-        let river = makeRiver(id: "r", sLat: 1, sLon: 2, mLat: 3, mLon: 4)
-        let ends = river.lineEndpoints
-        XCTAssertNotNil(ends)
-        XCTAssertEqual(ends?.start.latitude, 1)
-        XCTAssertEqual(ends?.start.longitude, 2)
-        XCTAssertEqual(ends?.end.latitude, 3)
-        XCTAssertEqual(ends?.end.longitude, 4)
+    func testRiverWithoutPathDataFallsBackToStraightSourceMouthLine() {
+        // An id with no entry in river-paths.json must fall back to a single
+        // straight part running source → mouth (graceful degradation).
+        let river = makeRiver(id: "no-such-river-xyz", sLat: 1, sLon: 2, mLat: 3, mLon: 4)
+        let path = river.linePath
+        XCTAssertNotNil(path)
+        XCTAssertEqual(path?.count, 1, "fallback is a single straight part")
+        let part = try? XCTUnwrap(path?.first)
+        XCTAssertEqual(part?.count, 2, "straight fallback has exactly the two endpoints")
+        XCTAssertEqual(part?.first?.latitude, 1)
+        XCTAssertEqual(part?.first?.longitude, 2)
+        XCTAssertEqual(part?.last?.latitude, 3)
+        XCTAssertEqual(part?.last?.longitude, 4)
     }
 
     func testRiverHasNoBorderRings() {
@@ -83,7 +88,7 @@ final class MapFeatureTests: XCTestCase {
         let sea = Sea(id: "s", name: "S", nameFr: nil, nameDe: nil, nameEs: nil, lat: 12, lon: -34)
         XCTAssertEqual(sea.pinCoordinate.latitude, 12)
         XCTAssertEqual(sea.pinCoordinate.longitude, -34)
-        XCTAssertNil(sea.lineEndpoints)
+        XCTAssertNil(sea.linePath)
     }
 
     func testMountainPinUsesJSONLatLon() {
@@ -91,7 +96,7 @@ final class MapFeatureTests: XCTestCase {
                               continent: "X", lat: 28, lon: 84, highestPeak: "P", elevationMetres: 8000)
         XCTAssertEqual(m.pinCoordinate.latitude, 28)
         XCTAssertEqual(m.pinCoordinate.longitude, 84)
-        XCTAssertNil(m.lineEndpoints)
+        XCTAssertNil(m.linePath)
     }
 
     // MARK: - Sea border data
