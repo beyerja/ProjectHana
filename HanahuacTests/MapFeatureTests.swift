@@ -192,6 +192,24 @@ final class MapFeatureTests: XCTestCase {
         }
     }
 
+    func testNoRiverPartHasLongStraightJump() {
+        // Guards against the "teleport" artifact: consecutive vertices within a part
+        // must be close, so no part renders as a long straight line bridging
+        // unrelated reaches of a river. Mirrors the generator's GAP_SPLIT_DEG = 0.4°.
+        let maxGapDegrees = 0.41
+        for (id, parts) in RiverPathLoader.shared {
+            for part in parts {
+                for (a, b) in zip(part, part.dropFirst()) {
+                    let dLat = a.latitude - b.latitude
+                    let dLon = a.longitude - b.longitude
+                    let gap = (dLat * dLat + dLon * dLon).squareRoot()
+                    XCTAssertLessThan(gap, maxGapDegrees,
+                        "River '\(id)' has a \(String(format: "%.2f", gap))° straight jump between consecutive path vertices")
+                }
+            }
+        }
+    }
+
     func testMajorRiverHasRealCurvedPathNotStraightLine() {
         // A flagship river (Nile) must come back as a real multi-point course from
         // the loader, not the two-point straight fallback.
