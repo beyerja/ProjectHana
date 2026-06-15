@@ -94,6 +94,39 @@ final class MapFeatureTests: XCTestCase {
         XCTAssertNil(m.lineEndpoints)
     }
 
+    // MARK: - Sea border data
+
+    func testSeaBorderLoaderMatchesAllSeasByID() {
+        let borders = SeaBorderLoader.shared
+        let seas = GeographyDataLoader.load().seas
+        XCTAssertFalse(seas.isEmpty)
+
+        // Every loaded border id must correspond to a known sea id.
+        let seaIDs = Set(seas.map(\.id))
+        for id in borders.keys {
+            XCTAssertTrue(seaIDs.contains(id), "Sea border id '\(id)' has no matching sea")
+        }
+
+        // All 20 seas should have a matched polygon (see story 003 spec).
+        let unmatched = seas.filter { borders[$0.id] == nil }.map(\.id)
+        XCTAssertTrue(unmatched.isEmpty, "Seas missing a border polygon: \(unmatched)")
+
+        // Rings should be non-trivial polygons.
+        for (id, rings) in borders {
+            XCTAssertFalse(rings.isEmpty, "Sea '\(id)' has no rings")
+            XCTAssertTrue(rings.allSatisfy { $0.count >= 4 }, "Sea '\(id)' has a degenerate ring")
+        }
+    }
+
+    func testSeaBorderRingsExposedViaMappableFeature() {
+        let borders = SeaBorderLoader.shared
+        let seas = GeographyDataLoader.load().seas
+        guard let withBorder = seas.first(where: { borders[$0.id] != nil }) else {
+            return XCTFail("Expected at least one sea with a border polygon")
+        }
+        XCTAssertNotNil(withBorder.borderRings)
+    }
+
     // MARK: - Catalog
 
     func testCatalogReturnsFeaturesForEveryCategory() {
