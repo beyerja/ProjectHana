@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0114442720969F5864F55E6D /* PilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96647996ABAD24F4AB1F1941 /* PilePickerView.swift */; };
+		09BA219B1A4B056A7AFD959A /* BorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C10211BD753EDB43C322A97 /* BorderLoader.swift */; };
 		0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */; };
 		16A319228D8757B6F595F322 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C30D9ED535AEDD850E02807 /* LearningSession.swift */; };
 		17EDC98B738E0A1FF613B15F /* AppLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A287A2E1964EE9A8ECFAB7 /* AppLocale.swift */; };
@@ -58,11 +59,13 @@
 		A8A94D2FDC44E49B9B0443FD /* QuizRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421BD7E949578F4FFA0BF9CF /* QuizRoute.swift */; };
 		ABA0A32BD133FC613F22CF09 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57AFB83614F6804D3671A1 /* LanguageManager.swift */; };
 		AEC45EB17BDE7F455C1CB7AE /* GeographyDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */; };
+		B0632565DFC723E523F01B3F /* MapFeatureRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F40EAE285B31D3FD21213A /* MapFeatureRendering.swift */; };
 		B144EBDC8C5F79A95B883FB5 /* AppLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C96CAC8649DD9B837C7678 /* AppLocaleTests.swift */; };
 		BEE55C74826C50C921997462 /* StreakTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758AF9EF8095AC6033447A90 /* StreakTracker.swift */; };
 		C68CFF1817E61FD869159D72 /* LocalizedQuizPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C092259C29945C5CE6C89A2 /* LocalizedQuizPromptTests.swift */; };
 		C6C390DA85F5759C498E9345 /* StatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132EB6CB2BB0B527A3C57527 /* StatsTests.swift */; };
 		C6DC0F0BF19452DB23A0E48E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9716AF7F0E3C9128332682BD /* ViewExtensions.swift */; };
+		CA52ACD8483387D82F189F21 /* MappableFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F515D771C91F31DA44F1CFBF /* MappableFeature.swift */; };
 		CB1BC56B0D4FF4D335F98ADD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */; };
 		CDC0C11EC4692BC78215E08F /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = C24D1F0D98466C85ACE2D994 /* countries.json */; };
 		D16B30980B2CA326DD430AF5 /* TextQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E8429BB7FEDE82E96359FF /* TextQuizSession.swift */; };
@@ -73,6 +76,7 @@
 		D8B11A241DC46B0A17B182E2 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB32874B4CD59E7A7B15526 /* ReviewCard.swift */; };
 		E1D9C05C5DE6C12A289E3C86 /* SyncableStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF541ACBAE26DA234D3D5C3 /* SyncableStoreTests.swift */; };
 		E9648CAA64D3216116F829D1 /* SyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E0A4C8378942A60E6FAC8 /* SyncStatus.swift */; };
+		EB2A8A989227BF8833037F02 /* MapFeatureCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D3C61F4B563A0F99E5CB2C /* MapFeatureCatalog.swift */; };
 		ED9937F2AC4E976EA91CB3C1 /* LearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9ED59834EB421065830ED /* LearningQuizView.swift */; };
 		F27547F2B084E91E0D7BE4E1 /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = F11FD6C85244DEBF7904B118 /* rivers.json */; };
 		F31CE3CE128F36466070D13C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2EADA5AE08E3AB2FDD015B /* SettingsView.swift */; };
@@ -116,9 +120,11 @@
 		4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapitalQuizView.swift; sourceTree = "<group>"; };
 		5F092FAD49DC2860FC69F0E8 /* MultipleChoiceSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceSession.swift; sourceTree = "<group>"; };
 		633F2484D956811A774A989B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		67F40EAE285B31D3FD21213A /* MapFeatureRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureRendering.swift; sourceTree = "<group>"; };
 		6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelper.swift; sourceTree = "<group>"; };
 		6B33F57D3ABE2A906E747101 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		6C092259C29945C5CE6C89A2 /* LocalizedQuizPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedQuizPromptTests.swift; sourceTree = "<group>"; };
+		6C10211BD753EDB43C322A97 /* BorderLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderLoader.swift; sourceTree = "<group>"; };
 		6C30D9ED535AEDD850E02807 /* LearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningSession.swift; sourceTree = "<group>"; };
 		6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPinCoordinateProvider.swift; sourceTree = "<group>"; };
 		6D781685E371E70F4ACB23A6 /* QuizSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSummaryView.swift; sourceTree = "<group>"; };
@@ -159,6 +165,7 @@
 		E6065359AA37AEFC736E0B30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E69AF0C2DECD04EE4B147777 /* CardStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStore.swift; sourceTree = "<group>"; };
 		E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPlaceholderView.swift; sourceTree = "<group>"; };
+		E9D3C61F4B563A0F99E5CB2C /* MapFeatureCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureCatalog.swift; sourceTree = "<group>"; };
 		EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sea.swift; sourceTree = "<group>"; };
 		EAFCAD670B510A8E79864C5F /* SM2Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Scheduler.swift; sourceTree = "<group>"; };
 		EC57AFB83614F6804D3671A1 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
@@ -166,6 +173,7 @@
 		F0DCF2D94E310309B851816E /* MountainRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainRange.swift; sourceTree = "<group>"; };
 		F11FD6C85244DEBF7904B118 /* rivers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rivers.json; sourceTree = "<group>"; };
 		F2A9ED59834EB421065830ED /* LearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningQuizView.swift; sourceTree = "<group>"; };
+		F515D771C91F31DA44F1CFBF /* MappableFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappableFeature.swift; sourceTree = "<group>"; };
 		F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelperTests.swift; sourceTree = "<group>"; };
 		F5FAB09F881E3D291D9A5253 /* SyncCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinatorTests.swift; sourceTree = "<group>"; };
 		FDBB60735040472DC32CCCC4 /* mountains.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mountains.json; sourceTree = "<group>"; };
@@ -281,11 +289,14 @@
 			isa = PBXGroup;
 			children = (
 				A8A920142B5EE81A611BBC5C /* ActiveSetStore.swift */,
+				6C10211BD753EDB43C322A97 /* BorderLoader.swift */,
 				3C79D6B37134580FEAE9AD70 /* Country.swift */,
 				C412DC824A749D0667C05943 /* CountryBorderLoader.swift */,
 				6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */,
 				C56B267CB810DA87B1D70D42 /* GeographyDataLoader.swift */,
 				6C30D9ED535AEDD850E02807 /* LearningSession.swift */,
+				E9D3C61F4B563A0F99E5CB2C /* MapFeatureCatalog.swift */,
+				F515D771C91F31DA44F1CFBF /* MappableFeature.swift */,
 				DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */,
 				F0DCF2D94E310309B851816E /* MountainRange.swift */,
 				E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */,
@@ -368,6 +379,7 @@
 		B2D6418EB07DE5AA00414C4F /* MapQuiz */ = {
 			isa = PBXGroup;
 			children = (
+				67F40EAE285B31D3FD21213A /* MapFeatureRendering.swift */,
 				46B3C69015B149060636051F /* MapLearningQuizView.swift */,
 				33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */,
 				6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */,
@@ -494,6 +506,7 @@
 			files = (
 				6E1791FD0E30A196559956B8 /* ActiveSetStore.swift in Sources */,
 				17EDC98B738E0A1FF613B15F /* AppLocale.swift in Sources */,
+				09BA219B1A4B056A7AFD959A /* BorderLoader.swift in Sources */,
 				F85BD5459DFBA29F33879E88 /* CapitalQuizView.swift in Sources */,
 				3FED385A8C9B097850517F7F /* CardStore.swift in Sources */,
 				50B17A2F93D184FEAED3D88D /* ContentView.swift in Sources */,
@@ -510,11 +523,14 @@
 				A8993F9B6F5EE4D9BF4EB35F /* LanguagePickerView.swift in Sources */,
 				ED9937F2AC4E976EA91CB3C1 /* LearningQuizView.swift in Sources */,
 				16A319228D8757B6F595F322 /* LearningSession.swift in Sources */,
+				EB2A8A989227BF8833037F02 /* MapFeatureCatalog.swift in Sources */,
+				B0632565DFC723E523F01B3F /* MapFeatureRendering.swift in Sources */,
 				1BBF3DAD7B746BF4D4AD594B /* MapLearningQuizView.swift in Sources */,
 				58EC26C66D332F8E7B88B468 /* MapLearningSession.swift in Sources */,
 				5C3F3A38388D7D8C23D5E66F /* MapQuizRegionHelper.swift in Sources */,
 				9E799E4670DC8E021D1C97B9 /* MapQuizSession.swift in Sources */,
 				F5FC0DE759E57E9892B08EE5 /* MapQuizView.swift in Sources */,
+				CA52ACD8483387D82F189F21 /* MappableFeature.swift in Sources */,
 				91BF4999F0EC34D6D1AB3271 /* MasteryTier.swift in Sources */,
 				31E53F4FFE9E7836BF041B92 /* MountainRange.swift in Sources */,
 				190B6EF7CCCBA8FBF190F761 /* MultipleChoiceQuizView.swift in Sources */,

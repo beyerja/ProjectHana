@@ -34,18 +34,18 @@ final class MapQuizRegionHelperTests: XCTestCase {
     func testReturnsAtLeastTenAnnotationCountries() {
         let countries = makeCountries()
         let correct = countries[0]
-        let result = makeQuizAnnotations(correct: correct, allCountries: countries)
+        let result = makeQuizAnnotations(correct: correct, allFeatures: countries)
         // 1 correct + 10 nearest = 11 total (or fewer if allCountries is small)
         let expected = min(11, countries.count)
-        XCTAssertEqual(result.countries.count, expected,
+        XCTAssertEqual(result.features.count, expected,
                        "Should return correct + 10 nearest neighbours")
     }
 
     func testCorrectCountryIsIncluded() {
         let countries = makeCountries()
         let correct = countries[0]
-        let result = makeQuizAnnotations(correct: correct, allCountries: countries)
-        XCTAssertTrue(result.countries.contains(correct),
+        let result = makeQuizAnnotations(correct: correct, allFeatures: countries)
+        XCTAssertTrue(result.features.contains { $0.id == correct.id },
                       "Correct country must always be included in annotations")
     }
 
@@ -55,7 +55,7 @@ final class MapQuizRegionHelperTests: XCTestCase {
         // Run several times due to randomness; at least some runs must produce an offset.
         var anyOffset = false
         for _ in 0..<20 {
-            let result = makeQuizAnnotations(correct: correct, allCountries: countries)
+            let result = makeQuizAnnotations(correct: correct, allFeatures: countries)
             let center = result.region.center
             if abs(center.latitude - correct.lat) > 0.001 || abs(center.longitude - correct.lon) > 0.001 {
                 anyOffset = true
@@ -68,7 +68,7 @@ final class MapQuizRegionHelperTests: XCTestCase {
     func testSpanIsAtLeast20Degrees() {
         let countries = makeCountries()
         let correct = countries[0]
-        let result = makeQuizAnnotations(correct: correct, allCountries: countries)
+        let result = makeQuizAnnotations(correct: correct, allFeatures: countries)
         XCTAssertGreaterThanOrEqual(result.region.span.latitudeDelta, 20,
                                     "Latitude span must be at least 20°")
         XCTAssertGreaterThanOrEqual(result.region.span.longitudeDelta, 20,
@@ -79,8 +79,8 @@ final class MapQuizRegionHelperTests: XCTestCase {
         // Only 4 countries total — should return all of them without crashing.
         let countries = (0..<4).map { makeCountry(id: "x\($0)", lat: Double($0), lon: Double($0)) }
         let correct = countries[0]
-        let result = makeQuizAnnotations(correct: correct, allCountries: countries)
-        XCTAssertEqual(result.countries.count, countries.count)
+        let result = makeQuizAnnotations(correct: correct, allFeatures: countries)
+        XCTAssertEqual(result.features.count, countries.count)
     }
 
     // MARK: - Generic pin-in-polygon tests
