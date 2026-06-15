@@ -12,6 +12,8 @@ Read `.workflow/feature.md`.
 
 Decompose into the minimum set of independent, vertically-sliced user stories. Each story must be deliverable and testable in isolation.
 
+When a feature generalizes existing concrete code over a new abstraction (protocol/generic) before plugging in variants, make the abstraction the first story and order it so every story's commit compiles on its own — if an earlier story references a type a later story introduces, have the earlier story ship a minimal stub (e.g. a loader returning empty) so the build is never red between stories.
+
 For each story (numbered 001, 002, ...):
 - Create `.workflow/stories/<NNN>-<slug>/spec.md`: Title, Goal, Acceptance Criteria
 - Create `.workflow/stories/<NNN>-<slug>/status.md`: `status: pending`
