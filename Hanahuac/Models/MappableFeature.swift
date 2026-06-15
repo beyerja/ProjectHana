@@ -71,10 +71,38 @@ extension River: MappableFeature {
         RiverPathLoader.shared[id] ?? [straightLinePart]
     }
 
-    /// Midpoint of the source→mouth line. (Pin-on-path is layered in by story 003.)
+    /// The tappable pin. For a matched river it sits on the real path — the path
+    /// vertex nearest the path's halfway point by cumulative length — so the pin
+    /// lands ON the river. With no bundled geometry it falls back to the
+    /// source→mouth midpoint (unchanged behaviour).
     var pinCoordinate: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: (sourceLat + mouthLat) / 2,
-                               longitude: (sourceLon + mouthLon) / 2)
+        if let vertex = RiverPathLoader.shared[id].flatMap(River.midpointVertex(of:)) {
+            return vertex
+        }
+        return CLLocationCoordinate2D(latitude: (sourceLat + mouthLat) / 2,
+                                      longitude: (sourceLon + mouthLon) / 2)
+    }
+
+    /// Returns the vertex closest to the halfway point (by cumulative length)
+    /// across all parts of a river path, or `nil` for an empty/degenerate path.
+    static func midpointVertex(of parts: [[CLLocationCoordinate2D]]) -> CLLocationCoordinate2D? {
+        let vertices = parts.flatMap { $0 }
+        guard vertices.count > 1 else { return vertices.first }
+        func seg(_ a: CLLocationCoordinate2D, _ b: CLLocationCoordinate2D) -> Double {
+            let dLat = a.latitude - b.latitude, dLon = a.longitude - b.longitude
+            return (dLat * dLat + dLon * dLon).squareRoot()
+        }
+        // Cumulative length to each vertex (parts concatenated in order).
+        var cumulative = [0.0]
+        for i in 1..<vertices.count {
+            cumulative.append(cumulative[i - 1] + seg(vertices[i - 1], vertices[i]))
+        }
+        let half = (cumulative.last ?? 0) / 2
+        var best = 0, bestDelta = Double.greatestFiniteMagnitude
+        for (i, c) in cumulative.enumerated() where abs(c - half) < bestDelta {
+            bestDelta = abs(c - half); best = i
+        }
+        return vertices[best]
     }
 
     var borderRings: [[CLLocationCoordinate2D]]? { nil }

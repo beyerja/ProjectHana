@@ -212,6 +212,70 @@ final class MapFeatureTests: XCTestCase {
         XCTAssertGreaterThan(total, 2, "matched river must not use the 2-point fallback")
     }
 
+    // MARK: - River path coverage, pin-on-path, fidelity (story 003)
+
+    /// Rivers intentionally relying on the straight source→mouth fallback because
+    /// Natural Earth has no confident centerline match. Currently empty (32/32
+    /// matched, including the Yellow River via rivernum); listed explicitly so a
+    /// coverage regression is caught by the test below.
+    private let expectedFallbackRiverIDs: Set<String> = []
+
+    func testEveryRiverHasPathOrIsDocumentedFallback() {
+        let paths = RiverPathLoader.shared
+        let rivers = GeographyDataLoader.load().rivers
+        XCTAssertEqual(rivers.count, 32, "expected the 32 catalog rivers")
+        let actualFallback = Set(rivers.filter { paths[$0.id] == nil }.map(\.id))
+        XCTAssertEqual(actualFallback, expectedFallbackRiverIDs,
+                       "river path coverage changed — update expectedFallbackRiverIDs and regenerate river-paths.json")
+        // Fallback rivers still expose a usable straight linePath (no crash).
+        for river in rivers where actualFallback.contains(river.id) {
+            let path = river.linePath
+            XCTAssertEqual(path?.count, 1)
+            XCTAssertEqual(path?.first?.count, 2)
+        }
+    }
+
+    func testMatchedRiverPinSitsOnAPathVertex() {
+        let rivers = GeographyDataLoader.load().rivers
+        let paths = RiverPathLoader.shared
+        for river in rivers {
+            guard let parts = paths[river.id] else { continue }
+            let pin = river.pinCoordinate
+            let onVertex = parts.flatMap { $0 }.contains {
+                abs($0.latitude - pin.latitude) < 1e-6 && abs($0.longitude - pin.longitude) < 1e-6
+            }
+            XCTAssertTrue(onVertex, "Pin for matched river '\(river.id)' is not on its path")
+        }
+    }
+
+    func testFallbackRiverPinIsSourceMouthMidpoint() {
+        // An unmatched id keeps the source/mouth midpoint pin.
+        let r = makeRiver(id: "no-such-river-xyz", sLat: 0, sLon: 0, mLat: 10, mLon: 20)
+        XCTAssertEqual(r.pinCoordinate.latitude, 5, accuracy: 1e-9)
+        XCTAssertEqual(r.pinCoordinate.longitude, 10, accuracy: 1e-9)
+    }
+
+    func testAllRiverPathPartsHaveSaneVertexCounts() {
+        for (id, parts) in RiverPathLoader.shared {
+            for part in parts {
+                XCTAssertGreaterThanOrEqual(part.count, 2, "River '\(id)' has a degenerate part")
+            }
+        }
+    }
+
+    func testMidpointVertexPicksHalfwayPoint() {
+        // Straight 5-vertex path: midpoint vertex is the centre one.
+        let path = [[
+            CLLocationCoordinate2D(latitude: 0, longitude: 0),
+            CLLocationCoordinate2D(latitude: 0, longitude: 1),
+            CLLocationCoordinate2D(latitude: 0, longitude: 2),
+            CLLocationCoordinate2D(latitude: 0, longitude: 3),
+            CLLocationCoordinate2D(latitude: 0, longitude: 4),
+        ]]
+        let mid = try? XCTUnwrap(River.midpointVertex(of: path))
+        XCTAssertEqual(mid?.longitude ?? .nan, 2, accuracy: 1e-9)
+    }
+
     // MARK: - Catalog
 
     func testCatalogReturnsFeaturesForEveryCategory() {
