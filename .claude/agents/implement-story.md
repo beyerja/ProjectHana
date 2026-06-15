@@ -56,6 +56,11 @@ If a property or method you are about to add already exists in another file, reu
 **iOS-only APIs**
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `Hanahuac/Views/ViewExtensions.swift` rather than direct calls.
 
+**Bundled Natural-Earth geo data (generate-*.py pattern)**
+When a story derives bundled geo data from Natural Earth (rivers, borders, etc.):
+- The framework Python may fail the NE download with `CERTIFICATE_VERIFY_FAILED`. Download the layer zip with `curl -sSL` into the script's cache dir (`$TMPDIR/ne-borders-cache`) and unzip it there; the script then finds the cached `.shp` and skips its own download.
+- Probe the NE shapefile (names, `name_en`, `name_alt`, `rivernum`) to confirm each curated match BEFORE finalizing the id→NE map — NE per-segment names vary and differ from display names. Match by the stable `rivernum` when the name is ambiguous or absent (e.g. Yellow River is NE name "Huang"/rivernum 66+95, not "Huang He"). Do the probing in one script, not many one-off `python3 -c` calls.
+
 After all tasks are done:
 6. Run `just install` **only if** the story adds new Swift files or introduces UI modifiers / APIs not already present in the codebase. Skip it for changes that only modify existing logic, geometry, or data within SwiftUI view bodies using patterns already in the project — and note the skip in the telemetry notes. When in doubt, run it.
 

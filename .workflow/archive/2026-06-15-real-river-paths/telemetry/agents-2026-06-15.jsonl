@@ -1,0 +1,12 @@
+{"ts":"2026-06-15T16:34:50Z","event":"start","agent":"clarify-feature","story":"feature"}
+{"ts":"2026-06-15T16:36:16Z","event":"end","agent":"clarify-feature","story":"feature","duration_s":86,"reads":8,"writes":1,"edits":0,"bashes":4,"est_chars":6000,"est_tokens":1500,"notes":""}
+{"ts":"2026-06-15T16:36:25Z","event":"start","agent":"break-stories","story":"feature"}
+{"ts":"2026-06-15T16:37:22Z","event":"end","agent":"break-stories","story":"feature","duration_s":57,"reads":12,"writes":7,"edits":0,"bashes":2,"est_chars":9000,"est_tokens":2250,"notes":""}
+{"ts":"2026-06-15T16:37:22Z","event":"start","agent":"assess-project-health","story":"feature"}
+{"ts":"2026-06-15T16:37:39Z","event":"end","agent":"assess-project-health","story":"feature","duration_s":17,"reads":4,"writes":0,"edits":0,"bashes":3,"est_chars":1500,"est_tokens":375,"notes":""}
+{"ts":"2026-06-15T16:38:03Z","event":"start","agent":"break-tasks","story":"001-linepath-refactor"}
+{"ts":"2026-06-15T16:38:27Z","event":"end","agent":"break-tasks","story":"001-linepath-refactor","duration_s":24,"reads":4,"writes":3,"edits":0,"bashes":2,"est_chars":4000,"est_tokens":1000,"notes":""}
+{"ts":"2026-06-15T16:38:27Z","event":"start","agent":"implement-story","story":"001-linepath-refactor"}
+{"ts":"2026-06-15T16:41:12Z","event":"end","agent":"implement-story","story":"001-linepath-refactor","duration_s":165,"reads":6,"writes":2,"edits":8,"bashes":4,"est_chars":12000,"est_tokens":3000,"notes":"no-install-logic-only"}
+{"ts":"2026-06-15T21:00:01Z","event":"end","agent":"evaluate-workflow","story":"feature","duration_s":0,"reads":14,"writes":0,"edits":1,"bashes":6,"est_chars":8000,"est_tokens":2000,"notes":""}
+{"ts":"2026-06-15T21:00:21Z","event":"start","agent":"archive-workflow","story":"feature"}
