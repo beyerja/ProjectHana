@@ -14,9 +14,6 @@ struct MapQuizView: View {
     @State private var isAdvancing = false
     @State private var isPinching = false
 
-    private let borders = CountryBorderLoader.shared
-    private let pinCoordinates = CountryPinCoordinateProvider.shared
-
     var body: some View {
         Group {
             if let session {
@@ -49,31 +46,23 @@ struct MapQuizView: View {
     private func quizBody(session: MapQuizSession) -> some View {
         // Capture answerState here (in the @ViewBuilder body) so SwiftUI's @Observable
         // tracking registers a dependency. Reading it inside the Map content builder
-        // closure does not register observation and the polygons would never update.
+        // closure does not register observation and the overlays would never update.
         let answerState = session.answerState
         ZStack(alignment: .bottom) {
             Map(position: $position) {
-                ForEach(session.annotationCountries, id: \.id) { country in
-                    let state = pinState(for: country, answerState: answerState)
-                    Annotation("", coordinate: pinCoordinates.coordinate(for: country)) {
+                ForEach(session.annotationFeatures, id: \.id) { feature in
+                    let state = mapPinState(featureID: feature.id, answerState: answerState)
+                    Annotation("", coordinate: feature.pinCoordinate) {
                         Button {
                             guard !isAdvancing, !isPinching else { return }
-                            session.handleTap(countryID: country.id)
+                            session.handleTap(featureID: feature.id)
                         } label: {
-                            CountryPinView(state: state, name: country.localizedName(for: languageManager.current))
+                            MapFeaturePinView(state: state, name: feature.localizedName(for: languageManager.current))
                         }
                         .disabled(answerState != .unanswered || isAdvancing || isPinching)
                     }
                 }
-                ForEach(Array(borders.keys), id: \.self) { id in
-                    if let rings = borders[id] {
-                        ForEach(rings.indices, id: \.self) { i in
-                            MapPolygon(coordinates: rings[i])
-                                .foregroundStyle(answerState.polygonFillColor(for: id))
-                                .stroke(.white.opacity(0.55), lineWidth: 0.8)
-                        }
-                    }
-                }
+                featureOverlays(for: session.annotationFeatures, answerState: answerState)
             }
             .mapStyle(.imagery(elevation: .flat))
             .ignoresSafeArea(edges: .horizontal)
@@ -126,7 +115,7 @@ struct MapQuizView: View {
             Text(L10n["map_quiz.tap_on_map"])
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Text(session.currentCountry?.localizedName(for: languageManager.current) ?? "")
+            Text(session.currentFeature?.localizedName(for: languageManager.current) ?? "")
                 .font(.title2.bold())
             Text("\(session.reviewedCount + 1) / \(session.cards.count)")
                 .font(.caption)
@@ -148,7 +137,7 @@ struct MapQuizView: View {
             case .correct:
                 return (L10n["map_quiz.feedback.correct"], Theme.Palette.correct)
             case .incorrect(let tappedID, _):
-                let name = session.allCountries.first { $0.id == tappedID }?.localizedName(for: languageManager.current) ?? tappedID
+                let name = session.allFeatures.first { $0.id == tappedID }?.localizedName(for: languageManager.current) ?? tappedID
                 return ("\(L10n["map_quiz.feedback.incorrect_prefix"]) \(name)", Theme.Palette.wrong)
             case .unanswered:
                 return ("", .clear)
@@ -177,62 +166,12 @@ struct MapQuizView: View {
     // MARK: – Helpers
 
     private func buildSession() {
-        let due = cardStore.dueCards(for: category ?? .country)
+        let cat = category ?? .country
+        let due = cardStore.dueCards(for: cat)
             .filter { cardStore.allCards.map(\.factID).contains($0.factID) }
-        guard !due.isEmpty else { session = MapQuizSession(cards: [], allCountries: []); return }
-        let geoData = GeographyDataLoader.shared
-        session = MapQuizSession(cards: due, allCountries: geoData.countries)
+        guard !due.isEmpty else { session = MapQuizSession(cards: [], allFeatures: []); return }
+        session = MapQuizSession(cards: due, allFeatures: MapFeatureCatalog.features(for: cat))
         if let s = session { position = .region(s.mapRegion) }
-    }
-
-    private func pinState(for country: Country, answerState: AnswerState) -> CountryPinView.State {
-        switch answerState {
-        case .unanswered:
-            return .neutral
-        case .correct(let id):
-            return country.id == id ? .correct : .neutral
-        case .incorrect(let tappedID, let correctID):
-            if country.id == tappedID { return .incorrectTapped }
-            if country.id == correctID { return .correctRevealed }
-            return .neutral
-        }
-    }
-}
-
-// MARK: – Pin view
-
-struct CountryPinView: View {
-    enum State { case neutral, correct, incorrectTapped, correctRevealed }
-
-    let state: State
-    let name: String
-
-    private var color: Color {
-        switch state {
-        case .neutral:          return Theme.Palette.accent
-        case .correct:          return Theme.Palette.correct
-        case .incorrectTapped:  return Theme.Palette.wrong
-        case .correctRevealed:  return Theme.Palette.correct
-        }
-    }
-
-    var body: some View {
-        VStack(spacing: 2) {
-            Circle()
-                .fill(color)
-                .frame(width: 28, height: 28)
-                .overlay(Circle().stroke(.white, lineWidth: 2))
-                .shadow(radius: 2)
-            if state == .correctRevealed || state == .correct {
-                Text(name)
-                    .font(.caption2.bold())
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 2)
-                    .background(color, in: Capsule())
-            }
-        }
-        .animation(.easeInOut(duration: 0.2), value: state)
     }
 }
 

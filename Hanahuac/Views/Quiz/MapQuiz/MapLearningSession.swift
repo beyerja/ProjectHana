@@ -25,9 +25,9 @@ final class MapLearningSession {
 
     // MARK: - Map state
 
-    let allCountries: [Country]
+    let allFeatures: [any MappableFeature]
     private(set) var answerState: AnswerState = .unanswered
-    private(set) var annotationCountries: [Country] = []
+    private(set) var annotationFeatures: [any MappableFeature] = []
     private(set) var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
 
     private let category: CardCategory?
@@ -37,22 +37,22 @@ final class MapLearningSession {
         activeSet.indices.contains(currentIndex) ? activeSet[currentIndex] : nil
     }
 
-    var currentCountry: Country? {
+    var currentFeature: (any MappableFeature)? {
         guard let card = current else { return nil }
-        return allCountries.first { $0.id == card.factID }
+        return allFeatures.first { $0.id == card.factID }
     }
 
     // MARK: - Init
 
     /// Convenience init (no persistence) — used by tests and paths with no category.
-    convenience init(newCards: [ReviewCard], allCountries: [Country]) {
-        self.init(newCards: newCards, allCountries: allCountries, category: nil, store: nil)
+    convenience init(newCards: [ReviewCard], allFeatures: [any MappableFeature]) {
+        self.init(newCards: newCards, allFeatures: allFeatures, category: nil, store: nil)
     }
 
     /// Designated init with optional active-set persistence.
-    init(newCards: [ReviewCard], allCountries: [Country], category: CardCategory?, store: ActiveSetStore?) {
+    init(newCards: [ReviewCard], allFeatures: [any MappableFeature], category: CardCategory?, store: ActiveSetStore?) {
         totalNewCards = newCards.count
-        self.allCountries = allCountries
+        self.allFeatures = allFeatures
         self.category = category
         self.store = store
 
@@ -89,13 +89,12 @@ final class MapLearningSession {
 
     // MARK: - Map interaction
 
-    func handleTap(countryID: String) {
-        guard answerState == .unanswered, currentCountry != nil else { return }
-        guard let correct = currentCountry else { return }
-        if countryID == correct.id {
-            answerState = .correct(id: countryID)
+    func handleTap(featureID: String) {
+        guard answerState == .unanswered, let correct = currentFeature else { return }
+        if featureID == correct.id {
+            answerState = .correct(id: featureID)
         } else {
-            answerState = .incorrect(tappedID: countryID, correctID: correct.id)
+            answerState = .incorrect(tappedID: featureID, correctID: correct.id)
         }
     }
 
@@ -169,9 +168,9 @@ final class MapLearningSession {
     }
 
     private func refreshAnnotations() {
-        guard let correct = currentCountry else { return }
-        let result = makeQuizAnnotations(correct: correct, allCountries: allCountries)
-        annotationCountries = result.countries
+        guard let correct = currentFeature else { return }
+        let result = makeQuizAnnotations(correct: correct, allFeatures: allFeatures)
+        annotationFeatures = result.features
         mapRegion = result.region
     }
 }
