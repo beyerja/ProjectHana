@@ -66,7 +66,12 @@ CACHE = os.path.join(os.environ.get("TMPDIR", "/tmp"), "ne-borders-cache")
 # the app's straight-line fallback.
 RIVER_MAP = {
     "nile":          {"names": ["nile", "white nile", "bahr el jebel", "albert nile", "victoria nile"]},
-    "amazon":        {"names": ["amazon", "amazonas", "solimoes", "solimões", "rio amazonas"]},
+    # Amazon: the NE "Amazonas" mainstem (rivernum 2) only reaches the Ucayali/
+    # Marañón confluence (~-73.5,-4.4). Add the Ucayali (rivernum 10) so the path
+    # runs the full Andes-to-Atlantic stem down to our stored Andean source
+    # (-15.5,-71.7); the two join at the confluence once shapes are split per part.
+    "amazon":        {"names": ["amazon", "amazonas", "solimoes", "solimões", "rio amazonas"],
+                      "rivernums": [2, 10]},
     "yangtze":       {"names": ["yangtze", "chang jiang", "jinsha jiang", "tongtian", "yangtze kiang"]},
     "mississippi":   {"names": ["mississippi"]},
     "yenisei":       {"names": ["yenisey", "yenisei", "jenissej", "ulug-khem", "yenisai"]},
@@ -143,13 +148,19 @@ def record_names(rec) -> list[str]:
     return out
 
 
-def segment_points(shape):
-    """Flatten a (possibly multi-part) NE polyline shape into one ordered point list."""
+def segment_parts(shape):
+    """Split a NE polyline shape into its constituent parts as separate segments.
+
+    NE often stores several disconnected line parts in one shape record, in file
+    order rather than geographic order. Flattening them into a single list would
+    bury real connection points in the interior where `stitch` (which only chains
+    on each segment's head/tail) can't see them — e.g. the Amazonas mainstem's
+    western end at the Ucayali confluence. Keeping parts separate lets stitch chain
+    them correctly.
+    """
     idx = list(shape.parts) + [len(shape.points)]
-    pts = []
-    for i in range(len(idx) - 1):
-        pts.extend(shape.points[idx[i]:idx[i + 1]])
-    return [(p[0], p[1]) for p in pts]
+    return [[(p[0], p[1]) for p in shape.points[idx[i]:idx[i + 1]]]
+            for i in range(len(idx) - 1)]
 
 
 def dist(a, b):
@@ -225,8 +236,9 @@ def build_rivers():
             return int(rec["rivernum"])
         except (KeyError, IndexError, TypeError, ValueError):
             return None
-    indexed = [(record_names(rec), rec_num(rec), segment_points(s))
-               for s, rec in zip(shapes, recs)]
+    indexed = [(record_names(rec), rec_num(rec), part)
+               for s, rec in zip(shapes, recs)
+               for part in segment_parts(s)]
 
     out = []
     for rid, spec in RIVER_MAP.items():
@@ -267,7 +279,9 @@ def build_rivers():
             parts.sort(key=len, reverse=True)
             parts = [orient(p, src, mth) for p in parts]
         cleaned = [dedup_round(p) for p in parts]
-        cleaned = [p for p in cleaned if len(p) >= 2]
+        # Drop degenerate stubs: a 2-vertex part is a stray NE fragment that didn't
+        # join, not a real centerline. Keep only parts with >= 3 vertices.
+        cleaned = [p for p in cleaned if len(p) >= 3]
         if not cleaned:
             print(f"  WARN river {rid}: matched but produced no usable path -> fallback")
             continue
