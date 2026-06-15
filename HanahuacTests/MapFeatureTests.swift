@@ -127,6 +127,44 @@ final class MapFeatureTests: XCTestCase {
         XCTAssertNotNil(withBorder.borderRings)
     }
 
+    // MARK: - Mountain border data + pin-only fallback
+
+    func testMountainBorderLoaderIDsAllMatchKnownMountains() {
+        let borders = MountainBorderLoader.shared
+        let mountains = GeographyDataLoader.load().mountains
+        let mtnIDs = Set(mountains.map(\.id))
+        XCTAssertFalse(borders.isEmpty, "Expected mountain border polygons to load")
+        for id in borders.keys {
+            XCTAssertTrue(mtnIDs.contains(id), "Mountain border id '\(id)' has no matching range")
+        }
+    }
+
+    func testMountainPinOnlyFallbackForUnmatchedRange() {
+        let borders = MountainBorderLoader.shared
+        let mountains = GeographyDataLoader.load().mountains
+        // At least one range is intentionally pin-only (e.g. East African Rift).
+        let pinOnly = mountains.filter { borders[$0.id] == nil }
+        XCTAssertFalse(pinOnly.isEmpty, "Expected at least one pin-only mountain range")
+        // A pin-only range exposes nil rings but still has a valid pin coordinate
+        // and functions in a session without crashing.
+        let range = pinOnly[0]
+        XCTAssertNil(range.borderRings)
+        let card = makeCard(factID: range.id, category: .mountain)
+        let session = MapQuizSession(cards: [card], allFeatures: [range])
+        XCTAssertEqual(session.currentFeature?.id, range.id)
+        session.handleTap(featureID: range.id)
+        if case .correct = session.answerState {} else { XCTFail("Expected correct state") }
+    }
+
+    func testMountainWithPolygonExposesRings() {
+        let borders = MountainBorderLoader.shared
+        let mountains = GeographyDataLoader.load().mountains
+        guard let withBorder = mountains.first(where: { borders[$0.id] != nil }) else {
+            return XCTFail("Expected at least one mountain with a polygon")
+        }
+        XCTAssertNotNil(withBorder.borderRings)
+    }
+
     // MARK: - Catalog
 
     func testCatalogReturnsFeaturesForEveryCategory() {
