@@ -24,10 +24,12 @@ Identify the top 1-2 outliers (highest avg estimated tokens → over-reads/over-
 
 ## Phase 2a — Agent bloat audit
 
-Read every `.claude/agents/` file and flag any that fails one or more heuristics: >80 lines, description >2 sentences, or >5 top-level rules/sections (`##` headings + bold rule paragraphs + top-level numbered lists).
+Read every `.claude/agents/` file and look for **genuine bloat** — content that could be cut without losing information: rules that restate each other, examples that merely repeat the rule they follow, hedging/filler prose, or a description longer than 2 sentences.
 
-- Passing file: output `✓ <filename> — OK`.
-- Flagged file: output `⚠ <filename> — flagged: <heuristics>`, then its current content, then a proposed trimmed version (same intent, shorter — merge redundant rules, cut examples that restate the rule, description to 1 sentence), then `Apply this simplification? (no edit without explicit approval)`.
+Raw size is **not** bloat. A long file, or one with many sections, that is all necessary, non-redundant, project-specific guardrails — each preventing a distinct real failure (e.g. "don't hand-edit the generated pbxproj", the SwiftData stale-store wipe, `just`-only env) — is fine. Do not flag a file on line count or section count alone; mark it `✓ <filename> — OK`, optionally noting `(long but each rule earns its place)`.
+
+- No removable content: `✓ <filename> — OK`.
+- Genuine bloat found: output `⚠ <filename> — <what is redundant/removable>`, then a proposed trimmed version (same intent, shorter — merge the redundant rules, cut the restating examples, description to 1 sentence), then `Apply this simplification? (no edit without explicit approval)`.
 
 Do **not** Edit any agent file in Phase 2a. Output proposals and wait; apply on confirmation in a follow-up turn.
 
