@@ -63,8 +63,9 @@ func mapPinState(featureID: String, answerState: AnswerState) -> MapFeaturePinVi
 
 /// Builds the polygon and polyline overlays for the annotation features in a map
 /// quiz / learning session. Polygons come from `borderRings`; polylines from
-/// `lineEndpoints` (rivers). The line is drawn as a multi-segment great-circle so
-/// it follows the globe's curvature rather than cutting straight across.
+/// `linePath` (rivers) — one `MapPolyline` per ordered part, so a river follows
+/// its real multi-point course (and braided rivers draw multiple parts). A
+/// two-point fallback part is densified so the straight line still reads smoothly.
 @MainActor
 @MapContentBuilder
 func featureOverlays(
@@ -79,9 +80,11 @@ func featureOverlays(
                     .stroke(.white.opacity(0.55), lineWidth: 0.8)
             }
         }
-        if let endpoints = feature.lineEndpoints {
-            MapPolyline(coordinates: greatCircleSegments(from: endpoints.start, to: endpoints.end))
-                .stroke(lineStrokeColor(for: feature.id, answerState: answerState), lineWidth: 4)
+        if let parts = feature.linePath {
+            ForEach(parts.indices, id: \.self) { i in
+                MapPolyline(coordinates: renderableCoordinates(parts[i]))
+                    .stroke(lineStrokeColor(for: feature.id, answerState: answerState), lineWidth: 4)
+            }
         }
     }
 }
@@ -101,9 +104,17 @@ private func lineStrokeColor(for featureID: String, answerState: AnswerState) ->
     }
 }
 
-/// Densifies a source→mouth segment into intermediate points so MapKit renders a
-/// curved great-circle-ish line. A straight two-point polyline already follows
-/// the rhumb on the projection, but densifying keeps long rivers visually smooth.
+/// Prepares a polyline part for rendering. A real multi-point centerline (>2
+/// vertices) is already detailed, so it is drawn as-is. A two-point fallback part
+/// (the straight source→mouth line) is densified into intermediate points so the
+/// straight line still reads as a smooth stroke across the projection.
+private func renderableCoordinates(_ part: [CLLocationCoordinate2D]) -> [CLLocationCoordinate2D] {
+    guard part.count == 2 else { return part }
+    return greatCircleSegments(from: part[0], to: part[1])
+}
+
+/// Densifies a straight segment into intermediate points so MapKit renders a
+/// smooth line across the projection.
 private func greatCircleSegments(
     from start: CLLocationCoordinate2D,
     to end: CLLocationCoordinate2D,

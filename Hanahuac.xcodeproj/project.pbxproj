@@ -28,6 +28,7 @@
 		4486112118500A5A7BDB8E5F /* mountain-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = 84C61DE695089044C5369288 /* mountain-borders.json */; };
 		45E20715A6F1DBF612284161 /* SyncFeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F56156DD1B70D620044397E /* SyncFeatureFlag.swift */; };
 		4ED995FD4863E55F89107C10 /* PreferenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DFD56E1A9339FE9D6066DF /* PreferenceStore.swift */; };
+		4FEB22C1D153658BE015CB42 /* river-paths.json in Resources */ = {isa = PBXBuildFile; fileRef = 84BAC6DFF2E1635009C2DFF9 /* river-paths.json */; };
 		50738B4C009D70A58A9AEBE8 /* country-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = 6D8E85F2AA5FFFC3920B316C /* country-borders.json */; };
 		50B17A2F93D184FEAED3D88D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FDCB200865136E842DB317 /* ContentView.swift */; };
 		53C2E037B85C8C89A414C2D4 /* PoleLabelCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */; };
@@ -53,6 +54,7 @@
 		8FF3959B891ECBCF499BCEE3 /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */; };
 		91BF4999F0EC34D6D1AB3271 /* MasteryTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */; };
 		92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */; };
+		99ACF5363A414EA1682FCA0B /* RiverPathLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F68D9014B6C092CCEE7005 /* RiverPathLoader.swift */; };
 		9A38525C1DEC1C139BA921AA /* MapFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99FAC06BE37F9329DF0FC70 /* MapFeatureTests.swift */; };
 		9A89BF6774EB44FC0EEA5D6E /* SyncStatusPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45793BEFAE16929E78F73B0A /* SyncStatusPresentationTests.swift */; };
 		9E799E4670DC8E021D1C97B9 /* MapQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE603D47A5DB8ED986C7F0 /* MapQuizSession.swift */; };
@@ -105,6 +107,7 @@
 		11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
 		132EB6CB2BB0B527A3C57527 /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
 		16C96CAC8649DD9B837C7678 /* AppLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocaleTests.swift; sourceTree = "<group>"; };
+		19F68D9014B6C092CCEE7005 /* RiverPathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiverPathLoader.swift; sourceTree = "<group>"; };
 		1BE902F9973E13AC591CEBF4 /* seas.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seas.json; sourceTree = "<group>"; };
 		1F3DE116C4E72605CC5529EB /* LocalizedGeoNameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedGeoNameTests.swift; sourceTree = "<group>"; };
 		24E8429BB7FEDE82E96359FF /* TextQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextQuizSession.swift; sourceTree = "<group>"; };
@@ -137,6 +140,7 @@
 		7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacTests.swift; sourceTree = "<group>"; };
 		7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizLogicTests.swift; sourceTree = "<group>"; };
 		7C111D9D119AAE2A508D7CA8 /* SyncStatusPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatusPresentation.swift; sourceTree = "<group>"; };
+		84BAC6DFF2E1635009C2DFF9 /* river-paths.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "river-paths.json"; sourceTree = "<group>"; };
 		84C61DE695089044C5369288 /* mountain-borders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "mountain-borders.json"; sourceTree = "<group>"; };
 		879A10791B45594CB569EDAA /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		8DB32874B4CD59E7A7B15526 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 				6D8E85F2AA5FFFC3920B316C /* country-borders.json */,
 				84C61DE695089044C5369288 /* mountain-borders.json */,
 				FDBB60735040472DC32CCCC4 /* mountains.json */,
+				84BAC6DFF2E1635009C2DFF9 /* river-paths.json */,
 				F11FD6C85244DEBF7904B118 /* rivers.json */,
 				B8BC8FDD71EB406D6A8DF545 /* sea-borders.json */,
 				1BE902F9973E13AC591CEBF4 /* seas.json */,
@@ -311,6 +316,7 @@
 				E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */,
 				8DB32874B4CD59E7A7B15526 /* ReviewCard.swift */,
 				983C356AE304785D4A76665B /* River.swift */,
+				19F68D9014B6C092CCEE7005 /* RiverPathLoader.swift */,
 				EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */,
 			);
 			path = Models;
@@ -502,6 +508,7 @@
 				50738B4C009D70A58A9AEBE8 /* country-borders.json in Resources */,
 				4486112118500A5A7BDB8E5F /* mountain-borders.json in Resources */,
 				746B09167C861A24BC5F5CB7 /* mountains.json in Resources */,
+				4FEB22C1D153658BE015CB42 /* river-paths.json in Resources */,
 				F27547F2B084E91E0D7BE4E1 /* rivers.json in Resources */,
 				5B59B89F003E80B24BAA470D /* sea-borders.json in Resources */,
 				24ED5005ECE65AA9F7BB2B9E /* seas.json in Resources */,
@@ -556,6 +563,7 @@
 				866338A08A8637603AB53C2E /* QuizSummaryView.swift in Sources */,
 				D8B11A241DC46B0A17B182E2 /* ReviewCard.swift in Sources */,
 				85AE02B97BA161330D662BDA /* River.swift in Sources */,
+				99ACF5363A414EA1682FCA0B /* RiverPathLoader.swift in Sources */,
 				420F469B2440869A0BC557C3 /* SM2Scheduler.swift in Sources */,
 				708666E64532C95080761670 /* Sea.swift in Sources */,
 				F31CE3CE128F36466070D13C /* SettingsView.swift in Sources */,

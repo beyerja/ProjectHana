@@ -35,14 +35,19 @@ final class MapFeatureTests: XCTestCase {
         XCTAssertEqual(pin.longitude, 10, accuracy: 1e-9)
     }
 
-    func testRiverExposesSourceAndMouthAsLineEndpoints() {
-        let river = makeRiver(id: "r", sLat: 1, sLon: 2, mLat: 3, mLon: 4)
-        let ends = river.lineEndpoints
-        XCTAssertNotNil(ends)
-        XCTAssertEqual(ends?.start.latitude, 1)
-        XCTAssertEqual(ends?.start.longitude, 2)
-        XCTAssertEqual(ends?.end.latitude, 3)
-        XCTAssertEqual(ends?.end.longitude, 4)
+    func testRiverWithoutPathDataFallsBackToStraightSourceMouthLine() {
+        // An id with no entry in river-paths.json must fall back to a single
+        // straight part running source → mouth (graceful degradation).
+        let river = makeRiver(id: "no-such-river-xyz", sLat: 1, sLon: 2, mLat: 3, mLon: 4)
+        let path = river.linePath
+        XCTAssertNotNil(path)
+        XCTAssertEqual(path?.count, 1, "fallback is a single straight part")
+        let part = try? XCTUnwrap(path?.first)
+        XCTAssertEqual(part?.count, 2, "straight fallback has exactly the two endpoints")
+        XCTAssertEqual(part?.first?.latitude, 1)
+        XCTAssertEqual(part?.first?.longitude, 2)
+        XCTAssertEqual(part?.last?.latitude, 3)
+        XCTAssertEqual(part?.last?.longitude, 4)
     }
 
     func testRiverHasNoBorderRings() {
@@ -83,7 +88,7 @@ final class MapFeatureTests: XCTestCase {
         let sea = Sea(id: "s", name: "S", nameFr: nil, nameDe: nil, nameEs: nil, lat: 12, lon: -34)
         XCTAssertEqual(sea.pinCoordinate.latitude, 12)
         XCTAssertEqual(sea.pinCoordinate.longitude, -34)
-        XCTAssertNil(sea.lineEndpoints)
+        XCTAssertNil(sea.linePath)
     }
 
     func testMountainPinUsesJSONLatLon() {
@@ -91,7 +96,7 @@ final class MapFeatureTests: XCTestCase {
                               continent: "X", lat: 28, lon: 84, highestPeak: "P", elevationMetres: 8000)
         XCTAssertEqual(m.pinCoordinate.latitude, 28)
         XCTAssertEqual(m.pinCoordinate.longitude, 84)
-        XCTAssertNil(m.lineEndpoints)
+        XCTAssertNil(m.linePath)
     }
 
     // MARK: - Sea border data
@@ -163,6 +168,112 @@ final class MapFeatureTests: XCTestCase {
             return XCTFail("Expected at least one mountain with a polygon")
         }
         XCTAssertNotNil(withBorder.borderRings)
+    }
+
+    // MARK: - River path data (real Natural Earth centerlines)
+
+    func testRiverPathLoaderIDsAllMatchKnownRivers() {
+        let paths = RiverPathLoader.shared
+        let rivers = GeographyDataLoader.load().rivers
+        XCTAssertFalse(paths.isEmpty, "Expected bundled river-paths.json to load")
+        let riverIDs = Set(rivers.map(\.id))
+        for id in paths.keys {
+            XCTAssertTrue(riverIDs.contains(id), "River path id '\(id)' has no matching river")
+        }
+    }
+
+    func testEveryMatchedRiverHasMultiPointParts() {
+        // Each bundled path must be real geometry: every part has >2 vertices.
+        for (id, parts) in RiverPathLoader.shared {
+            XCTAssertFalse(parts.isEmpty, "River '\(id)' has no path parts")
+            for part in parts {
+                XCTAssertGreaterThan(part.count, 2, "River '\(id)' part is not a real centerline")
+            }
+        }
+    }
+
+    func testMajorRiverHasRealCurvedPathNotStraightLine() {
+        // A flagship river (Nile) must come back as a real multi-point course from
+        // the loader, not the two-point straight fallback.
+        let paths = RiverPathLoader.shared
+        let nile = try? XCTUnwrap(paths["nile"])
+        XCTAssertNotNil(nile)
+        let total = nile?.reduce(0) { $0 + $1.count } ?? 0
+        XCTAssertGreaterThan(total, 50, "Nile should be a detailed centerline, got \(total) vertices")
+    }
+
+    func testMatchedRiverLinePathComesFromLoaderNotFallback() {
+        // River.linePath returns the bundled centerline for a matched river, and
+        // that path is not the trivial 2-point source→mouth fallback.
+        let nile = makeRiver(id: "nile", sLat: 4, sLon: 31.6, mLat: 31.5, mLon: 31.3)
+        let path = nile.linePath
+        XCTAssertNotNil(path)
+        let total = path?.reduce(0) { $0 + $1.count } ?? 0
+        XCTAssertGreaterThan(total, 2, "matched river must not use the 2-point fallback")
+    }
+
+    // MARK: - River path coverage, pin-on-path, fidelity (story 003)
+
+    /// Rivers intentionally relying on the straight source→mouth fallback because
+    /// Natural Earth has no confident centerline match. Currently empty (32/32
+    /// matched, including the Yellow River via rivernum); listed explicitly so a
+    /// coverage regression is caught by the test below.
+    private let expectedFallbackRiverIDs: Set<String> = []
+
+    func testEveryRiverHasPathOrIsDocumentedFallback() {
+        let paths = RiverPathLoader.shared
+        let rivers = GeographyDataLoader.load().rivers
+        XCTAssertEqual(rivers.count, 32, "expected the 32 catalog rivers")
+        let actualFallback = Set(rivers.filter { paths[$0.id] == nil }.map(\.id))
+        XCTAssertEqual(actualFallback, expectedFallbackRiverIDs,
+                       "river path coverage changed — update expectedFallbackRiverIDs and regenerate river-paths.json")
+        // Fallback rivers still expose a usable straight linePath (no crash).
+        for river in rivers where actualFallback.contains(river.id) {
+            let path = river.linePath
+            XCTAssertEqual(path?.count, 1)
+            XCTAssertEqual(path?.first?.count, 2)
+        }
+    }
+
+    func testMatchedRiverPinSitsOnAPathVertex() {
+        let rivers = GeographyDataLoader.load().rivers
+        let paths = RiverPathLoader.shared
+        for river in rivers {
+            guard let parts = paths[river.id] else { continue }
+            let pin = river.pinCoordinate
+            let onVertex = parts.flatMap { $0 }.contains {
+                abs($0.latitude - pin.latitude) < 1e-6 && abs($0.longitude - pin.longitude) < 1e-6
+            }
+            XCTAssertTrue(onVertex, "Pin for matched river '\(river.id)' is not on its path")
+        }
+    }
+
+    func testFallbackRiverPinIsSourceMouthMidpoint() {
+        // An unmatched id keeps the source/mouth midpoint pin.
+        let r = makeRiver(id: "no-such-river-xyz", sLat: 0, sLon: 0, mLat: 10, mLon: 20)
+        XCTAssertEqual(r.pinCoordinate.latitude, 5, accuracy: 1e-9)
+        XCTAssertEqual(r.pinCoordinate.longitude, 10, accuracy: 1e-9)
+    }
+
+    func testAllRiverPathPartsHaveSaneVertexCounts() {
+        for (id, parts) in RiverPathLoader.shared {
+            for part in parts {
+                XCTAssertGreaterThanOrEqual(part.count, 2, "River '\(id)' has a degenerate part")
+            }
+        }
+    }
+
+    func testMidpointVertexPicksHalfwayPoint() {
+        // Straight 5-vertex path: midpoint vertex is the centre one.
+        let path = [[
+            CLLocationCoordinate2D(latitude: 0, longitude: 0),
+            CLLocationCoordinate2D(latitude: 0, longitude: 1),
+            CLLocationCoordinate2D(latitude: 0, longitude: 2),
+            CLLocationCoordinate2D(latitude: 0, longitude: 3),
+            CLLocationCoordinate2D(latitude: 0, longitude: 4),
+        ]]
+        let mid = try? XCTUnwrap(River.midpointVertex(of: path))
+        XCTAssertEqual(mid?.longitude ?? .nan, 2, accuracy: 1e-9)
     }
 
     // MARK: - Catalog
