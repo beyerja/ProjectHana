@@ -14,6 +14,16 @@ Move `.workflow/feature.md`, `.workflow/stories.md`, `.workflow/log.md`, `.workf
 
 Leave `.workflow/` empty except for `README.md`.
 
+After moving, stage the whole change so no late writes are stranded:
+```
+git add -A .workflow
+```
+Then confirm `git status --porcelain .workflow` shows only staged entries. If any *unstaged*
+`.workflow/` change remains — e.g. a per-story `log.md` or `status.md` line an agent appended after
+the closing snapshot — stage it too. This prevents legitimate late appends from being orphaned as
+uncommitted working-tree deltas (the gitignored `.workflow/telemetry/*.jsonl` sink is exempt and
+won't appear).
+
 Install the app to the user's Applications folder **only if** the feature modified Swift source files or UI. Skip for pure tooling/workflow/config-only features (check by reviewing `.workflow/feature.md` — if the Goal mentions only agent files, CI config, or workflow scripts, skip this step):
 ```
 just install
