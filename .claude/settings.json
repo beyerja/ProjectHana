@@ -1,5 +1,16 @@
 {
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash scripts/permission-capture-hook.sh"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": ".*",
@@ -17,6 +28,7 @@
       "Bash(date -u *)",
       "Bash(xcodebuild *)",
       "Bash(bash scripts/telemetry-hook.sh*)",
+      "Bash(bash scripts/permission-capture-hook.sh*)",
       "Bash(bash scripts/agent-log.sh*)",
       "Bash(just test*)",
       "Bash(just build-mac*)",
