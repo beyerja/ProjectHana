@@ -76,6 +76,10 @@ log *args:
 telemetry:
     python3 scripts/telemetry-summary.py
 
+# Same summary but over live + committed archived telemetry — the cross-run view evaluate-workflow Phase 2b needs
+telemetry-history:
+    python3 scripts/telemetry-summary.py --history
+
 # Build the app for the iOS Simulator (iPhone 17); prints the .app bundle path on success
 build-sim:
     #!/usr/bin/env bash

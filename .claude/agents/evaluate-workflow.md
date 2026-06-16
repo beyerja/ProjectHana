@@ -57,10 +57,12 @@ Do **not** Edit any agent file in Phase 2a. Output proposals and wait; apply on 
 
 ## Phase 2b — Meta-evaluation
 
-**Skip if** `.workflow/telemetry/agents-*.jsonl` has fewer than 2 distinct workflow dates: output `Skipping Phase 2b — insufficient telemetry (fewer than 2 prior runs).` and stop.
+This phase needs cross-run history. The live `.workflow/telemetry/` holds only the current run, but every prior run's telemetry is preserved in its committed archive under `.workflow/archive/*/telemetry/agents-*.jsonl`. Run `just telemetry-history` to get the combined per-agent summary over **live + archived** telemetry (it prints the distinct-date count and lists the dates).
+
+**Skip if** that combined live + archived set (`.workflow/telemetry/agents-*.jsonl` plus `.workflow/archive/*/telemetry/agents-*.jsonl`) has fewer than 2 distinct workflow dates: output `Skipping Phase 2b — insufficient telemetry (fewer than 2 prior runs).` and stop.
 
 1. **Applied-edit detection** — run `git log --oneline --follow -- .claude/agents/ | head -20`. Identify files modified since the last evaluation. Flag any file recommended in a prior evaluation commit but never subsequently modified: `⚠ <filename>: previous recommendation not applied`.
-2. **Before/after telemetry** — for each edited file, use its commit timestamp as the boundary and compare per-agent `avg_duration_min`, `avg_est_tokens`, `retry_count`: **Improved** (>10% better), **Flat** (±10%), **Regressed** (>10% worse), or **Insufficient data** (<2 records on a side). Never fabricate a trend.
+2. **Before/after telemetry** — read end-records from the combined live + archived set above; for each edited file, use its commit timestamp as the boundary and compare per-agent `avg_duration_min`, `avg_est_tokens`, `retry_count`: **Improved** (>10% better), **Flat** (±10%), **Regressed** (>10% worse), or **Insufficient data** (<2 records on a side). Never fabricate a trend.
 3. **Qualitative finding accuracy** — for each "why" line in prior evaluation commits, state the original claim, check whether the relevant telemetry moved as predicted, and output **Supported**, **Contradicted**, or **Inconclusive** with one sentence of evidence.
 
 ## Finish

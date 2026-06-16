@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
-"""Print a summary table from .workflow/telemetry/agents-*.jsonl files."""
+"""Print a summary table from agent telemetry (.workflow/telemetry/agents-*.jsonl).
+
+By default reads only the live sink (the current workflow) — this is what Phase 1 of
+evaluate-workflow uses. Pass --history (or --all) to also include the committed archived
+sinks under .workflow/archive/*/telemetry/, giving the cross-run view that Phase 2b needs.
+"""
 import sys
 import json
 import collections
 import glob
 
+history = any(a in ("--history", "--all") for a in sys.argv[1:])
+
 patterns = [".workflow/telemetry/agents-*.jsonl"]
+if history:
+    patterns.append(".workflow/archive/*/telemetry/agents-*.jsonl")
+
 files = []
 for p in patterns:
     files.extend(sorted(glob.glob(p)))
@@ -31,6 +41,13 @@ for path in files:
 if not ends:
     print("No completed agent records found.")
     sys.exit(0)
+
+dates = sorted({r["ts"][:10] for r in ends if r.get("ts")})
+scope = "live + archived" if history else "live (current workflow)"
+print(f"Telemetry scope: {scope} — {len(ends)} agent runs across {len(dates)} distinct date(s).")
+if history:
+    print(f"Distinct workflow dates: {', '.join(dates) if dates else 'none'}")
+print()
 
 agents = collections.defaultdict(lambda: {"runs": 0, "dur_sum": 0.0, "tok_sum": 0.0, "retries": 0})
 for r in ends:
