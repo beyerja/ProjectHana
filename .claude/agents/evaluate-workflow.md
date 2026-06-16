@@ -22,6 +22,26 @@ Tool call distribution (this workflow):
 
 Identify the top 1-2 outliers (highest avg estimated tokens → over-reads/over-generates; most retries or non-empty notes → ambiguous instructions or scope too large). Then read all `.claude/agents/` files in one parallel batch, pick up to 3 concrete high-impact improvements, and apply them as targeted, surgical edits (no rewrites).
 
+## Phase 1b — Permission-prompt remediation
+
+Goal: cut the permission prompts the user has to approve, using the capture from the `PreToolUse` permission-capture hook.
+
+Read this run's `.workflow/telemetry/permissions-<date>.jsonl` (today's date; the file is local-only and gitignored). Each line is `{ts, tool, command, signature}`, where `signature` is the leading executable + first subcommand (e.g. `git status`, `gh pr`) so repeats group. **If the file is absent or empty, output `Permission capture: none this run — skipping remediation.` and skip the rest of this sub-phase** (graceful no-op: no error, no edits). Analyze only the current run's capture — never retroactively allowlist past runs.
+
+Group records by `signature`, count frequency, and show the distribution in the report so the user sees what drove each recommendation:
+```
+Prompted-command distribution (this run):
+  <signature>: NN
+  <signature>: NN
+```
+
+For each frequently-prompted signature, decide a remedy and classify it against the **security bar**:
+
+- **Auto-apply** — only when the command is *deterministic and side-effect-bounded* (read-only-ish; no destruction, no network, no privilege change). Remedy: add a named `just` recipe wrapping it plus a single **non-injectable** `Bash(just <recipe> *)` allow entry, **or** add an agent instruction to prefer an existing safe recipe. Apply it within the same run (edit the `justfile` and/or `.claude/settings.json` and/or the relevant agent file), and report each applied remedy.
+- **Propose-and-wait** — when the command *or allowlisting it* could be a security concern: destructive (rm/mv/overwrite outside scratch), network-fetching, privilege-changing, or wildcard-injectable (a `*` in the allow pattern could match arbitrary shell). Output the proposal and make **NO** edit until the user confirms — mirroring the Phase 2a bloat-audit behavior.
+
+**Security bar (hard rule):** never auto-add a broad or injectable allow pattern. The only allow form you may auto-add is a single `Bash(just <recipe> *)` whose recipe wraps one fixed command. When in doubt, propose — do not edit.
+
 ## Phase 2a — Agent bloat audit
 
 Read every `.claude/agents/` file and look for **genuine bloat** — content that could be cut without losing information: rules that restate each other, examples that merely repeat the rule they follow, hedging/filler prose, or a description longer than 2 sentences.
@@ -52,6 +72,7 @@ Append to `.workflow/log.md`:
 ```
 <timestamp> evaluate-workflow: DONE
 Telemetry outliers: <agents>
+Permission remediation: <"none this run" or "distribution: <sig:count, …>; applied: <…>; proposed: <…>">
 Phase 2a flags: <flagged files or "none">
 Phase 2b: <"skipped" or summary>
 Improvements: <list>
