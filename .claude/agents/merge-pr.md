@@ -23,12 +23,17 @@ just log end merge-pr "<story-id>" <R> 0 0 <B> 0 "" || true
 ```
 Append to `<story-dir>/log.md`: `<timestamp> merge-pr: DONE`.
 
-If any workflow files are now dirty (check with `git status`), commit them to main via a cleanup branch:
+If any *tracked* workflow files are now dirty (check with `git status`), commit them to main via a
+cleanup branch. (Note: with story 001 the `.workflow/` live working set is gitignored, so usually only
+`.workflow/archive/` or agent/script/config files will be dirty.) Namespace the chore branch by the
+shared feature slug so parallel features don't collide:
 ```sh
-git checkout -b chore/workflow-post-merge-<story-id>
-git add .workflow/
+slug="${HANA_FEATURE_SLUG:-}"
+chore_branch="chore/${slug:+$slug/}workflow-post-merge-<story-id>"
+git checkout -b "$chore_branch"
+git add -A .workflow
 git commit -m "chore(workflow): record merge of <story-id>"
-git push -u origin chore/workflow-post-merge-<story-id>
+git push -u origin "$chore_branch"
 gh pr merge --squash --delete-branch --auto
 ```
 Wait for the auto-merge to complete, then pull main again.

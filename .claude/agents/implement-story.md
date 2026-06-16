@@ -11,7 +11,18 @@ just log start implement-story "<story-id>" || true
 ```
 (derive `<story-id>` from the last path component of the story dir, e.g. `001-telemetry-infrastructure`)
 
-Read `<story-dir>/tasks.md`. Ensure on branch `story/<story-id>` (create from main if needed).
+Read `<story-dir>/tasks.md`.
+
+**Branch name (feature-slug namespaced)** — so parallel feature workflows in separate worktrees never
+collide. The orchestrator exports `HANA_FEATURE_SLUG` (the shared feature slug, also used for the
+worktree, build isolation, and telemetry tagging). Compute the branch once:
+```sh
+slug="${HANA_FEATURE_SLUG:-}"
+branch="story/${slug:+$slug/}<story-id>"   # → story/<slug>/<story-id> when set, else story/<story-id>
+```
+Ensure you are on `$branch` (create it from the worktree's base branch if needed). Never hardcode a
+flat `story/<story-id>` — always go through `HANA_FEATURE_SLUG` so single-checkout runs keep the
+legacy name while worktree runs are namespaced.
 
 For each unchecked task:
 1. Implement following existing project patterns
