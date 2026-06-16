@@ -1,0 +1,1 @@
+2026-06-16 implement-story: DONE — removed gap-split (fn + GAP_SPLIT_DEG + itertools import + docs), regenerated river-paths.json (32/32; Lena 10→1 part; mean 2.53→2.03), replaced teleport-invariant test with 3 new tests. lint clean, test SUCCEEDED, just install done. Visual verification PASS (/tmp/river-verify-{focus,all,lena}.png). Commit bd1b304.
