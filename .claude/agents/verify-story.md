@@ -12,9 +12,19 @@ just log start verify-story "<story-id>" || true
 
 Read `<story-dir>/spec.md` acceptance criteria.
 
-Ensure the local repo is on `main` and up to date before verifying (the PR may have been merged by the user):
+Ensure you are verifying up-to-date code (the PR may have been merged by the user). **Worktree-aware:**
+in a dedicated feature worktree you must NOT `git checkout main` (main is checked out in the primary
+worktree, and switching would abandon this run's branch). Detect the situation and sync without
+switching branches:
 ```sh
-git checkout main && git pull origin main
+git fetch origin
+if git worktree list --porcelain | grep -q "^worktree $(pwd -P)$" \
+   && [ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
+    # Linked feature worktree — verify the branch (already contains the merged work), don't switch.
+    git merge --ff-only origin/main 2>/dev/null || true
+else
+    git checkout main && git pull origin main
+fi
 ```
 
 If the story modified any `@Model` type, boot the simulator and uninstall the app before running tests to avoid a stale-schema crash:

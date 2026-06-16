@@ -40,3 +40,14 @@ Podfile.lock
 
 # Workflow screenshots (binary, large, local only)
 .workflow/screenshots/
+
+# Workflow live working state (local only — each worktree owns its own).
+# Only the durable, date+slug-namespaced archive/ and README.md are tracked, so
+# parallel feature workflows in separate worktrees never collide on this state.
+.workflow/feature.md
+.workflow/stories.md
+.workflow/log.md
+.workflow/stories/
+# Keep the durable record and docs tracked:
+!.workflow/archive/
+!.workflow/README.md

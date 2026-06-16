@@ -5,7 +5,33 @@ description: Orchestrate the full feature lifecycle from clarification through s
 
 Manage all state under `.workflow/`. Create the directory on first run. Append every phase transition to `.workflow/log.md`.
 
-Run the following steps in order, spawning a dedicated sub-agent for each:
+## Step 0 — Worktree setup (automatic isolation; no manual user action)
+
+So multiple feature workflows can run in parallel without colliding, each run gets its own git
+worktree. Do this before any other step:
+
+1. Derive a feature slug from the feature request (lowercase, hyphenated, e.g.
+   `worktree-parallel-workflows`). This single slug is the shared id for the worktree, the branch
+   namespace (`story/<slug>/…`, `chore/<slug>/…`), build isolation (`HANA_FEATURE_SLUG` → `just`'s
+   `wt`), and telemetry tagging — never re-derive it ad hoc elsewhere.
+2. **Guard / opt-out.** Skip worktree creation and run in the current checkout when the user
+   explicitly says so, or when the run *modifies the workflow tooling itself* (the agents in
+   `.claude/agents/`, `justfile`, `.gitignore`, `scripts/`, `.workflow/README.md`) — those changes
+   must land in the primary checkout because the worktree would carry stale committed copies. In that
+   case still export `HANA_FEATURE_SLUG` and use a feature branch, but do not create a worktree.
+   Record the choice (worktree vs. in-place) in `.workflow/log.md`.
+3. Otherwise create a sibling worktree (outside the primary checkout) on a fresh feature branch and
+   run all subsequent steps from inside it:
+   ```sh
+   slug=<feature-slug>
+   git worktree add -b "feat/$slug" "../ProjectHana-$slug" main
+   ```
+   Export `HANA_FEATURE_SLUG="$slug"` for every sub-agent so branch names, `just` build paths, and
+   telemetry are isolated. The shared telemetry sink still resolves to the primary checkout
+   (see `scripts/agent-log.sh`), so cross-run aggregation keeps working.
+
+Then run the following steps in order (from the worktree, if one was created), spawning a dedicated
+sub-agent for each:
 
 1. **Clarify** — spawn `clarify-feature` agent
 2. **Break stories** — spawn `break-stories` agent
@@ -23,10 +49,24 @@ Run the following steps in order, spawning a dedicated sub-agent for each:
 8. **Evaluate** — spawn `evaluate-workflow` agent
 9. **Archive** — spawn `archive-workflow` agent
 10. **Commit closing artifacts** — commit and push the archive move **and** any agent-file edits the
-    `evaluate-workflow` step applied, via a `chore/…` branch + PR (squash-merge once CI is green).
-    Then verify `git status --porcelain .workflow` is clean — nothing in `.workflow/` (outside the
-    gitignored telemetry sink) may be left as an uncommitted delta.
+    `evaluate-workflow` step applied, via a `chore/<slug>/…` branch + PR (squash-merge once CI is
+    green). Then verify `git status --porcelain .workflow` is clean — nothing in `.workflow/` (outside
+    the gitignored telemetry sink) may be left as an uncommitted delta.
+11. **Worktree teardown** — only if Step 0 created a worktree. After the closing-artifact PR is merged,
+    return to the primary checkout and remove this run's worktree and branch so nothing is left behind:
+    ```sh
+    git -C <primary-checkout> worktree remove "../ProjectHana-$slug"
+    git -C <primary-checkout> worktree prune
+    git -C <primary-checkout> branch -D "feat/$slug" 2>/dev/null || true
+    ```
+    The primary checkout must never be left detached or dirty by this. If a worktree was NOT created
+    (in-place/meta run), skip teardown and just confirm the working tree is clean.
 
 At each step, note the outcome in `.workflow/log.md`. If a step sends the workflow back, record the reason.
+
+**Avoid `cd`-prefixed compound Bash.** A `cd /abs/path && <cmd>` block can't be safely allowlisted and
+gets prompted every time (it was the single most-prompted signature in evaluation telemetry). Run
+side-effecting tools at a path instead: `git -C <repo> …`, `gh -R <owner/repo> …`, and `just`
+recipes whose paths are already worktree-aware. Reserve `cd` for the rare tool with no path flag.
 
 Output STATUS: DONE when the feature is verified and the workflow has been evaluated and improved.
