@@ -9,24 +9,29 @@ extension View {
 
 private struct PreviewStoreModifier: ViewModifier {
     @State private var store: CardStore?
+    @State private var statsStore: ProgressStatsStore?
 
     func body(content: Content) -> some View {
         Group {
-            if let store {
-                content.environment(store)
+            if let store, let statsStore {
+                content
+                    .environment(store)
+                    .environment(statsStore)
             } else {
                 ProgressView()
             }
         }
         .task {
             guard store == nil else { return }
-            let config = ModelConfiguration(isStoredInMemoryOnly: true)
+            let schema = Schema([ReviewCard.self, DailyProgressSnapshot.self])
+            let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
             // In-memory preview container creation cannot fail in practice.
             // swiftlint:disable:next force_try
-            let container = try! ModelContainer(for: ReviewCard.self, configurations: config)
+            let container = try! ModelContainer(for: schema, configurations: [config])
             let s = CardStore(modelContext: container.mainContext)
             s.seedIfNeeded(with: GeographyDataLoader.load())
             store = s
+            statsStore = ProgressStatsStore(modelContext: container.mainContext)
         }
     }
 }

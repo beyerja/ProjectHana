@@ -3,6 +3,7 @@ import SwiftUI
 
 struct MapQuizView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
@@ -92,6 +93,7 @@ struct MapQuizView: View {
             Task {
                 try? await Task.sleep(nanoseconds: delay)
                 session.advance()
+                progressStatsStore?.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
                 if !session.isFinished {
                     withAnimation { position = .region(session.mapRegion) }
                 }
