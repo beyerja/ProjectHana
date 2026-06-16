@@ -1,5 +1,5 @@
-import Foundation
 import CoreLocation
+import Foundation
 
 /// Loads the bundled `river-paths.json` of real river-centerline geometry derived
 /// from Natural Earth (`ne_10m_rivers_lake_centerlines`, see

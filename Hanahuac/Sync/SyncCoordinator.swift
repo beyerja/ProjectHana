@@ -1,6 +1,6 @@
 import Foundation
-import SwiftData
 import Observation
+import SwiftData
 
 /// Central seam that decides — based on the single `SyncFeatureFlag` plus iCloud availability and
 /// the user's opt-in choice — whether the app runs in CloudKit-backed or local-only mode, and that
@@ -35,9 +35,9 @@ final class SyncCoordinator {
     ) {
         self.availability = availability
         self.preferenceDefaults = preferenceDefaults
-        self.userOptedIn = preferenceDefaults.bool(forKey: Self.optInKey)
-        self.status = SyncStatus.off  // placeholder; recomputed below
-        self.status = computeStatus()
+        userOptedIn = preferenceDefaults.bool(forKey: Self.optInKey)
+        status = SyncStatus.off // placeholder; recomputed below
+        status = computeStatus()
     }
 
     // MARK: - Eligibility & status
@@ -116,15 +116,15 @@ final class SyncCoordinator {
 
     private static func makeConfiguration(schema: Schema) -> ModelConfiguration {
         #if CLOUDKIT_SYNC
-        // Only reached when the project is built with CLOUDKIT_SYNC + iCloud entitlements present.
-        return ModelConfiguration(
-            schema: schema,
-            isStoredInMemoryOnly: false,
-            cloudKitDatabase: .private(SyncFeatureFlag.containerIdentifier)
-        )
+            // Only reached when the project is built with CLOUDKIT_SYNC + iCloud entitlements present.
+            return ModelConfiguration(
+                schema: schema,
+                isStoredInMemoryOnly: false,
+                cloudKitDatabase: .private(SyncFeatureFlag.containerIdentifier)
+            )
         #else
-        // Default: local-only, byte-compatible with the original HanahuacApp configuration.
-        return ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+            // Default: local-only, byte-compatible with the original HanahuacApp configuration.
+            return ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         #endif
     }
 }

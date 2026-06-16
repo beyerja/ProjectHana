@@ -1,5 +1,5 @@
-import XCTest
 import SwiftData
+import XCTest
 @testable import Hanahuac
 
 @MainActor
@@ -19,7 +19,7 @@ final class LearningTests: XCTestCase {
     }
 
     private func makeCards(count: Int) -> [ReviewCard] {
-        (0..<count).map { makeCard(factID: "c\($0)") }
+        (0 ..< count).map { makeCard(factID: "c\($0)") }
     }
 
     // MARK: - Graduation at 3 consecutive correct
@@ -90,12 +90,12 @@ final class LearningTests: XCTestCase {
 
     // MARK: - Active set refill from pool
 
-    func testRefillsFromPoolOnGraduation() {
+    func testRefillsFromPoolOnGraduation() throws {
         let cards = makeCards(count: 11) // 10 active + 1 pending
         let session = LearningSession(newCards: cards)
         XCTAssertEqual(session.activeSet.count, 10)
         XCTAssertEqual(session.pendingPool.count, 1)
-        let current = session.current!
+        let current = try XCTUnwrap(session.current)
         // Graduate current card
         current.consecutiveCorrect = LearningSession.requiredStreak - 1
         session.recordCorrect()
@@ -103,12 +103,12 @@ final class LearningTests: XCTestCase {
         XCTAssertEqual(session.pendingPool.count, 0)
     }
 
-    func testActiveSetShrinksBelowTenWhenPoolEmpty() {
+    func testActiveSetShrinksBelowTenWhenPoolEmpty() throws {
         let cards = makeCards(count: 5)
         let session = LearningSession(newCards: cards)
         XCTAssertEqual(session.activeSet.count, 5)
         XCTAssertEqual(session.pendingPool.count, 0)
-        let current = session.current!
+        let current = try XCTUnwrap(session.current)
         current.consecutiveCorrect = LearningSession.requiredStreak - 1
         session.recordCorrect()
         XCTAssertEqual(session.activeSet.count, 4)
@@ -137,7 +137,7 @@ final class LearningTests: XCTestCase {
 
     // MARK: - dueCards excludes ungraduated cards
 
-    func testDueCardsExcludesNewCards() throws {
+    func testDueCardsExcludesNewCards() {
         let store = CardStore(modelContext: container.mainContext)
         store.upsert(ReviewCard(factID: "new1", category: .country))
         store.upsert(ReviewCard(factID: "new2", category: .country))
@@ -145,7 +145,7 @@ final class LearningTests: XCTestCase {
         XCTAssertTrue(due.isEmpty, "Ungraduated cards must not appear in dueCards")
     }
 
-    func testDueCardsIncludesGraduatedCards() throws {
+    func testDueCardsIncludesGraduatedCards() {
         let store = CardStore(modelContext: container.mainContext)
         let card = ReviewCard(factID: "grad1", category: .country, hasGraduated: true)
         store.upsert(card)
@@ -155,7 +155,7 @@ final class LearningTests: XCTestCase {
 
     // MARK: - newCards return
 
-    func testNewCardsReturnsOnlyUngraduated() throws {
+    func testNewCardsReturnsOnlyUngraduated() {
         let store = CardStore(modelContext: container.mainContext)
         store.upsert(ReviewCard(factID: "new1", category: .country))
         store.upsert(ReviewCard(factID: "grad1", category: .country, hasGraduated: true))
@@ -164,7 +164,7 @@ final class LearningTests: XCTestCase {
         XCTAssertEqual(newCards.first?.factID, "new1")
     }
 
-    func testNewCardsEmptyWhenAllGraduated() throws {
+    func testNewCardsEmptyWhenAllGraduated() {
         let store = CardStore(modelContext: container.mainContext)
         store.upsert(ReviewCard(factID: "grad1", category: .country, hasGraduated: true))
         XCTAssertTrue(store.newCards().isEmpty)

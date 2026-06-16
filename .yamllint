@@ -1,0 +1,30 @@
+# yamllint configuration for Hanahuac.
+# Lints workflow files, dependabot config, and project.yml.
+# Used as a fail-on-violation gate via `just lint-yaml` and the CI lint job.
+
+extends: default
+
+ignore: |
+  .build/
+  .build-mac/
+  .direnv/
+
+rules:
+  # GitHub Actions and xcodegen manifests legitimately use long lines (URLs, prose in
+  # PR-body blocks). Keep a generous cap; the lint job runs WITHOUT --strict, so a
+  # warning here is informational and does not fail the gate.
+  line-length:
+    max: 200
+    level: warning
+    allow-non-breakable-words: true
+  # `on:` in GitHub workflows is parsed as boolean true by YAML 1.1 (expected, not a
+  # mistake) and xcodegen build settings use the canonical Xcode YES/NO spelling, which
+  # must not be rewritten to true/false. Accept all of these as intentional truthy values.
+  truthy:
+    allowed-values: ["true", "false", "YES", "NO"]
+    check-keys: false
+  # Document start markers are optional for these manifests.
+  document-start: disable
+  # Allow the common 2-space comment indent used in the workflows.
+  comments:
+    min-spaces-from-content: 1

@@ -1,5 +1,5 @@
-import XCTest
 import SwiftData
+import XCTest
 @testable import Hanahuac
 
 @MainActor
@@ -13,8 +13,12 @@ final class StatsTests: XCTestCase {
     }
 
     private func makeCard(repetitions: Int, easeFactor: Double = 2.5) -> ReviewCard {
-        let card = ReviewCard(factID: UUID().uuidString, category: .country,
-                              repetitionCount: repetitions, easeFactor: easeFactor)
+        let card = ReviewCard(
+            factID: UUID().uuidString,
+            category: .country,
+            repetitionCount: repetitions,
+            easeFactor: easeFactor
+        )
         container.mainContext.insert(card)
         return card
     }
@@ -84,33 +88,33 @@ final class StatsTests: XCTestCase {
         XCTAssertEqual(StreakTracker.currentStreak(defaults: d), 1)
     }
 
-    func testStreak_consecutiveDays_increments() {
+    func testStreak_consecutiveDays_increments() throws {
         let d = freshDefaults()
         let cal = Calendar.current
         let today = cal.startOfDay(for: .now)
-        let yesterday = cal.date(byAdding: .day, value: -1, to: today)!
+        let yesterday = try XCTUnwrap(cal.date(byAdding: .day, value: -1, to: today))
         StreakTracker.recordReview(on: yesterday, defaults: d)
         StreakTracker.recordReview(on: today, defaults: d)
         XCTAssertEqual(StreakTracker.currentStreak(defaults: d), 2)
     }
 
-    func testStreak_threeDaysInARow() {
+    func testStreak_threeDaysInARow() throws {
         let d = freshDefaults()
         let cal = Calendar.current
         let today = cal.startOfDay(for: .now)
-        let d1 = cal.date(byAdding: .day, value: -2, to: today)!
-        let d2 = cal.date(byAdding: .day, value: -1, to: today)!
+        let d1 = try XCTUnwrap(cal.date(byAdding: .day, value: -2, to: today))
+        let d2 = try XCTUnwrap(cal.date(byAdding: .day, value: -1, to: today))
         StreakTracker.recordReview(on: d1, defaults: d)
         StreakTracker.recordReview(on: d2, defaults: d)
         StreakTracker.recordReview(on: today, defaults: d)
         XCTAssertEqual(StreakTracker.currentStreak(defaults: d), 3)
     }
 
-    func testStreak_missedDay_resetsToOne() {
+    func testStreak_missedDay_resetsToOne() throws {
         let d = freshDefaults()
         let cal = Calendar.current
         let today = cal.startOfDay(for: .now)
-        let twoDaysAgo = cal.date(byAdding: .day, value: -2, to: today)!
+        let twoDaysAgo = try XCTUnwrap(cal.date(byAdding: .day, value: -2, to: today))
         StreakTracker.recordReview(on: twoDaysAgo, defaults: d)
         StreakTracker.recordReview(on: today, defaults: d)
         XCTAssertEqual(StreakTracker.currentStreak(defaults: d), 1)

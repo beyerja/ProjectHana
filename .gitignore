@@ -13,6 +13,10 @@ build/
 # direnv (flake dev-shell cache)
 .direnv/
 
+# Python (helper scripts in scripts/; linted with ruff)
+__pycache__/
+*.pyc
+
 # Swift Package Manager
 .build/
 .swiftpm/

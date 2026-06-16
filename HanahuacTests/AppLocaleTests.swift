@@ -2,7 +2,6 @@ import XCTest
 @testable import Hanahuac
 
 final class AppLocaleTests: XCTestCase {
-
     // MARK: - AppLocale.matching
 
     func testMatchingEnglish() {
@@ -28,7 +27,7 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-MX")), .esMX)
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-ES")), .esMX)
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-AR")), .esMX)
-        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es")),    .esMX)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es")), .esMX)
     }
 
     /// Unrecognized locales fall back to .en (acceptance criteria).

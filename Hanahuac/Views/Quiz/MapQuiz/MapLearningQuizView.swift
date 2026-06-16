@@ -1,5 +1,5 @@
-import SwiftUI
 import MapKit
+import SwiftUI
 
 /// Map-based learning view for new cards in any category.
 /// Drives `MapLearningSession` (3-consecutive-correct graduation mechanic).
@@ -147,8 +147,9 @@ struct MapLearningQuizView: View {
             switch session.answerState {
             case .correct:
                 return (L10n["map_quiz.feedback.correct"], Theme.Palette.correct)
-            case .incorrect(let tappedID, _):
-                let name = session.allFeatures.first { $0.id == tappedID }?.localizedName(for: languageManager.current) ?? tappedID
+            case let .incorrect(tappedID, _):
+                let name = session.allFeatures.first { $0.id == tappedID }?
+                    .localizedName(for: languageManager.current) ?? tappedID
                 return ("\(L10n["map_quiz.feedback.incorrect_prefix"]) \(name)", Theme.Palette.wrong)
             case .unanswered:
                 return ("", .clear)
@@ -227,8 +228,12 @@ struct MapLearningQuizView: View {
         }
         let features = MapFeatureCatalog.features(for: category ?? .country)
         let store: ActiveSetStore? = category != nil ? UserDefaultsActiveSetStore() : nil
-        session = MapLearningSession(newCards: newCards, allFeatures: features,
-                                     category: category, store: store)
+        session = MapLearningSession(
+            newCards: newCards,
+            allFeatures: features,
+            category: category,
+            store: store
+        )
         if let s = session { position = .region(s.mapRegion) }
     }
 }

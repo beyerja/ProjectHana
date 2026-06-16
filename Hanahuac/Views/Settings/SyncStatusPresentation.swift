@@ -6,12 +6,12 @@ enum SyncStatusPresentation {
     /// Localization key for the status label.
     static func labelKey(for status: SyncStatus) -> String {
         switch status {
-        case .off: return "settings.sync.status.off"
-        case .unavailable: return "settings.sync.status.unavailable"
-        case .on: return "settings.sync.status.on"
-        case .syncing: return "settings.sync.status.syncing"
-        case .idle: return "settings.sync.status.idle"
-        case .error: return "settings.sync.status.error"
+        case .off: "settings.sync.status.off"
+        case .unavailable: "settings.sync.status.unavailable"
+        case .on: "settings.sync.status.on"
+        case .syncing: "settings.sync.status.syncing"
+        case .idle: "settings.sync.status.idle"
+        case .error: "settings.sync.status.error"
         }
     }
 

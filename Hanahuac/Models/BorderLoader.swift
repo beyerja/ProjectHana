@@ -1,5 +1,5 @@
-import Foundation
 import CoreLocation
+import Foundation
 
 /// Loads a bundled `*-borders.json` file of the shape
 /// `[{"id": "<id>", "rings": [[[lon, lat], ...], ...]}]` into a dictionary of

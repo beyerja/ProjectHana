@@ -2,7 +2,6 @@ import XCTest
 @testable import Hanahuac
 
 final class SyncableStoreTests: XCTestCase {
-
     // MARK: - KeyValueActiveSetStore over the in-memory fake (stands in for ubiquitous backend)
 
     func testActiveSetRoundTripsThroughKeyValueStore() {
@@ -76,10 +75,11 @@ final class SyncableStoreTests: XCTestCase {
         XCTAssertEqual(manager.current, .de)
     }
 
-    func testSwappingBackendKeepsObservableAPIIdentical() {
+    func testSwappingBackendKeepsObservableAPIIdentical() throws {
         // The same operations against local vs sync-capable backends are observationally identical.
-        let local = KeyValueActiveSetStore(store: UserDefaultsKeyValueStore(
-            defaults: UserDefaults(suiteName: "test.swap.\(UUID().uuidString)")!))
+        let local = try KeyValueActiveSetStore(store: UserDefaultsKeyValueStore(
+            defaults: XCTUnwrap(UserDefaults(suiteName: "test.swap.\(UUID().uuidString)"))
+        ))
         let sync = KeyValueActiveSetStore(store: InMemoryKeyValueStore())
         for store in [local, sync] as [ActiveSetStore] {
             store.save(["p", "q"], for: .mountain)

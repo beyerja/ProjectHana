@@ -9,7 +9,6 @@ struct LanguagePickerView: View {
             .navigationBarTitleDisplayMode(.inline)
     }
 
-    @ViewBuilder
     private var localeList: some View {
         List {
             Section(L10n["settings.language.picker_title"]) {

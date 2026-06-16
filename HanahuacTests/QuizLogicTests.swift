@@ -1,5 +1,5 @@
-import XCTest
 import SwiftData
+import XCTest
 @testable import Hanahuac
 
 @MainActor
@@ -38,7 +38,7 @@ final class QuizLogicTests: XCTestCase {
         let card = makeCard()
         let session = TextQuizSession(questions: [TextQuestion(card: card, prompt: "?", correctAnswer: "Berlin")])
         session.checkAnswer("   ")
-        if case .incorrect(let answer) = session.answerState {
+        if case let .incorrect(answer) = session.answerState {
             XCTAssertEqual(answer, "Berlin")
         } else {
             XCTFail("Expected incorrect answer state")
@@ -56,7 +56,7 @@ final class QuizLogicTests: XCTestCase {
         let card = makeCard()
         let session = TextQuizSession(questions: [TextQuestion(card: card, prompt: "?", correctAnswer: "Paris")])
         session.checkAnswer("London")
-        if case .incorrect(let answer) = session.answerState {
+        if case let .incorrect(answer) = session.answerState {
             XCTAssertEqual(answer, "Paris")
         } else {
             XCTFail("Expected incorrect state")
@@ -68,21 +68,27 @@ final class QuizLogicTests: XCTestCase {
     func testMCQOptions_fourOptions() {
         let card = makeCard(factID: "fr")
         let questions = MultipleChoiceSession.countryCapitalQuestions(cards: [card], countries: sampleCountries())
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         XCTAssertEqual(q.options.count, 4)
     }
 
     func testMCQOptions_exactlyOneCorrect() {
         let card = makeCard(factID: "fr")
         let questions = MultipleChoiceSession.countryCapitalQuestions(cards: [card], countries: sampleCountries())
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         XCTAssertEqual(q.options.filter(\.isCorrect).count, 1)
     }
 
     func testMCQOptions_correctAnswerIsCapital() {
         let card = makeCard(factID: "fr")
         let questions = MultipleChoiceSession.countryCapitalQuestions(cards: [card], countries: sampleCountries())
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         let correct = q.options.first(where: \.isCorrect)
         XCTAssertEqual(correct?.label, "Paris")
     }
@@ -90,7 +96,9 @@ final class QuizLogicTests: XCTestCase {
     func testMCQOptions_noDuplicateLabels() {
         let card = makeCard(factID: "fr")
         let questions = MultipleChoiceSession.countryCapitalQuestions(cards: [card], countries: sampleCountries())
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         let labels = q.options.map(\.label)
         XCTAssertEqual(Set(labels).count, labels.count, "Option labels must be unique")
     }
@@ -98,7 +106,9 @@ final class QuizLogicTests: XCTestCase {
     func testMCQOptions_noDistractorEqualsCorrect() {
         let card = makeCard(factID: "fr")
         let questions = MultipleChoiceSession.countryCapitalQuestions(cards: [card], countries: sampleCountries())
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         let distractors = q.options.filter { !$0.isCorrect }
         for d in distractors {
             XCTAssertNotEqual(d.label, "Paris", "Distractor must differ from correct answer")
@@ -112,7 +122,9 @@ final class QuizLogicTests: XCTestCase {
             factID: \.id, factName: \.name, factContinent: \.continent,
             categoryLabel: "river"
         )
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         let correct = q.options.first(where: \.isCorrect)
         XCTAssertEqual(correct?.label, "Europe")
     }
@@ -124,7 +136,9 @@ final class QuizLogicTests: XCTestCase {
             factID: \.id, factName: \.name, factContinent: \.continent,
             categoryLabel: "river"
         )
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         XCTAssertEqual(q.options.count, 4)
         XCTAssertEqual(Set(q.options.map(\.label)).count, 4)
     }
@@ -133,16 +147,91 @@ final class QuizLogicTests: XCTestCase {
 
     private func sampleCountries() -> [Country] {
         [
-            Country(id: "fr", name: "France", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Paris", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 46, lon: 2),
-            Country(id: "de", name: "Germany", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Berlin", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 51, lon: 10),
-            Country(id: "es", name: "Spain", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Madrid", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 40, lon: -4),
-            Country(id: "it", name: "Italy", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Rome", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 42, lon: 12),
-            Country(id: "pt", name: "Portugal", nameFr: nil, nameDe: nil, nameEs: nil, capital: "Lisbon", capitalFr: nil, capitalDe: nil, capitalEs: nil, continent: "Europe", lat: 39, lon: -8),
+            Country(
+                id: "fr",
+                name: "France",
+                nameFr: nil,
+                nameDe: nil,
+                nameEs: nil,
+                capital: "Paris",
+                capitalFr: nil,
+                capitalDe: nil,
+                capitalEs: nil,
+                continent: "Europe",
+                lat: 46,
+                lon: 2
+            ),
+            Country(
+                id: "de",
+                name: "Germany",
+                nameFr: nil,
+                nameDe: nil,
+                nameEs: nil,
+                capital: "Berlin",
+                capitalFr: nil,
+                capitalDe: nil,
+                capitalEs: nil,
+                continent: "Europe",
+                lat: 51,
+                lon: 10
+            ),
+            Country(
+                id: "es",
+                name: "Spain",
+                nameFr: nil,
+                nameDe: nil,
+                nameEs: nil,
+                capital: "Madrid",
+                capitalFr: nil,
+                capitalDe: nil,
+                capitalEs: nil,
+                continent: "Europe",
+                lat: 40,
+                lon: -4
+            ),
+            Country(
+                id: "it",
+                name: "Italy",
+                nameFr: nil,
+                nameDe: nil,
+                nameEs: nil,
+                capital: "Rome",
+                capitalFr: nil,
+                capitalDe: nil,
+                capitalEs: nil,
+                continent: "Europe",
+                lat: 42,
+                lon: 12
+            ),
+            Country(
+                id: "pt",
+                name: "Portugal",
+                nameFr: nil,
+                nameDe: nil,
+                nameEs: nil,
+                capital: "Lisbon",
+                capitalFr: nil,
+                capitalDe: nil,
+                capitalEs: nil,
+                continent: "Europe",
+                lat: 39,
+                lon: -8
+            )
         ]
     }
 
     private func sampleRivers() -> [River] {
-        [River(id: "rhine", name: "Rhine", nameFr: nil, nameDe: nil, nameEs: nil, continent: "Europe",
-               sourceLat: 46.8, sourceLon: 9.2, mouthLat: 51.9, mouthLon: 4.0)]
+        [River(
+            id: "rhine",
+            name: "Rhine",
+            nameFr: nil,
+            nameDe: nil,
+            nameEs: nil,
+            continent: "Europe",
+            sourceLat: 46.8,
+            sourceLon: 9.2,
+            mouthLat: 51.9,
+            mouthLon: 4.0
+        )]
     }
 }

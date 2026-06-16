@@ -76,7 +76,7 @@ final class LearningSession {
         card.consecutiveCorrect = 0
         // Remove from current position and reinsert at a later random position
         activeSet.remove(at: currentIndex)
-        let insertAt = Int.random(in: max(1, currentIndex)..<max(2, activeSet.count + 1))
+        let insertAt = Int.random(in: max(1, currentIndex) ..< max(2, activeSet.count + 1))
         activeSet.insert(card, at: min(insertAt, activeSet.count))
         // currentIndex stays, now pointing to the next card (or wraps)
         if currentIndex >= activeSet.count { currentIndex = 0 }

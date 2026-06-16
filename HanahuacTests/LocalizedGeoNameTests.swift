@@ -2,7 +2,6 @@ import XCTest
 @testable import Hanahuac
 
 final class LocalizedGeoNameTests: XCTestCase {
-
     // MARK: - Country
 
     func testCountry_allLocales_returnCorrectName() {
@@ -43,8 +42,11 @@ final class LocalizedGeoNameTests: XCTestCase {
             lon: 0
         )
 
-        XCTAssertEqual(country.localizedName(for: .fr), "Testland",
-                       "Missing nameFr should fall back to English name")
+        XCTAssertEqual(
+            country.localizedName(for: .fr),
+            "Testland",
+            "Missing nameFr should fall back to English name"
+        )
     }
 
     func testCountry_missingGermanName_fallsBackToEnglish() {
@@ -63,8 +65,11 @@ final class LocalizedGeoNameTests: XCTestCase {
             lon: 0
         )
 
-        XCTAssertEqual(country.localizedName(for: .de), "Testland",
-                       "Missing nameDe should fall back to English name")
+        XCTAssertEqual(
+            country.localizedName(for: .de),
+            "Testland",
+            "Missing nameDe should fall back to English name"
+        )
     }
 
     func testCountry_missingSpanishName_fallsBackToEnglish() {
@@ -83,8 +88,11 @@ final class LocalizedGeoNameTests: XCTestCase {
             lon: 0
         )
 
-        XCTAssertEqual(country.localizedName(for: .esMX), "Testland",
-                       "Missing nameEs should fall back to English name")
+        XCTAssertEqual(
+            country.localizedName(for: .esMX),
+            "Testland",
+            "Missing nameEs should fall back to English name"
+        )
     }
 
     func testCountry_localizedCapital() {

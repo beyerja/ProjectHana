@@ -1,5 +1,5 @@
-import XCTest
 import SwiftData
+import XCTest
 @testable import Hanahuac
 
 @MainActor
@@ -25,7 +25,7 @@ final class CardStoreTests: XCTestCase {
     func testSeedingCountMatchesDataset() {
         store.seedIfNeeded(with: geoData)
         let expected = geoData.countries.count + geoData.rivers.count +
-                       geoData.mountains.count + geoData.seas.count
+            geoData.mountains.count + geoData.seas.count
         XCTAssertEqual(store.allCards.count, expected)
     }
 
@@ -44,7 +44,12 @@ final class CardStoreTests: XCTestCase {
 
     func testDueCardsReturnsOverdueOnly() {
         let due = ReviewCard(factID: "due", category: .country, nextReviewDate: .distantPast, hasGraduated: true)
-        let future = ReviewCard(factID: "future", category: .country, nextReviewDate: .distantFuture, hasGraduated: true)
+        let future = ReviewCard(
+            factID: "future",
+            category: .country,
+            nextReviewDate: .distantFuture,
+            hasGraduated: true
+        )
         store.upsert(due)
         store.upsert(future)
         let dueCards = store.dueCards()

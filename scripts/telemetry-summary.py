@@ -11,10 +11,11 @@ sinks under .workflow/archive/*/telemetry/, giving the cross-run view that Phase
 Pass --by-feature to additionally break the per-agent table down by feature slug (per-feature
 attribution preserved from the shared sink).
 """
-import sys
-import json
+
 import collections
 import glob
+import json
+import sys
 
 history = any(a in ("--history", "--all") for a in sys.argv[1:])
 by_feature = "--by-feature" in sys.argv[1:]
@@ -65,12 +66,16 @@ for r in ends:
     if r.get("notes"):
         agents[a]["retries"] += 1
 
-print(f"| {'Agent':<26} | {'Runs':>4} | {'Avg Duration':>12} | {'Avg Est Tokens':>14} | {'Total Retries/Notes':>19} |")
-print(f"|{'-'*28}|{'-'*6}|{'-'*14}|{'-'*16}|{'-'*21}|")
+print(
+    f"| {'Agent':<26} | {'Runs':>4} | {'Avg Duration':>12} | {'Avg Est Tokens':>14} | {'Total Retries/Notes':>19} |"
+)
+print(f"|{'-' * 28}|{'-' * 6}|{'-' * 14}|{'-' * 16}|{'-' * 21}|")
 for name, d in sorted(agents.items()):
     avg_min = (d["dur_sum"] / d["runs"] / 60) if d["runs"] else 0
     avg_tok = (d["tok_sum"] / d["runs"]) if d["runs"] else 0
-    print(f"| {name:<26} | {d['runs']:>4} | {avg_min:>11.1f}m | {avg_tok:>14.0f} | {d['retries']:>19} |")
+    print(
+        f"| {name:<26} | {d['runs']:>4} | {avg_min:>11.1f}m | {avg_tok:>14.0f} | {d['retries']:>19} |"
+    )
 
 # Per-feature attribution from the shared sink. Records pre-dating the "feature" tag
 # fall back to "untagged" so historical aggregation never breaks.
@@ -82,6 +87,6 @@ if by_feature:
         feats[f]["dur_sum"] += r.get("duration_s", 0)
     print()
     print(f"| {'Feature':<26} | {'Runs':>4} | {'Total Duration':>14} |")
-    print(f"|{'-'*28}|{'-'*6}|{'-'*16}|")
+    print(f"|{'-' * 28}|{'-' * 6}|{'-' * 16}|")
     for f, d in sorted(feats.items()):
-        print(f"| {f:<26} | {d['runs']:>4} | {d['dur_sum']/60:>13.1f}m |")
+        print(f"| {f:<26} | {d['runs']:>4} | {d['dur_sum'] / 60:>13.1f}m |")

@@ -28,7 +28,10 @@ struct QuizSummaryView: View {
                 statRow(label: L10n["quiz_summary.cards_reviewed"], value: "\(reviewed)")
                 statRow(label: L10n["quiz_summary.correct"], value: "\(correct) (\(accuracy)%)")
                 if let next = nextDue {
-                    statRow(label: L10n["quiz_summary.next_review"], value: next.formatted(.relative(presentation: .named)))
+                    statRow(
+                        label: L10n["quiz_summary.next_review"],
+                        value: next.formatted(.relative(presentation: .named))
+                    )
                 }
             }
             .padding()

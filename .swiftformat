@@ -1,0 +1,24 @@
+# SwiftFormat configuration for Hanahuac.
+# Used in --lint mode as a fail-on-violation gate (`just lint-swift`, CI lint job).
+
+--swiftversion 5.10
+
+# Scope
+--exclude .build,.build-mac,.direnv,Hanahuac.xcodeproj
+
+# Formatting conventions (idiomatic Swift / SwiftUI defaults)
+--indent 4
+--maxwidth 120
+--commas inline
+--trimwhitespace always
+--semicolons never
+--self remove
+--importgrouping testable-bottom
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--funcattributes prev-line
+--typeattributes prev-line
+
+# Disable rules that would conflict with SwiftLint or churn unnecessarily.
+--disable wrapMultilineStatementBraces

@@ -1,5 +1,5 @@
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 extension View {
     func withPreviewStore() -> some View {
@@ -21,6 +21,8 @@ private struct PreviewStoreModifier: ViewModifier {
         .task {
             guard store == nil else { return }
             let config = ModelConfiguration(isStoredInMemoryOnly: true)
+            // In-memory preview container creation cannot fail in practice.
+            // swiftlint:disable:next force_try
             let container = try! ModelContainer(for: ReviewCard.self, configurations: config)
             let s = CardStore(modelContext: container.mainContext)
             s.seedIfNeeded(with: GeographyDataLoader.load())

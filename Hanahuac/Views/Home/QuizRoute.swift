@@ -8,35 +8,35 @@ enum HomeQuizMode: Hashable {
 
     var supportsNew: Bool {
         switch self {
-        case .mapQuiz, .multipleChoice: return true
-        case .typeCapital, .nameCountry: return false
+        case .mapQuiz, .multipleChoice: true
+        case .typeCapital, .nameCountry: false
         }
     }
 
     var icon: String {
         switch self {
-        case .mapQuiz: return "map.fill"
-        case .multipleChoice: return "list.bullet.circle.fill"
-        case .typeCapital: return "building.columns.fill"
-        case .nameCountry: return "globe.europe.africa.fill"
+        case .mapQuiz: "map.fill"
+        case .multipleChoice: "list.bullet.circle.fill"
+        case .typeCapital: "building.columns.fill"
+        case .nameCountry: "globe.europe.africa.fill"
         }
     }
 
     var color: Color {
         switch self {
-        case .mapQuiz: return Theme.Palette.country
-        case .multipleChoice: return Theme.Palette.accentDeep
-        case .typeCapital: return Theme.Palette.mountain
-        case .nameCountry: return Theme.Palette.sea
+        case .mapQuiz: Theme.Palette.country
+        case .multipleChoice: Theme.Palette.accentDeep
+        case .typeCapital: Theme.Palette.mountain
+        case .nameCountry: Theme.Palette.sea
         }
     }
 
     var titleKey: String {
         switch self {
-        case .mapQuiz: return "quiz.mode.map_tap.title"
-        case .multipleChoice: return "quiz.mode.multiple_choice.title"
-        case .typeCapital: return "quiz.mode.type_capital.title"
-        case .nameCountry: return "quiz.mode.name_country.title"
+        case .mapQuiz: "quiz.mode.map_tap.title"
+        case .multipleChoice: "quiz.mode.multiple_choice.title"
+        case .typeCapital: "quiz.mode.type_capital.title"
+        case .nameCountry: "quiz.mode.name_country.title"
         }
     }
 }

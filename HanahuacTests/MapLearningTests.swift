@@ -1,5 +1,5 @@
-import XCTest
 import SwiftData
+import XCTest
 @testable import Hanahuac
 
 @MainActor
@@ -19,7 +19,7 @@ final class MapLearningTests: XCTestCase {
     }
 
     private func makeCards(count: Int) -> [ReviewCard] {
-        (0..<count).map { makeCard(factID: "c\($0)") }
+        (0 ..< count).map { makeCard(factID: "c\($0)") }
     }
 
     // MARK: - MapLearningSession graduation mechanic
@@ -28,7 +28,7 @@ final class MapLearningTests: XCTestCase {
         let card = makeCard()
         let session = MapLearningSession(newCards: [card], allFeatures: [])
         XCTAssertFalse(card.hasGraduated)
-        session.handleTap(featureID: "c1")   // correct
+        session.handleTap(featureID: "c1") // correct
         session.recordCorrect()
         session.handleTap(featureID: "c1")
         session.recordCorrect()
@@ -76,12 +76,12 @@ final class MapLearningTests: XCTestCase {
         XCTAssertGreaterThan(card.repetitionCount, 0)
     }
 
-    func testMapLearningRefillsFromPoolOnGraduation() {
+    func testMapLearningRefillsFromPoolOnGraduation() throws {
         let cards = makeCards(count: 11) // 10 active + 1 pending
         let session = MapLearningSession(newCards: cards, allFeatures: [])
         XCTAssertEqual(session.activeSet.count, 10)
         XCTAssertEqual(session.pendingPool.count, 1)
-        let current = session.current!
+        let current = try XCTUnwrap(session.current)
         current.consecutiveCorrect = MapLearningSession.requiredStreak - 1
         session.recordCorrect()
         XCTAssertEqual(session.activeSet.count, 10)
@@ -123,20 +123,22 @@ final class MapLearningTests: XCTestCase {
         XCTAssertEqual(ids1, ids2, "Second construction must resume the same active set")
     }
 
-    func testActiveSetPersistenceFiltersGraduatedIDs() {
+    func testActiveSetPersistenceFiltersGraduatedIDs() throws {
         let cards = makeCards(count: 3)
         let store = InMemoryActiveSetStore()
 
         let session1 = LearningSession(newCards: cards, category: .country, store: store)
         // Graduate one card outside the session to simulate it being marked done
-        let firstID = session1.activeSet.first!.factID
-        cards.first { $0.factID == firstID }!.hasGraduated = true
+        let firstID = try XCTUnwrap(session1.activeSet.first?.factID)
+        cards.first { $0.factID == firstID }?.hasGraduated = true
 
         // Remaining non-graduated cards
         let remaining = cards.filter { !$0.hasGraduated }
         let session2 = LearningSession(newCards: remaining, category: .country, store: store)
-        XCTAssertFalse(session2.activeSet.contains { $0.factID == firstID },
-                       "Graduated card must be excluded from rehydrated active set")
+        XCTAssertFalse(
+            session2.activeSet.contains { $0.factID == firstID },
+            "Graduated card must be excluded from rehydrated active set"
+        )
     }
 
     func testActiveSetPersistenceEmptyAfterFilterTriggersFreshDraw() {
@@ -151,45 +153,60 @@ final class MapLearningTests: XCTestCase {
 
         // Second construction with only graduated cards — rehydrated set is empty → fresh draw
         // Provide new non-graduated cards
-        let newCards = [(0..<2).map { makeCard(factID: "fresh\($0)") }].flatMap { $0 }
+        let newCards = [(0 ..< 2).map { makeCard(factID: "fresh\($0)") }].flatMap { $0 }
         let session2 = LearningSession(newCards: newCards, category: .country, store: store)
         XCTAssertFalse(session2.activeSet.isEmpty, "Fresh draw must produce a non-empty active set")
         let freshIDs = session2.activeSet.map(\.factID)
-        XCTAssertTrue(freshIDs.allSatisfy { $0.hasPrefix("fresh") },
-                      "Fresh draw must use new ungraduated cards")
+        XCTAssertTrue(
+            freshIDs.allSatisfy { $0.hasPrefix("fresh") },
+            "Fresh draw must use new ungraduated cards"
+        )
     }
 
-    func testActiveSetPersistenceUpdatedAfterGraduation() {
+    func testActiveSetPersistenceUpdatedAfterGraduation() throws {
         let cards = makeCards(count: 5)
         let store = InMemoryActiveSetStore()
         let session = LearningSession(newCards: cards, category: .country, store: store)
         let initialStoredCount = store.load(for: .country).count
         XCTAssertGreaterThan(initialStoredCount, 0)
 
-        let current = session.current!
+        let current = try XCTUnwrap(session.current)
         current.consecutiveCorrect = LearningSession.requiredStreak - 1
-        session.recordCorrect()  // graduates the card
+        session.recordCorrect() // graduates the card
 
         let updatedStored = store.load(for: .country)
-        XCTAssertFalse(updatedStored.contains(current.factID),
-                       "Graduated card's ID must be removed from the persisted active set")
+        XCTAssertFalse(
+            updatedStored.contains(current.factID),
+            "Graduated card's ID must be removed from the persisted active set"
+        )
     }
 
     // MARK: - Wrong-click dual penalty (MapQuizSession)
 
     private func makeCountry(id: String) -> Country {
-        Country(id: id, name: id, nameFr: nil, nameDe: nil, nameEs: nil,
-                capital: "Cap", capitalFr: nil, capitalDe: nil, capitalEs: nil,
-                continent: "EU", lat: 0, lon: 0)
+        Country(
+            id: id,
+            name: id,
+            nameFr: nil,
+            nameDe: nil,
+            nameEs: nil,
+            capital: "Cap",
+            capitalFr: nil,
+            capitalDe: nil,
+            capitalEs: nil,
+            continent: "EU",
+            lat: 0,
+            lon: 0
+        )
     }
 
-    func testMapQuizDualPenaltyAppliedToBothCards() {
+    func testMapQuizDualPenaltyAppliedToBothCards() throws {
         let quizzedCard = makeCard(factID: "correct")
         let tappedCard = makeCard(factID: "wrong")
         let countries = [makeCountry(id: "correct"), makeCountry(id: "wrong")]
         let session = MapQuizSession(cards: [quizzedCard, tappedCard], allFeatures: countries)
         // Determine which card is current after shuffle; tap the other one
-        let currentID = session.currentCard!.factID
+        let currentID = try XCTUnwrap(session.currentCard?.factID)
         let otherID = currentID == "correct" ? "wrong" : "correct"
         let currentCard = currentID == "correct" ? quizzedCard : tappedCard
         let otherCard = currentID == "correct" ? tappedCard : quizzedCard
@@ -213,14 +230,14 @@ final class MapLearningTests: XCTestCase {
 
     // MARK: - Wrong-click dual streak-reset (MapLearningSession)
 
-    func testMapLearningWrongResetsStreakOfTappedCard() {
+    func testMapLearningWrongResetsStreakOfTappedCard() throws {
         let correctCard = makeCard(factID: "correct")
         let tappedCard = makeCard(factID: "wrong")
         tappedCard.consecutiveCorrect = 2
         let countries = [makeCountry(id: "correct"), makeCountry(id: "wrong")]
         let session = MapLearningSession(newCards: [correctCard, tappedCard], allFeatures: countries)
         // Find which card is current and tap the other one
-        let current = session.current!
+        let current = try XCTUnwrap(session.current)
         let otherID = current.factID == "correct" ? "wrong" : "correct"
         let otherCard = otherID == "wrong" ? tappedCard : correctCard
         otherCard.consecutiveCorrect = 2
@@ -244,32 +261,50 @@ final class MapLearningTests: XCTestCase {
         let cards = makeCards(count: 5)
         let store = InMemoryActiveSetStore()
 
-        let session1 = MapLearningSession(newCards: cards, allFeatures: [],
-                                          category: .country, store: store)
+        let session1 = MapLearningSession(
+            newCards: cards,
+            allFeatures: [],
+            category: .country,
+            store: store
+        )
         let ids1 = session1.activeSet.map(\.factID)
         XCTAssertFalse(ids1.isEmpty)
 
-        let session2 = MapLearningSession(newCards: cards, allFeatures: [],
-                                          category: .country, store: store)
+        let session2 = MapLearningSession(
+            newCards: cards,
+            allFeatures: [],
+            category: .country,
+            store: store
+        )
         let ids2 = session2.activeSet.map(\.factID)
         XCTAssertEqual(ids1, ids2, "Second construction must resume the same active set")
     }
 
-    func testMapLearningPersistenceFiltersGraduatedIDs() {
+    func testMapLearningPersistenceFiltersGraduatedIDs() throws {
         let cards = makeCards(count: 3)
         let store = InMemoryActiveSetStore()
 
-        let session1 = MapLearningSession(newCards: cards, allFeatures: [],
-                                          category: .country, store: store)
+        let session1 = MapLearningSession(
+            newCards: cards,
+            allFeatures: [],
+            category: .country,
+            store: store
+        )
         // Graduate the first card outside the session
-        let firstID = session1.activeSet.first!.factID
-        cards.first { $0.factID == firstID }!.hasGraduated = true
+        let firstID = try XCTUnwrap(session1.activeSet.first?.factID)
+        cards.first { $0.factID == firstID }?.hasGraduated = true
 
         let remaining = cards.filter { !$0.hasGraduated }
-        let session2 = MapLearningSession(newCards: remaining, allFeatures: [],
-                                          category: .country, store: store)
-        XCTAssertFalse(session2.activeSet.contains { $0.factID == firstID },
-                       "Graduated card must be excluded from rehydrated active set")
+        let session2 = MapLearningSession(
+            newCards: remaining,
+            allFeatures: [],
+            category: .country,
+            store: store
+        )
+        XCTAssertFalse(
+            session2.activeSet.contains { $0.factID == firstID },
+            "Graduated card must be excluded from rehydrated active set"
+        )
     }
 
     func testMapLearningPersistenceEmptyAfterFilterTriggersFreshDraw() {
@@ -277,37 +312,53 @@ final class MapLearningTests: XCTestCase {
         let store = InMemoryActiveSetStore()
 
         // First session — persists IDs
-        _ = MapLearningSession(newCards: cards, allFeatures: [],
-                               category: .country, store: store)
+        _ = MapLearningSession(
+            newCards: cards,
+            allFeatures: [],
+            category: .country,
+            store: store
+        )
 
         // Mark all persisted cards as graduated
         cards.forEach { $0.hasGraduated = true }
 
         // Second construction with only graduated cards — should draw fresh set
-        let newCards = (0..<2).map { makeCard(factID: "fresh\($0)") }
-        let session2 = MapLearningSession(newCards: newCards, allFeatures: [],
-                                          category: .country, store: store)
+        let newCards = (0 ..< 2).map { makeCard(factID: "fresh\($0)") }
+        let session2 = MapLearningSession(
+            newCards: newCards,
+            allFeatures: [],
+            category: .country,
+            store: store
+        )
         XCTAssertFalse(session2.activeSet.isEmpty, "Fresh draw must produce a non-empty active set")
         let freshIDs = session2.activeSet.map(\.factID)
-        XCTAssertTrue(freshIDs.allSatisfy { $0.hasPrefix("fresh") },
-                      "Fresh draw must use new ungraduated cards")
+        XCTAssertTrue(
+            freshIDs.allSatisfy { $0.hasPrefix("fresh") },
+            "Fresh draw must use new ungraduated cards"
+        )
     }
 
-    func testMapLearningPersistenceUpdatedAfterGraduation() {
+    func testMapLearningPersistenceUpdatedAfterGraduation() throws {
         let cards = makeCards(count: 5)
         let store = InMemoryActiveSetStore()
-        let session = MapLearningSession(newCards: cards, allFeatures: [],
-                                         category: .country, store: store)
+        let session = MapLearningSession(
+            newCards: cards,
+            allFeatures: [],
+            category: .country,
+            store: store
+        )
         let initialStoredCount = store.load(for: .country).count
         XCTAssertGreaterThan(initialStoredCount, 0)
 
-        let current = session.current!
+        let current = try XCTUnwrap(session.current)
         current.consecutiveCorrect = MapLearningSession.requiredStreak - 1
-        session.recordCorrect()  // graduates the card
+        session.recordCorrect() // graduates the card
 
         let updatedStored = store.load(for: .country)
-        XCTAssertFalse(updatedStored.contains(current.factID),
-                       "Graduated card's ID must be removed from the persisted active set")
+        XCTAssertFalse(
+            updatedStored.contains(current.factID),
+            "Graduated card's ID must be removed from the persisted active set"
+        )
     }
 
     func testMapLearningNoPersistenceWithoutStore() {

@@ -8,12 +8,12 @@ enum MapFeatureCatalog {
     static func features(for category: CardCategory) -> [any MappableFeature] {
         let data = GeographyDataLoader.shared
         switch category {
-        case .country:  return data.countries
+        case .country: return data.countries
         // River / MountainRange / Sea conformance to MappableFeature is added in
         // stories 002–004; each returns its features once it conforms.
-        case .river:    return data.rivers.map { $0 as any MappableFeature }
+        case .river: return data.rivers.map { $0 as any MappableFeature }
         case .mountain: return data.mountains.map { $0 as any MappableFeature }
-        case .sea:      return data.seas.map { $0 as any MappableFeature }
+        case .sea: return data.seas.map { $0 as any MappableFeature }
         }
     }
 }

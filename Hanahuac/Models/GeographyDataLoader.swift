@@ -7,7 +7,7 @@ struct GeographyData {
     let seas: [Sea]
 }
 
-struct GeographyDataLoader {
+enum GeographyDataLoader {
     static let shared: GeographyData = load()
 
     static func load() -> GeographyData {
