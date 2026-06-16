@@ -60,6 +60,20 @@
 "stats.tier.reps_3_4" = "Rép. 3–4";
 "stats.tier.mastered" = "Rép. ≥ 5, EF ≥ 2,0";
 
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Évolution dans le temps";
+"stats.charts.range.7d" = "7 jours";
+"stats.charts.range.30d" = "30 jours";
+"stats.charts.range.all" = "Tout";
+"stats.charts.category.all" = "Toutes";
+"stats.charts.mastery_growth" = "Progression";
+"stats.charts.reviews_completed" = "Révisions effectuées";
+"stats.charts.cards_graduated" = "Cartes validées";
+"stats.charts.streak_history" = "Série";
+"stats.charts.series.review" = "Révision";
+"stats.charts.series.mastered" = "Maîtrisées";
+"stats.charts.empty" = "Continue à apprendre pour voir tes progrès ici.";
+
 /* LearningQuizView */
 "learn.title" = "Apprendre";
 "learn.results" = "Résultats";

@@ -60,6 +60,20 @@
 "stats.tier.reps_3_4" = "Wdh. 3–4";
 "stats.tier.mastered" = "Wdh. ≥ 5, EF ≥ 2,0";
 
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Verlauf über Zeit";
+"stats.charts.range.7d" = "7 Tage";
+"stats.charts.range.30d" = "30 Tage";
+"stats.charts.range.all" = "Gesamt";
+"stats.charts.category.all" = "Alle";
+"stats.charts.mastery_growth" = "Lernfortschritt";
+"stats.charts.reviews_completed" = "Wiederholungen";
+"stats.charts.cards_graduated" = "Karten abgeschlossen";
+"stats.charts.streak_history" = "Serie";
+"stats.charts.series.review" = "Wiederholung";
+"stats.charts.series.mastered" = "Gemeistert";
+"stats.charts.empty" = "Lerne weiter, um hier deinen Fortschritt zu sehen.";
+
 /* LearningQuizView */
 "learn.title" = "Lernen";
 "learn.results" = "Ergebnisse";

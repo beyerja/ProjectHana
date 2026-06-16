@@ -31,7 +31,14 @@ private struct PreviewStoreModifier: ViewModifier {
             let s = CardStore(modelContext: container.mainContext)
             s.seedIfNeeded(with: GeographyDataLoader.load())
             store = s
-            statsStore = ProgressStatsStore(modelContext: container.mainContext)
+            let stats = ProgressStatsStore(modelContext: container.mainContext)
+            #if DEBUG
+                for snapshot in DailyProgressSnapshot.sampleHistory() {
+                    container.mainContext.insert(snapshot)
+                }
+                try? container.mainContext.save()
+            #endif
+            statsStore = stats
         }
     }
 }
