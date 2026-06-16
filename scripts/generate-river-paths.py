@@ -21,9 +21,13 @@ Natural Earth splits each river into MANY short line segments (≈1473 features 
      A small tolerance is deliberate: genuinely-separate pieces stay separate parts
      and render as separate polylines, rather than being bridged by a long straight
      "teleport" line. Disjoint/braided rivers therefore keep multiple parts.
-  3. Round coordinates to COORD_DECIMALS, drop near-duplicate consecutive vertices,
-     and split any part at gaps wider than GAP_SPLIT_DEG so no rendered segment is a
-     long straight line (handles sparsely-sampled within-segment NE reaches too).
+  3. Round coordinates to COORD_DECIMALS and drop near-duplicate consecutive vertices.
+     Each stitched part is kept whole: a continuous river is one part, even where
+     Natural Earth samples a reach coarsely (the part faithfully follows the river
+     course). We deliberately do NOT split parts at sparse within-segment gaps —
+     doing so shattered continuous rivers (e.g. the Lena) into many fragments that
+     rendered as a gapped/dashed line. Genuinely-separate NE pieces are still kept
+     apart by JOIN_TOLERANCE, so no long straight "teleport" line is drawn.
 
 Output schema (one object per line):
     [ {"id": "<our id>", "parts": [[[lon, lat], ...], ...]}, ... ]
@@ -46,7 +50,6 @@ from __future__ import annotations
 
 import argparse
 import io
-import itertools
 import json
 import math
 import os
@@ -64,11 +67,6 @@ COORD_DECIMALS = 3
 # straight "teleport" line (the Niger boomerang, the Volga X, etc.). Pieces that
 # don't share an endpoint stay separate parts and render as separate polylines.
 JOIN_TOLERANCE = 0.05
-# After assembly, split a part wherever two consecutive vertices are farther apart
-# than this — catches sparsely-sampled within-segment NE gaps (e.g. a 1.36° hop in
-# the Lena) that would otherwise draw a long straight line. The part breaks into
-# separate rendered polylines at the gap; no drawn segment then exceeds this.
-GAP_SPLIT_DEG = 0.4
 # Consecutive vertices closer than this (degrees) are de-duplicated.
 DEDUP_EPS = 0.0005
 
@@ -253,23 +251,6 @@ def dedup_round(part):
     return out
 
 
-def gap_split(part):
-    """Break a part wherever consecutive vertices are > GAP_SPLIT_DEG apart.
-
-    Guarantees no rendered segment is a long straight line, whether the gap came
-    from a sparse within-segment NE reach or a residual stitch join.
-    """
-    pieces, cur = [], [part[0]]
-    for prev, p in itertools.pairwise(part):
-        if dist(prev, p) > GAP_SPLIT_DEG:
-            pieces.append(cur)
-            cur = [p]
-        else:
-            cur.append(p)
-    pieces.append(cur)
-    return pieces
-
-
 def build_rivers():
     reader = fetch_layer()
     shapes, recs = reader.shapes(), reader.records()
@@ -329,8 +310,6 @@ def build_rivers():
             parts.sort(key=len, reverse=True)
             parts = [orient(p, src, mth) for p in parts]
         cleaned = [dedup_round(p) for p in parts]
-        # Break any long-straight-line gaps into separate parts (see GAP_SPLIT_DEG).
-        cleaned = [piece for p in cleaned for piece in gap_split(p)]
         # Drop degenerate stubs: a <3-vertex part is a stray NE fragment, not a real
         # centerline. Keep only parts with >= 3 vertices.
         cleaned = [p for p in cleaned if len(p) >= 3]

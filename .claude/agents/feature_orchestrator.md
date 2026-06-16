@@ -25,10 +25,13 @@ worktree. Do this before any other step:
    ```sh
    slug=<feature-slug>
    git worktree add -b "feat/$slug" "../ProjectHana-$slug" main
+   direnv allow "../ProjectHana-$slug"   # a fresh worktree's .envrc is unauthorized; without
+                                         # this the first `just` recipe dies with "direnv: .envrc is blocked"
    ```
    Export `HANA_FEATURE_SLUG="$slug"` for every sub-agent so branch names, `just` build paths, and
    telemetry are isolated. The shared telemetry sink still resolves to the primary checkout
-   (see `scripts/agent-log.sh`), so cross-run aggregation keeps working.
+   (see `scripts/agent-log.sh`), so cross-run aggregation keeps working. (When REUSING a pre-existing
+   worktree, still run `direnv allow` once in it before the first `just` call for the same reason.)
 
 Then run the following steps in order (from the worktree, if one was created), spawning a dedicated
 sub-agent for each:

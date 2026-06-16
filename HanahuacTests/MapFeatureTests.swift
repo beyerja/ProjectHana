@@ -215,11 +215,17 @@ final class MapFeatureTests: XCTestCase {
         }
     }
 
-    func testNoRiverPartHasLongStraightJump() {
-        // Guards against the "teleport" artifact: consecutive vertices within a part
-        // must be close, so no part renders as a long straight line bridging
-        // unrelated reaches of a river. Mirrors the generator's GAP_SPLIT_DEG = 0.4°.
-        let maxGapDegrees = 0.41
+    func testNoRiverPartHasCrossMapTeleportJump() {
+        // The real teleport guard. A continuous river is one part even where Natural
+        // Earth samples a reach coarsely — those faithful within-segment reaches are
+        // short (the worst, the Lena's, is ≈1.36°). A FALSE cross-piece join — two
+        // genuinely-separate NE pieces stitched into one part — would instead show up
+        // as a single huge straight jump bridging unrelated reaches of the map. The
+        // generator keeps such pieces apart (JOIN_TOLERANCE = 0.05), so no intra-part
+        // jump should come anywhere near a cross-map distance. 3.0° sits far above
+        // every legitimate reach yet far below a teleport (e.g. the old Niger
+        // boomerang / Volga X spanned many degrees).
+        let teleportThresholdDegrees = 3.0
         for (id, parts) in RiverPathLoader.shared {
             for part in parts {
                 for (a, b) in zip(part, part.dropFirst()) {
@@ -228,13 +234,49 @@ final class MapFeatureTests: XCTestCase {
                     let gap = (dLat * dLat + dLon * dLon).squareRoot()
                     XCTAssertLessThan(
                         gap,
-                        maxGapDegrees,
-                        "River '\(id)' has a \(String(format: "%.2f", gap))° straight jump "
-                            + "between consecutive path vertices"
+                        teleportThresholdDegrees,
+                        "River '\(id)' has a \(String(format: "%.2f", gap))° jump between "
+                            + "consecutive vertices — a likely false cross-piece join (teleport)"
                     )
                 }
             }
         }
+    }
+
+    func testRiverPartCountStaysBounded() {
+        // After removing the gap-split shatter step, a continuous river is a small
+        // number of parts; only genuinely braided/disjoint Natural Earth rivers keep
+        // several. The worst legitimately disjoint rivers (Niger, Ganges) have 7
+        // parts; a regression that re-shatters continuous rivers (the old Lena had 10)
+        // would push some river well past this. 12 leaves headroom without masking a
+        // re-shatter.
+        let maxPartsPerRiver = 12
+        for (id, parts) in RiverPathLoader.shared {
+            XCTAssertLessThanOrEqual(
+                parts.count,
+                maxPartsPerRiver,
+                "River '\(id)' has \(parts.count) parts — continuous rivers should not "
+                    + "shatter into many fragments"
+            )
+        }
+    }
+
+    func testLenaIsContinuous() {
+        // The Lena was the flagship symptom: gap-split shattered it into 10 fragments
+        // that rendered as a gapped/dashed line. With gap-split removed it is one
+        // continuous part. Allow a tiny margin (≤ 2) in case Natural Earth genuinely
+        // splits its mouth, but it must not regress toward the old many-fragment state.
+        let lena = try? XCTUnwrap(RiverPathLoader.shared["lena"])
+        XCTAssertNotNil(lena)
+        let partCount = lena?.count ?? .max
+        XCTAssertLessThanOrEqual(
+            partCount,
+            2,
+            "Lena should be continuous (1 part, ≤2 allowed), got \(partCount)"
+        )
+        // And that single course must be a real, detailed centerline, not a stub.
+        let total = lena?.reduce(0) { $0 + $1.count } ?? 0
+        XCTAssertGreaterThan(total, 500, "Lena should be a detailed centerline, got \(total)")
     }
 
     func testMajorRiverHasRealCurvedPathNotStraightLine() {
