@@ -104,15 +104,11 @@ def command_is_allowed(command, patterns):
             if cmd.startswith(p[:-1]):
                 return True
             continue
-        # General case: glob match against the whole command. Anchor both ends.
+        # General case (interior wildcards, e.g. "DEVELOPER_DIR=* xcodebuild *"):
+        # treat the pattern as a glob over the whole command. A trailing '*' already
+        # lets the match consume "anything after", matching Claude's prefix semantics.
         if fnmatch.fnmatch(cmd, p):
             return True
-        # Claude treats a trailing '*' as "and anything after"; emulate by also trying
-        # a prefix interpretation of the segment before the final '*'.
-        if p.endswith("*"):
-            head = p[:-1]
-            if fnmatch.fnmatch(cmd, head + "*") and cmd.startswith(head.split("*")[0]):
-                return True
     return False
 
 
