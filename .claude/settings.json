@@ -55,6 +55,8 @@
       "Bash(just --evaluate*)",
       "Bash(git push *)",
       "Bash(git worktree *)",
+      "Bash(git log *)",
+      "Bash(git show *)",
       "Bash(bash /Users/*/scripts/install-mac.sh*)",
       "Bash(gh pr checks *)",
       "Bash(gh run list *)",

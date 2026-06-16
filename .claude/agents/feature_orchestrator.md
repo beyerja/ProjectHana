@@ -64,4 +64,9 @@ sub-agent for each:
 
 At each step, note the outcome in `.workflow/log.md`. If a step sends the workflow back, record the reason.
 
+**Avoid `cd`-prefixed compound Bash.** A `cd /abs/path && <cmd>` block can't be safely allowlisted and
+gets prompted every time (it was the single most-prompted signature in evaluation telemetry). Run
+side-effecting tools at a path instead: `git -C <repo> …`, `gh -R <owner/repo> …`, and `just`
+recipes whose paths are already worktree-aware. Reserve `cd` for the rare tool with no path flag.
+
 Output STATUS: DONE when the feature is verified and the workflow has been evaluated and improved.
