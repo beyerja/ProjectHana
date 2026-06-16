@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """Print a summary table from agent telemetry (.workflow/telemetry/agents-*.jsonl).
 
-By default reads only the live sink (the current workflow) — this is what Phase 1 of
+The sink is shared: all parallel worktrees write to the primary checkout's
+.workflow/telemetry/, and each record is tagged with a "feature" slug. Run this from the
+primary checkout (as `just telemetry` does) to see every run.
+
+By default reads only the live sink (the current set of runs) — this is what Phase 1 of
 evaluate-workflow uses. Pass --history (or --all) to also include the committed archived
 sinks under .workflow/archive/*/telemetry/, giving the cross-run view that Phase 2b needs.
+Pass --by-feature to additionally break the per-agent table down by feature slug (per-feature
+attribution preserved from the shared sink).
 """
 import sys
 import json
@@ -11,6 +17,7 @@ import collections
 import glob
 
 history = any(a in ("--history", "--all") for a in sys.argv[1:])
+by_feature = "--by-feature" in sys.argv[1:]
 
 patterns = [".workflow/telemetry/agents-*.jsonl"]
 if history:
@@ -64,3 +71,17 @@ for name, d in sorted(agents.items()):
     avg_min = (d["dur_sum"] / d["runs"] / 60) if d["runs"] else 0
     avg_tok = (d["tok_sum"] / d["runs"]) if d["runs"] else 0
     print(f"| {name:<26} | {d['runs']:>4} | {avg_min:>11.1f}m | {avg_tok:>14.0f} | {d['retries']:>19} |")
+
+# Per-feature attribution from the shared sink. Records pre-dating the "feature" tag
+# fall back to "untagged" so historical aggregation never breaks.
+if by_feature:
+    feats = collections.defaultdict(lambda: {"runs": 0, "dur_sum": 0.0})
+    for r in ends:
+        f = r.get("feature") or "untagged"
+        feats[f]["runs"] += 1
+        feats[f]["dur_sum"] += r.get("duration_s", 0)
+    print()
+    print(f"| {'Feature':<26} | {'Runs':>4} | {'Total Duration':>14} |")
+    print(f"|{'-'*28}|{'-'*6}|{'-'*16}|")
+    for f, d in sorted(feats.items()):
+        print(f"| {f:<26} | {d['runs']:>4} | {d['dur_sum']/60:>13.1f}m |")
