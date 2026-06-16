@@ -20,13 +20,18 @@ worktree. Do this before any other step:
    must land in the primary checkout because the worktree would carry stale committed copies. In that
    case still export `HANA_FEATURE_SLUG` and use a feature branch, but do not create a worktree.
    Record the choice (worktree vs. in-place) in `.workflow/log.md`.
-3. Otherwise create a sibling worktree (outside the primary checkout) on a fresh feature branch and
-   run all subsequent steps from inside it:
+3. Otherwise create a worktree under the **stable worktrees parent** on a fresh feature branch and run
+   all subsequent steps from inside it. All parallel worktrees live under one parent dir
+   (`../ProjectHana-worktrees/<slug>`) — never as scattered `../ProjectHana-<slug>` siblings — so a
+   single `permissions.additionalDirectories` grant pre-authorizes every current and future worktree
+   and no directory-access prompt fires per run (see `.workflow/README.md` → "Running workflows in
+   parallel"):
    ```sh
    slug=<feature-slug>
-   git worktree add -b "feat/$slug" "../ProjectHana-$slug" main
-   direnv allow "../ProjectHana-$slug"   # a fresh worktree's .envrc is unauthorized; without
-                                         # this the first `just` recipe dies with "direnv: .envrc is blocked"
+   mkdir -p "../ProjectHana-worktrees"
+   git worktree add -b "feat/$slug" "../ProjectHana-worktrees/$slug" main
+   direnv allow "../ProjectHana-worktrees/$slug"   # a fresh worktree's .envrc is unauthorized; without
+                                                   # this the first `just` recipe dies with "direnv: .envrc is blocked"
    ```
    Export `HANA_FEATURE_SLUG="$slug"` for every sub-agent so branch names, `just` build paths, and
    telemetry are isolated. The shared telemetry sink still resolves to the primary checkout
@@ -58,18 +63,23 @@ sub-agent for each:
 11. **Worktree teardown** — only if Step 0 created a worktree. After the closing-artifact PR is merged,
     return to the primary checkout and remove this run's worktree and branch so nothing is left behind:
     ```sh
-    git -C <primary-checkout> worktree remove "../ProjectHana-$slug"
+    git -C <primary-checkout> worktree remove "../ProjectHana-worktrees/$slug"
     git -C <primary-checkout> worktree prune
     git -C <primary-checkout> branch -D "feat/$slug" 2>/dev/null || true
     ```
-    The primary checkout must never be left detached or dirty by this. If a worktree was NOT created
-    (in-place/meta run), skip teardown and just confirm the working tree is clean.
+    The shared `../ProjectHana-worktrees` parent dir stays in place (and stays authorized) for future
+    runs — only the per-slug subdir is removed. The primary checkout must never be left detached or
+    dirty by this. If a worktree was NOT created (in-place/meta run), skip teardown and just confirm
+    the working tree is clean.
 
 At each step, note the outcome in `.workflow/log.md`. If a step sends the workflow back, record the reason.
 
 **Avoid `cd`-prefixed compound Bash.** A `cd /abs/path && <cmd>` block can't be safely allowlisted and
-gets prompted every time (it was the single most-prompted signature in evaluation telemetry). Run
-side-effecting tools at a path instead: `git -C <repo> …`, `gh -R <owner/repo> …`, and `just`
-recipes whose paths are already worktree-aware. Reserve `cd` for the rare tool with no path flag.
+gets prompted every time (it was the single most-prompted signature in evaluation telemetry, and the
+top offenders are `cd ../ProjectHana-worktrees/<slug> && …` from parallel worktree runs). Run
+side-effecting tools at a path instead: `git -C <worktree> …`, `gh -R <owner/repo> …`, and `just -f
+<worktree>/justfile …` (the recipes are already worktree-aware). The worktrees parent is pre-authorized
+(Step 0), so you can read/write/run inside `../ProjectHana-worktrees/<slug>` directly with no `cd` and
+no prompt. Reserve `cd` for the rare tool with no path flag.
 
 Output STATUS: DONE when the feature is verified and the workflow has been evaluated and improved.
