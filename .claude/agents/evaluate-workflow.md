@@ -14,7 +14,7 @@ Read `.workflow/log.md` and every `<story-dir>/log.md`.
 
 Run `just telemetry` for the agent summary table. If it reports no telemetry, note that and proceed qualitatively from story logs — do not block.
 
-Read all `.workflow/telemetry/hooks-*.jsonl` if present and report call counts per tool type (`est_chars` is 0 in this project, so skip token estimates from hooks — use counts only):
+Read all `.workflow/telemetry/hooks-*.jsonl` if present and report call counts per tool type. Each record carries `est_tokens`; when populated, report avg `est_tokens` per tool to find over-reads/over-generates (when all zero, fall back to counts only):
 ```
 Tool call distribution (this workflow):
   Read: NNN   Bash: NNN   Write: NNN   Edit: NNN   Agent: NNN
@@ -28,7 +28,9 @@ Goal: cut the permission prompts the user has to approve, using the capture from
 
 Read this run's `.workflow/telemetry/permissions-<date>.jsonl` (today's date; the file is local-only and gitignored). Each line is `{ts, tool, command, signature}`, where `signature` is the leading executable + first subcommand (e.g. `git status`, `gh pr`) so repeats group. **If the file is absent or empty, output `Permission capture: none this run — skipping remediation.` and skip the rest of this sub-phase** (graceful no-op: no error, no edits). Analyze only the current run's capture — never retroactively allowlist past runs.
 
-Group records by `signature`, count frequency, and show the distribution in the report so the user sees what drove each recommendation:
+**Filter inspection noise first.** The capture also catches one-off inspection commands from the verify-feature step and from evaluate-workflow's own reads (`cat`, `ls`, `grep`, `git diff`/`show`, `sleep`, and multi-line/compound `echo "===" && …` script blocks). For compound or multi-line commands the `signature` degrades to a meaningless leading token (`echo "===`, `cd …`, `for f`, `sleep 8;`) — these are not recurring workflow commands and must NOT be allowlisted. Only consider a signature for remediation when it is a clean recurring *workflow build/PR* command (a repeated `just`/`git`/`gh`/`xcodebuild` invocation the agents actually rely on). If every captured signature is inspection noise, output `Permission capture: NN records, all inspection noise — no recurring workflow command to allowlist.` and skip the rest of this sub-phase.
+
+Group the remaining records by `signature`, count frequency, and show the distribution in the report so the user sees what drove each recommendation:
 ```
 Prompted-command distribution (this run):
   <signature>: NN
