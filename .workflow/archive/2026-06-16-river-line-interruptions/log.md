@@ -26,3 +26,7 @@ Permission remediation: none this run — no permissions-*.jsonl capture file pr
 Phase 2a flags: none — agents were recently trimmed (#73/#64/#83); spot-read shows each rule earns its place.
 Phase 2b: applied-edit detection only — agent files actively maintained through #87; no prior recommendation left unapplied. Before/after skipped (no live telemetry this run).
 Improvements: feature_orchestrator.md Step 0 — add `direnv allow` after worktree creation (and note it for reused worktrees). Real failure hit this run: a fresh/reused worktree's .envrc is unauthorized so the first `just` recipe dies with "direnv: .envrc is blocked". Must land in PRIMARY checkout (workflow tooling).
+
+2026-06-16 archive-workflow: DONE — moved feature.md/stories.md/log.md/stories/ + verify screenshot into .workflow/archive/2026-06-16-river-line-interruptions/. .workflow/ left with README.md only.
+2026-06-16 closing-artifacts: archive committed on feat/river-line-interruptions (3a5f7a6, PR #88, CI green). Agent improvement (direnv allow in Step 0) committed in PRIMARY checkout via chore/river-line-interruptions/direnv-allow -> PR #90 (CI green). Both await user merge.
+2026-06-16 worktree-teardown: DEFERRED — per Step 11 teardown runs only AFTER the closing PRs merge; PR #88/#90 await user merge, so river worktree retained. Temporary chore worktree removed.
