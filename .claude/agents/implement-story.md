@@ -28,6 +28,7 @@ For each unchecked task:
 1. Implement following existing project patterns
 2. Run project checks:
    ```sh
+   just lint   # fail-on-violation lint gate (Swift/Python/Shell/Nix/YAML); blocks the PR in CI
    just test
    ```
 3. Fix any failures and retry until clean
