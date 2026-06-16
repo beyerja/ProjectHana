@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MultipleChoiceQuizView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
@@ -134,6 +135,7 @@ struct MultipleChoiceQuizView: View {
         Task {
             try? await Task.sleep(nanoseconds: delay)
             session.advance()
+            progressStatsStore?.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
             isAdvancing = false
         }
     }
