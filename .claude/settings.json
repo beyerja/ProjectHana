@@ -38,6 +38,8 @@
       "Bash(just log *)",
       "Bash(just telemetry*)",
       "Bash(just telemetry-history*)",
+      "Bash(just lint*)",
+      "Bash(just --dry-run lint*)",
       "Bash(just --dry-run test*)",
       "Bash(just --dry-run build-mac*)",
       "Bash(just --dry-run install*)",
