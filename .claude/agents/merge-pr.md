@@ -14,7 +14,15 @@ Read `<story-dir>/pr.md`. Confirm PR is approved and all CI checks pass.
 
 Run: `gh pr merge --squash --delete-branch`
 
-Pull main to sync: `git checkout main && git pull`
+Sync to the merged main. **Worktree-aware:** in a dedicated feature worktree, do NOT
+`git checkout main` (main belongs to the primary worktree). Just fetch:
+```sh
+git fetch origin main
+# Primary checkout only — switch to main and fast-forward:
+if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ] || ! git worktree list --porcelain | grep -q "^worktree $(pwd -P)$"; then
+    git checkout main && git pull
+fi
+```
 
 Update `<story-dir>/status.md` to `status: merged`.
 Run (ignore errors):
