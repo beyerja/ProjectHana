@@ -19,3 +19,4 @@
   Improvements: implement-story.md — added a "pass the lint gate the first time" checklist (trailing_comma, sorted_first_last, redundant_nil_coalescing, test force-unwrap/hoistTry/redundantThrows/wrapLoopBodies/wrapPropertyBodies)
 - 2026-06-16 Step 10 — Closing artifacts: feature archive committed on feat/progress-statistics (bda0d6b, in PR #89). Agent-file improvement (implement-story.md lint checklist) landed via chore PR #92, squash-merged to main. worktree .workflow clean.
 - 2026-06-16 Step 11 — Worktree teardown DEFERRED: feature PR #89 is open and awaiting the user's merge (solo-project convention). Tearing down now would strand the branch mid-review. Teardown (remove worktree + prune feat/progress-statistics) to run after #89 merges.
+- 2026-06-16 Feature PR #89 brought up to date with main (merged chore #92); CI re-run all green. Ready for user merge. Worktree teardown still deferred until #89 merges.
