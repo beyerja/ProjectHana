@@ -35,6 +35,16 @@ For each unchecked task:
 4. Commit with a clear message
 5. Mark task checked in `tasks.md`
 
+**Write Swift that passes the lint gate the first time.** The strict SwiftLint + `swiftformat --lint`
+gate fails the build on these recurring violations — get them right while writing, not on a retry:
+- No trailing comma after the last element of a collection literal (`trailing_comma`).
+- Use `min()`/`max()` / `min(by:)`/`max(by:)`, never `sorted().first`/`.last` (`sorted_first_last`).
+- No `x.map { … } ?? nil` — use `flatMap` (`redundant_nil_coalescing`).
+- In **tests**: never force-unwrap (`!`) — use `try XCTUnwrap(...)` and make the method `throws`;
+  hoist `try` to the start of the expression, not inline (`hoistTry`); drop `throws` if nothing throws
+  (`redundantThrows`); wrap loop bodies and single-line property bodies onto their own lines
+  (`wrapLoopBodies`, `wrapPropertyBodies`).
+
 **SwiftData schema changes**
 When adding or removing fields on an `@Model` type:
 - Non-optional fields without a default value will crash on launch if the simulator's store is stale. Before running tests, wipe the store: in the simulator, long-press the app icon → Remove App (or `xcrun simctl uninstall booted <bundle-id>`). The app's `ModelContainer` catch block should already handle this in development, but the simulator must be clean.
