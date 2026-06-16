@@ -48,20 +48,20 @@ jobs:
       # directly inside `nix develop` instead (no direnv on the runner). Each step fails the
       # job on any violation (fail-on-violation).
       - name: SwiftLint
-        run: nix develop --command swiftlint lint --strict --config .swiftlint.yml
+        run: nix develop .#lint --command swiftlint lint --strict --config .swiftlint.yml
 
       - name: SwiftFormat (lint)
-        run: nix develop --command swiftformat --lint .
+        run: nix develop .#lint --command swiftformat --lint .
 
       - name: Ruff (check)
-        run: nix develop --command ruff check .
+        run: nix develop .#lint --command ruff check .
 
       - name: Ruff (format check)
-        run: nix develop --command ruff format --check .
+        run: nix develop .#lint --command ruff format --check .
 
       - name: ShellCheck
         run: |
-          nix develop --command bash -c '
+          nix develop .#lint --command bash -c '
             set -euo pipefail
             files=$(git ls-files "*.sh")
             [ -z "$files" ] && { echo "No shell scripts."; exit 0; }
@@ -70,7 +70,7 @@ jobs:
 
       - name: nixfmt (check)
         run: |
-          nix develop --command bash -c '
+          nix develop .#lint --command bash -c '
             set -euo pipefail
             files=$(git ls-files "*.nix")
             [ -z "$files" ] && { echo "No Nix files."; exit 0; }
@@ -79,7 +79,7 @@ jobs:
 
       - name: yamllint
         run: |
-          nix develop --command bash -c '
+          nix develop .#lint --command bash -c '
             set -euo pipefail
             files=$(git ls-files "*.yml" "*.yaml")
             [ -z "$files" ] && { echo "No YAML files."; exit 0; }
