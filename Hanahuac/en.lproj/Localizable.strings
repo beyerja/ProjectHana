@@ -60,6 +60,20 @@
 "stats.tier.reps_3_4" = "Reps 3–4";
 "stats.tier.mastered" = "Reps ≥ 5, EF ≥ 2.0";
 
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Trends Over Time";
+"stats.charts.range.7d" = "7 Days";
+"stats.charts.range.30d" = "30 Days";
+"stats.charts.range.all" = "All Time";
+"stats.charts.category.all" = "All";
+"stats.charts.mastery_growth" = "Mastery Growth";
+"stats.charts.reviews_completed" = "Reviews Completed";
+"stats.charts.cards_graduated" = "Cards Graduated";
+"stats.charts.streak_history" = "Streak";
+"stats.charts.series.review" = "Review";
+"stats.charts.series.mastered" = "Mastered";
+"stats.charts.empty" = "Keep learning to see your progress trends here.";
+
 /* LearningQuizView */
 "learn.title" = "Learn";
 "learn.results" = "Results";

@@ -22,12 +22,14 @@ struct HanahuacApp: App {
 private struct AppRootView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var cardStore: CardStore?
+    @State private var progressStatsStore: ProgressStatsStore?
 
     var body: some View {
         Group {
-            if let store = cardStore {
+            if let store = cardStore, let statsStore = progressStatsStore {
                 ContentView()
                     .environment(store)
+                    .environment(statsStore)
             } else {
                 ProgressView("Loading…")
             }
@@ -38,6 +40,7 @@ private struct AppRootView: View {
             let data = GeographyDataLoader.load()
             store.seedIfNeeded(with: data)
             cardStore = store
+            progressStatsStore = ProgressStatsStore(modelContext: modelContext)
         }
     }
 }

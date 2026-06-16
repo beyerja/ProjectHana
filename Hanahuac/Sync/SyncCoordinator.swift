@@ -94,7 +94,7 @@ final class SyncCoordinator {
     /// schema change — or an iCloud sign-out that orphans a CloudKit-backed store — degrades to a
     /// fresh local store rather than crashing.
     static func makeModelContainer() -> ModelContainer {
-        let schema = Schema([ReviewCard.self])
+        let schema = Schema([ReviewCard.self, DailyProgressSnapshot.self])
         let config = makeConfiguration(schema: schema)
         do {
             return try ModelContainer(for: schema, configurations: [config])

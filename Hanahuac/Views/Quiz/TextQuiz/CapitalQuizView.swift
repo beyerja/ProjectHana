@@ -7,6 +7,7 @@ enum CapitalQuizMode {
 
 struct CapitalQuizView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
@@ -134,7 +135,7 @@ struct CapitalQuizView: View {
                 .frame(maxWidth: .infinity)
                 .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: 14))
 
-            Button(L10n["capital_quiz.next"]) { session.advance() }
+            Button(L10n["capital_quiz.next"]) { advance(session) }
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
@@ -144,6 +145,13 @@ struct CapitalQuizView: View {
     }
 
     // MARK: – Helpers
+
+    /// Advance the session and record today's progress rollup (no-op when no stats store is injected,
+    /// e.g. in previews).
+    private func advance(_ session: TextQuizSession) {
+        session.advance()
+        progressStatsStore?.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
+    }
 
     private func buildSession() {
         let due = cardStore.dueCards(for: .country)

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct StatsView: View {
     @Environment(CardStore.self) private var cardStore
+    @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @State private var streak: Int = StreakTracker.currentStreak()
 
@@ -22,6 +23,9 @@ struct StatsView: View {
             VStack(spacing: 28) {
                 summarySection
                 categoryBreakdownSection
+                if let progressStatsStore {
+                    StatsChartsSection(snapshots: progressStatsStore.allSnapshots)
+                }
                 tierLegendSection
             }
             .padding()
