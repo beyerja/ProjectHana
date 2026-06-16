@@ -50,6 +50,24 @@ pr-list:
 ci branch:
     gh run list --repo beyerja/ProjectHana --branch {{branch}}
 
+# Lint the repo's tracked shell scripts with shellcheck (from the flake dev shell via direnv)
+lint-sh:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    scripts=()
+    while IFS= read -r f; do
+        scripts+=("$f")
+    done < <(git ls-files '*.sh')
+    if [[ ${#scripts[@]} -eq 0 ]]; then
+        echo "No tracked .sh files to lint."
+        exit 0
+    fi
+    printf 'Linting %d shell script(s):\n' "${#scripts[@]}"
+    printf '  %s\n' "${scripts[@]}"
+    # shellcheck comes from the flake dev shell via direnv (no hardcoded /nix path)
+    direnv exec . shellcheck "${scripts[@]}"
+    echo "shellcheck: all scripts passed."
+
 # Delegate to agent telemetry logger
 log *args:
     bash scripts/agent-log.sh {{args}}

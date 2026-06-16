@@ -10,17 +10,19 @@ BUILD_DIR="$REPO_ROOT/.build-mac"
 LOG="/tmp/hanahuac-mac-build.log"
 
 echo "==> Building Hanahuac (macOS Release)…"
-"$DEVELOPER_DIR/usr/bin/xcodebuild" \
+if "$DEVELOPER_DIR/usr/bin/xcodebuild" \
   -project "$REPO_ROOT/Hanahuac.xcodeproj" \
   -scheme Hanahuac \
   -destination 'platform=macOS,arch=arm64' \
   -configuration Release \
   -derivedDataPath "$BUILD_DIR" \
-  build > "$LOG" 2>&1 && echo "    Build succeeded." || {
-    grep -E "error:" "$LOG" | head -20
-    echo "error: macOS build failed — full log at $LOG" >&2
-    exit 1
-  }
+  build > "$LOG" 2>&1; then
+  echo "    Build succeeded."
+else
+  grep -E "error:" "$LOG" | head -20
+  echo "error: macOS build failed — full log at $LOG" >&2
+  exit 1
+fi
 
 APP_SRC="$BUILD_DIR/Build/Products/Release/Hanahuac.app"
 
