@@ -23,6 +23,7 @@
             xcbeautify  # pretty xcodebuild output
             jq          # process bundled JSON datasets
             swiftformat # optional: format Swift source
+            shellcheck  # static analysis/linting for the scripts/*.sh hook scripts
             just        # task runner — short aliases for common commands
             direnv      # per-directory env var loading via .envrc
           ];
