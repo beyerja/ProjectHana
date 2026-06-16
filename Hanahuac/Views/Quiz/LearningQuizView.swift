@@ -123,7 +123,9 @@ struct LearningQuizView: View {
     }
 
     private func refreshQuestion() {
-        guard let card = session.current else { currentQuestion = nil; return }
+        guard let card = session.current else { currentQuestion = nil
+            return
+        }
         currentQuestion = makeQuestion(for: card)
     }
 
@@ -177,9 +179,9 @@ struct LearningQuizView: View {
         switch answerState {
         case .unanswered:
             return Theme.Palette.accent.opacity(0.15)
-        case .correct(let id):
+        case let .correct(id):
             return option.id == id ? Theme.Palette.correct : Theme.Palette.accent.opacity(0.1)
-        case .incorrect(let chosenID, let correctID):
+        case let .incorrect(chosenID, correctID):
             if option.id == chosenID { return Theme.Palette.wrong }
             if option.id == correctID { return Theme.Palette.correct }
             return Theme.Palette.accent.opacity(0.1)
@@ -190,9 +192,9 @@ struct LearningQuizView: View {
         switch answerState {
         case .unanswered:
             return Theme.Palette.accent
-        case .correct(let id):
+        case let .correct(id):
             return option.id == id ? .white : .secondary
-        case .incorrect(let chosenID, let correctID):
+        case let .incorrect(chosenID, correctID):
             if option.id == chosenID || option.id == correctID { return .white }
             return .secondary
         }
@@ -203,21 +205,25 @@ struct LearningQuizView: View {
     private func makeQuestion(for card: ReviewCard) -> MCQQuestion? {
         switch card.cardCategory {
         case .country:
-            return MultipleChoiceSession.countryCapitalQuestions(
-                cards: [card], countries: geo.countries).first
+            MultipleChoiceSession.countryCapitalQuestions(
+                cards: [card], countries: geo.countries
+            ).first
         case .river:
-            return MultipleChoiceSession.continentQuestions(
+            MultipleChoiceSession.continentQuestions(
                 cards: [card], facts: geo.rivers,
                 factID: \.id, factName: \.name, factContinent: \.continent,
-                categoryLabel: "river").first
+                categoryLabel: "river"
+            ).first
         case .mountain:
-            return MultipleChoiceSession.continentQuestions(
+            MultipleChoiceSession.continentQuestions(
                 cards: [card], facts: geo.mountains,
                 factID: \.id, factName: \.name, factContinent: \.continent,
-                categoryLabel: "mountain range").first
+                categoryLabel: "mountain range"
+            ).first
         case .sea:
-            return MultipleChoiceSession.seaIdentificationQuestions(
-                cards: [card], seas: geo.seas).first
+            MultipleChoiceSession.seaIdentificationQuestions(
+                cards: [card], seas: geo.seas
+            ).first
         }
     }
 }

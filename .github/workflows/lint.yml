@@ -1,0 +1,87 @@
+name: Lint
+
+# Fast, blocking, fail-on-violation lint gate for every PR (and pushes to main).
+#
+# Per the project's "split CI by speed" convention this holds only FAST linters
+# (swiftlint, swiftformat --lint, ruff, shellcheck, nixfmt --check, yamllint) — the slow
+# scanners (CodeQL etc.) stay on schedule/push-to-main in their own workflows and are NOT
+# part of this blocking per-PR path.
+#
+# Unlike ci.yml's costly macOS build, this whole job is cheap (a few minutes), so it runs
+# UNCONDITIONALLY on every PR rather than behind a path filter. Running unconditionally
+# also guarantees the required check reports a definite pass/fail and never gets stuck in
+# "Pending" (which would block branch protection). Each linter resolves the exact same
+# versions developers get locally because they all come from the Nix flake dev shell.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint (all languages)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      # Install Nix so the linters come from the flake — no hardcoded /nix paths, and the
+      # versions match the local dev shell exactly.
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      # `just lint` invokes each tool via `direnv exec .`; in CI we run the recipes' tools
+      # directly inside `nix develop` instead (no direnv on the runner). Each step fails the
+      # job on any violation (fail-on-violation).
+      - name: SwiftLint
+        run: nix develop --command swiftlint lint --strict --config .swiftlint.yml
+
+      - name: SwiftFormat (lint)
+        run: nix develop --command swiftformat --lint .
+
+      - name: Ruff (check)
+        run: nix develop --command ruff check .
+
+      - name: Ruff (format check)
+        run: nix develop --command ruff format --check .
+
+      - name: ShellCheck
+        run: |
+          nix develop --command bash -c '
+            set -euo pipefail
+            files=$(git ls-files "*.sh")
+            [ -z "$files" ] && { echo "No shell scripts."; exit 0; }
+            shellcheck $files
+          '
+
+      - name: nixfmt (check)
+        run: |
+          nix develop --command bash -c '
+            set -euo pipefail
+            files=$(git ls-files "*.nix")
+            [ -z "$files" ] && { echo "No Nix files."; exit 0; }
+            nixfmt --check $files
+          '
+
+      - name: yamllint
+        run: |
+          nix develop --command bash -c '
+            set -euo pipefail
+            files=$(git ls-files "*.yml" "*.yaml")
+            [ -z "$files" ] && { echo "No YAML files."; exit 0; }
+            yamllint $files
+          '

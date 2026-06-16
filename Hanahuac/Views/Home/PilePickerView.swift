@@ -72,7 +72,10 @@ struct PilePickerView: View {
                 .foregroundStyle(.tertiary)
         }
         .padding()
-        .background(Theme.Palette.surface, in: RoundedRectangle(cornerRadius: Theme.Metrics.tileRadius, style: .continuous))
+        .background(
+            Theme.Palette.surface,
+            in: RoundedRectangle(cornerRadius: Theme.Metrics.tileRadius, style: .continuous)
+        )
         .overlay(
             RoundedRectangle(cornerRadius: Theme.Metrics.tileRadius, style: .continuous)
                 .strokeBorder(Theme.Palette.hairline, lineWidth: 1)

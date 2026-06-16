@@ -10,7 +10,9 @@ struct MCQQuestion {
     let card: ReviewCard
     let prompt: String
     let options: [MCQOption]
-    var correctLabel: String { options.first(where: \.isCorrect)?.label ?? "" }
+    var correctLabel: String {
+        options.first(where: \.isCorrect)?.label ?? ""
+    }
 }
 
 enum MCQAnswerState: Equatable {
@@ -30,8 +32,14 @@ final class MultipleChoiceSession {
     var current: MCQQuestion? {
         questions.indices.contains(currentIndex) ? questions[currentIndex] : nil
     }
-    var reviewedCount: Int { min(currentIndex, questions.count) }
-    var nextDueDate: Date? { questions.map(\.card.nextReviewDate).min() }
+
+    var reviewedCount: Int {
+        min(currentIndex, questions.count)
+    }
+
+    var nextDueDate: Date? {
+        questions.map(\.card.nextReviewDate).min()
+    }
 
     init(questions: [MCQQuestion]) {
         self.questions = questions.shuffled()
@@ -51,8 +59,7 @@ final class MultipleChoiceSession {
 
     func advance() {
         guard let q = current else { return }
-        let quality: Int
-        if case .correct = answerState { quality = 4 } else { quality = 1 }
+        let quality = if case .correct = answerState { 4 } else { 1 }
         let result = SM2Scheduler.schedule(card: q.card, quality: quality)
         SM2Scheduler.apply(result, to: q.card, quality: quality)
         StreakTracker.recordReview()
@@ -76,7 +83,8 @@ final class MultipleChoiceSession {
                 .prefix(3)
                 .map { MCQOption(label: $0.localizedCapital(for: locale), isCorrect: false) }
             guard distractors.count == 3 else { return nil }
-            let options = ([MCQOption(label: country.localizedCapital(for: locale), isCorrect: true)] + distractors).shuffled()
+            let options = ([MCQOption(label: country.localizedCapital(for: locale), isCorrect: true)] + distractors)
+                .shuffled()
             let promptTemplate = L10n.string("quiz.prompt.capital_of", locale: locale)
             return MCQQuestion(
                 card: card,
@@ -92,7 +100,7 @@ final class MultipleChoiceSession {
         factID: (T) -> String,
         factName: (T) -> String,
         factContinent: (T) -> String,
-        categoryLabel: String,
+        categoryLabel _: String,
         locale: AppLocale = .en,
         factLocalizedName: ((T, AppLocale) -> String)? = nil
     ) -> [MCQQuestion] {
@@ -105,7 +113,8 @@ final class MultipleChoiceSession {
             guard distractorEnglish.count == 3 else { return nil }
             let correctLabel = localizedContinent(correctEnglish, locale: locale)
             let options = ([MCQOption(label: correctLabel, isCorrect: true)] +
-                           distractorEnglish.map { MCQOption(label: localizedContinent($0, locale: locale), isCorrect: false) }).shuffled()
+                distractorEnglish.map { MCQOption(label: localizedContinent($0, locale: locale), isCorrect: false) })
+                .shuffled()
             let displayName = factLocalizedName?(fact, locale) ?? factName(fact)
             let promptTemplate = L10n.string("quiz.prompt.continent_of", locale: locale)
             return MCQQuestion(
@@ -126,7 +135,7 @@ final class MultipleChoiceSession {
             let distractors = seas.filter { $0.id != sea.id }.shuffled().prefix(3)
             guard distractors.count == 3 else { return nil }
             let options = ([MCQOption(label: sea.localizedName(for: locale), isCorrect: true)] +
-                           distractors.map { MCQOption(label: $0.localizedName(for: locale), isCorrect: false) }).shuffled()
+                distractors.map { MCQOption(label: $0.localizedName(for: locale), isCorrect: false) }).shuffled()
             let region = approximateRegion(lat: sea.lat, lon: sea.lon)
             return MCQQuestion(
                 card: card,
@@ -148,13 +157,13 @@ final class MultipleChoiceSession {
     private static func localizedContinent(_ english: String, locale: AppLocale) -> String {
         let key: String
         switch english {
-        case "Africa":        key = "continent.africa"
-        case "Asia":          key = "continent.asia"
-        case "Europe":        key = "continent.europe"
+        case "Africa": key = "continent.africa"
+        case "Asia": key = "continent.asia"
+        case "Europe": key = "continent.europe"
         case "North America": key = "continent.north_america"
-        case "Oceania":       key = "continent.oceania"
+        case "Oceania": key = "continent.oceania"
         case "South America": key = "continent.south_america"
-        default:              return english
+        default: return english
         }
         return L10n.string(key, locale: locale)
     }

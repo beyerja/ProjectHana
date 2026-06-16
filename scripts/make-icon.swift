@@ -4,20 +4,22 @@
 // The icon view is self-contained here (it can't import the app module), but mirrors
 // Hanahuac/Views/Brand/HanahuacLogo.swift and Hanahuac/Theme.swift.
 
+import CoreGraphics
+import ImageIO
 import SwiftUI
 import UniformTypeIdentifiers
-import ImageIO
-import CoreGraphics
 
 // MARK: - Palette (mirror of Theme.Palette)
 
 extension Color {
     init(hex: UInt) {
-        self.init(.sRGB,
-                  red: Double((hex >> 16) & 0xFF) / 255,
-                  green: Double((hex >> 8) & 0xFF) / 255,
-                  blue: Double(hex & 0xFF) / 255,
-                  opacity: 1)
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xFF) / 255,
+            green: Double((hex >> 8) & 0xFF) / 255,
+            blue: Double(hex & 0xFF) / 255,
+            opacity: 1
+        )
     }
 }
 
@@ -65,20 +67,30 @@ struct IconView: View {
     let s: CGFloat = 1024
     var body: some View {
         ZStack {
-            LinearGradient(colors: [P.canvas, P.sand],
-                           startPoint: .top, endPoint: .bottom)
+            LinearGradient(
+                colors: [P.canvas, P.sand],
+                startPoint: .top,
+                endPoint: .bottom
+            )
 
             // Globe
             let g = s * 0.62
             ZStack {
                 Circle()
-                    .fill(LinearGradient(colors: [P.country, P.sea],
-                                         startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .fill(LinearGradient(
+                        colors: [P.country, P.sea],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ))
                 GlobeGrid()
                     .stroke(Color.white.opacity(0.5), lineWidth: g * 0.016)
                     .clipShape(Circle())
-                Circle().fill(RadialGradient(colors: [Color.white.opacity(0.35), .clear],
-                                             center: .topLeading, startRadius: 0, endRadius: g * 0.75))
+                Circle().fill(RadialGradient(
+                    colors: [Color.white.opacity(0.35), .clear],
+                    center: .topLeading,
+                    startRadius: 0,
+                    endRadius: g * 0.75
+                ))
                 Circle().strokeBorder(Color.white.opacity(0.55), lineWidth: g * 0.02)
             }
             .frame(width: g, height: g)
@@ -116,9 +128,15 @@ func render(to path: String) {
     // Flatten onto an opaque context (app icons must not have an alpha channel).
     let w = cg.width, h = cg.height
     let cs = CGColorSpaceCreateDeviceRGB()
-    guard let ctx = CGContext(data: nil, width: w, height: h, bitsPerComponent: 8,
-                              bytesPerRow: 0, space: cs,
-                              bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue) else {
+    guard let ctx = CGContext(
+        data: nil,
+        width: w,
+        height: h,
+        bitsPerComponent: 8,
+        bytesPerRow: 0,
+        space: cs,
+        bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue
+    ) else {
         FileHandle.standardError.write("ERROR: could not create context\n".data(using: .utf8)!)
         exit(1)
     }

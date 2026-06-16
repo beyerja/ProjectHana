@@ -1,10 +1,10 @@
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 @main
 struct HanahuacApp: App {
-    // Container creation is delegated to the sync coordinator so the local-only vs CloudKit-backed
-    // configuration is chosen in one place behind a single flag (default OFF → local-only).
+    /// Container creation is delegated to the sync coordinator so the local-only vs CloudKit-backed
+    /// configuration is chosen in one place behind a single flag (default OFF → local-only).
     let modelContainer: ModelContainer = SyncCoordinator.makeModelContainer()
 
     @State private var syncCoordinator = SyncCoordinator()

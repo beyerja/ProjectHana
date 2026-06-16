@@ -1,0 +1,83 @@
+# SwiftLint configuration for Hanahuac.
+# Run via `just lint-swift` (uses the flake-provided swiftlint through direnv).
+# Fail-on-violation: in CI, `swiftlint lint --strict` turns warnings into errors.
+
+included:
+  - Hanahuac
+  - HanahuacTests
+
+excluded:
+  - Hanahuac.xcodeproj
+  - .build
+  - .build-mac
+  - .direnv
+
+# A pragmatic, idiomatic ruleset: keep the sensible defaults, add a curated set of
+# opt-in rules, and relax a few thresholds that fight SwiftUI's naturally long bodies.
+opt_in_rules:
+  - empty_count
+  - empty_string
+  - first_where
+  - last_where
+  - contains_over_first_not_nil
+  - sorted_first_last
+  - toggle_bool
+  - redundant_nil_coalescing
+  - closure_spacing
+  - explicit_init
+  - operator_usage_whitespace
+  - vertical_whitespace_closing_braces
+  - yoda_condition
+
+disabled_rules:
+  - todo                  # tracked separately; not a build gate
+
+# SwiftUI view bodies and data tables are legitimately long; relax these to avoid churn.
+line_length:
+  warning: 120
+  error: 200
+  ignores_comments: true
+  ignores_urls: true
+
+type_body_length:
+  warning: 400
+  error: 600
+
+file_length:
+  warning: 600
+  error: 1000
+
+function_body_length:
+  warning: 80
+  error: 150
+
+# Single-letter names are idiomatic for loop indices, math (coordinates/deltas) and
+# concise test fixtures throughout this codebase, so allow length-1 identifiers while
+# still catching the empty/oddly-cased cases the rule also guards.
+identifier_name:
+  min_length:
+    warning: 1
+    error: 1
+  excluded:
+    - id
+
+type_name:
+  min_length: 3
+  max_length:
+    warning: 50
+    error: 60
+
+# "mastery" / "mastered" is core spaced-repetition domain vocabulary (an SM-2 learning
+# tier), not the non-inclusive sense of the word — allow it explicitly.
+inclusive_language:
+  override_allowed_terms:
+    - master   # mastery tier / "isMastered" — SRS domain term
+
+# One coordinator entry point legitimately takes 6 parameters; allow a little headroom.
+function_parameter_count:
+  warning: 6
+  error: 8
+
+# Tests often have long method bodies and force-unwrap test fixtures.
+nesting:
+  type_level: 2

@@ -1,0 +1,27 @@
+# Python tooling config for Hanahuac's helper scripts (scripts/*.py).
+# Ruff provides both linting (`ruff check`) and formatting (`ruff format`).
+# Used as a fail-on-violation gate via `just lint-py` and the CI lint job.
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+# These scripts are the only Python in the repo.
+include = ["scripts/*.py"]
+extend-exclude = [".build", ".build-mac", ".direnv"]
+
+[tool.ruff.lint]
+# A pragmatic, idiomatic selection:
+#   E/W  pycodestyle, F pyflakes, I import sorting, UP pyupgrade,
+#   B    bugbear, C4 comprehensions, SIM simplify, RUF ruff-specific.
+# PTH (use-pathlib) is intentionally NOT enabled: these are standalone data-generation
+# utilities where the existing os.path usage is correct and idiomatic enough; enforcing
+# a wholesale pathlib rewrite would be high-churn with no behavioral benefit.
+select = ["E", "W", "F", "I", "UP", "B", "C4", "SIM", "RUF"]
+ignore = [
+    "E501",    # line length handled by the formatter
+    "RUF001",  # ambiguous unicode in string literals: intentional (foreign river/place names)
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

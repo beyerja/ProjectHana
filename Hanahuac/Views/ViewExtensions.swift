@@ -4,27 +4,27 @@ extension View {
     /// `.navigationBarTitleDisplayMode(.inline)` — no-op on macOS.
     func inlineNavigationTitle() -> some View {
         #if os(iOS)
-        self.navigationBarTitleDisplayMode(.inline)
+            navigationBarTitleDisplayMode(.inline)
         #else
-        self
+            self
         #endif
     }
 
     /// `.navigationBarTitleDisplayMode(.large)` — no-op on macOS.
     func largeNavigationTitle() -> some View {
         #if os(iOS)
-        self.navigationBarTitleDisplayMode(.large)
+            navigationBarTitleDisplayMode(.large)
         #else
-        self
+            self
         #endif
     }
 
     /// `.textInputAutocapitalization(.never)` — no-op on macOS.
     func neverAutocapitalize() -> some View {
         #if os(iOS)
-        self.textInputAutocapitalization(.never)
+            textInputAutocapitalization(.never)
         #else
-        self
+            self
         #endif
     }
 }

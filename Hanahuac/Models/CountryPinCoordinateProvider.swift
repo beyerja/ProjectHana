@@ -13,7 +13,6 @@ import CoreLocation
 /// The computed coordinates are cached in a dictionary at first access and reused for
 /// the lifetime of the app.
 struct CountryPinCoordinateProvider {
-
     // MARK: - Shared instance
 
     static let shared = CountryPinCoordinateProvider()
@@ -32,7 +31,7 @@ struct CountryPinCoordinateProvider {
                   let pole = PoleLabelCalculator.compute(ring: mainland) else { continue }
             cache[id] = pole
         }
-        self.computed = cache
+        computed = cache
     }
 
     // MARK: - Public API

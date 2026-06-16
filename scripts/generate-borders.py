@@ -30,8 +30,17 @@ Usage:
     python3 scripts/generate-borders.py --write    # regenerate and overwrite the JSON files
 Requires `pyshp` (pure-Python, no GDAL):  python3 -m pip install pyshp
 """
+
 from __future__ import annotations
-import argparse, io, json, math, os, sys, urllib.request, zipfile
+
+import argparse
+import io
+import json
+import math
+import os
+import sys
+import urllib.request
+import zipfile
 
 NE_BASE = "https://naturalearth.s3.amazonaws.com"
 LAYERS = {
@@ -104,6 +113,7 @@ MOUNTAIN_MAP = {
 def fetch_layer(key: str):
     """Download+unzip a NE layer into CACHE if absent; return base path (no ext)."""
     import shapefile  # imported here so --help works without pyshp
+
     rel = LAYERS[key]
     base = os.path.join(CACHE, os.path.basename(rel))
     if not os.path.exists(base + ".shp"):
@@ -117,8 +127,8 @@ def fetch_layer(key: str):
 
 def rings_from_shape(shape):
     """Split a shapefile shape into rings (one per part)."""
-    idx = list(shape.parts) + [len(shape.points)]
-    return [shape.points[idx[i]:idx[i + 1]] for i in range(len(idx) - 1)]
+    idx = [*list(shape.parts), len(shape.points)]
+    return [shape.points[idx[i] : idx[i + 1]] for i in range(len(idx) - 1)]
 
 
 def ring_area(ring):
@@ -129,7 +139,8 @@ def ring_area(ring):
 
 
 def ring_centroid(ring):
-    xs = [p[0] for p in ring]; ys = [p[1] for p in ring]
+    xs = [p[0] for p in ring]
+    ys = [p[1] for p in ring]
     return sum(xs) / len(xs), sum(ys) / len(ys)
 
 
@@ -148,7 +159,7 @@ def build_seas():
     reader = fetch_layer("marine")
     shapes, recs = reader.shapes(), reader.records()
     by_name = {}
-    for s, rec in zip(shapes, recs):
+    for s, rec in zip(shapes, recs, strict=False):
         by_name.setdefault(rec["name"], []).append(s)
     out = []
     for sid, names in SEA_MAP.items():
@@ -169,7 +180,7 @@ def build_mountains():
     shapes, recs = reader.shapes(), reader.records()
     coords = {e["id"]: (e["lat"], e["lon"]) for e in load_json("mountains.json")}
     by_name = {}
-    for s, rec in zip(shapes, recs):
+    for s, rec in zip(shapes, recs, strict=False):
         by_name.setdefault(rec["NAME"], []).append(s)
     out = []
     for mid, ne_name in MOUNTAIN_MAP.items():
@@ -179,10 +190,14 @@ def build_mountains():
             continue
         if len(candidates) > 1 and mid in coords:
             lat, lon = coords[mid]
-            candidates = [min(
-                candidates,
-                key=lambda s: math.dist(ring_centroid(max(rings_from_shape(s), key=len)), (lon, lat)),
-            )]
+            candidates = [
+                min(
+                    candidates,
+                    key=lambda s: math.dist(
+                        ring_centroid(max(rings_from_shape(s), key=len)), (lon, lat)
+                    ),
+                )
+            ]
         raw = []
         for s in candidates:
             raw.extend(rings_from_shape(s))
@@ -230,15 +245,21 @@ def verify(name, data):
         d = math.dist(gc, cccent)
         flag = "" if d < 0.5 else "  <-- centroid drift"
         if len(cg["rings"]) != len(cc["rings"]) or flag:
-            print(f"    {fid}: rings gen={len(cg['rings'])} committed={len(cc['rings'])} "
-                  f"centroidΔ={d:.3f}{flag}")
+            print(
+                f"    {fid}: rings gen={len(cg['rings'])} committed={len(cc['rings'])} "
+                f"centroidΔ={d:.3f}{flag}"
+            )
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--write", action="store_true",
-                    help="overwrite the committed JSON files (default: verify only, write nothing)")
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    ap.add_argument(
+        "--write",
+        action="store_true",
+        help="overwrite the committed JSON files (default: verify only, write nothing)",
+    )
     args = ap.parse_args()
     print("Seas:")
     seas = build_seas()

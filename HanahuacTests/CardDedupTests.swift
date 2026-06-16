@@ -1,5 +1,5 @@
-import XCTest
 import SwiftData
+import XCTest
 @testable import Hanahuac
 
 @MainActor
@@ -38,7 +38,7 @@ final class CardDedupTests: XCTestCase {
         XCTAssertEqual(store.allCards.filter { $0.factID == "us" }.count, 1)
     }
 
-    func testDeduplicatePreservesMostProgressedCard() {
+    func testDeduplicatePreservesMostProgressedCard() throws {
         let fresh = ReviewCard(factID: "nile", category: .river)
         let progressed = ReviewCard(
             factID: "nile",
@@ -55,7 +55,7 @@ final class CardDedupTests: XCTestCase {
 
         let survivors = store.allCards.filter { $0.factID == "nile" }
         XCTAssertEqual(survivors.count, 1)
-        let winner = try! XCTUnwrap(survivors.first)
+        let winner = try XCTUnwrap(survivors.first)
         XCTAssertTrue(winner.hasGraduated, "Graduated/most-progressed card must survive")
         XCTAssertEqual(winner.repetitionCount, 4)
         XCTAssertEqual(winner.consecutiveCorrect, 3)
@@ -74,13 +74,15 @@ final class CardDedupTests: XCTestCase {
     func testEmptySeedProducesExactlyOneCardPerFact() {
         store.seedIfNeeded(with: geoData)
         let expected = geoData.countries.count + geoData.rivers.count +
-                       geoData.mountains.count + geoData.seas.count
+            geoData.mountains.count + geoData.seas.count
         XCTAssertEqual(store.allCards.count, expected)
 
         // Exactly one per factID.
         let byFact = Dictionary(grouping: store.allCards, by: \.factID)
-        XCTAssertTrue(byFact.values.allSatisfy { $0.count == 1 },
-                      "No factID should have more than one card")
+        XCTAssertTrue(
+            byFact.values.allSatisfy { $0.count == 1 },
+            "No factID should have more than one card"
+        )
     }
 
     func testReseedingFullStoreAddsNoDuplicates() {
@@ -90,15 +92,15 @@ final class CardDedupTests: XCTestCase {
         XCTAssertEqual(store.allCards.count, count)
     }
 
-    func testPartialSeedFillsOnlyMissingFactsWithoutDuplicating() {
+    func testPartialSeedFillsOnlyMissingFactsWithoutDuplicating() throws {
         // Pre-insert one card that the catalog also contains.
-        let firstCountry = try! XCTUnwrap(geoData.countries.first)
+        let firstCountry = try XCTUnwrap(geoData.countries.first)
         store.upsert(ReviewCard(factID: firstCountry.id, category: .country, repetitionCount: 9, hasGraduated: true))
 
         store.seedIfNeeded(with: geoData)
 
         let expected = geoData.countries.count + geoData.rivers.count +
-                       geoData.mountains.count + geoData.seas.count
+            geoData.mountains.count + geoData.seas.count
         XCTAssertEqual(store.allCards.count, expected, "Partial seed must fill only missing facts")
 
         let matches = store.allCards.filter { $0.factID == firstCountry.id }

@@ -1,5 +1,5 @@
-import XCTest
 import SwiftData
+import XCTest
 @testable import Hanahuac
 
 /// Tests that MCQ factory methods produce correctly localized prompts and options.
@@ -21,11 +21,17 @@ final class LocalizedQuizPromptTests: XCTestCase {
         let questions = MultipleChoiceSession.countryCapitalQuestions(
             cards: [card], countries: countries, locale: .fr
         )
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
-        XCTAssertTrue(q.prompt.contains("Allemagne"),
-                      "French prompt should contain 'Allemagne', got: \(q.prompt)")
-        XCTAssertFalse(q.prompt.contains("Germany"),
-                       "French prompt must not contain English name 'Germany'")
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
+        XCTAssertTrue(
+            q.prompt.contains("Allemagne"),
+            "French prompt should contain 'Allemagne', got: \(q.prompt)"
+        )
+        XCTAssertFalse(
+            q.prompt.contains("Germany"),
+            "French prompt must not contain English name 'Germany'"
+        )
     }
 
     func testCountryCapitalQuestions_germanLocale_promptContainsGermanName() {
@@ -34,11 +40,17 @@ final class LocalizedQuizPromptTests: XCTestCase {
         let questions = MultipleChoiceSession.countryCapitalQuestions(
             cards: [card], countries: countries, locale: .de
         )
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
-        XCTAssertTrue(q.prompt.contains("Deutschland"),
-                      "German prompt should contain 'Deutschland', got: \(q.prompt)")
-        XCTAssertFalse(q.prompt.contains("Germany"),
-                       "German prompt must not contain English name 'Germany'")
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
+        XCTAssertTrue(
+            q.prompt.contains("Deutschland"),
+            "German prompt should contain 'Deutschland', got: \(q.prompt)"
+        )
+        XCTAssertFalse(
+            q.prompt.contains("Germany"),
+            "German prompt must not contain English name 'Germany'"
+        )
     }
 
     func testCountryCapitalQuestions_spanishLocale_promptContainsSpanishName() {
@@ -47,11 +59,17 @@ final class LocalizedQuizPromptTests: XCTestCase {
         let questions = MultipleChoiceSession.countryCapitalQuestions(
             cards: [card], countries: countries, locale: .esMX
         )
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
-        XCTAssertTrue(q.prompt.contains("Alemania"),
-                      "Spanish prompt should contain 'Alemania', got: \(q.prompt)")
-        XCTAssertFalse(q.prompt.contains("Germany"),
-                       "Spanish prompt must not contain English name 'Germany'")
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
+        XCTAssertTrue(
+            q.prompt.contains("Alemania"),
+            "Spanish prompt should contain 'Alemania', got: \(q.prompt)"
+        )
+        XCTAssertFalse(
+            q.prompt.contains("Germany"),
+            "Spanish prompt must not contain English name 'Germany'"
+        )
     }
 
     /// Regression guard: English locale must produce same output as pre-feature behavior.
@@ -65,12 +83,18 @@ final class LocalizedQuizPromptTests: XCTestCase {
             cards: [card], countries: countries
         )
         guard let qEn = questionsEn.first, let qDefault = questionsDefault.first else {
-            XCTFail("No questions generated"); return
+            XCTFail("No questions generated")
+            return
         }
-        XCTAssertTrue(qEn.prompt.contains("Germany"),
-                      "English prompt should contain 'Germany', got: \(qEn.prompt)")
-        XCTAssertEqual(qEn.prompt, qDefault.prompt,
-                       "locale:.en should produce same prompt as default (no locale param)")
+        XCTAssertTrue(
+            qEn.prompt.contains("Germany"),
+            "English prompt should contain 'Germany', got: \(qEn.prompt)"
+        )
+        XCTAssertEqual(
+            qEn.prompt,
+            qDefault.prompt,
+            "locale:.en should produce same prompt as default (no locale param)"
+        )
     }
 
     // MARK: - countryCapitalQuestions: options are localized
@@ -81,10 +105,15 @@ final class LocalizedQuizPromptTests: XCTestCase {
         let questions = MultipleChoiceSession.countryCapitalQuestions(
             cards: [card], countries: countries, locale: .fr
         )
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         let correct = q.options.first(where: \.isCorrect)
-        XCTAssertEqual(correct?.label, "Berlin",
-                       "French locale: correct option should be 'Berlin' (capital unchanged in French)")
+        XCTAssertEqual(
+            correct?.label,
+            "Berlin",
+            "French locale: correct option should be 'Berlin' (capital unchanged in French)"
+        )
     }
 
     // MARK: - continentQuestions: options are localized continent labels
@@ -101,15 +130,22 @@ final class LocalizedQuizPromptTests: XCTestCase {
             locale: .esMX,
             factLocalizedName: { river, locale in river.localizedName(for: locale) }
         )
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         let correct = q.options.first(where: \.isCorrect)
         // "Europe" in Spanish (Mexican) should be "Europa"
-        XCTAssertEqual(correct?.label, "Europa",
-                       "Spanish locale: Europe continent label should be 'Europa', got: \(correct?.label ?? "nil")")
+        XCTAssertEqual(
+            correct?.label,
+            "Europa",
+            "Spanish locale: Europe continent label should be 'Europa', got: \(correct?.label ?? "nil")"
+        )
         // All options should be Spanish labels (none should be bare "Europe")
         for option in q.options {
-            XCTAssertFalse(option.label == "Europe",
-                           "No option should be the bare English 'Europe' when locale is esMX")
+            XCTAssertFalse(
+                option.label == "Europe",
+                "No option should be the bare English 'Europe' when locale is esMX"
+            )
         }
     }
 
@@ -125,10 +161,15 @@ final class LocalizedQuizPromptTests: XCTestCase {
             locale: .fr,
             factLocalizedName: { river, locale in river.localizedName(for: locale) }
         )
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         let correct = q.options.first(where: \.isCorrect)
-        XCTAssertEqual(correct?.label, "Europe",
-                       "French locale: Europe should be 'Europe' in French, got: \(correct?.label ?? "nil")")
+        XCTAssertEqual(
+            correct?.label,
+            "Europe",
+            "French locale: Europe should be 'Europe' in French, got: \(correct?.label ?? "nil")"
+        )
     }
 
     func testContinentQuestions_germanLocale_correctOptionIsGermanContinent() {
@@ -143,10 +184,15 @@ final class LocalizedQuizPromptTests: XCTestCase {
             locale: .de,
             factLocalizedName: { river, locale in river.localizedName(for: locale) }
         )
-        guard let q = questions.first else { XCTFail("No questions generated"); return }
+        guard let q = questions.first else { XCTFail("No questions generated")
+            return
+        }
         let correct = q.options.first(where: \.isCorrect)
-        XCTAssertEqual(correct?.label, "Europa",
-                       "German locale: Europe should be 'Europa' in German, got: \(correct?.label ?? "nil")")
+        XCTAssertEqual(
+            correct?.label,
+            "Europa",
+            "German locale: Europe should be 'Europa' in German, got: \(correct?.label ?? "nil")"
+        )
     }
 
     /// Regression guard: English locale produces same continent label as before the feature.
@@ -170,13 +216,17 @@ final class LocalizedQuizPromptTests: XCTestCase {
             categoryLabel: "river"
         )
         guard let qEn = questionsEn.first, let qDefault = questionsDefault.first else {
-            XCTFail("No questions generated"); return
+            XCTFail("No questions generated")
+            return
         }
         let correctEn = qEn.options.first(where: \.isCorrect)
         let correctDefault = qDefault.options.first(where: \.isCorrect)
         XCTAssertEqual(correctEn?.label, "Europe")
-        XCTAssertEqual(correctEn?.label, correctDefault?.label,
-                       "locale:.en should produce same continent label as default (no locale param)")
+        XCTAssertEqual(
+            correctEn?.label,
+            correctDefault?.label,
+            "locale:.en should produce same continent label as default (no locale param)"
+        )
     }
 
     // MARK: - Fixtures
@@ -189,34 +239,91 @@ final class LocalizedQuizPromptTests: XCTestCase {
 
     private func sampleCountries() -> [Country] {
         [
-            Country(id: "de", name: "Germany",
-                    nameFr: "Allemagne", nameDe: "Deutschland", nameEs: "Alemania",
-                    capital: "Berlin", capitalFr: "Berlin", capitalDe: "Berlin", capitalEs: "Berlín",
-                    continent: "Europe", lat: 51, lon: 10),
-            Country(id: "fr", name: "France",
-                    nameFr: "France", nameDe: "Frankreich", nameEs: "Francia",
-                    capital: "Paris", capitalFr: "Paris", capitalDe: "Paris", capitalEs: "París",
-                    continent: "Europe", lat: 46, lon: 2),
-            Country(id: "es", name: "Spain",
-                    nameFr: "Espagne", nameDe: "Spanien", nameEs: "España",
-                    capital: "Madrid", capitalFr: "Madrid", capitalDe: "Madrid", capitalEs: "Madrid",
-                    continent: "Europe", lat: 40, lon: -4),
-            Country(id: "it", name: "Italy",
-                    nameFr: "Italie", nameDe: "Italien", nameEs: "Italia",
-                    capital: "Rome", capitalFr: "Rome", capitalDe: "Rom", capitalEs: "Roma",
-                    continent: "Europe", lat: 42, lon: 12),
-            Country(id: "pt", name: "Portugal",
-                    nameFr: "Portugal", nameDe: "Portugal", nameEs: "Portugal",
-                    capital: "Lisbon", capitalFr: "Lisbonne", capitalDe: "Lissabon", capitalEs: "Lisboa",
-                    continent: "Europe", lat: 39, lon: -8),
+            Country(
+                id: "de",
+                name: "Germany",
+                nameFr: "Allemagne",
+                nameDe: "Deutschland",
+                nameEs: "Alemania",
+                capital: "Berlin",
+                capitalFr: "Berlin",
+                capitalDe: "Berlin",
+                capitalEs: "Berlín",
+                continent: "Europe",
+                lat: 51,
+                lon: 10
+            ),
+            Country(
+                id: "fr",
+                name: "France",
+                nameFr: "France",
+                nameDe: "Frankreich",
+                nameEs: "Francia",
+                capital: "Paris",
+                capitalFr: "Paris",
+                capitalDe: "Paris",
+                capitalEs: "París",
+                continent: "Europe",
+                lat: 46,
+                lon: 2
+            ),
+            Country(
+                id: "es",
+                name: "Spain",
+                nameFr: "Espagne",
+                nameDe: "Spanien",
+                nameEs: "España",
+                capital: "Madrid",
+                capitalFr: "Madrid",
+                capitalDe: "Madrid",
+                capitalEs: "Madrid",
+                continent: "Europe",
+                lat: 40,
+                lon: -4
+            ),
+            Country(
+                id: "it",
+                name: "Italy",
+                nameFr: "Italie",
+                nameDe: "Italien",
+                nameEs: "Italia",
+                capital: "Rome",
+                capitalFr: "Rome",
+                capitalDe: "Rom",
+                capitalEs: "Roma",
+                continent: "Europe",
+                lat: 42,
+                lon: 12
+            ),
+            Country(
+                id: "pt",
+                name: "Portugal",
+                nameFr: "Portugal",
+                nameDe: "Portugal",
+                nameEs: "Portugal",
+                capital: "Lisbon",
+                capitalFr: "Lisbonne",
+                capitalDe: "Lissabon",
+                capitalEs: "Lisboa",
+                continent: "Europe",
+                lat: 39,
+                lon: -8
+            )
         ]
     }
 
     private func sampleRivers() -> [River] {
-        [River(id: "rhine", name: "Rhine",
-               nameFr: "Rhin", nameDe: "Rhein", nameEs: "Rin",
-               continent: "Europe",
-               sourceLat: 46.8, sourceLon: 9.2,
-               mouthLat: 51.9, mouthLon: 4.0)]
+        [River(
+            id: "rhine",
+            name: "Rhine",
+            nameFr: "Rhin",
+            nameDe: "Rhein",
+            nameEs: "Rin",
+            continent: "Europe",
+            sourceLat: 46.8,
+            sourceLon: 9.2,
+            mouthLat: 51.9,
+            mouthLon: 4.0
+        )]
     }
 }

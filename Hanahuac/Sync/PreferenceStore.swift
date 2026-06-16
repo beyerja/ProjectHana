@@ -13,7 +13,7 @@ protocol PreferenceStore: AnyObject {
 /// Stable keys for synced preferences. Raw values match the historical `UserDefaults` keys so
 /// existing local selections are read transparently.
 enum PreferenceKey: String {
-    case appLocale = "appLocale"
+    case appLocale
 }
 
 // MARK: - KeyValueStore-backed implementation

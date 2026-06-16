@@ -1,6 +1,6 @@
-import XCTest
-import SwiftData
 import CoreLocation
+import SwiftData
+import XCTest
 @testable import Hanahuac
 
 /// Tests for the generalized `MappableFeature` abstraction across the
@@ -24,8 +24,18 @@ final class MapFeatureTests: XCTestCase {
     // MARK: - River geometry
 
     private func makeRiver(id: String, sLat: Double, sLon: Double, mLat: Double, mLon: Double) -> River {
-        River(id: id, name: id, nameFr: nil, nameDe: nil, nameEs: nil, continent: "X",
-              sourceLat: sLat, sourceLon: sLon, mouthLat: mLat, mouthLon: mLon)
+        River(
+            id: id,
+            name: id,
+            nameFr: nil,
+            nameDe: nil,
+            nameEs: nil,
+            continent: "X",
+            sourceLat: sLat,
+            sourceLon: sLon,
+            mouthLat: mLat,
+            mouthLon: mLon
+        )
     }
 
     func testRiverPinIsMidpointOfSourceAndMouth() {
@@ -62,8 +72,8 @@ final class MapFeatureTests: XCTestCase {
         let card = makeCard(factID: "nile", category: .river)
         let session = MapQuizSession(cards: [card], allFeatures: features)
         XCTAssertEqual(session.currentFeature?.id, "nile")
-        session.handleTap(featureID: "amazon")  // wrong
-        if case .incorrect(let tapped, let correct) = session.answerState {
+        session.handleTap(featureID: "amazon") // wrong
+        if case let .incorrect(tapped, correct) = session.answerState {
             XCTAssertEqual(tapped, "amazon")
             XCTAssertEqual(correct, "nile")
         } else {
@@ -75,10 +85,13 @@ final class MapFeatureTests: XCTestCase {
         let r = makeRiver(id: "nile", sLat: 4, sLon: 31, mLat: 31, mLon: 31)
         let card = makeCard(factID: "nile", category: .river)
         let session = MapLearningSession(newCards: [card], allFeatures: [r])
-        session.handleTap(featureID: "nile"); session.recordCorrect()
-        session.handleTap(featureID: "nile"); session.recordCorrect()
+        session.handleTap(featureID: "nile")
+        session.recordCorrect()
+        session.handleTap(featureID: "nile")
+        session.recordCorrect()
         XCTAssertFalse(card.hasGraduated)
-        session.handleTap(featureID: "nile"); session.recordCorrect()
+        session.handleTap(featureID: "nile")
+        session.recordCorrect()
         XCTAssertTrue(card.hasGraduated)
     }
 
@@ -92,8 +105,18 @@ final class MapFeatureTests: XCTestCase {
     }
 
     func testMountainPinUsesJSONLatLon() {
-        let m = MountainRange(id: "m", name: "M", nameFr: nil, nameDe: nil, nameEs: nil,
-                              continent: "X", lat: 28, lon: 84, highestPeak: "P", elevationMetres: 8000)
+        let m = MountainRange(
+            id: "m",
+            name: "M",
+            nameFr: nil,
+            nameDe: nil,
+            nameEs: nil,
+            continent: "X",
+            lat: 28,
+            lon: 84,
+            highestPeak: "P",
+            elevationMetres: 8000
+        )
         XCTAssertEqual(m.pinCoordinate.latitude, 28)
         XCTAssertEqual(m.pinCoordinate.longitude, 84)
         XCTAssertNil(m.linePath)
@@ -203,8 +226,12 @@ final class MapFeatureTests: XCTestCase {
                     let dLat = a.latitude - b.latitude
                     let dLon = a.longitude - b.longitude
                     let gap = (dLat * dLat + dLon * dLon).squareRoot()
-                    XCTAssertLessThan(gap, maxGapDegrees,
-                        "River '\(id)' has a \(String(format: "%.2f", gap))° straight jump between consecutive path vertices")
+                    XCTAssertLessThan(
+                        gap,
+                        maxGapDegrees,
+                        "River '\(id)' has a \(String(format: "%.2f", gap))° straight jump "
+                            + "between consecutive path vertices"
+                    )
                 }
             }
         }
@@ -243,8 +270,11 @@ final class MapFeatureTests: XCTestCase {
         let rivers = GeographyDataLoader.load().rivers
         XCTAssertEqual(rivers.count, 32, "expected the 32 catalog rivers")
         let actualFallback = Set(rivers.filter { paths[$0.id] == nil }.map(\.id))
-        XCTAssertEqual(actualFallback, expectedFallbackRiverIDs,
-                       "river path coverage changed — update expectedFallbackRiverIDs and regenerate river-paths.json")
+        XCTAssertEqual(
+            actualFallback,
+            expectedFallbackRiverIDs,
+            "river path coverage changed — update expectedFallbackRiverIDs and regenerate river-paths.json"
+        )
         // Fallback rivers still expose a usable straight linePath (no crash).
         for river in rivers where actualFallback.contains(river.id) {
             let path = river.linePath
@@ -288,7 +318,7 @@ final class MapFeatureTests: XCTestCase {
             CLLocationCoordinate2D(latitude: 0, longitude: 1),
             CLLocationCoordinate2D(latitude: 0, longitude: 2),
             CLLocationCoordinate2D(latitude: 0, longitude: 3),
-            CLLocationCoordinate2D(latitude: 0, longitude: 4),
+            CLLocationCoordinate2D(latitude: 0, longitude: 4)
         ]]
         let mid = try? XCTUnwrap(River.midpointVertex(of: path))
         XCTAssertEqual(mid?.longitude ?? .nan, 2, accuracy: 1e-9)

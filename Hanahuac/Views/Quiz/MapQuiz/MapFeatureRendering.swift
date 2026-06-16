@@ -1,5 +1,5 @@
-import SwiftUI
 import MapKit
+import SwiftUI
 
 // MARK: - Pin view
 
@@ -13,10 +13,10 @@ struct MapFeaturePinView: View {
 
     private var color: Color {
         switch state {
-        case .neutral:          return Theme.Palette.accent
-        case .correct:          return Theme.Palette.correct
-        case .incorrectTapped:  return Theme.Palette.wrong
-        case .correctRevealed:  return Theme.Palette.correct
+        case .neutral: Theme.Palette.accent
+        case .correct: Theme.Palette.correct
+        case .incorrectTapped: Theme.Palette.wrong
+        case .correctRevealed: Theme.Palette.correct
         }
     }
 
@@ -50,9 +50,9 @@ func mapPinState(featureID: String, answerState: AnswerState) -> MapFeaturePinVi
     switch answerState {
     case .unanswered:
         return .neutral
-    case .correct(let id):
+    case let .correct(id):
         return featureID == id ? .correct : .neutral
-    case .incorrect(let tappedID, let correctID):
+    case let .incorrect(tappedID, correctID):
         if featureID == tappedID { return .incorrectTapped }
         if featureID == correctID { return .correctRevealed }
         return .neutral
@@ -95,11 +95,11 @@ private func lineStrokeColor(for featureID: String, answerState: AnswerState) ->
     switch answerState {
     case .unanswered:
         return Theme.Palette.accent.opacity(0.9)
-    case .correct(let id):
+    case let .correct(id):
         return featureID == id ? Theme.Palette.correct : Theme.Palette.accent.opacity(0.6)
-    case .incorrect(let tappedID, let correctID):
+    case let .incorrect(tappedID, correctID):
         if featureID == correctID { return Theme.Palette.correct }
-        if featureID == tappedID  { return Theme.Palette.wrong }
+        if featureID == tappedID { return Theme.Palette.wrong }
         return Theme.Palette.accent.opacity(0.6)
     }
 }
@@ -121,7 +121,7 @@ private func greatCircleSegments(
     steps: Int = 24
 ) -> [CLLocationCoordinate2D] {
     guard steps > 1 else { return [start, end] }
-    return (0...steps).map { i in
+    return (0 ... steps).map { i in
         let t = Double(i) / Double(steps)
         return CLLocationCoordinate2D(
             latitude: start.latitude + (end.latitude - start.latitude) * t,

@@ -1,7 +1,8 @@
 import Foundation
 import Observation
 
-@Observable final class LanguageManager {
+@Observable
+final class LanguageManager {
     static let shared = LanguageManager()
 
     /// Backing store for the synced preference. Defaults to the local (`UserDefaults`) store so

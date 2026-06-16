@@ -7,9 +7,9 @@ struct SM2Result {
     let nextReviewDate: Date
 }
 
-struct SM2Scheduler {
+enum SM2Scheduler {
     static func schedule(card: ReviewCard, quality: Int) -> SM2Result {
-        precondition((0...5).contains(quality), "quality must be 0–5")
+        precondition((0 ... 5).contains(quality), "quality must be 0–5")
 
         let q = Double(quality)
 

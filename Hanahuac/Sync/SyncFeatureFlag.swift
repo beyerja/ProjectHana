@@ -13,9 +13,9 @@ enum SyncFeatureFlag {
     /// True only when the project is built with the `CLOUDKIT_SYNC` compilation condition.
     static var isCompiledIn: Bool {
         #if CLOUDKIT_SYNC
-        return true
+            return true
         #else
-        return false
+            return false
         #endif
     }
 

@@ -5,9 +5,17 @@ struct StatsView: View {
     @Environment(LanguageManager.self) private var languageManager
     @State private var streak: Int = StreakTracker.currentStreak()
 
-    private var all: [ReviewCard] { cardStore.allCards }
-    private var dueCount: Int { cardStore.dueCards().count }
-    private var reviewedCount: Int { all.filter { $0.repetitionCount > 0 }.count }
+    private var all: [ReviewCard] {
+        cardStore.allCards
+    }
+
+    private var dueCount: Int {
+        cardStore.dueCards().count
+    }
+
+    private var reviewedCount: Int {
+        all.filter { $0.repetitionCount > 0 }.count
+    }
 
     var body: some View {
         ScrollView {
@@ -141,23 +149,25 @@ struct StatsView: View {
 extension MasteryTier {
     var description: String {
         switch self {
-        case .new:      return L10n["stats.tier.not_started"]
-        case .learning: return L10n["stats.tier.reps_1_2"]
-        case .review:   return L10n["stats.tier.reps_3_4"]
-        case .mastered: return L10n["stats.tier.mastered"]
+        case .new: L10n["stats.tier.not_started"]
+        case .learning: L10n["stats.tier.reps_1_2"]
+        case .review: L10n["stats.tier.reps_3_4"]
+        case .mastered: L10n["stats.tier.mastered"]
         }
     }
 }
 
 extension CardCategory: CaseIterable {
-    public static var allCases: [CardCategory] { [.country, .river, .mountain, .sea] }
+    public static var allCases: [CardCategory] {
+        [.country, .river, .mountain, .sea]
+    }
 
     var displayName: String {
         switch self {
-        case .country:  return L10n["home.category.countries"]
-        case .river:    return L10n["home.category.rivers"]
-        case .mountain: return L10n["home.category.mountains"]
-        case .sea:      return L10n["home.category.seas"]
+        case .country: L10n["home.category.countries"]
+        case .river: L10n["home.category.rivers"]
+        case .mountain: L10n["home.category.mountains"]
+        case .sea: L10n["home.category.seas"]
         }
     }
 }

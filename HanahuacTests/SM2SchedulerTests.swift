@@ -1,5 +1,5 @@
-import XCTest
 import SwiftData
+import XCTest
 @testable import Hanahuac
 
 @MainActor
@@ -106,7 +106,7 @@ final class SM2SchedulerTests: XCTestCase {
 
     func testEaseFactorNeverDropsBelowFloor() {
         var card = makeCard(easeFactor: 2.5)
-        for _ in 0..<20 {
+        for _ in 0 ..< 20 {
             let result = SM2Scheduler.schedule(card: card, quality: 0)
             card.easeFactor = result.newEaseFactor
             XCTAssertGreaterThanOrEqual(card.easeFactor, 1.3)
@@ -118,11 +118,14 @@ final class SM2SchedulerTests: XCTestCase {
     func testQuality5StreakGrowsInterval() {
         var card = makeCard(easeFactor: 2.5, interval: 0)
         var lastInterval = 0
-        for rep in 0..<5 {
+        for rep in 0 ..< 5 {
             let result = SM2Scheduler.schedule(card: card, quality: 5)
             if rep >= 2 {
-                XCTAssertGreaterThan(result.newIntervalDays, lastInterval,
-                    "Interval should grow on rep \(rep)")
+                XCTAssertGreaterThan(
+                    result.newIntervalDays,
+                    lastInterval,
+                    "Interval should grow on rep \(rep)"
+                )
             }
             card.repetitionCount = result.newRepetitionCount
             card.easeFactor = result.newEaseFactor

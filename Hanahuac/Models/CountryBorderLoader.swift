@@ -1,7 +1,7 @@
-import Foundation
 import CoreLocation
+import Foundation
 
-struct CountryBorderLoader {
+enum CountryBorderLoader {
     static let shared: [String: [[CLLocationCoordinate2D]]] = load()
 
     private static func load() -> [String: [[CLLocationCoordinate2D]]] {

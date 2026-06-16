@@ -32,8 +32,14 @@ final class TextQuizSession {
     var current: TextQuestion? {
         questions.indices.contains(currentIndex) ? questions[currentIndex] : nil
     }
-    var reviewedCount: Int { min(currentIndex, questions.count) }
-    var nextDueDate: Date? { questions.map(\.card.nextReviewDate).min() }
+
+    var reviewedCount: Int {
+        min(currentIndex, questions.count)
+    }
+
+    var nextDueDate: Date? {
+        questions.map(\.card.nextReviewDate).min()
+    }
 
     init(questions: [TextQuestion]) {
         self.questions = questions.shuffled()

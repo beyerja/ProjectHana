@@ -1,8 +1,8 @@
 import SwiftUI
 
 enum CapitalQuizMode {
-    case capitalOfCountry    // "What is the capital of X?"
-    case countryOfCapital    // "Which country has X as its capital?"
+    case capitalOfCountry // "What is the capital of X?"
+    case countryOfCapital // "Which country has X as its capital?"
 }
 
 struct CapitalQuizView: View {
@@ -29,11 +29,15 @@ struct CapitalQuizView: View {
                     quizBody(session: session)
                 }
             } else {
-                ContentUnavailableView(L10n["capital_quiz.nothing_due_title"], systemImage: "checkmark.circle",
-                    description: Text(L10n["capital_quiz.nothing_due_desc"]))
+                ContentUnavailableView(
+                    L10n["capital_quiz.nothing_due_title"],
+                    systemImage: "checkmark.circle",
+                    description: Text(L10n["capital_quiz.nothing_due_desc"])
+                )
             }
         }
-        .navigationTitle(mode == .capitalOfCountry ? L10n["capital_quiz.nav.capital"] : L10n["capital_quiz.nav.country"])
+        .navigationTitle(mode == .capitalOfCountry ? L10n["capital_quiz.nav.capital"] :
+            L10n["capital_quiz.nav.country"])
         .inlineNavigationTitle()
         .toolbar {
             ToolbarItem(placement: .cancellationAction) { Button(L10n["capital_quiz.exit"]) { dismiss() } }
@@ -85,9 +89,13 @@ struct CapitalQuizView: View {
             unansweredInput(session: session)
         case .correct:
             feedbackView(text: L10n["capital_quiz.feedback.correct"], color: Theme.Palette.correct, session: session)
-        case .incorrect(let correctAnswer):
+        case let .incorrect(correctAnswer):
             VStack(spacing: 12) {
-                feedbackView(text: "\(L10n["capital_quiz.feedback.wrong_prefix"]) \(correctAnswer)", color: Theme.Palette.wrong, session: session)
+                feedbackView(
+                    text: "\(L10n["capital_quiz.feedback.wrong_prefix"]) \(correctAnswer)",
+                    color: Theme.Palette.wrong,
+                    session: session
+                )
             }
         }
     }
@@ -106,8 +114,10 @@ struct CapitalQuizView: View {
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(inputText.isEmpty ? Color.secondary.opacity(0.3) : Theme.Palette.accent,
-                            in: RoundedRectangle(cornerRadius: 14))
+                .background(
+                    inputText.isEmpty ? Color.secondary.opacity(0.3) : Theme.Palette.accent,
+                    in: RoundedRectangle(cornerRadius: 14)
+                )
                 .foregroundStyle(.white)
                 .disabled(inputText.isEmpty)
         }
@@ -137,7 +147,9 @@ struct CapitalQuizView: View {
 
     private func buildSession() {
         let due = cardStore.dueCards(for: .country)
-        guard !due.isEmpty else { session = nil; return }
+        guard !due.isEmpty else { session = nil
+            return
+        }
         let countries = GeographyDataLoader.shared.countries
         let locale = languageManager.current
         let questions = mode == .capitalOfCountry

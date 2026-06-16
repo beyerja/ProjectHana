@@ -1,5 +1,5 @@
-import Foundation
 import CoreLocation
+import Foundation
 
 /// A geography entity that can be presented on the map quiz / map learning map:
 /// a tappable pin, an optional polygon border overlay, and an optional multi-point
@@ -36,9 +36,14 @@ protocol MappableFeature {
 
 extension MappableFeature {
     /// Latitude of the pin — used by the region helper for neighbour selection.
-    var quizLat: Double { pinCoordinate.latitude }
+    var quizLat: Double {
+        pinCoordinate.latitude
+    }
+
     /// Longitude of the pin — used by the region helper for neighbour selection.
-    var quizLon: Double { pinCoordinate.longitude }
+    var quizLon: Double {
+        pinCoordinate.longitude
+    }
 }
 
 // MARK: - Country conformance
@@ -52,7 +57,9 @@ extension Country: MappableFeature {
         CountryBorderLoader.shared[id]
     }
 
-    var linePath: [[CLLocationCoordinate2D]]? { nil }
+    var linePath: [[CLLocationCoordinate2D]]? {
+        nil
+    }
 }
 
 // MARK: - River conformance (real path or straight fallback + midpoint pin)
@@ -61,8 +68,10 @@ extension River: MappableFeature {
     /// The straight source→mouth line as a single part — the graceful fallback
     /// used when no real centerline geometry is bundled for this river.
     var straightLinePart: [CLLocationCoordinate2D] {
-        [CLLocationCoordinate2D(latitude: sourceLat, longitude: sourceLon),
-         CLLocationCoordinate2D(latitude: mouthLat, longitude: mouthLon)]
+        [
+            CLLocationCoordinate2D(latitude: sourceLat, longitude: sourceLon),
+            CLLocationCoordinate2D(latitude: mouthLat, longitude: mouthLon)
+        ]
     }
 
     /// Real multi-point centerline parts from `river-paths.json` when matched,
@@ -79,8 +88,10 @@ extension River: MappableFeature {
         if let vertex = RiverPathLoader.shared[id].flatMap(River.midpointVertex(of:)) {
             return vertex
         }
-        return CLLocationCoordinate2D(latitude: (sourceLat + mouthLat) / 2,
-                                      longitude: (sourceLon + mouthLon) / 2)
+        return CLLocationCoordinate2D(
+            latitude: (sourceLat + mouthLat) / 2,
+            longitude: (sourceLon + mouthLon) / 2
+        )
     }
 
     /// Returns the vertex closest to the halfway point (by cumulative length)
@@ -94,18 +105,21 @@ extension River: MappableFeature {
         }
         // Cumulative length to each vertex (parts concatenated in order).
         var cumulative = [0.0]
-        for i in 1..<vertices.count {
+        for i in 1 ..< vertices.count {
             cumulative.append(cumulative[i - 1] + seg(vertices[i - 1], vertices[i]))
         }
         let half = (cumulative.last ?? 0) / 2
         var best = 0, bestDelta = Double.greatestFiniteMagnitude
         for (i, c) in cumulative.enumerated() where abs(c - half) < bestDelta {
-            bestDelta = abs(c - half); best = i
+            bestDelta = abs(c - half)
+            best = i
         }
         return vertices[best]
     }
 
-    var borderRings: [[CLLocationCoordinate2D]]? { nil }
+    var borderRings: [[CLLocationCoordinate2D]]? {
+        nil
+    }
 }
 
 // MARK: - Sea conformance (polygon overlay + pin)
@@ -121,7 +135,9 @@ extension Sea: MappableFeature {
         SeaBorderLoader.shared[id]
     }
 
-    var linePath: [[CLLocationCoordinate2D]]? { nil }
+    var linePath: [[CLLocationCoordinate2D]]? {
+        nil
+    }
 }
 
 // MARK: - MountainRange conformance (polygon overlay + pin, with fallback)
@@ -137,5 +153,7 @@ extension MountainRange: MappableFeature {
         MountainBorderLoader.shared[id]
     }
 
-    var linePath: [[CLLocationCoordinate2D]]? { nil }
+    var linePath: [[CLLocationCoordinate2D]]? {
+        nil
+    }
 }

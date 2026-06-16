@@ -70,6 +70,31 @@ pr-list:
 ci branch:
     gh run list --repo beyerja/ProjectHana --branch {{branch}}
 
+# Run every linter (fail-on-violation). Mirrors the CI lint job; all tools come from the
+# flake dev shell via direnv (no hardcoded /nix paths).
+lint: lint-swift lint-py lint-sh lint-nix lint-yaml
+    @echo "lint: all linters passed."
+
+# Lint Swift sources: SwiftLint rules (strict) + swiftformat --lint (formatting gate).
+lint-swift:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "== SwiftLint =="
+    direnv exec . swiftlint lint --strict --config .swiftlint.yml
+    echo "== swiftformat --lint =="
+    direnv exec . swiftformat --lint .
+    echo "swift: clean."
+
+# Lint Python helper scripts with Ruff (check + format --check).
+lint-py:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "== ruff check =="
+    direnv exec . ruff check .
+    echo "== ruff format --check =="
+    direnv exec . ruff format --check .
+    echo "python: clean."
+
 # Lint the repo's tracked shell scripts with shellcheck (from the flake dev shell via direnv)
 lint-sh:
     #!/usr/bin/env bash
@@ -87,6 +112,27 @@ lint-sh:
     # shellcheck comes from the flake dev shell via direnv (no hardcoded /nix path)
     direnv exec . shellcheck "${scripts[@]}"
     echo "shellcheck: all scripts passed."
+
+# Check Nix files are formatted (nixfmt-rfc-style, --check = fail-on-violation).
+lint-nix:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    nixfiles=()
+    while IFS= read -r f; do nixfiles+=("$f"); done < <(git ls-files '*.nix')
+    if [[ ${#nixfiles[@]} -eq 0 ]]; then echo "No tracked .nix files."; exit 0; fi
+    direnv exec . nixfmt --check "${nixfiles[@]}"
+    echo "nix: formatted."
+
+# Lint tracked YAML files (yamllint). Config-defined errors fail the gate; line-length is a
+# non-blocking warning, so we deliberately do NOT pass --strict (which would fail on warnings).
+lint-yaml:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    yamlfiles=()
+    while IFS= read -r f; do yamlfiles+=("$f"); done < <(git ls-files '*.yml' '*.yaml')
+    if [[ ${#yamlfiles[@]} -eq 0 ]]; then echo "No tracked YAML files."; exit 0; fi
+    direnv exec . yamllint "${yamlfiles[@]}"
+    echo "yaml: clean."
 
 # Delegate to agent telemetry logger
 log *args:

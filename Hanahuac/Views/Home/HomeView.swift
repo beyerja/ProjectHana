@@ -97,7 +97,7 @@ struct HomeView: View {
     }
 
     private func navigateTo(mode: HomeQuizMode, category: CardCategory, newCount: Int, pendingCount: Int) {
-        if newCount > 0 && pendingCount > 0 {
+        if newCount > 0, pendingCount > 0 {
             navigationPath.append(QuizRoute.pilePicker(mode: mode, category: category))
         } else if newCount > 0 {
             navigationPath.append(QuizRoute.quiz(mode: mode, category: category, pile: .new))
@@ -146,7 +146,10 @@ struct HomeView: View {
             }
         }
         .padding(14)
-        .background(Theme.Palette.surface, in: RoundedRectangle(cornerRadius: Theme.Metrics.tileRadius, style: .continuous))
+        .background(
+            Theme.Palette.surface,
+            in: RoundedRectangle(cornerRadius: Theme.Metrics.tileRadius, style: .continuous)
+        )
         .overlay(
             RoundedRectangle(cornerRadius: Theme.Metrics.tileRadius, style: .continuous)
                 .strokeBorder(Theme.Palette.hairline, lineWidth: 1)
@@ -169,9 +172,9 @@ struct HomeView: View {
     @ViewBuilder
     private func quizRouteView(_ route: QuizRoute) -> some View {
         switch route {
-        case .pilePicker(let mode, let category):
+        case let .pilePicker(mode, category):
             PilePickerView(mode: mode, category: category)
-        case .quiz(let mode, let category, let pile):
+        case let .quiz(mode, category, pile):
             directQuizView(mode: mode, category: category, pile: pile)
                 .background(Theme.Palette.canvas.ignoresSafeArea())
         }

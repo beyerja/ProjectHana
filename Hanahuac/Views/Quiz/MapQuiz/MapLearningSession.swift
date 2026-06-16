@@ -28,7 +28,7 @@ final class MapLearningSession {
     let allFeatures: [any MappableFeature]
     private(set) var answerState: AnswerState = .unanswered
     private(set) var annotationFeatures: [any MappableFeature] = []
-    private(set) var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
+    private(set) var mapRegion: MKCoordinateRegion = .init()
 
     private let category: CardCategory?
     private let store: ActiveSetStore?
@@ -117,7 +117,7 @@ final class MapLearningSession {
         card.consecutiveCorrect = 0
 
         // Dual-penalty: also reset the streak of the incorrectly-tapped country's card if present.
-        if case .incorrect(let tappedID, _) = answerState, tappedID != card.factID {
+        if case let .incorrect(tappedID, _) = answerState, tappedID != card.factID {
             if let tappedCard = activeSet.first(where: { $0.factID == tappedID }) {
                 tappedCard.consecutiveCorrect = 0
             }
@@ -125,7 +125,7 @@ final class MapLearningSession {
 
         // Reinsert later in the queue (same as LearningSession)
         activeSet.remove(at: currentIndex)
-        let insertAt = Int.random(in: max(1, currentIndex)..<max(2, activeSet.count + 1))
+        let insertAt = Int.random(in: max(1, currentIndex) ..< max(2, activeSet.count + 1))
         activeSet.insert(card, at: min(insertAt, activeSet.count))
         if currentIndex >= activeSet.count { currentIndex = 0 }
         answerState = .unanswered

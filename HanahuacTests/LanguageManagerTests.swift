@@ -21,20 +21,32 @@ final class LanguageManagerTests: XCTestCase {
         let manager = LanguageManager.shared
 
         manager.current = .fr
-        XCTAssertEqual(UserDefaults.standard.string(forKey: key), "fr",
-                       "Setting current to .fr should persist 'fr' to UserDefaults")
+        XCTAssertEqual(
+            UserDefaults.standard.string(forKey: key),
+            "fr",
+            "Setting current to .fr should persist 'fr' to UserDefaults"
+        )
 
         manager.current = .de
-        XCTAssertEqual(UserDefaults.standard.string(forKey: key), "de",
-                       "Setting current to .de should persist 'de' to UserDefaults")
+        XCTAssertEqual(
+            UserDefaults.standard.string(forKey: key),
+            "de",
+            "Setting current to .de should persist 'de' to UserDefaults"
+        )
 
         manager.current = .esMX
-        XCTAssertEqual(UserDefaults.standard.string(forKey: key), "es-MX",
-                       "Setting current to .esMX should persist 'es-MX' to UserDefaults")
+        XCTAssertEqual(
+            UserDefaults.standard.string(forKey: key),
+            "es-MX",
+            "Setting current to .esMX should persist 'es-MX' to UserDefaults"
+        )
 
         manager.current = .en
-        XCTAssertEqual(UserDefaults.standard.string(forKey: key), "en",
-                       "Setting current to .en should persist 'en' to UserDefaults")
+        XCTAssertEqual(
+            UserDefaults.standard.string(forKey: key),
+            "en",
+            "Setting current to .en should persist 'en' to UserDefaults"
+        )
     }
 
     // MARK: - Reading back the persisted value
@@ -62,36 +74,50 @@ final class LanguageManagerTests: XCTestCase {
     func testSavedUserDefaults_frenchRawValue_resolvesToFr() {
         UserDefaults.standard.set("fr", forKey: key)
         let restored = AppLocale(rawValue: UserDefaults.standard.string(forKey: key) ?? "")
-        XCTAssertEqual(restored, .fr,
-                       "Raw value 'fr' stored in UserDefaults should restore to .fr")
+        XCTAssertEqual(
+            restored,
+            .fr,
+            "Raw value 'fr' stored in UserDefaults should restore to .fr"
+        )
     }
 
     func testSavedUserDefaults_germanRawValue_resolvesToDe() {
         UserDefaults.standard.set("de", forKey: key)
         let restored = AppLocale(rawValue: UserDefaults.standard.string(forKey: key) ?? "")
-        XCTAssertEqual(restored, .de,
-                       "Raw value 'de' stored in UserDefaults should restore to .de")
+        XCTAssertEqual(
+            restored,
+            .de,
+            "Raw value 'de' stored in UserDefaults should restore to .de"
+        )
     }
 
     func testSavedUserDefaults_spanishRawValue_resolvesToEsMX() {
         UserDefaults.standard.set("es-MX", forKey: key)
         let restored = AppLocale(rawValue: UserDefaults.standard.string(forKey: key) ?? "")
-        XCTAssertEqual(restored, .esMX,
-                       "Raw value 'es-MX' stored in UserDefaults should restore to .esMX")
+        XCTAssertEqual(
+            restored,
+            .esMX,
+            "Raw value 'es-MX' stored in UserDefaults should restore to .esMX"
+        )
     }
 
     func testSavedUserDefaults_englishRawValue_resolvesToEn() {
         UserDefaults.standard.set("en", forKey: key)
         let restored = AppLocale(rawValue: UserDefaults.standard.string(forKey: key) ?? "")
-        XCTAssertEqual(restored, .en,
-                       "Raw value 'en' stored in UserDefaults should restore to .en")
+        XCTAssertEqual(
+            restored,
+            .en,
+            "Raw value 'en' stored in UserDefaults should restore to .en"
+        )
     }
 
     func testSavedUserDefaults_unknownRawValue_resolvesToNil() {
         UserDefaults.standard.set("ja", forKey: key)
         let restored = AppLocale(rawValue: UserDefaults.standard.string(forKey: key) ?? "")
-        XCTAssertNil(restored,
-                     "Unknown raw value 'ja' must not resolve to any AppLocale (returns nil)")
+        XCTAssertNil(
+            restored,
+            "Unknown raw value 'ja' must not resolve to any AppLocale (returns nil)"
+        )
     }
 
     // MARK: - LanguageManager.shared reflects current locale in memory
@@ -99,16 +125,21 @@ final class LanguageManagerTests: XCTestCase {
     func testSharedManager_currentLocaleIsAValidAppLocale() {
         let manager = LanguageManager.shared
         XCTAssertNotNil(manager.current)
-        XCTAssertTrue(AppLocale.allCases.contains(manager.current),
-                      "LanguageManager.current must always be a valid AppLocale case")
+        XCTAssertTrue(
+            AppLocale.allCases.contains(manager.current),
+            "LanguageManager.current must always be a valid AppLocale case"
+        )
     }
 
     func testSharedManager_setAndGet_allLocales() {
         let manager = LanguageManager.shared
         for locale in AppLocale.allCases {
             manager.current = locale
-            XCTAssertEqual(manager.current, locale,
-                           "After setting current to \(locale), reading back should return \(locale)")
+            XCTAssertEqual(
+                manager.current,
+                locale,
+                "After setting current to \(locale), reading back should return \(locale)"
+            )
         }
     }
 }

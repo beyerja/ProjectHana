@@ -1,6 +1,6 @@
 import Foundation
 
-struct StreakTracker {
+enum StreakTracker {
     private static let lastReviewKey = "streak_lastReviewDate"
     private static let streakKey = "streak_count"
 
@@ -8,7 +8,7 @@ struct StreakTracker {
         defaults.integer(forKey: streakKey)
     }
 
-    // Call this after any quiz session completes at least one review.
+    /// Call this after any quiz session completes at least one review.
     static func recordReview(on date: Date = .now, defaults: UserDefaults = .standard) {
         let cal = Calendar.current
         let today = cal.startOfDay(for: date)

@@ -1,20 +1,22 @@
 import Foundation
 
 enum AppLocale: String, CaseIterable, Identifiable {
-    case en   = "en"
-    case fr   = "fr"
-    case de   = "de"
+    case en
+    case fr
+    case de
     case esMX = "es-MX"
 
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     /// The language's native display name shown in the language picker.
     var displayName: String {
         switch self {
-        case .en:   return "English"
-        case .fr:   return "Français"
-        case .de:   return "Deutsch"
-        case .esMX: return "Español (México)"
+        case .en: "English"
+        case .fr: "Français"
+        case .de: "Deutsch"
+        case .esMX: "Español (México)"
         }
     }
 
@@ -25,11 +27,10 @@ enum AppLocale: String, CaseIterable, Identifiable {
     /// 2. Match by language code (`en`, `fr`, `de`).
     /// 3. Fall back to `.en` for unrecognized locales.
     static func matching(_ locale: Locale) -> AppLocale {
-        let language: String
-        if #available(iOS 16, macOS 13, *) {
-            language = locale.language.languageCode?.identifier ?? ""
+        let language: String = if #available(iOS 16, macOS 13, *) {
+            locale.language.languageCode?.identifier ?? ""
         } else {
-            language = locale.languageCode ?? ""
+            locale.languageCode ?? ""
         }
 
         // All Spanish variants map to esMX
@@ -41,7 +42,7 @@ enum AppLocale: String, CaseIterable, Identifiable {
         case "en": return .en
         case "fr": return .fr
         case "de": return .de
-        default:   return .en
+        default: return .en
         }
     }
 }

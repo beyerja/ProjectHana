@@ -41,8 +41,19 @@ Usage:
     python3 scripts/generate-river-paths.py --write    # regenerate and overwrite
 Requires `pyshp` (pure-Python, no GDAL):  python3 -m pip install pyshp
 """
+
 from __future__ import annotations
-import argparse, io, json, math, os, sys, unicodedata, urllib.request, zipfile
+
+import argparse
+import io
+import itertools
+import json
+import math
+import os
+import sys
+import unicodedata
+import urllib.request
+import zipfile
 
 NE_BASE = "https://naturalearth.s3.amazonaws.com"
 LAYER = "10m_physical/ne_10m_rivers_lake_centerlines"
@@ -74,48 +85,56 @@ CACHE = os.path.join(os.environ.get("TMPDIR", "/tmp"), "ne-borders-cache")
 # segment (e.g. Irrawaddy delta, Dniester guard). Rivers omitted here are left to
 # the app's straight-line fallback.
 RIVER_MAP = {
-    "nile":          {"names": ["nile", "white nile", "bahr el jebel", "albert nile", "victoria nile"]},
+    "nile": {"names": ["nile", "white nile", "bahr el jebel", "albert nile", "victoria nile"]},
     # Amazon: the NE "Amazonas" mainstem (rivernum 2) only reaches the Ucayali/
     # Marañón confluence (~-73.5,-4.4). Add the Ucayali (rivernum 10) so the path
     # runs the full Andes-to-Atlantic stem down to our stored Andean source
     # (-15.5,-71.7); the two join at the confluence once shapes are split per part.
-    "amazon":        {"names": ["amazon", "amazonas", "solimoes", "solimões", "rio amazonas"],
-                      "rivernums": [2, 10]},
-    "yangtze":       {"names": ["yangtze", "chang jiang", "jinsha jiang", "tongtian", "yangtze kiang"]},
-    "mississippi":   {"names": ["mississippi"]},
-    "yenisei":       {"names": ["yenisey", "yenisei", "jenissej", "ulug-khem", "yenisai"]},
+    "amazon": {
+        "names": ["amazon", "amazonas", "solimoes", "solimões", "rio amazonas"],
+        "rivernums": [2, 10],
+    },
+    "yangtze": {"names": ["yangtze", "chang jiang", "jinsha jiang", "tongtian", "yangtze kiang"]},
+    "mississippi": {"names": ["mississippi"]},
+    "yenisei": {"names": ["yenisey", "yenisei", "jenissej", "ulug-khem", "yenisai"]},
     # Yellow River: NE calls it "Huang" (name) with rivernum 66 (Tibetan-plateau
     # stem) + 95 (lower reach to the Bohai mouth). Matched by rivernum to be exact
     # and to avoid catching "Yellowstone".
-    "yellow-river":  {"rivernums": [66, 95]},
-    "ob":            {"names": ["ob", "ob'", "katun"]},
-    "congo":         {"names": ["congo", "lualaba", "zaire"]},
-    "lena":          {"names": ["lena"]},
-    "niger":         {"names": ["niger"]},
-    "mekong":        {"names": ["mekong", "lancang jiang", "lan-ts'ang chiang", "lancang"]},
-    "missouri":      {"names": ["missouri"]},
-    "volga":         {"names": ["volga"]},
-    "zambezi":       {"names": ["zambezi", "zambeze"]},
-    "ganges":        {"names": ["ganges", "ganga"]},
-    "indus":         {"names": ["indus"]},
-    "murray":        {"names": ["murray"]},
-    "euphrates":     {"names": ["euphrates", "firat", "fırat", "al furat"]},
-    "tigris":        {"names": ["tigris", "dicle"]},
-    "rhine":         {"names": ["rhine", "rhein", "rhin", "rijn"]},
-    "danube":        {"names": ["danube", "donau", "duna", "dunav", "dunarea"]},
-    "colorado":      {"names": ["colorado"], "near_source": True},  # several Colorados -> proximity filter
-    "columbia":      {"names": ["columbia"]},
+    "yellow-river": {"rivernums": [66, 95]},
+    "ob": {"names": ["ob", "ob'", "katun"]},
+    "congo": {"names": ["congo", "lualaba", "zaire"]},
+    "lena": {"names": ["lena"]},
+    "niger": {"names": ["niger"]},
+    "mekong": {"names": ["mekong", "lancang jiang", "lan-ts'ang chiang", "lancang"]},
+    "missouri": {"names": ["missouri"]},
+    "volga": {"names": ["volga"]},
+    "zambezi": {"names": ["zambezi", "zambeze"]},
+    "ganges": {"names": ["ganges", "ganga"]},
+    "indus": {"names": ["indus"]},
+    "murray": {"names": ["murray"]},
+    "euphrates": {"names": ["euphrates", "firat", "fırat", "al furat"]},
+    "tigris": {"names": ["tigris", "dicle"]},
+    "rhine": {"names": ["rhine", "rhein", "rhin", "rijn"]},
+    "danube": {"names": ["danube", "donau", "duna", "dunav", "dunarea"]},
+    "colorado": {
+        "names": ["colorado"],
+        "near_source": True,
+    },  # several Colorados -> proximity filter
+    "columbia": {"names": ["columbia"]},
     # delta segments carry "delta" in the name; exclude so we keep the main river
-    "irrawaddy":     {"names": ["irrawaddy", "ayeyarwady"], "exclude": ["delta"]},
-    "orange":        {"names": ["orange", "oranje", "gariep"]},
-    "parana":        {"names": ["parana", "paraná", "rio parana"]},
-    "amur":          {"names": ["amur", "heilong jiang", "heilongjiang"]},
+    "irrawaddy": {"names": ["irrawaddy", "ayeyarwady"], "exclude": ["delta"]},
+    "orange": {"names": ["orange", "oranje", "gariep"]},
+    "parana": {"names": ["parana", "paraná", "rio parana"]},
+    "amur": {"names": ["amur", "heilong jiang", "heilongjiang"]},
     # match Dnieper via its alt names; never fuzzy-match the separate Dniester
-    "dnieper":       {"names": ["dnieper", "dnipro", "dnepr"], "exclude": ["dniester", "dnister", "dnestr"]},
+    "dnieper": {
+        "names": ["dnieper", "dnipro", "dnepr"],
+        "exclude": ["dniester", "dnister", "dnestr"],
+    },
     "senegal-river": {"names": ["senegal", "sénégal"]},
-    "orinoco":       {"names": ["orinoco"]},
+    "orinoco": {"names": ["orinoco"]},
     "sao-francisco": {"names": ["sao francisco", "são francisco", "rio sao francisco"]},
-    "tocantins":     {"names": ["tocantins"]},
+    "tocantins": {"names": ["tocantins"]},
 }
 
 
@@ -131,6 +150,7 @@ def norm(s: str | None) -> str:
 def fetch_layer():
     """Download+unzip the NE rivers layer into CACHE if absent; return a Reader."""
     import shapefile  # imported here so --help works without pyshp
+
     base = os.path.join(CACHE, os.path.basename(LAYER))
     if not os.path.exists(base + ".shp"):
         os.makedirs(CACHE, exist_ok=True)
@@ -167,9 +187,8 @@ def segment_parts(shape):
     western end at the Ucayali confluence. Keeping parts separate lets stitch chain
     them correctly.
     """
-    idx = list(shape.parts) + [len(shape.points)]
-    return [[(p[0], p[1]) for p in shape.points[idx[i]:idx[i + 1]]]
-            for i in range(len(idx) - 1)]
+    idx = [*list(shape.parts), len(shape.points)]
+    return [[(p[0], p[1]) for p in shape.points[idx[i] : idx[i + 1]]] for i in range(len(idx) - 1)]
 
 
 def dist(a, b):
@@ -241,7 +260,7 @@ def gap_split(part):
     from a sparse within-segment NE reach or a residual stitch join.
     """
     pieces, cur = [], [part[0]]
-    for prev, p in zip(part, part[1:]):
+    for prev, p in itertools.pairwise(part):
         if dist(prev, p) > GAP_SPLIT_DEG:
             pieces.append(cur)
             cur = [p]
@@ -262,9 +281,12 @@ def build_rivers():
             return int(rec["rivernum"])
         except (KeyError, IndexError, TypeError, ValueError):
             return None
-    indexed = [(record_names(rec), rec_num(rec), part)
-               for s, rec in zip(shapes, recs)
-               for part in segment_parts(s)]
+
+    indexed = [
+        (record_names(rec), rec_num(rec), part)
+        for s, rec in zip(shapes, recs, strict=False)
+        for part in segment_parts(s)
+    ]
 
     out = []
     for rid, spec in RIVER_MAP.items():
@@ -286,9 +308,11 @@ def build_rivers():
             # keep only segments within a generous radius of the stored source/mouth
             # corridor; drops same-named rivers on other continents
             mth = (r["mouthLon"], r["mouthLat"])
-            def relevant(pts):
+
+            def relevant(pts, src=src, mth=mth):
                 c = pts[len(pts) // 2]
                 return min(dist(c, src), dist(c, mth)) < 12.0
+
             matched = [m for m in matched if relevant(m)] or matched
 
         if not matched:
@@ -352,22 +376,30 @@ def verify(name, data):
         gv = sum(len(p) for p in cg["parts"])
         cv = sum(len(p) for p in cc["parts"])
         if gv != cv or len(cg["parts"]) != len(cc["parts"]):
-            print(f"    {rid}: parts gen={len(cg['parts'])}/{gv}v committed={len(cc['parts'])}/{cv}v")
+            print(
+                f"    {rid}: parts gen={len(cg['parts'])}/{gv}v committed={len(cc['parts'])}/{cv}v"
+            )
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--write", action="store_true",
-                    help="overwrite the committed JSON (default: verify only, write nothing)")
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+    ap.add_argument(
+        "--write",
+        action="store_true",
+        help="overwrite the committed JSON (default: verify only, write nothing)",
+    )
     args = ap.parse_args()
     print("Rivers:")
     rivers = build_rivers()
     matched_ids = {e["id"] for e in rivers}
     all_ids = {r["id"] for r in load_json("rivers.json")}
     fallback = sorted(all_ids - matched_ids)
-    print(f"\nMatched {len(matched_ids)}/{len(all_ids)} rivers; "
-          f"straight-line fallback for: {fallback or 'none'}")
+    print(
+        f"\nMatched {len(matched_ids)}/{len(all_ids)} rivers; "
+        f"straight-line fallback for: {fallback or 'none'}"
+    )
     if args.write:
         write_json("river-paths.json", rivers)
     else:

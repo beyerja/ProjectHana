@@ -2,7 +2,6 @@ import XCTest
 @testable import Hanahuac
 
 final class GeographyDataLoaderTests: XCTestCase {
-
     private var data: GeographyData!
 
     override func setUpWithError() throws {
@@ -10,23 +9,35 @@ final class GeographyDataLoaderTests: XCTestCase {
     }
 
     func testCountriesMinimumCount() {
-        XCTAssertGreaterThanOrEqual(data.countries.count, 195,
-            "Expected at least 195 countries, got \(data.countries.count)")
+        XCTAssertGreaterThanOrEqual(
+            data.countries.count,
+            195,
+            "Expected at least 195 countries, got \(data.countries.count)"
+        )
     }
 
     func testRiversMinimumCount() {
-        XCTAssertGreaterThanOrEqual(data.rivers.count, 30,
-            "Expected at least 30 rivers, got \(data.rivers.count)")
+        XCTAssertGreaterThanOrEqual(
+            data.rivers.count,
+            30,
+            "Expected at least 30 rivers, got \(data.rivers.count)"
+        )
     }
 
     func testMountainsMinimumCount() {
-        XCTAssertGreaterThanOrEqual(data.mountains.count, 20,
-            "Expected at least 20 mountain ranges, got \(data.mountains.count)")
+        XCTAssertGreaterThanOrEqual(
+            data.mountains.count,
+            20,
+            "Expected at least 20 mountain ranges, got \(data.mountains.count)"
+        )
     }
 
     func testSeasMinimumCount() {
-        XCTAssertGreaterThanOrEqual(data.seas.count, 15,
-            "Expected at least 15 seas/oceans, got \(data.seas.count)")
+        XCTAssertGreaterThanOrEqual(
+            data.seas.count,
+            15,
+            "Expected at least 15 seas/oceans, got \(data.seas.count)"
+        )
     }
 
     func testCountryFieldsAreNonEmpty() {
@@ -70,8 +81,10 @@ final class GeographyDataLoaderTests: XCTestCase {
     func testContinentsAreValid() {
         let valid = Set(["Africa", "Asia", "Europe", "North America", "Oceania", "South America", "Antarctica"])
         for country in data.countries {
-            XCTAssertTrue(valid.contains(country.continent),
-                "\(country.name) has unexpected continent: \(country.continent)")
+            XCTAssertTrue(
+                valid.contains(country.continent),
+                "\(country.name) has unexpected continent: \(country.continent)"
+            )
         }
     }
 

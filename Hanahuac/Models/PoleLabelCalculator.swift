@@ -11,7 +11,6 @@ import CoreLocation
 /// Grid size: 40×40 cells is sufficient for all country polygons in this app (max ~370
 /// vertices for Russia) and runs in well under 1 ms per polygon.
 enum PoleLabelCalculator {
-
     // MARK: - Public API
 
     /// Returns the pole of inaccessibility for `ring`, or `nil` if the ring has fewer
@@ -31,8 +30,8 @@ enum PoleLabelCalculator {
         var bestDistanceSq: Double = -1
         var bestCoord: CLLocationCoordinate2D?
 
-        for i in 0..<gridSize {
-            for j in 0..<gridSize {
+        for i in 0 ..< gridSize {
+            for j in 0 ..< gridSize {
                 let lon = minLon + lonSpan * (Double(i) + 0.5) / Double(gridSize)
                 let lat = minLat + latSpan * (Double(j) + 0.5) / Double(gridSize)
 
@@ -56,11 +55,11 @@ enum PoleLabelCalculator {
         let n = ring.count
         var inside = false
         var j = n - 1
-        for i in 0..<n {
+        for i in 0 ..< n {
             let xi = ring[i].longitude, yi = ring[i].latitude
             let xj = ring[j].longitude, yj = ring[j].latitude
-            if ((yi > lat) != (yj > lat)) &&
-               (lon < (xj - xi) * (lat - yi) / (yj - yi) + xi) {
+            if (yi > lat) != (yj > lat),
+               lon < (xj - xi) * (lat - yi) / (yj - yi) + xi {
                 inside.toggle()
             }
             j = i
@@ -74,8 +73,8 @@ enum PoleLabelCalculator {
     ) -> Double {
         var minDist = Double.infinity
         let n = ring.count
-        for i in 0..<n {
-            let ax = ring[i].longitude,      ay = ring[i].latitude
+        for i in 0 ..< n {
+            let ax = ring[i].longitude, ay = ring[i].latitude
             let bx = ring[(i + 1) % n].longitude, by = ring[(i + 1) % n].latitude
             let dx = bx - ax, dy = by - ay
             let distSq: Double

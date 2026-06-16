@@ -14,10 +14,10 @@ extension AnswerState {
         switch self {
         case .unanswered:
             return .clear
-        case .correct(let id):
+        case let .correct(id):
             return featureID == id ? Theme.Palette.correct.opacity(0.35) : .clear
-        case .incorrect(let tappedID, let correctID):
-            if featureID == tappedID  { return Theme.Palette.wrong.opacity(0.35) }
+        case let .incorrect(tappedID, correctID):
+            if featureID == tappedID { return Theme.Palette.wrong.opacity(0.35) }
             if featureID == correctID { return Theme.Palette.correct.opacity(0.35) }
             return .clear
         }
@@ -34,17 +34,24 @@ final class MapQuizSession {
     private(set) var answerState: AnswerState = .unanswered
     private(set) var isFinished = false
     private(set) var annotationFeatures: [any MappableFeature] = []
-    private(set) var mapRegion: MKCoordinateRegion = MKCoordinateRegion()
+    private(set) var mapRegion: MKCoordinateRegion = .init()
 
     var currentCard: ReviewCard? {
         cards.indices.contains(currentIndex) ? cards[currentIndex] : nil
     }
+
     var currentFeature: (any MappableFeature)? {
         guard let card = currentCard else { return nil }
         return allFeatures.first { $0.id == card.factID }
     }
-    var reviewedCount: Int { min(currentIndex, cards.count) }
-    var nextDueDate: Date? { cards.compactMap { $0.nextReviewDate }.min() }
+
+    var reviewedCount: Int {
+        min(currentIndex, cards.count)
+    }
+
+    var nextDueDate: Date? {
+        cards.compactMap(\.nextReviewDate).min()
+    }
 
     init(cards: [ReviewCard], allFeatures: [any MappableFeature]) {
         self.cards = cards.shuffled()
@@ -64,16 +71,15 @@ final class MapQuizSession {
 
     func advance() {
         guard let card = currentCard else { return }
-        let quality: Int
-        switch answerState {
-        case .correct:   quality = 4
-        default:         quality = 1
+        let quality = switch answerState {
+        case .correct: 4
+        default: 1
         }
         let result = SM2Scheduler.schedule(card: card, quality: quality)
         SM2Scheduler.apply(result, to: card, quality: quality)
 
         // Dual penalty: also penalise the incorrectly-tapped card if it's in the deck.
-        if case .incorrect(let tappedID, _) = answerState, tappedID != card.factID {
+        if case let .incorrect(tappedID, _) = answerState, tappedID != card.factID {
             if let tappedCard = cards.first(where: { $0.factID == tappedID }) {
                 let tappedResult = SM2Scheduler.schedule(card: tappedCard, quality: 1)
                 SM2Scheduler.apply(tappedResult, to: tappedCard, quality: 1)

@@ -1,5 +1,5 @@
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct MapQuizView: View {
     @Environment(CardStore.self) private var cardStore
@@ -136,8 +136,9 @@ struct MapQuizView: View {
             switch session.answerState {
             case .correct:
                 return (L10n["map_quiz.feedback.correct"], Theme.Palette.correct)
-            case .incorrect(let tappedID, _):
-                let name = session.allFeatures.first { $0.id == tappedID }?.localizedName(for: languageManager.current) ?? tappedID
+            case let .incorrect(tappedID, _):
+                let name = session.allFeatures.first { $0.id == tappedID }?
+                    .localizedName(for: languageManager.current) ?? tappedID
                 return ("\(L10n["map_quiz.feedback.incorrect_prefix"]) \(name)", Theme.Palette.wrong)
             case .unanswered:
                 return ("", .clear)
@@ -169,7 +170,9 @@ struct MapQuizView: View {
         let cat = category ?? .country
         let due = cardStore.dueCards(for: cat)
             .filter { cardStore.allCards.map(\.factID).contains($0.factID) }
-        guard !due.isEmpty else { session = MapQuizSession(cards: [], allFeatures: []); return }
+        guard !due.isEmpty else { session = MapQuizSession(cards: [], allFeatures: [])
+            return
+        }
         session = MapQuizSession(cards: due, allFeatures: MapFeatureCatalog.features(for: cat))
         if let s = session { position = .region(s.mapRegion) }
     }

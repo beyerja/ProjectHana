@@ -21,14 +21,14 @@ enum CardCategory: String, Codable, Hashable {
 final class ReviewCard {
     var id: UUID = UUID()
     var factID: String = ""
-    var category: String = CardCategory.country.rawValue  // CardCategory rawValue — SwiftData needs primitive types
+    var category: String = CardCategory.country.rawValue // CardCategory rawValue — SwiftData needs primitive types
     var repetitionCount: Int = 0
     var easeFactor: Double = 2.5
     var intervalDays: Int = 0
     var nextReviewDate: Date = Date.now
     var lastQualityScore: Int?
-    var consecutiveCorrect: Int = 0   // learning-phase streak; resets to 0 on wrong answer
-    var hasGraduated: Bool = false    // true once the card enters the SM-2 schedule
+    var consecutiveCorrect: Int = 0 // learning-phase streak; resets to 0 on wrong answer
+    var hasGraduated: Bool = false // true once the card enters the SM-2 schedule
 
     init(
         id: UUID = UUID(),

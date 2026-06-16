@@ -6,9 +6,8 @@ import SwiftUI
 /// retune. The palette nods to Hanahuac's roots: warm Mexican (Nahuatl) terracotta/sand tones
 /// paired with soft, calm pastels.
 enum Theme {
-
     enum Palette {
-        // Canvas & surfaces
+        /// Canvas & surfaces
         /// Warm cream app background.
         static let canvas = Color(hex: 0xFBF7F0)
         /// Card / elevated surface.
@@ -19,11 +18,11 @@ enum Theme {
         static let hairline = Color(hex: 0xE7DDCD)
 
         // Text
-        static let textPrimary = Color(hex: 0x3A332E)   // warm near-black
+        static let textPrimary = Color(hex: 0x3A332E) // warm near-black
         static let textSecondary = Color(hex: 0x8A8077) // warm gray
         static let textOnAccent = Color(hex: 0xFFFFFF)
 
-        // Brand accents
+        /// Brand accents
         /// Soft terracotta/coral — drives AccentColor.
         static let accent = Color(hex: 0xE0917F)
         /// Deeper terracotta for text/icons on light surfaces (accessible).
@@ -32,17 +31,17 @@ enum Theme {
         static let sage = Color(hex: 0x7FB59C)
 
         // Category pastels (medium-saturation so they read as both fills and small text)
-        static let country = Color(hex: 0x7E97D6)   // periwinkle
-        static let river = Color(hex: 0x53B7CE)     // aqua
-        static let mountain = Color(hex: 0xB98A6E)  // warm clay
-        static let sea = Color(hex: 0x4FB6A4)       // teal
+        static let country = Color(hex: 0x7E97D6) // periwinkle
+        static let river = Color(hex: 0x53B7CE) // aqua
+        static let mountain = Color(hex: 0xB98A6E) // warm clay
+        static let sea = Color(hex: 0x4FB6A4) // teal
 
         // Quiz / pile states
         static let correct = Color(hex: 0x6BAE78)
         static let wrong = Color(hex: 0xD9837A)
-        static let new = Color(hex: 0x7FB59C)       // "new" pile (sage)
-        static let pending = Color(hex: 0x7E9CD9)   // "due/pending" pile (soft blue)
-        static let neutral = Color(hex: 0xB7AEA2)   // disabled / neutral
+        static let new = Color(hex: 0x7FB59C) // "new" pile (sage)
+        static let pending = Color(hex: 0x7E9CD9) // "due/pending" pile (soft blue)
+        static let neutral = Color(hex: 0xB7AEA2) // disabled / neutral
     }
 
     enum Metrics {

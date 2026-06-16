@@ -31,11 +31,26 @@ final class UserDefaultsKeyValueStore: KeyValueStore {
         self.defaults = defaults
     }
 
-    func stringArray(forKey key: String) -> [String]? { defaults.stringArray(forKey: key) }
-    func setStringArray(_ value: [String], forKey key: String) { defaults.set(value, forKey: key) }
-    func string(forKey key: String) -> String? { defaults.string(forKey: key) }
-    func setString(_ value: String, forKey key: String) { defaults.set(value, forKey: key) }
-    func removeObject(forKey key: String) { defaults.removeObject(forKey: key) }
+    func stringArray(forKey key: String) -> [String]? {
+        defaults.stringArray(forKey: key)
+    }
+
+    func setStringArray(_ value: [String], forKey key: String) {
+        defaults.set(value, forKey: key)
+    }
+
+    func string(forKey key: String) -> String? {
+        defaults.string(forKey: key)
+    }
+
+    func setString(_ value: String, forKey key: String) {
+        defaults.set(value, forKey: key)
+    }
+
+    func removeObject(forKey key: String) {
+        defaults.removeObject(forKey: key)
+    }
+
     func synchronize() { /* UserDefaults persists automatically. */ }
 }
 
@@ -54,13 +69,26 @@ final class UbiquitousKeyValueStore: KeyValueStore {
     func stringArray(forKey key: String) -> [String]? {
         store.array(forKey: key) as? [String]
     }
+
     func setStringArray(_ value: [String], forKey key: String) {
         store.set(value, forKey: key)
     }
-    func string(forKey key: String) -> String? { store.string(forKey: key) }
-    func setString(_ value: String, forKey key: String) { store.set(value, forKey: key) }
-    func removeObject(forKey key: String) { store.removeObject(forKey: key) }
-    func synchronize() { store.synchronize() }
+
+    func string(forKey key: String) -> String? {
+        store.string(forKey: key)
+    }
+
+    func setString(_ value: String, forKey key: String) {
+        store.set(value, forKey: key)
+    }
+
+    func removeObject(forKey key: String) {
+        store.removeObject(forKey: key)
+    }
+
+    func synchronize() {
+        store.synchronize()
+    }
 }
 
 // MARK: - In-memory backend (tests)
@@ -70,10 +98,25 @@ final class UbiquitousKeyValueStore: KeyValueStore {
 final class InMemoryKeyValueStore: KeyValueStore {
     private(set) var storage: [String: Any] = [:]
 
-    func stringArray(forKey key: String) -> [String]? { storage[key] as? [String] }
-    func setStringArray(_ value: [String], forKey key: String) { storage[key] = value }
-    func string(forKey key: String) -> String? { storage[key] as? String }
-    func setString(_ value: String, forKey key: String) { storage[key] = value }
-    func removeObject(forKey key: String) { storage.removeValue(forKey: key) }
+    func stringArray(forKey key: String) -> [String]? {
+        storage[key] as? [String]
+    }
+
+    func setStringArray(_ value: [String], forKey key: String) {
+        storage[key] = value
+    }
+
+    func string(forKey key: String) -> String? {
+        storage[key] as? String
+    }
+
+    func setString(_ value: String, forKey key: String) {
+        storage[key] = value
+    }
+
+    func removeObject(forKey key: String) {
+        storage.removeValue(forKey: key)
+    }
+
     func synchronize() { /* no-op */ }
 }

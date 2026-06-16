@@ -16,19 +16,19 @@ struct Country: Codable, Identifiable, Hashable {
 
     func localizedName(for locale: AppLocale) -> String {
         switch locale {
-        case .fr:   return nameFr ?? name
-        case .de:   return nameDe ?? name
-        case .esMX: return nameEs ?? name
-        case .en:   return name
+        case .fr: nameFr ?? name
+        case .de: nameDe ?? name
+        case .esMX: nameEs ?? name
+        case .en: name
         }
     }
 
     func localizedCapital(for locale: AppLocale) -> String {
         switch locale {
-        case .fr:   return capitalFr ?? capital
-        case .de:   return capitalDe ?? capital
-        case .esMX: return capitalEs ?? capital
-        case .en:   return capital
+        case .fr: capitalFr ?? capital
+        case .de: capitalDe ?? capital
+        case .esMX: capitalEs ?? capital
+        case .en: capital
         }
     }
 }

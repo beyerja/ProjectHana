@@ -2,7 +2,6 @@ import XCTest
 @testable import Hanahuac
 
 final class SyncStatusPresentationTests: XCTestCase {
-
     func testLabelKeyForEachStatus() {
         XCTAssertEqual(SyncStatusPresentation.labelKey(for: .off), "settings.sync.status.off")
         XCTAssertEqual(SyncStatusPresentation.labelKey(for: .unavailable), "settings.sync.status.unavailable")

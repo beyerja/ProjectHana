@@ -1,10 +1,9 @@
-import XCTest
 import SwiftData
+import XCTest
 @testable import Hanahuac
 
 @MainActor
 final class SyncCoordinatorTests: XCTestCase {
-
     private func freshDefaults() -> UserDefaults {
         UserDefaults(suiteName: "test.sync.\(UUID().uuidString)")!
     }
@@ -70,7 +69,7 @@ final class SyncCoordinatorTests: XCTestCase {
 
     // MARK: - Container factory
 
-    func testMakeModelContainerProducesUsableLocalContainer() throws {
+    func testMakeModelContainerProducesUsableLocalContainer() {
         let container = SyncCoordinator.makeModelContainer()
         let store = CardStore(modelContext: ModelContext(container))
         store.upsert(ReviewCard(factID: "smoke-test", category: .country))
