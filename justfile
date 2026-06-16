@@ -4,6 +4,25 @@ set shell := ["bash", "-c"]
 export DEVELOPER_DIR := "/Applications/Xcode.app/Contents/Developer"
 export PATH := env_var("HOME") + "/.nix-profile/bin:" + env_var("PATH")
 
+# --- Per-worktree build isolation -------------------------------------------------
+# `wt` is the worktree/feature-slug id. Parallel feature workflows (each in its own git
+# worktree) override it so their DerivedData, /tmp build output, and simulator destination
+# never collide. It defaults from the orchestrator's HANA_FEATURE_SLUG env var, falling back
+# to empty — and an empty `wt` reproduces the original single-checkout paths byte-for-byte.
+# Override per invocation with `just wt=my-feature test`, or rely on the exported env var.
+wt := env_var_or_default("HANA_FEATURE_SLUG", "")
+
+# Path suffix: "-<wt>" when isolated, "" otherwise (keeps legacy /tmp paths in a plain checkout).
+_sfx := if wt == "" { "" } else { "-" + wt }
+
+# Per-worktree DerivedData + /tmp build output dirs (suffixed only when `wt` is set).
+mac_dd := "/tmp/Hanahuac-mac-build" + _sfx
+sim_dd := "/tmp/Hanahuac-sim-build" + _sfx
+
+# Simulator destination name. Defaults to the shared "iPhone 17"; set HANA_SIM_NAME (or `just
+# sim="iPhone 17 (feat)" …`) to a per-worktree clone's name to avoid simulator contention.
+sim := env_var_or_default("HANA_SIM_NAME", "iPhone 17")
+
 # Regenerate Hanahuac.xcodeproj from project.yml (xcodegen comes from the flake dev shell via direnv)
 generate:
     direnv exec . xcodegen generate
@@ -12,12 +31,13 @@ generate:
 icon:
     xcrun swift scripts/make-icon.swift
 
-# Run the full test suite on the iPhone 17 simulator
+# Run the full test suite on the simulator (per-worktree DerivedData + destination when `wt` is set)
 test:
     xcodebuild test \
         -project Hanahuac.xcodeproj \
         -scheme Hanahuac \
-        -destination 'platform=iOS Simulator,name=iPhone 17' \
+        -destination 'platform=iOS Simulator,name={{sim}}' \
+        -derivedDataPath '{{sim_dd}}' \
         2>&1 | grep -E "TEST SUCCEEDED|TEST FAILED|error:|Test Case.*failed" \
              | grep -v "CoreData|simctl|appintents"
 
@@ -27,7 +47,7 @@ build-mac:
         -project Hanahuac.xcodeproj \
         -scheme Hanahuac \
         -destination 'platform=macOS,variant=Mac Catalyst' \
-        -derivedDataPath /tmp/Hanahuac-mac-build \
+        -derivedDataPath '{{mac_dd}}' \
         CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
         2>&1 | tail -3
 
@@ -35,7 +55,7 @@ build-mac:
 install: build-mac
     #!/usr/bin/env bash
     set -euo pipefail
-    APP=$(find /tmp/Hanahuac-mac-build -name "Hanahuac.app" -maxdepth 6 | head -1)
+    APP=$(find '{{mac_dd}}' -name "Hanahuac.app" -maxdepth 6 | head -1)
     pkill -x Hanahuac 2>/dev/null || true
     sleep 1
     rm -rf /Applications/Hanahuac.app
@@ -80,30 +100,31 @@ telemetry:
 telemetry-history:
     python3 scripts/telemetry-summary.py --history
 
-# Build the app for the iOS Simulator (iPhone 17); prints the .app bundle path on success
+# Build the app for the iOS Simulator; prints the .app bundle path on success
+# (per-worktree DerivedData + destination when `wt`/HANA_SIM_NAME are set)
 build-sim:
     #!/usr/bin/env bash
     set -euo pipefail
     xcodebuild build \
         -project Hanahuac.xcodeproj \
         -scheme Hanahuac \
-        -destination 'platform=iOS Simulator,name=iPhone 17' \
-        -derivedDataPath /tmp/Hanahuac-sim-build \
+        -destination 'platform=iOS Simulator,name={{sim}}' \
+        -derivedDataPath '{{sim_dd}}' \
         2>&1 | tail -5
-    APP=$(find /tmp/Hanahuac-sim-build -name "Hanahuac.app" -maxdepth 10 | head -1)
+    APP=$(find '{{sim_dd}}' -name "Hanahuac.app" -maxdepth 10 | head -1)
     echo "Built: $APP"
 
 # Install the app to the booted simulator (depends on build-sim)
 install-sim: build-sim
     #!/usr/bin/env bash
     set -euo pipefail
-    APP=$(find /tmp/Hanahuac-sim-build -name "Hanahuac.app" -maxdepth 10 | head -1)
+    APP=$(find '{{sim_dd}}' -name "Hanahuac.app" -maxdepth 10 | head -1)
     xcrun simctl install booted "$APP"
     echo "Installed: $APP"
 
-# Boot the iPhone 17 simulator (no-op if already booted)
+# Boot the simulator named by `sim` (default iPhone 17; no-op if already booted)
 boot-sim:
-    xcrun simctl boot "iPhone 17" 2>/dev/null || true
+    xcrun simctl boot "{{sim}}" 2>/dev/null || true
 
 # Launch the installed app on the booted simulator
 launch-sim:
