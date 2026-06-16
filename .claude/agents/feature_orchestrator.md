@@ -22,6 +22,10 @@ Run the following steps in order, spawning a dedicated sub-agent for each:
    - STATUS: DONE → continue
 8. **Evaluate** — spawn `evaluate-workflow` agent
 9. **Archive** — spawn `archive-workflow` agent
+10. **Commit closing artifacts** — commit and push the archive move **and** any agent-file edits the
+    `evaluate-workflow` step applied, via a `chore/…` branch + PR (squash-merge once CI is green).
+    Then verify `git status --porcelain .workflow` is clean — nothing in `.workflow/` (outside the
+    gitignored telemetry sink) may be left as an uncommitted delta.
 
 At each step, note the outcome in `.workflow/log.md`. If a step sends the workflow back, record the reason.
 
