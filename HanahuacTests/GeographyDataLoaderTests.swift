@@ -118,4 +118,46 @@ final class GeographyDataLoaderTests: XCTestCase {
         XCTAssertTrue(ids.contains("pacific"), "Pacific Ocean missing")
         XCTAssertTrue(ids.contains("mediterranean"), "Mediterranean Sea missing")
     }
+
+    // MARK: - Korean / Nahuatl content (story 003)
+
+    /// Korean country names and capitals decode from the bundled JSON and surface via localizedName.
+    func testKoreanCountryContentDecoded() throws {
+        let mexico = try XCTUnwrap(data.countries.first { $0.id == "MX" })
+        XCTAssertEqual(mexico.localizedName(for: .ko), "멕시코")
+        XCTAssertEqual(mexico.localizedCapital(for: .ko), "멕시코시티")
+
+        let japan = try XCTUnwrap(data.countries.first { $0.id == "JP" })
+        XCTAssertEqual(japan.localizedName(for: .ko), "일본")
+    }
+
+    /// Nahuatl uses its own value where present and otherwise falls back to Mexican Spanish (es-MX),
+    /// never English, for the bundled data.
+    func testNahuatlCountryFallsBackThroughSpanish() throws {
+        let mexico = try XCTUnwrap(data.countries.first { $0.id == "MX" })
+        XCTAssertEqual(mexico.localizedName(for: .nah), "Mēxihco", "Mexico has a Nahuatl name")
+
+        // A country without a Nahuatl name should fall back to its Mexican Spanish name.
+        let germany = try XCTUnwrap(data.countries.first { $0.id == "DE" })
+        XCTAssertNil(germany.nameNah)
+        XCTAssertEqual(germany.localizedName(for: .nah), germany.nameEs)
+        XCTAssertNotEqual(germany.localizedName(for: .nah), germany.name, "Should not fall through to English")
+    }
+
+    /// Korean coverage is complete for geographic content (every entry has a Korean name).
+    func testKoreanCoverageComplete() {
+        for country in data.countries {
+            XCTAssertNotNil(country.nameKo, "Country \(country.id) missing name_ko")
+            XCTAssertNotNil(country.capitalKo, "Country \(country.id) missing capital_ko")
+        }
+        for river in data.rivers {
+            XCTAssertNotNil(river.nameKo, "River \(river.id) missing name_ko")
+        }
+        for sea in data.seas {
+            XCTAssertNotNil(sea.nameKo, "Sea \(sea.id) missing name_ko")
+        }
+        for mountain in data.mountains {
+            XCTAssertNotNil(mountain.nameKo, "Mountain \(mountain.id) missing name_ko")
+        }
+    }
 }
