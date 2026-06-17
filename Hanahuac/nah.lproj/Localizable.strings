@@ -1,0 +1,10 @@
+/* Nahuatl (Nāhuatl) — generic
+ *
+ * Partial translation by design. Any key omitted here falls back to Mexican Spanish (es-MX),
+ * then English, via L10n.string(_:locale:). Additional coverage is added in story 002; terms with
+ * no confident Nahuatl rendering are intentionally left to fall back to Mexican Spanish.
+ */
+
+/* SettingsView / LanguagePickerView */
+"settings.language" = "Tlahtōlli";
+"settings.language.picker_title" = "Tlahtōlli īpan tequitiliztli";

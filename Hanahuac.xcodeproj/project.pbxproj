@@ -122,6 +122,7 @@
 		2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacApp.swift; sourceTree = "<group>"; };
 		2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningTests.swift; sourceTree = "<group>"; };
 		33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningSession.swift; sourceTree = "<group>"; };
+		3689189086A893C067FA6186 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C79D6B37134580FEAE9AD70 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		3EDD77E9938F36A3D49A28DB /* StatsChartsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsChartsSection.swift; sourceTree = "<group>"; };
 		41380920DBE818A192AD116A /* HanahuacTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HanahuacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +132,7 @@
 		4A9B4E84299EBAF69A5F57C4 /* KeyValueStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStore.swift; sourceTree = "<group>"; };
 		4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapitalQuizView.swift; sourceTree = "<group>"; };
 		538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStatsStoreTests.swift; sourceTree = "<group>"; };
+		5E4F1B169628C363C05DB0D5 /* nah */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nah; path = nah.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5F092FAD49DC2860FC69F0E8 /* MultipleChoiceSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceSession.swift; sourceTree = "<group>"; };
 		633F2484D956811A774A989B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		67F40EAE285B31D3FD21213A /* MapFeatureRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureRendering.swift; sourceTree = "<group>"; };
@@ -499,6 +501,8 @@
 				en,
 				"es-MX",
 				fr,
+				ko,
+				nah,
 			);
 			mainGroup = FC85180E538FE13CB2C2E1C4;
 			minimizedProjectReferenceProxies = 1;
@@ -642,6 +646,8 @@
 				9E7710CFEA52939B5CC38E2E /* en */,
 				879A10791B45594CB569EDAA /* es-MX */,
 				633F2484D956811A774A989B /* fr */,
+				3689189086A893C067FA6186 /* ko */,
+				5E4F1B169628C363C05DB0D5 /* nah */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

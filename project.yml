@@ -25,6 +25,8 @@ targets:
       - path: Hanahuac/fr.lproj
       - path: Hanahuac/de.lproj
       - path: Hanahuac/es-MX.lproj
+      - path: Hanahuac/ko.lproj
+      - path: Hanahuac/nah.lproj
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.hanahuac.app
