@@ -40,6 +40,10 @@ gate fails the build on these recurring violations — get them right while writ
 - No trailing comma after the last element of a collection literal (`trailing_comma`).
 - Use `min()`/`max()` / `min(by:)`/`max(by:)`, never `sorted().first`/`.last` (`sorted_first_last`).
 - No `x.map { … } ?? nil` — use `flatMap` (`redundant_nil_coalescing`).
+- Keep every line ≤120 chars (`line_length`) — break long `XCTAssert…(…, file:, line:)` calls and
+  long expressions across lines, or hoist sub-expressions to locals, while writing.
+- Tuples may have at most 2 members (`large_tuple`) — for a 3+ field return value (e.g. a
+  min/max lat/lon rect) declare a small named `struct`, never a 4-tuple.
 - In **tests**: never force-unwrap (`!`) — use `try XCTUnwrap(...)` and make the method `throws`;
   hoist `try` to the start of the expression, not inline (`hoistTry`); drop `throws` if nothing throws
   (`redundantThrows`); wrap loop bodies and single-line property bodies onto their own lines
