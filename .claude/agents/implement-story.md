@@ -55,6 +55,14 @@ When adding or removing fields on an `@Model` type:
 - After any schema change, grep all existing tests that construct the changed model type and verify they pass the new required fields. Tests that create model instances and omit new non-optional properties will produce compiler errors; tests that rely on old default values (e.g. `hasGraduated: false`) may silently produce wrong results — audit those explicitly.
 - If the story spec does not include a migration plan, use `ModelConfiguration(isStoredInMemoryOnly: true)` in tests so they never touch the on-disk store.
 
+**Adding a field to a plain `Codable` struct breaks its memberwise-init call sites**
+Adding a stored property to a `Codable struct` (e.g. the `Country`/`River`/`Sea`/`MountainRange` geo
+models) gives Swift's *synthesized* memberwise init a new required parameter, so every `Type(...)`
+call site — often spread across many test files — stops compiling at once. Instead of editing every
+call site, add an **explicit memberwise `init` that defaults the new field(s)** (e.g.
+`nameKo: String? = nil`); `Codable` still decodes the new key via `decodeIfPresent`. Faster and
+lower-risk than touching dozens of call sites.
+
 **Xcode project is generated — never hand-edit the pbxproj**
 The project is generated from `project.yml` by xcodegen. Source/resource files are enumerated
 from folder paths (`Hanahuac/`, `HanahuacTests/`), so after **adding or removing any file** run:
