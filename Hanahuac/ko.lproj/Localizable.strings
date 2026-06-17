@@ -1,9 +1,161 @@
 /* Korean (한국어)
  *
- * Partial translation. Any key omitted here falls back to Mexican Spanish (es-MX), then English,
- * via L10n.string(_:locale:). Full UI coverage is added in story 002.
+ * Any key omitted here falls back to Mexican Spanish (es-MX), then English, via
+ * L10n.string(_:locale:). Format specifiers (%d, %@) are preserved exactly from the source.
  */
 
+/* HomeView */
+"home.tagline" = "하나의 세계, 한 번에 하나의 퀴즈";
+"home.categories" = "분류";
+"home.category.countries" = "국가";
+"home.category.rivers" = "강";
+"home.category.mountains" = "산맥";
+"home.category.seas" = "바다";
+"home.view_progress" = "진행 상황 보기";
+"home.tile.new" = "신규";
+"home.tile.pending" = "대기 중";
+"home.tile.all_done" = "모두 완료";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "지도 탭 퀴즈";
+"quiz.mode.map_tap.desc" = "지도에서 올바른 국가를 탭하세요";
+"quiz.mode.type_capital.title" = "수도 입력";
+"quiz.mode.type_capital.desc" = "\"X의 수도는 무엇인가요?\"";
+"quiz.mode.name_country.title" = "국가 맞히기";
+"quiz.mode.name_country.desc" = "\"X를 수도로 하는 국가는 어디인가요?\"";
+"quiz.mode.multiple_choice.title" = "객관식";
+"quiz.mode.multiple_choice.desc" = "4개의 보기 중에서 수도를 고르세요";
+"quiz.cards_due.singular" = "장 복습 예정";
+"quiz.cards_due.plural" = "장 복습 예정";
+
 /* SettingsView / LanguagePickerView */
+"settings.title" = "설정";
+"settings.section.general" = "일반";
+"settings.section.icloud" = "iCloud";
 "settings.language" = "언어";
 "settings.language.picker_title" = "앱 언어";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud 동기화";
+"settings.sync.status_label" = "상태";
+"settings.sync.status.off" = "꺼짐";
+"settings.sync.status.unavailable" = "사용 불가";
+"settings.sync.status.on" = "켜짐";
+"settings.sync.status.syncing" = "동기화 중…";
+"settings.sync.status.idle" = "최신 상태";
+"settings.sync.status.error" = "오류";
+"settings.sync.unavailable_note" = "iCloud 동기화를 사용할 수 없습니다. iCloud에 로그인하고 동기화가 활성화된 빌드를 사용하세요.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "진행 상황 기능 준비 중";
+"progress.placeholder_desc" = "학습 통계가 여기에 표시됩니다.";
+"progress.title" = "진행 상황";
+
+/* StatsView */
+"stats.title" = "진행 상황";
+"stats.cards_reviewed" = "복습한 카드";
+"stats.due_today" = "오늘 예정";
+"stats.day_streak" = "연속 학습일";
+"stats.by_category" = "분류별";
+"stats.category_header" = "분류";
+"stats.mastery_tiers" = "숙달 단계";
+"stats.tier.not_started" = "시작 안 함";
+"stats.tier.reps_1_2" = "복습 1–2회";
+"stats.tier.reps_3_4" = "복습 3–4회";
+"stats.tier.mastered" = "복습 ≥ 5회, EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "시간에 따른 추세";
+"stats.charts.range.7d" = "7일";
+"stats.charts.range.30d" = "30일";
+"stats.charts.range.all" = "전체 기간";
+"stats.charts.category.all" = "전체";
+"stats.charts.mastery_growth" = "숙달도 성장";
+"stats.charts.reviews_completed" = "완료한 복습";
+"stats.charts.cards_graduated" = "수료한 카드";
+"stats.charts.streak_history" = "연속 기록";
+"stats.charts.series.review" = "복습";
+"stats.charts.series.mastered" = "숙달";
+"stats.charts.empty" = "학습을 계속하면 진행 추세가 여기에 표시됩니다.";
+
+/* LearningQuizView */
+"learn.title" = "학습";
+"learn.results" = "결과";
+"learn.exit" = "나가기";
+"learn.done" = "완료";
+"learn.no_cards_title" = "학습할 카드가 없습니다";
+"learn.no_cards_desc" = "모든 카드가 이미 복습 일정에 있습니다.";
+"learn.graduated_count" = "%d / %d 수료";
+"learn.active_count" = "%d개 진행 중";
+"learn.complete_title" = "학습 완료!";
+"learn.complete_desc" = "모든 카드가 복습 일정에 추가되었습니다.";
+"learn.cards_graduated" = "수료한 카드";
+
+/* MapQuizView */
+"map_quiz.title" = "지도 퀴즈";
+"map_quiz.exit" = "나가기";
+"map_quiz.tap_on_map" = "지도를 탭하세요";
+"map_quiz.nothing_due_title" = "예정된 항목 없음";
+"map_quiz.nothing_due_desc" = "지금 복습할 카드가 없습니다. 나중에 다시 오세요!";
+"map_quiz.feedback.correct" = "정답!";
+"map_quiz.feedback.incorrect_prefix" = "오답 — 정답은";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "결과";
+"quiz_summary.session_complete" = "세션 완료!";
+"quiz_summary.cards_reviewed" = "복습한 카드";
+"quiz_summary.correct" = "정답";
+"quiz_summary.next_review" = "다음 복습";
+"quiz_summary.done" = "완료";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "예정된 항목 없음";
+"mcq_quiz.nothing_due_desc" = "지금 복습할 카드가 없습니다.";
+"mcq_quiz.exit" = "나가기";
+"mcq_quiz.correct_count" = "%d개 정답";
+"mcq_quiz.nav.country" = "국가 퀴즈";
+"mcq_quiz.nav.river" = "강 퀴즈";
+"mcq_quiz.nav.mountain" = "산맥 퀴즈";
+"mcq_quiz.nav.sea" = "바다 퀴즈";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "예정된 항목 없음";
+"capital_quiz.nothing_due_desc" = "지금 복습할 카드가 없습니다.";
+"capital_quiz.exit" = "나가기";
+"capital_quiz.check" = "확인";
+"capital_quiz.next" = "다음 →";
+"capital_quiz.placeholder" = "답을 입력하세요…";
+"capital_quiz.feedback.correct" = "정답! ✓";
+"capital_quiz.feedback.wrong_prefix" = "정답은:";
+"capital_quiz.nav.capital" = "수도 퀴즈";
+"capital_quiz.nav.country" = "국가 퀴즈";
+"capital_quiz.correct_count" = "%d개 정답";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "퀴즈 준비 중";
+"quiz_placeholder.desc" = "%@ 퀴즈는 다음 업데이트에서 제공될 예정입니다.";
+"quiz_placeholder.all_categories" = "전체 분류";
+
+/* Continent labels */
+"continent.africa" = "아프리카";
+"continent.asia" = "아시아";
+"continent.europe" = "유럽";
+"continent.north_america" = "북아메리카";
+"continent.oceania" = "오세아니아";
+"continent.south_america" = "남아메리카";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "%@의 수도는 무엇인가요?";
+"quiz.prompt.continent_of" = "%@은(는) 어느 대륙에 있나요?";
+"quiz.prompt.country_of_capital" = "%@를 수도로 하는 국가는 어디인가요?";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "새 카드 학습";
+"learn.mode_picker.map.title" = "지도 퀴즈";
+"learn.mode_picker.map.desc" = "지도에서 올바른 국가를 탭하세요";
+"learn.mode_picker.mcq.title" = "객관식";
+"learn.mode_picker.mcq.desc" = "4개의 보기 중에서 답을 고르세요";
+
+/* Map learning quiz */
+"learn_map.title" = "지도 학습";
+"learn_map.streak" = "%d / 3";
