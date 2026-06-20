@@ -8,26 +8,14 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 WRAPPER="${SCRIPT_DIR}/gh-review-bot.sh"
 
+# Shared harness: TMPROOT (+cleanup trap), pass/fail counters (pass/fail), ok()/ko().
+# pass/fail/TMPROOT are assigned in the sourced lib (shellcheck cannot follow `source` without -x).
+# shellcheck source=scripts/test-lib.sh disable=SC1091
+source "${SCRIPT_DIR}/test-lib.sh"
+
 # A clearly-fake token value used ONLY inside an ephemeral stub written to a temp dir (never committed,
 # never a real credential). Generated at runtime so no token-shaped literal lives in this file.
 FAKE_TOKEN="stub-token-$$-$RANDOM"
-
-TMPROOT="$(mktemp -d)"
-trap 'rm -rf "${TMPROOT}"' EXIT
-
-pass=0
-fail=0
-note() {
-    printf '  %s\n' "$1"
-}
-ok() {
-    pass=$((pass + 1))
-    printf 'PASS: %s\n' "$1"
-}
-ko() {
-    fail=$((fail + 1))
-    printf 'FAIL: %s\n' "$1" >&2
-}
 
 # Build a PATH directory holding stubs. `security` succeeds and prints the fake token; the target
 # command `gh` records the args it received and confirms GH_TOKEN was set in its environment.
@@ -94,7 +82,7 @@ test_absent_item() {
 
 # --- (b) no token leak: token value absent from stdout/stderr and any file --------------------------
 test_no_leak() {
-    local dir out rc leakhit
+    local dir out rc
     dir="$(make_stub_path present)"
     set +e
     out="$(PATH="${dir}:${PATH}" "${WRAPPER}" gh api user 2>&1)"
@@ -108,17 +96,16 @@ test_no_leak() {
     fi
 
     # Scan every file written under the stub dir for the token value.
-    leakhit=0
+    local leakfile=""
     while IFS= read -r f; do
         if grep -qF "${FAKE_TOKEN}" "${f}" 2>/dev/null; then
-            leakhit=1
-            note "leak in ${f}"
+            leakfile="${f}"
         fi
     done < <(find "${dir}" -type f ! -name 'security' ! -name 'gh')
-    if [[ ${leakhit} -eq 0 ]]; then
+    if [[ -z "${leakfile}" ]]; then
         ok "no token written to any recorded file"
     else
-        ko "token value found in a written file"
+        ko "token value found in a written file: ${leakfile}"
     fi
 }
 
@@ -174,5 +161,7 @@ test_no_leak
 test_passthrough
 
 echo
+# shellcheck disable=SC2154  # pass/fail are set in the sourced test-lib.sh
 printf 'Result: %d passed, %d failed.\n' "${pass}" "${fail}"
+# shellcheck disable=SC2154
 [[ ${fail} -eq 0 ]]

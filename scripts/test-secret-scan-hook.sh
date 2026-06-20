@@ -12,19 +12,10 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 HOOK="${SCRIPT_DIR}/hooks/pre-commit-secret-scan.sh"
 
-TMPROOT="$(mktemp -d)"
-trap 'rm -rf "${TMPROOT}"' EXIT
-
-pass=0
-fail=0
-ok() {
-    pass=$((pass + 1))
-    printf 'PASS: %s\n' "$1"
-}
-ko() {
-    fail=$((fail + 1))
-    printf 'FAIL: %s\n' "$1" >&2
-}
+# Shared harness: TMPROOT (+cleanup trap), pass/fail counters (pass/fail), ok()/ko().
+# pass/fail/TMPROOT are assigned in the sourced lib (shellcheck cannot follow `source` without -x).
+# shellcheck source=scripts/test-lib.sh disable=SC1091
+source "${SCRIPT_DIR}/test-lib.sh"
 
 # Build planted token strings of the exact shapes the hook matches, assembled from pieces so this
 # source file contains no contiguous real-token-shaped literal.
@@ -105,11 +96,32 @@ test_allows_ordinary() {
     fi
 }
 
+# --- (c) rejects a line carrying BOTH a real-shaped token AND a FAKE sentinel ----------------------
+# Regression for the line-level allowlist bypass: a single line with a real-shaped ghp_ token next to
+# a ghp_FAKE… sentinel must still be REJECTED (the FAKE must not whitelist the whole line).
+test_rejects_mixed_real_and_fake() {
+    local dir rc
+    dir="$(new_repo)"
+    {
+        printf 'real = "%s"  # decoy ghp_FAKE0000000000000000000000000000000000\n' "$(classic_token)"
+    } > "${dir}/mixed.txt"
+    git -C "${dir}" add mixed.txt
+    rc="$(run_hook "${dir}")"
+    if [[ "${rc}" -ne 0 ]]; then
+        ok "rejects mixed real+FAKE line (exit ${rc})"
+    else
+        ko "mixed real+FAKE line should be rejected, exited 0 (line-level allowlist bypass)"
+    fi
+}
+
 echo "== test-secret-scan-hook.sh =="
 test_rejects_classic
 test_rejects_fine_grained
+test_rejects_mixed_real_and_fake
 test_allows_ordinary
 
 echo
+# shellcheck disable=SC2154  # pass/fail are set in the sourced test-lib.sh
 printf 'Result: %d passed, %d failed.\n' "${pass}" "${fail}"
+# shellcheck disable=SC2154
 [[ ${fail} -eq 0 ]]

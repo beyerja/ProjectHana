@@ -26,28 +26,22 @@ readonly ALLOWLIST_PAT='(ghp_FAKE|github_pat_FAKE)'
 
 # Limit the scan to the added lines of staged changes (the diff), so we only ever inspect content
 # that is actually about to be committed. `-U0` keeps context out; we look at '+' lines only.
-staged_diff="$(git diff --cached --no-color -U0 || true)"
+#
+# `^\+[^+]` keeps real added lines while dropping the `+++` file header (whose 2nd char is '+').
+added="$(git diff --cached --no-color -U0 | grep -E '^\+[^+]' || true)"
 
-# Collect the added lines (leading '+', but not the '+++' file header).
-added=""
-while IFS= read -r line; do
-    case "${line}" in
-        +++*) ;;
-        +*) added+="${line}"$'\n' ;;
-        *) ;;
-    esac
-done <<< "${staged_diff}"
-
-# Candidate matches = token-shaped lines that are NOT the allowlisted FAKE sentinel.
-candidates="$(printf '%s' "${added}" | grep -En "${COMBINED_PAT}" | grep -Ev "${ALLOWLIST_PAT}" || true)"
+# Extract candidate tokens PER-TOKEN (not per-line) with `grep -Eo`, then drop only the FAKE
+# sentinels. Filtering whole *lines* would let a line carrying BOTH a real-shaped token AND a
+# `ghp_FAKE…` sentinel slip through; matching individual tokens closes that bypass.
+candidates="$(printf '%s' "${added}" | grep -Eo "${COMBINED_PAT}" | grep -Ev "${ALLOWLIST_PAT}" || true)"
 
 if [[ -n "${candidates}" ]]; then
     {
         echo "COMMIT REJECTED: a GitHub token-like string was found in staged content."
         echo
         echo "Offending pattern(s) match: ghp_<36 chars> or github_pat_<…> (real PAT shapes)."
-        echo "Matched line(s):"
-        printf '%s\n' "${candidates}" | sed 's/^/  /'
+        echo "Matched token(s) (prefix shown, remainder redacted):"
+        printf '%s\n' "${candidates}" | sed -E 's/^((ghp_|github_pat_)[A-Za-z0-9]{0,4}).*/  \1…[redacted]/'
         echo
         echo "Remove the secret from the staged change before committing."
         echo "If this is a legitimate non-secret, unstage it or rewrite it so it does not look"
