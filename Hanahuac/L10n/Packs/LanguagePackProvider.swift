@@ -109,4 +109,14 @@ enum LanguagePackProviderHolder {
     static func requestDownloadIfNeeded(for locale: AppLocale) {
         (active as? ODRLanguagePackProvider)?.requestDownload(for: locale)
     }
+
+    /// The retry entry point used by the language picker (story 005): re-issue a previously failed
+    /// download for `locale`. Like ``requestDownloadIfNeeded(for:)`` this is a no-op for providers with
+    /// nothing to download (the bundled provider) and for base languages, so the picker's retry action
+    /// calls it without branching on the concrete provider type. Forwarded to
+    /// ``ODRLanguagePackProvider/retryDownload(for:)`` when the ODR provider is active.
+    @MainActor
+    static func retryDownload(for locale: AppLocale) {
+        (active as? ODRLanguagePackProvider)?.retryDownload(for: locale)
+    }
 }

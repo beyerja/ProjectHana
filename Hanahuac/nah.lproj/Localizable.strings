@@ -29,6 +29,10 @@
 "settings.section.general" = "Nōhuiyān";
 "settings.language" = "Tlahtōlli";
 "settings.language.picker_title" = "Tlahtōlli īpan tequitiliztli";
+"settings.language.downloading" = "Motēmōhtihcac…";
+"settings.language.download_failed" = "Ahmo huel motēmōh";
+"settings.language.retry" = "Oc ceppa";
+"settings.language.available" = "Ōncah";
 
 /* StatsView */
 "stats.tier.not_started" = "Ahmo pēhua";
