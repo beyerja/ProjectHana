@@ -92,19 +92,30 @@ final class TextQuizSession {
         }
     }
 
-    static func reverseCapitalQuestions(
+    /// Questions for the map-pin "Name that feature" quiz: each due card is paired
+    /// with its `MappableFeature` (any category). The feature itself is shown on the
+    /// map by the view, so the prompt is just the localized "Name this …"
+    /// instruction. The accepted answer is the feature's localized name, with the
+    /// English name accepted as a fallback for non-English locales — mirroring the
+    /// capital-quiz matching semantics so Korean/Nahuatl (resolved via the model's
+    /// ko→es→en / nah→es→en chain) and English answers both validate.
+    static func nameFeatureQuestions(
         cards: [ReviewCard],
-        countries: [Country],
+        features: [any MappableFeature],
         locale: AppLocale = .en
     ) -> [TextQuestion] {
-        cards.compactMap { card in
-            guard let c = countries.first(where: { $0.id == card.factID }) else { return nil }
-            let promptTemplate = L10n.string("quiz.prompt.country_of_capital", locale: locale)
-            let localizedName = c.localizedName(for: locale)
-            let fallback = locale == .en ? nil : c.name
+        let byID = Dictionary(features.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first })
+        return cards.compactMap { card in
+            guard let feature = byID[card.factID] else { return nil }
+            let localizedName = feature.localizedName(for: locale)
+            // `localizedName(for: .en)` returns the bundled English `name` for every
+            // category, so it is the English fallback without needing `name` on the
+            // protocol.
+            let englishName = feature.localizedName(for: .en)
+            let fallback = (locale == .en || englishName == localizedName) ? nil : englishName
             return TextQuestion(
                 card: card,
-                prompt: String(format: promptTemplate, c.localizedCapital(for: locale)),
+                prompt: L10n.string("name_feature.prompt", locale: locale),
                 correctAnswer: localizedName,
                 fallbackAnswer: fallback
             )

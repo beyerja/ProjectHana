@@ -19,8 +19,10 @@
 
 /* QuizModePickerView */
 "quiz.mode.map_tap.title" = "Tlatēmōliztli īpan tlahcuilōlmāpan";
-"quiz.mode.name_country.title" = "Xictōcāyōti in āltepētl";
+"quiz.mode.name_feature.title" = "Xictōcāyōti in tlālli";
 "quiz.mode.multiple_choice.title" = "Miyac tlapehpenaliztli";
+"name_feature.prompt" = "Xictōcāyōti inīn tlālli";
+"name_feature.nav" = "Xictōcāyōti in tlālli";
 
 /* SettingsView / LanguagePickerView */
 "settings.title" = "Tlachihchīhualiztli";

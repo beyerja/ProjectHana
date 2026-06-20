@@ -17,8 +17,8 @@
 "quiz.mode.map_tap.desc" = "Appuyez sur le bon pays sur la carte";
 "quiz.mode.type_capital.title" = "Taper la capitale";
 "quiz.mode.type_capital.desc" = "\"Quelle est la capitale de X ?\"";
-"quiz.mode.name_country.title" = "Nommer le pays";
-"quiz.mode.name_country.desc" = "\"Quel pays a X comme capitale ?\"";
+"quiz.mode.name_feature.title" = "Nommer le lieu";
+"quiz.mode.name_feature.desc" = "Tapez le nom du lieu marqué sur la carte";
 "quiz.mode.multiple_choice.title" = "Choix multiple";
 "quiz.mode.multiple_choice.desc" = "Choisissez la capitale parmi 4 options";
 "quiz.cards_due.singular" = "carte à réviser";
@@ -126,6 +126,12 @@
 "capital_quiz.nav.capital" = "Quiz Capitales";
 "capital_quiz.nav.country" = "Quiz Pays";
 "capital_quiz.correct_count" = "%d correct";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Nommez ce lieu";
+"name_feature.nav" = "Nommer le lieu";
+"name_feature.nothing_due_title" = "Rien à réviser";
+"name_feature.nothing_due_desc" = "Aucune carte à réviser pour le moment.";
 
 /* QuizPlaceholderView */
 "quiz_placeholder.coming_soon" = "Quiz bientôt disponible";
