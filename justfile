@@ -51,16 +51,24 @@ build-mac:
         CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
         2>&1 | tail -3
 
-# Build, install to /Applications, and launch (atomic)
+# Build, install to /Applications, and launch (atomic).
+# Snapshots the user's progress (SwiftData store + preferences) to a timestamped backup BEFORE
+# replacing the app bundle, and verifies the live store survived afterwards — so a local upgrade can
+# never be the cause of progress loss. Backups live under
+# ~/Library/Application Support/Hanahuac-backups/ (last 10 kept). See scripts/backup-progress.sh.
 install: build-mac
     #!/usr/bin/env bash
     set -euo pipefail
     APP=$(find '{{mac_dd}}' -name "Hanahuac.app" -maxdepth 6 | head -1)
+    echo "==> Backing up local progress before install…"
+    bash scripts/backup-progress.sh backup
     pkill -x Hanahuac 2>/dev/null || true
     sleep 1
     rm -rf /Applications/Hanahuac.app
     cp -R "$APP" /Applications/
     open /Applications/Hanahuac.app
+    echo "==> Verifying progress survived install…"
+    bash scripts/backup-progress.sh verify
 
 # List open PRs
 pr-list:
