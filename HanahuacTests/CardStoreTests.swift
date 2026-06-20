@@ -83,4 +83,37 @@ final class CardStoreTests: XCTestCase {
         let card = ReviewCard(factID: "de", category: .country)
         XCTAssertEqual(card.intervalDays, 0)
     }
+
+    // MARK: - Revision signal (Observation regression guard)
+
+    func testUpsertBumpsRevision() {
+        let before = store.revision
+        store.upsert(ReviewCard(factID: "rev-upsert", category: .country))
+        XCTAssertGreaterThan(store.revision, before)
+    }
+
+    func testResetAllBumpsRevision() {
+        store.seedIfNeeded(with: geoData)
+        let before = store.revision
+        store.resetAll()
+        XCTAssertGreaterThan(store.revision, before)
+    }
+
+    func testSeedIfNeededBumpsRevision() {
+        let before = store.revision
+        store.seedIfNeeded(with: geoData)
+        XCTAssertGreaterThan(store.revision, before)
+    }
+
+    func testDeduplicateBumpsRevisionWhenDuplicatesRemoved() throws {
+        // Insert two raw cards sharing a factID for the active language so deduplicate has work to do.
+        let lang = AppLocale.en.rawValue
+        container.mainContext.insert(ReviewCard(factID: "dup", language: lang, category: .country))
+        container.mainContext.insert(ReviewCard(factID: "dup", language: lang, category: .country))
+        try container.mainContext.save()
+        let before = store.revision
+        let removed = store.deduplicate()
+        XCTAssertEqual(removed, 1)
+        XCTAssertGreaterThan(store.revision, before)
+    }
 }

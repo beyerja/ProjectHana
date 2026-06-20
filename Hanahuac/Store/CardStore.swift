@@ -17,6 +17,19 @@ final class CardStore {
     /// The `AppLocale.rawValue` whose cards this store reads and writes.
     let language: String
 
+    /// Monotonic mutation counter bumped after every persisted change. The fetch accessors
+    /// (`allCards`/`newCards`/`dueCards`) run a fresh `FetchDescriptor` and read no `@Observable`
+    /// stored property, so SwiftUI Observation registers no dependency on them. A view that reads
+    /// `revision` in its `body` (even discarding the value) ties its invalidation to this counter and
+    /// therefore recomputes its fetch-derived numbers after each mutation.
+    private(set) var revision: Int = 0
+
+    /// Bumps `revision` after a persisted mutation. `&+=` (wrapping add) keeps a long-lived store from
+    /// trapping on overflow.
+    private func markChanged() {
+        revision &+= 1
+    }
+
     init(modelContext: ModelContext, language: String) {
         self.modelContext = modelContext
         self.language = language
@@ -62,7 +75,10 @@ final class CardStore {
             card.hasGraduated = true
             changed = true
         }
-        if changed { try? modelContext.save() }
+        if changed {
+            try? modelContext.save()
+            markChanged()
+        }
     }
 
     /// Inserts/updates a card in the active language. The card is stamped with this store's
@@ -73,6 +89,7 @@ final class CardStore {
         if card.language.isEmpty { card.language = language }
         modelContext.insert(card)
         try? modelContext.save()
+        markChanged()
     }
 
     /// Clears every card for the *active language only*; other languages' tracks are untouched.
@@ -82,6 +99,7 @@ final class CardStore {
             modelContext.delete(card)
         }
         try? modelContext.save()
+        markChanged()
     }
 
     /// Seeds the store so there is exactly one `ReviewCard` per catalog fact *for the active
@@ -115,6 +133,7 @@ final class CardStore {
         seed(data.seas.map(\.id), as: .sea)
 
         try? modelContext.save()
+        markChanged()
     }
 
     /// Collapses `ReviewCard`s that share a `factID` *within the active language* down to a single
@@ -144,7 +163,10 @@ final class CardStore {
                 removed += 1
             }
         }
-        if removed > 0 { try? modelContext.save() }
+        if removed > 0 {
+            try? modelContext.save()
+            markChanged()
+        }
         return removed
     }
 
