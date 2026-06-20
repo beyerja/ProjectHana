@@ -68,7 +68,41 @@
       "Bash(gh pr view *)",
       "Bash(gh pr list *)",
       "Bash(gh repo view *)",
-      "Bash(python3 scripts/telemetry-summary.py*)"
+      "Bash(python3 scripts/telemetry-summary.py*)",
+
+      "Bash(tail *)",
+      "Bash(head *)",
+      "Bash(wc *)",
+      "Bash(sort *)",
+      "Bash(cut *)",
+      "Bash(comm *)",
+      "Bash(uniq *)",
+      "Bash(nl *)",
+      "Bash(column *)",
+      "Bash(jq *)",
+      "Bash(sleep *)",
+      "Bash(grep -r *)",
+
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* status*)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* add *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* commit -F *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* push*)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* log*)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* diff*)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* show*)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* checkout *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* switch *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* merge *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* fetch*)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* branch*)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* check-ignore *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* rev-parse *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* ls-files*)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* restore *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* stash*)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* mv *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* rm *)",
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* worktree *)"
     ]
   }
 }
