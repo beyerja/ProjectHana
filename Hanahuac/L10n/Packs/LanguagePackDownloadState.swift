@@ -48,6 +48,13 @@ enum LanguagePackDownloadState: Equatable {
 @Observable
 @MainActor
 final class LanguagePackDownloadStore {
+    /// The single app-wide store. The production ``LanguagePackBootstrap`` wires the active
+    /// ``ODRLanguagePackProvider`` to this instance, and the language picker (story 005) observes the
+    /// same instance — so the picker renders the live download state the provider mutates. Mirrors the
+    /// ``LanguageManager/shared`` / `SyncCoordinator` singleton patterns. Tests that need isolation
+    /// construct their own store via ``init()`` rather than touching this one.
+    static let shared = LanguagePackDownloadStore()
+
     /// Per-language download state. A language with no entry is treated as ``LanguagePackDownloadState/notRequested``.
     private var statesByCode: [String: LanguagePackDownloadState] = [:]
 
