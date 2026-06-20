@@ -41,7 +41,10 @@ worktree. Do this before any other step:
 Then run the following steps in order (from the worktree, if one was created), spawning a dedicated
 sub-agent for each:
 
-1. **Clarify** — spawn `clarify-feature` agent
+1. **Clarify** — spawn `clarify-feature` agent. **Skip it** only when the request already supplies
+   unambiguous goal + acceptance criteria + root cause (e.g. a bug report that names the offending view
+   and the established fix pattern, or a follow-up to a merged PR). In that case write `.workflow/feature.md`
+   directly and record *why* clarification was unnecessary in `.workflow/log.md`. When in doubt, spawn it.
 2. **Break stories** — spawn `break-stories` agent
 3. **Assess health** — spawn `assess-project-health` agent (may prepend setup stories)
 4. **Story loop** — for each story in `.workflow/stories.md` where status ≠ done:
