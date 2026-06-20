@@ -21,6 +21,12 @@ enum CardCategory: String, Codable, Hashable {
 final class ReviewCard {
     var id: UUID = UUID()
     var factID: String = ""
+    /// The `AppLocale.rawValue` this card's progress belongs to. Progress is tracked independently
+    /// per language, so the canonical identity of a card is (`factID`, `language`). An empty string
+    /// is the legacy/unassigned sentinel for rows created before per-language progress existed; the
+    /// one-time upgrade migration stamps those with the active locale (see the migration story).
+    /// Defaulted (never `@Attribute(.unique)`) to stay CloudKit-sync-ready.
+    var language: String = ""
     var category: String = CardCategory.country.rawValue // CardCategory rawValue — SwiftData needs primitive types
     var repetitionCount: Int = 0
     var easeFactor: Double = 2.5
@@ -33,6 +39,7 @@ final class ReviewCard {
     init(
         id: UUID = UUID(),
         factID: String,
+        language: String = "",
         category: CardCategory,
         repetitionCount: Int = 0,
         easeFactor: Double = 2.5,
@@ -44,6 +51,7 @@ final class ReviewCard {
     ) {
         self.id = id
         self.factID = factID
+        self.language = language
         self.category = category.rawValue
         self.repetitionCount = repetitionCount
         self.easeFactor = easeFactor
