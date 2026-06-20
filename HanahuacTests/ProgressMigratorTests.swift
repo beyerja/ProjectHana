@@ -89,15 +89,22 @@ final class ProgressMigratorTests: XCTestCase {
         XCTAssertNil(d.object(forKey: StreakTracker.legacyStreakKey), "Legacy streak key removed")
     }
 
-    func testMigratesLegacyActiveSetToActiveLanguage() throws {
+    func testMigratesLegacyActiveSetToActiveLanguageMapQuizMode() throws {
         let d = try freshDefaults()
         d.set(["us", "fr"], forKey: legacyActiveSetKey(for: .country))
 
         ProgressMigrator.migrateIfNeeded(context: context, activeLanguage: AppLocale.en.rawValue, defaults: d)
 
-        let migrated = UserDefaultsActiveSetStore(language: AppLocale.en.rawValue, defaults: d)
-        XCTAssertEqual(migrated.load(for: .country), ["us", "fr"])
+        // The combined migration moves the legacy un-namespaced active set all the way to the active
+        // language's MAP QUIZ per-mode key: per-language step → activeSet.en.country, then per-mode
+        // step → activeSet.en.mapQuiz.country (all legacy progress was the Map Tab Quiz).
+        let mapQuiz = UserDefaultsActiveSetStore(language: AppLocale.en.rawValue, mode: .mapQuiz, defaults: d)
+        XCTAssertEqual(mapQuiz.load(for: .country), ["us", "fr"])
         XCTAssertNil(d.stringArray(forKey: legacyActiveSetKey(for: .country)), "Legacy active-set key removed")
+        XCTAssertNil(
+            d.stringArray(forKey: legacyPerLanguageActiveSetKey(language: AppLocale.en.rawValue, category: .country)),
+            "Intermediate per-language active-set key consumed by the per-mode step"
+        )
     }
 
     func testFreshInstallWithNoLegacyDataIsNoOp() throws {

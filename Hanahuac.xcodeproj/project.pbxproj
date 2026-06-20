@@ -69,6 +69,7 @@
 		91BF4999F0EC34D6D1AB3271 /* MasteryTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */; };
 		92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */; };
 		9318D2A472DA5228C7650718 /* ProgressBackupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8A92BEB2B9C38CBB63762A /* ProgressBackupTests.swift */; };
+		948C446E9022BC5B0C7AE3A3 /* PerQuizModeMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */; };
 		99ACF5363A414EA1682FCA0B /* RiverPathLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F68D9014B6C092CCEE7005 /* RiverPathLoader.swift */; };
 		9A38525C1DEC1C139BA921AA /* MapFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99FAC06BE37F9329DF0FC70 /* MapFeatureTests.swift */; };
 		9A89BF6774EB44FC0EEA5D6E /* SyncStatusPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45793BEFAE16929E78F73B0A /* SyncStatusPresentationTests.swift */; };
@@ -125,6 +126,7 @@
 
 /* Begin PBXFileReference section */
 		02EDCEF7B89BAFA774D2290F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerQuizModeMigratorTests.swift; sourceTree = "<group>"; };
 		108E300896C44A17DFF98AED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
 		132EB6CB2BB0B527A3C57527 /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 				8CFB005463FA4BC0CD7858BA /* PerLanguageProgressTests.swift */,
 				2FE505ACBF181DC9B41177E8 /* PerModeActiveSetTests.swift */,
 				72D6DF935BA62491E7164B00 /* PerModeSnapshotTests.swift */,
+				0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */,
 				5906EC2E701B118E0EF8A915 /* PerQuizModeProgressTests.swift */,
 				1B8A92BEB2B9C38CBB63762A /* ProgressBackupTests.swift */,
 				1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */,
@@ -681,6 +684,7 @@
 				B9F99F753E98BB7121C19491 /* PerLanguageProgressTests.swift in Sources */,
 				32B0E3EAA85EEB6CF349C877 /* PerModeActiveSetTests.swift in Sources */,
 				591EF8E1C86152E7D979EBAC /* PerModeSnapshotTests.swift in Sources */,
+				948C446E9022BC5B0C7AE3A3 /* PerQuizModeMigratorTests.swift in Sources */,
 				E09F28AA2229C8780C0723C6 /* PerQuizModeProgressTests.swift in Sources */,
 				9318D2A472DA5228C7650718 /* ProgressBackupTests.swift in Sources */,
 				0667BDF3A3506797F49130F7 /* ProgressMigratorTests.swift in Sources */,
