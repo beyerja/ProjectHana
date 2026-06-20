@@ -6,6 +6,9 @@ import Foundation
 /// The protocol declares only the minimal surface the ODR provider needs to trigger and observe an
 /// On-Demand-Resources download:
 /// - ``loadingProgress`` — the fractional (0...1) download progress to surface to the picker.
+/// - ``observeProgress(_:)`` — forward fractional progress updates as the download advances, so the
+///   provider can publish intermediate `downloading(progress:)` states (mirrors KVO on
+///   `NSBundleResourceRequest.progress.fractionCompleted`).
 /// - ``conditionallyBeginAccessingResources(completionHandler:)`` — an already-present check that
 ///   completes synchronously-ish with `true` when the tagged resources are already on device.
 /// - ``beginAccessingResources(completionHandler:)`` — kick off the download, completing with `nil`
@@ -19,6 +22,11 @@ protocol ResourceRequesting: AnyObject {
     /// The fractional download progress in `0...1`. Mirrors `NSBundleResourceRequest.progress`'s
     /// `fractionCompleted`, exposed directly so the ODR provider need not retain a `Progress` KVO.
     var loadingProgress: Double { get }
+
+    /// Start observing fractional download progress, invoking `handler` (off the main thread, as ODR's
+    /// KVO fires) with each `0...1` value as the download advances. The receiver retains the
+    /// observation for its lifetime; ``endAccessingResources()`` tears it down.
+    func observeProgress(_ handler: @escaping (Double) -> Void)
 
     /// Ask whether the tagged resources are already present on device WITHOUT triggering a download.
     /// Completes with `true` when present (the request is then already accessing them).
@@ -45,12 +53,24 @@ typealias ResourceRequestFactory = (_ tags: Set<String>) -> ResourceRequesting
 final class LiveResourceRequest: ResourceRequesting {
     private let request: NSBundleResourceRequest
 
+    /// Retained KVO observation of `progress.fractionCompleted`; released on ``endAccessingResources()``.
+    private var progressObservation: NSKeyValueObservation?
+
     init(tags: Set<String>, bundle: Bundle = .main) {
         request = NSBundleResourceRequest(tags: tags, bundle: bundle)
     }
 
     var loadingProgress: Double {
         request.progress.fractionCompleted
+    }
+
+    func observeProgress(_ handler: @escaping (Double) -> Void) {
+        progressObservation = request.progress.observe(
+            \.fractionCompleted,
+            options: [.initial, .new]
+        ) { progress, _ in
+            handler(progress.fractionCompleted)
+        }
     }
 
     func conditionallyBeginAccessingResources(completionHandler: @escaping (Bool) -> Void) {
@@ -62,6 +82,8 @@ final class LiveResourceRequest: ResourceRequesting {
     }
 
     func endAccessingResources() {
+        progressObservation?.invalidate()
+        progressObservation = nil
         request.endAccessingResources()
     }
 

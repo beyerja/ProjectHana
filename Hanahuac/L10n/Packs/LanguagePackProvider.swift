@@ -70,7 +70,7 @@ protocol LanguagePackProvider {
 /// completion handler, while synchronous, non-isolated resolution call sites (`L10n.string`, geo
 /// `localizedName`/`localizedCapital`) read `active` from any thread. To keep those reads race-free
 /// without forcing the whole synchronous resolution surface onto `@MainActor`, the backing storage is
-/// guarded by an `os_unfair_lock`: every get/set is mutually exclusive. The accessor type stays
+/// guarded by an `NSLock`: every get/set is mutually exclusive. The accessor type stays
 /// `LanguagePackProvider` so no call site changes beyond going through the computed property.
 enum LanguagePackProviderHolder {
     /// The lock guarding ``backingProvider``. Cheap, non-reentrant; only ever held for the duration of

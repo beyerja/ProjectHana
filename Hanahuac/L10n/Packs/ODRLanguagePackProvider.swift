@@ -53,6 +53,10 @@ final class ODRLanguagePackProvider: LanguagePackProvider {
     /// Language codes with an in-flight request, to coalesce duplicate `requestDownload` calls.
     private var inFlightCodes: Set<String> = []
 
+    /// Set once ``release()`` tears the provider down, so a late completion from an already-released
+    /// request cannot repopulate ``resolvedByCode`` / ``inFlightCodes`` after teardown.
+    private var isReleased = false
+
     /// - Parameters:
     ///   - bundled: the wrapped bundled provider for base languages / fallback.
     ///   - downloadStore: the observable state store (defaults to a fresh one).
@@ -147,11 +151,15 @@ final class ODRLanguagePackProvider: LanguagePackProvider {
     }
 
     /// End all retained `NSBundleResourceRequest`s, letting the OS purge the on-demand resources.
-    /// Call on teardown when the downloaded packs are no longer needed.
+    /// Call on teardown when the downloaded packs are no longer needed. Also clears the in-flight
+    /// guard and latches ``isReleased`` so a late completion from an in-flight request cannot
+    /// repopulate state after teardown.
     func release() {
         let requests: [ResourceRequesting] = withLock {
             let all = resolvedByCode.values.map(\.request)
             resolvedByCode.removeAll()
+            inFlightCodes.removeAll()
+            isReleased = true
             return all
         }
         for request in requests {
@@ -162,10 +170,33 @@ final class ODRLanguagePackProvider: LanguagePackProvider {
     // MARK: - Private
 
     /// Issue the actual ODR request, observe progress, and complete by resolving the pack or marking
-    /// the download failed. Runs the completion off the main thread (as ODR does) then publishes to
-    /// the `@MainActor` store.
+    /// the download failed. Takes the fast path when the tagged resources are already on device,
+    /// otherwise observes `fractionCompleted` and forwards it to the store. Runs the completion off the
+    /// main thread (as ODR does) then publishes to the `@MainActor` store.
     private func beginDownload(for locale: AppLocale, tags: Set<String>) {
         let request = makeRequest(tags)
+        request.conditionallyBeginAccessingResources { [weak self] alreadyPresent in
+            guard let self else {
+                request.endAccessingResources()
+                return
+            }
+            if alreadyPresent {
+                // Fast path: resources already on device, no download needed.
+                finishSucceeded(locale, request: request)
+            } else {
+                startDownloading(locale, request: request)
+            }
+        }
+    }
+
+    /// Kick off the actual download (resources are not already present), forwarding fractional progress
+    /// to the store as it advances and resolving/failing on completion.
+    private func startDownloading(_ locale: AppLocale, request: ResourceRequesting) {
+        request.observeProgress { [downloadStore] fraction in
+            Task { @MainActor in
+                downloadStore.updateProgress(locale, progress: fraction)
+            }
+        }
         request.beginAccessingResources { [weak self] error in
             guard let self else {
                 request.endAccessingResources()
@@ -186,9 +217,19 @@ final class ODRLanguagePackProvider: LanguagePackProvider {
         let bundle = downloadedBundle(for: locale)
         let geoData = downloadedGeoData(for: locale, in: bundle)
         let resolved = ResolvedPack(bundle: bundle, geoData: geoData, request: request)
-        withLock {
+        let didStore: Bool = withLock {
+            guard !isReleased else {
+                return false
+            }
             resolvedByCode[locale.rawValue] = resolved
             inFlightCodes.remove(locale.rawValue)
+            return true
+        }
+        guard didStore else {
+            // Provider was released while this download was in flight: drop the late result so it
+            // cannot repopulate state, and release the request the OS would otherwise keep retained.
+            request.endAccessingResources()
+            return
         }
         Task { @MainActor [downloadStore] in
             downloadStore.markAvailable(locale)
