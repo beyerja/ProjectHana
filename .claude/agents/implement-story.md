@@ -51,9 +51,17 @@ gate fails the build on these recurring violations — get them right while writ
 
 **SwiftData schema changes**
 When adding or removing fields on an `@Model` type:
-- Non-optional fields without a default value will crash on launch if the simulator's store is stale. Before running tests, wipe the store: in the simulator, long-press the app icon → Remove App (or `xcrun simctl uninstall booted <bundle-id>`). The app's `ModelContainer` catch block should already handle this in development, but the simulator must be clean.
+- The store opens through a **versioned schema + migration plan** (`Hanahuac/Sync/HanahuacSchema.swift`:
+  `SchemaV1` / `HanahuacMigrationPlan`). For a backwards-compatible (additive/lightweight) change, add a
+  new `SchemaVN` version and append a `.lightweight(fromVersion:toVersion:)` stage to the plan so the
+  existing on-disk store migrates **in place** (the user's progress is preserved). Do NOT rely on the
+  recovery path to discard data: `SyncCoordinator.makeModelContainer()` is intentionally
+  **non-destructive** — it backs the store up before any wipe and only wipes as a last resort.
+- Non-optional fields without a default value still crash on launch against a store that predates a
+  proper migration. When iterating in the simulator, wipe the simulator's store (`xcrun simctl uninstall
+  booted <bundle-id>`) so a stale local store doesn't mask a missing migration stage.
 - After any schema change, grep all existing tests that construct the changed model type and verify they pass the new required fields. Tests that create model instances and omit new non-optional properties will produce compiler errors; tests that rely on old default values (e.g. `hasGraduated: false`) may silently produce wrong results — audit those explicitly.
-- If the story spec does not include a migration plan, use `ModelConfiguration(isStoredInMemoryOnly: true)` in tests so they never touch the on-disk store.
+- In tests, use `ModelConfiguration(isStoredInMemoryOnly: true)` so they never touch the on-disk store.
 
 **Adding a field to a plain `Codable` struct breaks its memberwise-init call sites**
 Adding a stored property to a `Codable struct` (e.g. the `Country`/`River`/`Sea`/`MountainRange` geo
