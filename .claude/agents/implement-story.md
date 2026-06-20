@@ -44,10 +44,12 @@ gate fails the build on these recurring violations — get them right while writ
   long expressions across lines, or hoist sub-expressions to locals, while writing.
 - Tuples may have at most 2 members (`large_tuple`) — for a 3+ field return value (e.g. a
   min/max lat/lon rect) declare a small named `struct`, never a 4-tuple.
+- Wrap single-line property bodies and loop bodies onto their own lines, in **production code too**,
+  not just tests (`wrapPropertyBodies`, `wrapLoopBodies`) — e.g. write
+  `var x: [T] {\n    expr\n}`, never `var x: [T] { expr }`.
 - In **tests**: never force-unwrap (`!`) — use `try XCTUnwrap(...)` and make the method `throws`;
   hoist `try` to the start of the expression, not inline (`hoistTry`); drop `throws` if nothing throws
-  (`redundantThrows`); wrap loop bodies and single-line property bodies onto their own lines
-  (`wrapLoopBodies`, `wrapPropertyBodies`).
+  (`redundantThrows`).
 
 **SwiftData schema changes**
 When adding or removing fields on an `@Model` type:
