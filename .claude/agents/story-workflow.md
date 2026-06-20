@@ -18,11 +18,26 @@ Run the following steps in order, spawning a dedicated sub-agent for each. Pass 
 4. **Wait for CI** — spawn `wait-for-ci` agent with the PR number from step 3 and the story-id
    - STATUS: FAIL → fix the failure (go to step 2 with CI failure as context), then re-push; repeat from step 4
    - STATUS: PASS → continue
-5. **Review loop** — spawn `review-pr` agent
-   - STATUS: CHANGES_IMPLEMENTED → repeat step 5
-   - STATUS: PENDING_REVIEW → notify the user that the PR needs review and they should merge it when ready. Wait for the user's confirmation that the PR is merged, then skip step 6 and go directly to step 7.
-   - STATUS: APPROVED → continue
-6. **Merge** — if the user already merged (common in this solo project, they confirm verbally), skip `merge-pr` and proceed directly to step 7; otherwise spawn `merge-pr` agent
+5. **Independent review loop** — ordered AFTER CI passes (step 4) so the reviewer sees code that builds.
+   Spawn the `independent-review` agent as a **fresh, cold-context invocation** that is **explicitly
+   distinct from the implement agent** of step 2: the reviewer and the implementer are **separate spawns**,
+   so the change is reviewed by someone who did not write it (the 4-eye principle). NEVER reuse the
+   implement agent — or its context — to review its own work. The reviewer reads the PR diff cold.
+
+   Key the loop off the reviewer's STATUS output, capped at **3 rounds**:
+   - STATUS: CHANGES_REQUESTED → spawn an `implement-story` (implement) agent — again a **separate spawn,
+     never the reviewer** — to address **every** inline comment, **reply to each review thread marking it
+     resolved**, run the project checks (`just lint`, `just test`), and push the fixes. Then **re-spawn a
+     fresh `independent-review`** (cold again) on the updated PR. This counts as one round.
+   - STATUS: APPROVED → continue to step 6.
+
+   After **3 rounds** without reaching APPROVED, **STOP looping and ESCALATE to the user** (do not loop
+   further); leave the PR open for the user to decide.
+
+   (There is no human-review gate: the workflow never pauses for the user to review or merge a PR. The
+   only human touch-point in this loop is the 3-round escalation above.)
+6. **Merge** — once the reviewer emitted APPROVED **and** CI is green, spawn `merge-pr` **unconditionally**.
+   Do not assume the user already merged and do not wait for a human merge click.
 7. **Verify** — spawn `verify-story` agent
    - STATUS: FAILED → go to step 2 (re-implement with failure context)
    - STATUS: DONE → finish
