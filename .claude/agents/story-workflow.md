@@ -12,6 +12,12 @@ just log start story-workflow "<story-id>" || true
 
 Run the following steps in order, spawning a dedicated sub-agent for each. Pass the story directory as context to every agent.
 
+**PR-base contract (autonomous, no human gate):** each story PR targets **`main`** directly (not an
+intermediate feature branch), so it is CI-gated and goes through the independent-review loop below.
+There is no story→feature-branch PR and no human merge click anywhere in this loop — merge is automatic
+once the reviewer emits APPROVED and CI is green (step 6). Do NOT pause to wait for a human to review or
+merge a story PR.
+
 1. **Break tasks** — spawn `break-tasks` agent
 2. **Implement** — spawn `implement-story` agent
 3. **Create PR** — spawn `create-pr` agent

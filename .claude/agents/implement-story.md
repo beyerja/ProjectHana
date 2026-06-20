@@ -26,7 +26,11 @@ legacy name while worktree runs are namespaced.
 
 For each unchecked task:
 1. Implement following existing project patterns
-2. Run project checks:
+2. Run project checks. **In a worktree run, invoke `just` at the worktree path** —
+   `just -f <worktree>/justfile lint` / `… test` (the recipes are worktree-aware) — never
+   `cd <worktree> && just …`. That `cd <worktree> && …` compound is the single most-prompted command
+   in telemetry and stayed the top offender even after the rule landed in CLAUDE.md, so emit the
+   at-a-path shape here (see CLAUDE.md → "Emit allowlistable command shapes"):
    ```sh
    just lint   # fail-on-violation lint gate (Swift/Python/Shell/Nix/YAML); blocks the PR in CI
    just test
