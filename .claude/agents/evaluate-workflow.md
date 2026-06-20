@@ -44,6 +44,14 @@ For each frequently-prompted signature, decide a remedy and classify it against 
 
 **Security bar (hard rule):** never auto-add a broad or injectable allow pattern. The only allow form you may auto-add is a single `Bash(just <recipe> *)` whose recipe wraps one fixed command. When in doubt, propose — do not edit.
 
+**Under "Auto" permission mode, editing `.claude/settings.json` is blocked entirely** (self-granting
+permission is intent-resistant and the classifier denies it). So treat *any* allowlist edit as
+**Propose-and-wait** — surface the exact entries for the user to add by hand. The remedy an agent *can*
+self-apply is the command **shape**: prefer an existing safe `just` recipe, or fix the agent instruction
+to emit an allowlistable form per CLAUDE.md → "Emit allowlistable command shapes" (path-flags not `cd`,
+`commit -F`/`--body-file` not heredocs, `--watch` not poll loops). Reach for shape fixes first; propose
+settings edits second.
+
 ## Phase 2a — Agent bloat audit
 
 Read every `.claude/agents/` file and look for **genuine bloat** — content that could be cut without losing information: rules that restate each other, examples that merely repeat the rule they follow, hedging/filler prose, or a description longer than 2 sentences.

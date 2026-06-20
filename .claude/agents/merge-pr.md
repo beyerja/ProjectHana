@@ -40,7 +40,9 @@ slug="${HANA_FEATURE_SLUG:-}"
 chore_branch="chore/${slug:+$slug/}workflow-post-merge-<story-id>"
 git checkout -b "$chore_branch"
 git add -A .workflow
-git commit -m "chore(workflow): record merge of <story-id>"
+git commit -m "chore(workflow): record merge of <story-id>"   # single-line is fine; for a multi-line
+                                                              # body write a file + `git commit -F`,
+                                                              # never a heredoc (see CLAUDE.md)
 git push -u origin "$chore_branch"
 gh pr merge --squash --delete-branch --auto
 ```

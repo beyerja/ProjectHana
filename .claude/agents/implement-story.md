@@ -32,7 +32,10 @@ For each unchecked task:
    just test
    ```
 3. Fix any failures and retry until clean
-4. Commit with a clear message
+4. Commit with a clear message. For a multi-line body, write the message to a file with the Write tool
+   and `git commit -F <file>` (or `git -C <worktree> commit -F <file>`) — never `git commit -m "$(cat
+   <<'EOF')"` or `commit -F - <<'EOF'` (heredocs/`$(…)` are always prompted; see CLAUDE.md → "Emit
+   allowlistable command shapes"). Run git at a path (`git -C <worktree>`), never `cd … && git …`.
 5. Mark task checked in `tasks.md`
 
 **Write Swift that passes the lint gate the first time.** The strict SwiftLint + `swiftformat --lint`

@@ -10,17 +10,19 @@ Requires: story directory path.
 just log start create-pr "<story-id>" || true
 ```
 
-Read `<story-dir>/spec.md` and recent commits. Push the current branch:
+Read `<story-dir>/spec.md` and recent commits. Push the current branch (use `git -C <worktree> …` in a
+worktree run rather than `cd … && git push`):
 ```
 git push -u origin <branch>
 ```
 
-Create a PR targeting main using `gh`:
+Create a PR targeting main using `gh`. **Write the body to a file with the Write tool, then pass
+`--body-file`** — never a heredoc or `--body "$(…)"` (command substitution / heredocs are always
+prompted; see CLAUDE.md → "Emit allowlistable command shapes"):
 ```
-gh pr create --base main --head <branch> --title "<story title>" --body "..."
+gh pr create --base main --head <branch> --title "<story title>" --body-file <path-to-body-file>
 ```
-- Body: goal, bulleted summary of changes, test plan checklist
-- Always pass body via HEREDOC to preserve formatting
+- Body file contents: goal, bulleted summary of changes, test plan checklist.
 
 Write PR URL and number to `<story-dir>/pr.md`.
 Count tool calls (R/W/E/B) and estimate chars, then run (ignore errors):

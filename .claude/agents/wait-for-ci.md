@@ -24,6 +24,12 @@ Steps:
    ```
    This blocks until all checks finish. Exit code 0 = all passed; non-zero = at least one failed or is still pending after timeout.
 
+   **Do not hand-roll a registration poll loop** (`for i in $(seq …); do gh pr checks …; done`) — loops
+   are always prompted (see CLAUDE.md → "Emit allowlistable command shapes"). `--watch` already blocks
+   on pending checks. The only race is checks not yet *registered* right after a push, in which case
+   `--watch` returns immediately with none found: handle that with a single `sleep 15` then one more
+   `gh pr checks <number> --watch --fail-fast`, not a loop.
+
    **If no checks are found** (e.g. the PR only modifies files outside CI path filters such as `.claude/` or `.workflow/`), `gh pr checks` will report nothing. Treat this as STATUS: PASS — no CI path triggered.
 
 3. If checks pass: output STATUS: PASS.

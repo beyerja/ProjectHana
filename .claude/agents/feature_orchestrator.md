@@ -82,12 +82,16 @@ sub-agent for each:
 
 At each step, note the outcome in `.workflow/log.md`. If a step sends the workflow back, record the reason.
 
-**Avoid `cd`-prefixed compound Bash.** A `cd /abs/path && <cmd>` block can't be safely allowlisted and
-gets prompted every time (it was the single most-prompted signature in evaluation telemetry, and the
-top offenders are `cd ../ProjectHana-worktrees/<slug> && …` from parallel worktree runs). Run
-side-effecting tools at a path instead: `git -C <worktree> …`, `gh -R <owner/repo> …`, and `just -f
-<worktree>/justfile …` (the recipes are already worktree-aware). The worktrees parent is pre-authorized
-(Step 0), so you can read/write/run inside `../ProjectHana-worktrees/<slug>` directly with no `cd` and
-no prompt. Reserve `cd` for the rare tool with no path flag.
+**Emit allowlistable command shapes** (full rules in CLAUDE.md → "Emit allowlistable command shapes").
+The headline for orchestration: **avoid `cd`-prefixed compound Bash.** A `cd /abs/path && <cmd>` block
+can't be safely allowlisted and gets prompted every time (it was the single most-prompted signature in
+evaluation telemetry, and the top offenders are `cd ../ProjectHana-worktrees/<slug> && …` from parallel
+worktree runs). Run side-effecting tools at a path instead: `git -C <worktree> …`, `gh -R <owner/repo>
+…`, and `just -f <worktree>/justfile …` (the recipes are already worktree-aware). The worktrees parent
+is pre-authorized (Step 0), so you can read/write/run inside `../ProjectHana-worktrees/<slug>` directly
+with no `cd` and no prompt. Reserve `cd` for the rare tool with no path flag. Likewise: commit with
+`git commit -F <file>` (message written via the Write tool), open PRs with `gh pr create --body-file`,
+and wait on CI with `gh pr checks <n> --watch --fail-fast` — never heredocs, `$(…)`, or hand-rolled
+poll loops.
 
 Output STATUS: DONE when the feature is verified and the workflow has been evaluated and improved.
