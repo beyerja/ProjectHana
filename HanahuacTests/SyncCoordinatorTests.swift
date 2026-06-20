@@ -28,7 +28,7 @@ final class SyncCoordinatorTests: XCTestCase {
             availability: FixedICloudAvailabilityProvider(isICloudAccountAvailable: true),
             preferenceDefaults: freshDefaults()
         )
-        XCTAssertTrue(coordinator.makeActiveSetStore() is UserDefaultsActiveSetStore)
+        XCTAssertTrue(coordinator.makeActiveSetStore(language: AppLocale.en.rawValue) is UserDefaultsActiveSetStore)
         // Preference store is local-backed; round-trips through UserDefaults default suite.
         let prefs = coordinator.makePreferenceStore()
         prefs.setString("es-MX", forKey: .appLocale)
@@ -64,7 +64,7 @@ final class SyncCoordinatorTests: XCTestCase {
         // ...but no iCloud account → unavailable + local fallback, no crash.
         XCTAssertEqual(coordinator.status, .unavailable)
         XCTAssertFalse(coordinator.isSyncActive)
-        XCTAssertTrue(coordinator.makeActiveSetStore() is UserDefaultsActiveSetStore)
+        XCTAssertTrue(coordinator.makeActiveSetStore(language: AppLocale.en.rawValue) is UserDefaultsActiveSetStore)
     }
 
     // MARK: - Container factory

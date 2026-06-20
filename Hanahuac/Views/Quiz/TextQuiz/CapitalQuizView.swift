@@ -150,7 +150,10 @@ struct CapitalQuizView: View {
     /// e.g. in previews).
     private func advance(_ session: TextQuizSession) {
         session.advance()
-        progressStatsStore?.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
+        progressStatsStore?.recordSnapshot(
+            cards: cardStore.allCards,
+            streak: StreakTracker.currentStreak(language: cardStore.language)
+        )
     }
 
     private func buildSession() {

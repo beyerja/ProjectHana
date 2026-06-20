@@ -4,7 +4,7 @@ struct StatsView: View {
     @Environment(CardStore.self) private var cardStore
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
-    @State private var streak: Int = StreakTracker.currentStreak()
+    @State private var streak: Int = 0 // resolved from the active language in onAppear
 
     private var all: [ReviewCard] {
         cardStore.allCards
@@ -33,7 +33,7 @@ struct StatsView: View {
         .background(Theme.Palette.canvas.ignoresSafeArea())
         .navigationTitle(L10n["stats.title"])
         .inlineNavigationTitle()
-        .onAppear { streak = StreakTracker.currentStreak() }
+        .onAppear { streak = StreakTracker.currentStreak(language: languageManager.current.rawValue) }
         .id(languageManager.current)
     }
 
