@@ -1,45 +1,56 @@
+import MapKit
 import SwiftUI
 
-/// "Type the Capital" quiz: shows a country and the user types its capital.
-/// Countries-only. Drives both piles:
+/// The map-pin "Name that place" quiz: the current feature is shown pinned on the
+/// map and the user types its name. Works for every category (countries, rivers,
+/// mountains, seas) by driving the generic `MappableFeature` machinery.
+///
+/// Two piles, mirroring the other quiz surfaces:
 /// - `.pending` (due cards) → an SM-2 `TextQuizSession`, ending in `QuizSummaryView`.
 /// - `.new` (new cards) → a `LearningSession` (3-consecutive-correct graduation),
 ///   ending in a graduation completion screen.
-struct CapitalQuizView: View {
+struct NameFeatureQuizView: View {
+    /// Which pile this instance drives.
+    enum Source {
+        case pending(category: CardCategory)
+        case new(newCards: [ReviewCard], category: CardCategory)
+    }
+
     @Environment(CardStore.self) private var cardStore
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
-    let pile: Pile
+    let source: Source
 
     @State private var pending: TextQuizSession?
     @State private var learning: LearningSession?
+    @State private var features: [any MappableFeature] = []
     @State private var inputText = ""
     @State private var hasBuilt = false
-    @State private var localAnswerState: TextAnswerState = .unanswered
-    @State private var lastWasCorrect = false
     @FocusState private var fieldFocused: Bool
-
-    private var countries: [Country] {
-        GeographyDataLoader.shared.countries
-    }
 
     var body: some View {
         content
-            .navigationTitle(L10n["capital_quiz.nav.capital"])
+            .navigationTitle(L10n["name_feature.nav"])
             .inlineNavigationTitle()
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button(L10n["capital_quiz.exit"]) { dismiss() } }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(L10n["capital_quiz.exit"]) { dismiss() }
+                }
             }
             .onAppear(perform: buildIfNeeded)
     }
 
+    // MARK: - Content routing
+
     @ViewBuilder
     private var content: some View {
-        switch pile {
-        case .pending: pendingContent
-        case .new: newContent
+        switch source {
+        case .pending:
+            pendingContent
+        case .new:
+            newContent
         }
     }
 
@@ -54,19 +65,25 @@ struct CapitalQuizView: View {
                     correct: session.correctCount,
                     nextDue: session.nextDueDate
                 )
-            } else {
+            } else if let feature = currentPendingFeature(session) {
                 quizBody(
-                    prompt: session.current?.prompt ?? "",
+                    feature: feature,
                     answerState: session.answerState,
                     progressText: "\(session.reviewedCount + 1) / \(session.questions.count)",
-                    correctCount: session.correctCount,
                     onCheck: { session.checkAnswer($0) },
                     onNext: { advancePending(session) }
                 )
+            } else {
+                nothingDue
             }
         } else {
             nothingDue
         }
+    }
+
+    private func currentPendingFeature(_ session: TextQuizSession) -> (any MappableFeature)? {
+        guard let card = session.current?.card else { return nil }
+        return features.first { $0.id == card.factID }
     }
 
     private func advancePending(_ session: TextQuizSession) {
@@ -86,18 +103,17 @@ struct CapitalQuizView: View {
         if let session = learning {
             if session.isFinished {
                 completionView(graduated: session.graduatedCount)
-            } else if let card = session.current {
-                let q = capitalQuestion(for: card)
+            } else if let card = session.current, let feature = features.first(where: { $0.id == card.factID }) {
+                let q = nameQuestion(for: card)
                 quizBody(
-                    prompt: q?.prompt ?? "",
+                    feature: feature,
                     answerState: localAnswerState,
                     progressText: String(
                         format: L10n["learn.graduated_count"],
                         session.graduatedCount, session.totalNewCards
                     ),
-                    correctCount: session.graduatedCount,
                     correctAnswerOverride: q?.correctAnswer,
-                    onCheck: { checkLearning($0, question: q) },
+                    onCheck: { checkLearning($0, question: q, session: session) },
                     onNext: { advanceLearning(session) }
                 )
             } else {
@@ -108,13 +124,12 @@ struct CapitalQuizView: View {
         }
     }
 
-    private func capitalQuestion(for card: ReviewCard) -> TextQuestion? {
-        TextQuizSession.capitalQuestions(
-            cards: [card], countries: countries, locale: languageManager.current
-        ).first
-    }
+    // The new pile drives `LearningSession` for graduation; this view owns the
+    // per-question answer state (the session only records correct/wrong).
+    @State private var localAnswerState: TextAnswerState = .unanswered
+    @State private var lastWasCorrect = false
 
-    private func checkLearning(_ input: String, question: TextQuestion?) {
+    private func checkLearning(_ input: String, question: TextQuestion?, session _: LearningSession) {
         guard localAnswerState == .unanswered, let q = question else { return }
         let trimmed = input.trimmingCharacters(in: .whitespacesAndNewlines)
         let matchesPrimary = trimmed.caseInsensitiveCompare(q.correctAnswer) == .orderedSame
@@ -131,7 +146,11 @@ struct CapitalQuizView: View {
     }
 
     private func advanceLearning(_ session: LearningSession) {
-        if lastWasCorrect { session.recordCorrect() } else { session.recordWrong() }
+        if lastWasCorrect {
+            session.recordCorrect()
+        } else {
+            session.recordWrong()
+        }
         progressStatsStore?.recordSnapshot(
             cards: cardStore.allCards,
             streak: StreakTracker.currentStreak(language: cardStore.language)
@@ -141,42 +160,67 @@ struct CapitalQuizView: View {
         fieldFocused = true
     }
 
-    // MARK: - Shared quiz body
+    private func nameQuestion(for card: ReviewCard) -> TextQuestion? {
+        TextQuizSession.nameFeatureQuestions(
+            cards: [card], features: features, locale: languageManager.current
+        ).first
+    }
+
+    // MARK: - Shared quiz body (map + input)
 
     private func quizBody(
-        prompt: String,
+        feature: any MappableFeature,
         answerState: TextAnswerState,
         progressText: String,
-        correctCount: Int,
         correctAnswerOverride: String? = nil,
         onCheck: @escaping (String) -> Void,
         onNext: @escaping () -> Void
     ) -> some View {
-        ScrollView {
-            VStack(spacing: 28) {
+        VStack(spacing: 0) {
+            featureMap(feature: feature, revealed: answerState != .unanswered)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            VStack(spacing: 16) {
                 HStack {
+                    Text(L10n["name_feature.prompt"])
+                        .font(.headline)
+                    Spacer()
                     Text(progressText)
                         .font(.subheadline).foregroundStyle(.secondary)
-                    Spacer()
-                    Text(String(format: L10n["capital_quiz.correct_count"], correctCount))
-                        .font(.subheadline).foregroundStyle(Theme.Palette.correct)
                 }
-                Text(prompt)
-                    .font(.title3.bold())
-                    .multilineTextAlignment(.center)
-                    .padding(24)
-                    .frame(maxWidth: .infinity)
-                    .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
                 answerSection(
                     answerState: answerState,
                     correctAnswerOverride: correctAnswerOverride,
                     onCheck: onCheck,
                     onNext: onNext
                 )
-                Spacer(minLength: 0)
             }
             .padding()
+            .background(Theme.Palette.surface, in: RoundedRectangle(cornerRadius: 20))
+            .padding(.horizontal)
+            .padding(.bottom)
         }
+    }
+
+    private func featureMap(feature: any MappableFeature, revealed: Bool) -> some View {
+        let region = QuizRegionMath.region(
+            fittingPins: [(feature.quizLat, feature.quizLon)]
+        )
+        // Reveal the name on the pin only after the answer is submitted.
+        let pinState: MapFeaturePinView.State = revealed ? .correctRevealed : .neutral
+        return Map(initialPosition: .region(region)) {
+            Annotation("", coordinate: feature.pinCoordinate) {
+                MapFeaturePinView(
+                    state: pinState,
+                    name: feature.localizedName(for: languageManager.current)
+                )
+            }
+            // Only this feature's overlay (river line / sea or mountain polygon).
+            featureOverlays(for: [feature], answerState: revealed ? .correct(id: feature.id) : .unanswered)
+        }
+        .mapStyle(.imagery(elevation: .flat))
+        .ignoresSafeArea(edges: .horizontal)
+        .disabled(true) // a single-pin reference map; no tap interaction
     }
 
     @ViewBuilder
@@ -188,7 +232,7 @@ struct CapitalQuizView: View {
     ) -> some View {
         switch answerState {
         case .unanswered:
-            VStack(spacing: 16) {
+            VStack(spacing: 12) {
                 TextField(L10n["capital_quiz.placeholder"], text: $inputText)
                     .textFieldStyle(.roundedBorder)
                     .focused($fieldFocused)
@@ -209,7 +253,10 @@ struct CapitalQuizView: View {
             }
             .onAppear { fieldFocused = true }
         case .correct:
-            feedback(text: L10n["capital_quiz.feedback.correct"], color: Theme.Palette.correct, onNext: onNext)
+            feedback(
+                text: L10n["capital_quiz.feedback.correct"],
+                color: Theme.Palette.correct, onNext: onNext
+            )
         case let .incorrect(correctAnswer):
             feedback(
                 text: "\(L10n["capital_quiz.feedback.wrong_prefix"]) \(correctAnswerOverride ?? correctAnswer)",
@@ -219,14 +266,13 @@ struct CapitalQuizView: View {
     }
 
     private func feedback(text: String, color: Color, onNext: @escaping () -> Void) -> some View {
-        VStack(spacing: 16) {
+        VStack(spacing: 12) {
             Text(text)
-                .font(.headline)
-                .foregroundStyle(color)
+                .font(.headline).foregroundStyle(color)
                 .multilineTextAlignment(.center)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: 14))
+                .background(color.opacity(0.12), in: RoundedRectangle(cornerRadius: 14))
             Button(L10n["capital_quiz.next"]) { onNext() }
                 .font(.headline)
                 .frame(maxWidth: .infinity)
@@ -238,21 +284,11 @@ struct CapitalQuizView: View {
 
     // MARK: - Empty / completion states
 
-    /// Advance the session and record today's progress rollup (no-op when no stats store is injected,
-    /// e.g. in previews).
-    private func advance(_ session: TextQuizSession) {
-        session.advance()
-        progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
-            streak: StreakTracker.currentStreak(language: cardStore.language)
-        )
-    }
-
     private var nothingDue: some View {
         ContentUnavailableView(
-            L10n["capital_quiz.nothing_due_title"],
+            L10n["name_feature.nothing_due_title"],
             systemImage: "checkmark.circle",
-            description: Text(L10n["capital_quiz.nothing_due_desc"])
+            description: Text(L10n["name_feature.nothing_due_desc"])
         )
     }
 
@@ -300,25 +336,26 @@ struct CapitalQuizView: View {
     private func buildIfNeeded() {
         guard !hasBuilt else { return }
         hasBuilt = true
-        switch pile {
-        case .pending:
-            let due = cardStore.dueCards(for: .country)
-            let questions = TextQuizSession.capitalQuestions(
-                cards: due, countries: countries, locale: languageManager.current
+        switch source {
+        case let .pending(category):
+            features = MapFeatureCatalog.features(for: category)
+            let due = cardStore.dueCards(for: category)
+            let questions = TextQuizSession.nameFeatureQuestions(
+                cards: due, features: features, locale: languageManager.current
             )
             pending = questions.isEmpty ? nil : TextQuizSession(questions: questions)
-        case .new:
-            let newCards = cardStore.newCards(for: .country)
+        case let .new(newCards, category):
+            features = MapFeatureCatalog.features(for: category)
             // The active set is per-language; scope it to the active card store's language.
-            let store = UserDefaultsActiveSetStore(language: cardStore.language)
-            learning = LearningSession(newCards: newCards, category: .country, store: store)
+            let store: ActiveSetStore? = UserDefaultsActiveSetStore(language: cardStore.language)
+            learning = LearningSession(newCards: newCards, category: category, store: store)
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        CapitalQuizView(pile: .pending)
+        NameFeatureQuizView(source: .pending(category: .country))
             .withPreviewStore()
             .environment(LanguageManager.shared)
     }

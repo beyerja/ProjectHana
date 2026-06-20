@@ -17,8 +17,8 @@
 "quiz.mode.map_tap.desc" = "Tippen Sie auf das richtige Land auf der Karte";
 "quiz.mode.type_capital.title" = "Hauptstadt eingeben";
 "quiz.mode.type_capital.desc" = "\"Was ist die Hauptstadt von X?\"";
-"quiz.mode.name_country.title" = "Land benennen";
-"quiz.mode.name_country.desc" = "\"Welches Land hat X als Hauptstadt?\"";
+"quiz.mode.name_feature.title" = "Ort benennen";
+"quiz.mode.name_feature.desc" = "Gib den Namen des markierten Ortes auf der Karte ein";
 "quiz.mode.multiple_choice.title" = "Multiple Choice";
 "quiz.mode.multiple_choice.desc" = "Wählen Sie die Hauptstadt aus 4 Optionen";
 "quiz.cards_due.singular" = "Karte fällig";
@@ -128,6 +128,12 @@
 "capital_quiz.nav.capital" = "Hauptstadt-Quiz";
 "capital_quiz.nav.country" = "Länder-Quiz";
 "capital_quiz.correct_count" = "%d richtig";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Benenne diesen Ort";
+"name_feature.nav" = "Ort benennen";
+"name_feature.nothing_due_title" = "Nichts fällig";
+"name_feature.nothing_due_desc" = "Momentan sind keine Karten fällig.";
 
 /* QuizPlaceholderView */
 "quiz_placeholder.coming_soon" = "Quiz demnächst";

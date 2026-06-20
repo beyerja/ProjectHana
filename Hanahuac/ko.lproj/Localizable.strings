@@ -21,8 +21,8 @@
 "quiz.mode.map_tap.desc" = "지도에서 올바른 국가를 탭하세요";
 "quiz.mode.type_capital.title" = "수도 입력";
 "quiz.mode.type_capital.desc" = "\"X의 수도는 무엇인가요?\"";
-"quiz.mode.name_country.title" = "국가 맞히기";
-"quiz.mode.name_country.desc" = "\"X를 수도로 하는 국가는 어디인가요?\"";
+"quiz.mode.name_feature.title" = "장소 맞히기";
+"quiz.mode.name_feature.desc" = "지도에 표시된 장소의 이름을 입력하세요";
 "quiz.mode.multiple_choice.title" = "객관식";
 "quiz.mode.multiple_choice.desc" = "4개의 보기 중에서 수도를 고르세요";
 "quiz.cards_due.singular" = "장 복습 예정";
@@ -132,6 +132,12 @@
 "capital_quiz.nav.capital" = "수도 퀴즈";
 "capital_quiz.nav.country" = "국가 퀴즈";
 "capital_quiz.correct_count" = "%d개 정답";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "이 장소의 이름을 맞혀 보세요";
+"name_feature.nav" = "장소 맞히기";
+"name_feature.nothing_due_title" = "복습할 항목 없음";
+"name_feature.nothing_due_desc" = "지금은 복습할 카드가 없습니다.";
 
 /* QuizPlaceholderView */
 "quiz_placeholder.coming_soon" = "퀴즈 준비 중";

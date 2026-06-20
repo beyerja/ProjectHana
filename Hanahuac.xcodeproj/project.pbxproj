@@ -33,6 +33,7 @@
 		420F469B2440869A0BC557C3 /* SM2Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFCAD670B510A8E79864C5F /* SM2Scheduler.swift */; };
 		4486112118500A5A7BDB8E5F /* mountain-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = 84C61DE695089044C5369288 /* mountain-borders.json */; };
 		45E20715A6F1DBF612284161 /* SyncFeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F56156DD1B70D620044397E /* SyncFeatureFlag.swift */; };
+		49E3DC2EA9B65062D932545E /* NameFeatureQuizTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5666DA35DFB133E8E641545 /* NameFeatureQuizTests.swift */; };
 		4ED995FD4863E55F89107C10 /* PreferenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3DFD56E1A9339FE9D6066DF /* PreferenceStore.swift */; };
 		4FEB22C1D153658BE015CB42 /* river-paths.json in Resources */ = {isa = PBXBuildFile; fileRef = 84BAC6DFF2E1635009C2DFF9 /* river-paths.json */; };
 		50738B4C009D70A58A9AEBE8 /* country-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = 6D8E85F2AA5FFFC3920B316C /* country-borders.json */; };
@@ -43,10 +44,12 @@
 		5B59B89F003E80B24BAA470D /* sea-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = B8BC8FDD71EB406D6A8DF545 /* sea-borders.json */; };
 		5C3F3A38388D7D8C23D5E66F /* MapQuizRegionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */; };
 		64BA046A2AA02BABA9422B62 /* MultipleChoiceSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F092FAD49DC2860FC69F0E8 /* MultipleChoiceSession.swift */; };
+		65821E378B8AF18D360C8A2E /* HomeQuizModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEBADCA4691A5AC9A317ACF /* HomeQuizModeTests.swift */; };
 		696206A61705E6338B07D623 /* SyncCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5FAB09F881E3D291D9A5253 /* SyncCoordinatorTests.swift */; };
 		69F5820A4B8C2E591AD48173 /* ProgressRecordingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFA705339BAA792E8E11E85 /* ProgressRecordingTests.swift */; };
 		6C94573A7E2FBDDEEDC98D60 /* KeyValueStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9B4E84299EBAF69A5F57C4 /* KeyValueStore.swift */; };
 		6E1791FD0E30A196559956B8 /* ActiveSetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8A920142B5EE81A611BBC5C /* ActiveSetStore.swift */; };
+		6E88AFCC124B6551DA2FAF7E /* NameFeatureQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B39D29AD6C77507E61A3F8DC /* NameFeatureQuizView.swift */; };
 		708666E64532C95080761670 /* Sea.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */; };
 		714D2A18568B15E855DEB64E /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C067B5B526D874D731E4EE9D /* StatsView.swift */; };
 		746B09167C861A24BC5F5CB7 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = FDBB60735040472DC32CCCC4 /* mountains.json */; };
@@ -130,6 +133,7 @@
 		2512100D917D9763B4ABB694 /* HanahuacLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacLogo.swift; sourceTree = "<group>"; };
 		28541D220A20441BA2942BE5 /* LanguageManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManagerTests.swift; sourceTree = "<group>"; };
 		2BE10D9C12442D7186628F76 /* MapQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizView.swift; sourceTree = "<group>"; };
+		2DEBADCA4691A5AC9A317ACF /* HomeQuizModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQuizModeTests.swift; sourceTree = "<group>"; };
 		2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacApp.swift; sourceTree = "<group>"; };
 		2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningTests.swift; sourceTree = "<group>"; };
 		33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningSession.swift; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 		B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
 		B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoaderTests.swift; sourceTree = "<group>"; };
 		B2DF1997D1D5E7FDF0F9BAEC /* LanguageProgressSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageProgressSummary.swift; sourceTree = "<group>"; };
+		B39D29AD6C77507E61A3F8DC /* NameFeatureQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFeatureQuizView.swift; sourceTree = "<group>"; };
 		B8BC8FDD71EB406D6A8DF545 /* sea-borders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sea-borders.json"; sourceTree = "<group>"; };
 		BB14B38C73AC73496B822ADD /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
 		BCFB55464417EC0B009B6930 /* CardDedupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDedupTests.swift; sourceTree = "<group>"; };
@@ -212,6 +217,7 @@
 		F2A9ED59834EB421065830ED /* LearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningQuizView.swift; sourceTree = "<group>"; };
 		F515D771C91F31DA44F1CFBF /* MappableFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappableFeature.swift; sourceTree = "<group>"; };
 		F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelperTests.swift; sourceTree = "<group>"; };
+		F5666DA35DFB133E8E641545 /* NameFeatureQuizTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameFeatureQuizTests.swift; sourceTree = "<group>"; };
 		F5FAB09F881E3D291D9A5253 /* SyncCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinatorTests.swift; sourceTree = "<group>"; };
 		F85289DD2C1AE0AE38568540 /* ProgressStatsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStatsStore.swift; sourceTree = "<group>"; };
 		FDBB60735040472DC32CCCC4 /* mountains.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mountains.json; sourceTree = "<group>"; };
@@ -224,6 +230,7 @@
 			isa = PBXGroup;
 			children = (
 				4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */,
+				B39D29AD6C77507E61A3F8DC /* NameFeatureQuizView.swift */,
 				24E8429BB7FEDE82E96359FF /* TextQuizSession.swift */,
 			);
 			path = TextQuiz;
@@ -237,6 +244,7 @@
 				B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */,
 				B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */,
 				7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */,
+				2DEBADCA4691A5AC9A317ACF /* HomeQuizModeTests.swift */,
 				EF0CCAA2F2AF702B15300352 /* L10nBundleResolutionTests.swift */,
 				28541D220A20441BA2942BE5 /* LanguageManagerTests.swift */,
 				96A6378C2D06D307933A42E1 /* LearningTests.swift */,
@@ -245,6 +253,7 @@
 				E99FAC06BE37F9329DF0FC70 /* MapFeatureTests.swift */,
 				2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */,
 				F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */,
+				F5666DA35DFB133E8E641545 /* NameFeatureQuizTests.swift */,
 				8CFB005463FA4BC0CD7858BA /* PerLanguageProgressTests.swift */,
 				1B8A92BEB2B9C38CBB63762A /* ProgressBackupTests.swift */,
 				1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */,
@@ -599,6 +608,7 @@
 				31E53F4FFE9E7836BF041B92 /* MountainRange.swift in Sources */,
 				190B6EF7CCCBA8FBF190F761 /* MultipleChoiceQuizView.swift in Sources */,
 				64BA046A2AA02BABA9422B62 /* MultipleChoiceSession.swift in Sources */,
+				6E88AFCC124B6551DA2FAF7E /* NameFeatureQuizView.swift in Sources */,
 				0114442720969F5864F55E6D /* PilePickerView.swift in Sources */,
 				53C2E037B85C8C89A414C2D4 /* PoleLabelCalculator.swift in Sources */,
 				4ED995FD4863E55F89107C10 /* PreferenceStore.swift in Sources */,
@@ -638,6 +648,7 @@
 				8FF3959B891ECBCF499BCEE3 /* CardStoreTests.swift in Sources */,
 				AEC45EB17BDE7F455C1CB7AE /* GeographyDataLoaderTests.swift in Sources */,
 				2AE1D2E426F022C999D475F9 /* HanahuacTests.swift in Sources */,
+				65821E378B8AF18D360C8A2E /* HomeQuizModeTests.swift in Sources */,
 				2C070983399A1915D3A6BCEB /* L10nBundleResolutionTests.swift in Sources */,
 				D1B5CF9272BC39C196371B53 /* LanguageManagerTests.swift in Sources */,
 				8D0E371BF5449F8DC3E68A81 /* LearningTests.swift in Sources */,
@@ -646,6 +657,7 @@
 				9A38525C1DEC1C139BA921AA /* MapFeatureTests.swift in Sources */,
 				9F0CD581EDE922EAF670F9A8 /* MapLearningTests.swift in Sources */,
 				D81EDE85F2EF406BCE8CAA1C /* MapQuizRegionHelperTests.swift in Sources */,
+				49E3DC2EA9B65062D932545E /* NameFeatureQuizTests.swift in Sources */,
 				B9F99F753E98BB7121C19491 /* PerLanguageProgressTests.swift in Sources */,
 				9318D2A472DA5228C7650718 /* ProgressBackupTests.swift in Sources */,
 				0667BDF3A3506797F49130F7 /* ProgressMigratorTests.swift in Sources */,
