@@ -92,25 +92,6 @@ final class TextQuizSession {
         }
     }
 
-    static func reverseCapitalQuestions(
-        cards: [ReviewCard],
-        countries: [Country],
-        locale: AppLocale = .en
-    ) -> [TextQuestion] {
-        cards.compactMap { card in
-            guard let c = countries.first(where: { $0.id == card.factID }) else { return nil }
-            let promptTemplate = L10n.string("quiz.prompt.country_of_capital", locale: locale)
-            let localizedName = c.localizedName(for: locale)
-            let fallback = locale == .en ? nil : c.name
-            return TextQuestion(
-                card: card,
-                prompt: String(format: promptTemplate, c.localizedCapital(for: locale)),
-                correctAnswer: localizedName,
-                fallbackAnswer: fallback
-            )
-        }
-    }
-
     /// Questions for the map-pin "Name that feature" quiz: each due card is paired
     /// with its `MappableFeature` (any category). The feature itself is shown on the
     /// map by the view, so the prompt is just the localized "Name this …"
