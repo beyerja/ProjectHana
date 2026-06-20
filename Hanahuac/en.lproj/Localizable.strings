@@ -17,8 +17,8 @@
 "quiz.mode.map_tap.desc" = "Tap the correct country on the map";
 "quiz.mode.type_capital.title" = "Type the Capital";
 "quiz.mode.type_capital.desc" = "\"What is the capital of X?\"";
-"quiz.mode.name_country.title" = "Name the Country";
-"quiz.mode.name_country.desc" = "\"Which country has X as its capital?\"";
+"quiz.mode.name_feature.title" = "Name That Place";
+"quiz.mode.name_feature.desc" = "Type the name of the marked place on the map";
 "quiz.mode.multiple_choice.title" = "Multiple Choice";
 "quiz.mode.multiple_choice.desc" = "Pick the capital from 4 options";
 "quiz.cards_due.singular" = "card due";
@@ -126,6 +126,12 @@
 "capital_quiz.nav.capital" = "Capital Quiz";
 "capital_quiz.nav.country" = "Country Quiz";
 "capital_quiz.correct_count" = "%d correct";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Name this place";
+"name_feature.nav" = "Name That Place";
+"name_feature.nothing_due_title" = "Nothing Due";
+"name_feature.nothing_due_desc" = "No cards are due right now.";
 
 /* QuizPlaceholderView */
 "quiz_placeholder.coming_soon" = "Quiz Coming Soon";

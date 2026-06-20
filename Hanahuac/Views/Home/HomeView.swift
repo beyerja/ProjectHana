@@ -43,22 +43,22 @@ struct HomeView: View {
             categorySection(
                 name: L10n["home.category.countries"],
                 icon: "globe.americas.fill", color: Theme.Palette.country, category: .country,
-                modes: [.mapQuiz, .multipleChoice, .typeCapital, .nameCountry]
+                modes: HomeQuizMode.modes(for: .country)
             )
             categorySection(
                 name: L10n["home.category.rivers"],
                 icon: "water.waves", color: Theme.Palette.river, category: .river,
-                modes: [.mapQuiz, .multipleChoice]
+                modes: HomeQuizMode.modes(for: .river)
             )
             categorySection(
                 name: L10n["home.category.mountains"],
                 icon: "mountain.2.fill", color: Theme.Palette.mountain, category: .mountain,
-                modes: [.mapQuiz, .multipleChoice]
+                modes: HomeQuizMode.modes(for: .mountain)
             )
             categorySection(
                 name: L10n["home.category.seas"],
                 icon: "drop.fill", color: Theme.Palette.sea, category: .sea,
-                modes: [.mapQuiz, .multipleChoice]
+                modes: HomeQuizMode.modes(for: .sea)
             )
         }
     }
@@ -192,9 +192,11 @@ struct HomeView: View {
         case (.multipleChoice, .pending):
             MultipleChoiceQuizView(category: category)
         case (.typeCapital, _):
-            CapitalQuizView(mode: .capitalOfCountry)
-        case (.nameCountry, _):
-            CapitalQuizView(mode: .countryOfCapital)
+            CapitalQuizView(pile: pile)
+        case (.nameFeature, .new):
+            NameFeatureQuizView(source: .new(newCards: cardStore.newCards(for: category), category: category))
+        case (.nameFeature, .pending):
+            NameFeatureQuizView(source: .pending(category: category))
         }
     }
 
