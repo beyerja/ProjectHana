@@ -22,11 +22,19 @@ final class ReviewCard {
     var id: UUID = UUID()
     var factID: String = ""
     /// The `AppLocale.rawValue` this card's progress belongs to. Progress is tracked independently
-    /// per language, so the canonical identity of a card is (`factID`, `language`). An empty string
-    /// is the legacy/unassigned sentinel for rows created before per-language progress existed; the
-    /// one-time upgrade migration stamps those with the active locale (see the migration story).
-    /// Defaulted (never `@Attribute(.unique)`) to stay CloudKit-sync-ready.
+    /// per language AND per quiz mode, so the canonical identity of a card is
+    /// (`factID`, `language`, `quizMode`). An empty string is the legacy/unassigned sentinel for rows
+    /// created before per-language progress existed; the one-time upgrade migration stamps those with
+    /// the active locale (see the migration story). Defaulted (never `@Attribute(.unique)`) to stay
+    /// CloudKit-sync-ready.
     var language: String = ""
+    /// The `QuizModeID.rawValue` this card's progress belongs to. Each quiz mode keeps an independent
+    /// spaced-repetition track for a fact, so a fact may hold up to one card per mode within a
+    /// language. An empty string is the legacy/unassigned sentinel for rows created before
+    /// per-quiz-mode progress existed; the one-time upgrade migration stamps those with `mapQuiz` (all
+    /// legacy progress was effectively the Map Tab Quiz). Defaulted (never `@Attribute(.unique)`) to
+    /// stay CloudKit-sync-ready.
+    var quizMode: String = ""
     var category: String = CardCategory.country.rawValue // CardCategory rawValue — SwiftData needs primitive types
     var repetitionCount: Int = 0
     var easeFactor: Double = 2.5
@@ -40,6 +48,7 @@ final class ReviewCard {
         id: UUID = UUID(),
         factID: String,
         language: String = "",
+        quizMode: String = "",
         category: CardCategory,
         repetitionCount: Int = 0,
         easeFactor: Double = 2.5,
@@ -52,6 +61,7 @@ final class ReviewCard {
         self.id = id
         self.factID = factID
         self.language = language
+        self.quizMode = quizMode
         self.category = category.rawValue
         self.repetitionCount = repetitionCount
         self.easeFactor = easeFactor

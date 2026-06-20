@@ -25,11 +25,19 @@ final class DailyProgressSnapshot {
     var day: Date = Calendar.current.startOfDay(for: .now)
 
     /// The `AppLocale.rawValue` this snapshot's stats belong to. Stats are tracked independently per
-    /// language, so the canonical identity of a snapshot is (`day`, `language`). An empty string is
-    /// the legacy/unassigned sentinel for rows created before per-language progress existed; the
-    /// one-time upgrade migration stamps those with the active locale. Defaulted (never
+    /// language, so the canonical identity of a snapshot is (`day`, `language`, `quizMode`). An empty
+    /// string is the legacy/unassigned sentinel for rows created before per-language progress existed;
+    /// the one-time upgrade migration stamps those with the active locale. Defaulted (never
     /// `@Attribute(.unique)`) to stay CloudKit-sync-ready.
     var language: String = ""
+
+    /// The `QuizModeID.rawValue` this snapshot's stats belong to, OR an empty string for the
+    /// **mode-aggregated** rollup (the totals the Progress screen shows by default). Daily stats are
+    /// recorded both per mode and as an aggregate, so the canonical identity of a snapshot is
+    /// (`day`, `language`, `quizMode`); the empty-`quizMode` row is the aggregate, and a non-empty
+    /// `quizMode` row is that mode's slice (backing the per-mode breakdown). Defaulted (never
+    /// `@Attribute(.unique)`) to stay CloudKit-sync-ready.
+    var quizMode: String = ""
 
     /// Number of reviews completed across all quiz modes on this day (cumulative, last-write-wins
     /// within the day via upsert).
@@ -65,6 +73,7 @@ final class DailyProgressSnapshot {
     init(
         day: Date = Calendar.current.startOfDay(for: .now),
         language: String = "",
+        quizMode: String = "",
         reviewsCompleted: Int = 0,
         cardsGraduated: Int = 0,
         streak: Int = 0,
@@ -81,6 +90,7 @@ final class DailyProgressSnapshot {
     ) {
         self.day = day
         self.language = language
+        self.quizMode = quizMode
         self.reviewsCompleted = reviewsCompleted
         self.cardsGraduated = cardsGraduated
         self.streak = streak
