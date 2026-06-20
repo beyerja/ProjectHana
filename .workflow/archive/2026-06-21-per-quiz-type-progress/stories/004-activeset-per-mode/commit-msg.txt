@@ -1,0 +1,21 @@
+feat(progress): namespace the active set per quiz mode
+
+Each quiz mode now tracks its own "new"/in-progress active set, so
+advancing one mode's active set for a (language, category) does not affect
+another mode's.
+
+- `activeSetKey` is namespaced by (language, mode, category):
+  `activeSet.<language>.<mode>.<category>`. `mode: nil` keeps the
+  pre-per-mode per-language key (`activeSet.<language>.<category>`) for
+  back-compat callers and as the Story-005 migration source; add
+  `legacyPerLanguageActiveSetKey(language:category:)`.
+- Thread `mode: QuizModeID? = nil` through all ActiveSetStore impls
+  (UserDefaults/KeyValue/InMemory), `makeUbiquitousActiveSetStore`, and
+  `SyncCoordinator.makeActiveSetStore`.
+- The 4 quiz views that build an active set now pass their own mode
+  (LearningQuizView=.multipleChoice, MapLearningQuizView=.mapQuiz,
+  CapitalQuizView=.typeCapital, NameFeatureQuizView=.nameFeature).
+- Tests: PerModeActiveSetTests covers key namespacing, per-mode isolation
+  on advance/clear, and the legacy per-language migration source.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>

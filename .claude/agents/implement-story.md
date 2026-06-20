@@ -110,6 +110,15 @@ grep -r "extension <TypeName>" Hanahuac/
 ```
 If a property or method you are about to add already exists in another file, reuse it — do not redeclare it. Common culprits: `displayName`, `localizedName`, `color`, `iconName` on model types used in multiple views.
 
+**Overloaded methods that take different enums with shared case names are ambiguous at leading-dot call sites**
+When a new orthogonal dimension adds a second enum (e.g. a persisted `QuizModeID` alongside the
+SwiftUI `HomeQuizMode`, both with cases `mapQuiz`/`multipleChoice`/…), do NOT give one type two
+`func foo(for:)` overloads — one per enum. A call like `provider.foo(for: .multipleChoice)` then fails
+to compile with `ambiguous use of '.multipleChoice'` because the leading-dot literal matches both
+overloads. Give the overloads **distinct labels** (`store(for: HomeQuizMode)` vs
+`store(forModeID: QuizModeID)`) so call sites resolve unambiguously without forcing every caller to
+spell out `HomeQuizMode.multipleChoice`.
+
 **iOS-only APIs**
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `Hanahuac/Views/ViewExtensions.swift` rather than direct calls.
 

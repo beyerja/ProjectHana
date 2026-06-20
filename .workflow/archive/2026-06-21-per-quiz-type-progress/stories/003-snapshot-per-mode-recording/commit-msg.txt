@@ -1,0 +1,23 @@
+feat(progress): record daily snapshots per mode + fix aggregate rollup
+
+Record daily progress both per quiz mode and as a mode-aggregated rollup,
+and fix the Story-002 follow-up where the aggregate snapshot was being
+overwritten with only the last-graded mode's counts.
+
+- `ProgressStatsStore` snapshot ops are now (day, language, quizMode)-keyed:
+  `snapshots(forQuizMode:)`/`(…,since:)` accessors, dedup/canonical scoped
+  per (day, mode). `allSnapshots`/`snapshots(since:)` still return the
+  aggregate (`quizMode == ""`) rows, so the Progress screen default is
+  unchanged.
+- New `recordSnapshot(allCards:modeCards:mode:streak:)` upserts BOTH the
+  aggregate row (from the cross-mode union) AND the per-mode row. The
+  back-compat `recordSnapshot(cards:streak:)` still writes the aggregate.
+- All 7 quiz-view call sites now pass `cardStoreProvider.allCards` (aggregate)
+  + `cardStore.allCards` (this mode) + the mode token, so the aggregate
+  reflects every mode and per-mode data is captured for the breakdown.
+- Streak is untouched — still per-language and shared across modes.
+- Tests: aggregate reflects all modes (not just the last graded), per-mode
+  rows independent, aggregate + per-mode coexist for a day (not dupes),
+  idempotent per (day, mode), shared-streak regression guard.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>

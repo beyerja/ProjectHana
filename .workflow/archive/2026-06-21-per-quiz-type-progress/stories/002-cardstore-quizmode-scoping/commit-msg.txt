@@ -1,0 +1,25 @@
+feat(progress): scope CardStore per quiz mode via CardStoreProvider
+
+Make spaced-repetition card state independent per quiz mode. Each quiz
+mode now reads/writes a CardStore scoped to (language, quizMode), so
+grading a fact in one mode never touches that fact's cards in another.
+
+- CardStore gains `quizMode`; every fetch predicate, seed, upsert, dedup,
+  and reset is scoped to (language, quizMode). seedIfNeeded takes an
+  optional category filter so a mode only holds cards for the categories
+  it serves.
+- New CardStoreProvider (@Observable) lazily builds + seeds one CardStore
+  per QuizModeID for the active language, rebuilt on language change. It
+  exposes store(for:), an aggregate `revision` (for Home invalidation),
+  and aggregate `allCards`/`dueCards` (for the Progress screen's default
+  mode-aggregated totals). typeCapital is seeded Countries-only.
+- Inject the provider into the environment in place of the single
+  CardStore (HanahuacApp + PreviewStore). Home resolves a per-mode store
+  for each row's counts; each quiz view + PilePicker resolves its own
+  mode's store; StatsView reads the provider's aggregate.
+- QuizModeID gains `servedCategories`; HomeQuizMode gains `allModes`.
+- Tests: PerQuizModeProgressTests covers per-mode isolation (grading one
+  mode leaves others untouched), no cross-mode dedup, reset scoping,
+  provider seeding, typeCapital Countries-only, and aggregate = union.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>

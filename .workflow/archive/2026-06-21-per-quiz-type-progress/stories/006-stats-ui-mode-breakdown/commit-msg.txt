@@ -1,0 +1,21 @@
+feat(progress): add a per-mode breakdown toggle to the Progress screen
+
+The Progress screen keeps showing mode-aggregated totals by default and
+adds a collapsible per-quiz-type breakdown, completing the per-quiz-type
+progress feature.
+
+- Add `ModeProgressSummary` (mirrors `LanguageProgressSummary`) computing
+  reviewed/review-tier/mastered/due per QuizModeID within the active
+  language. typeCapital naturally surfaces only its Countries cards; empty
+  modes yield zeroed rows.
+- Add a `modeBreakdownSection` to `StatsView` mirroring the existing
+  per-language breakdown: a toggle (collapsed by default, so the default
+  aggregated totals are unchanged) revealing each mode's totals.
+- Localize the new `stats.by_mode` string (en/fr/de/es-MX/ko; nah resolves
+  via the es-MX→en fallback chain). Mode row labels reuse the existing
+  `quiz.mode.*.title` strings.
+- Tests: ModeProgressSummary returns one row per mode in display order, a
+  fact graded in one mode shows under that mode only, empty modes zero out,
+  and the summary ignores other languages.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
