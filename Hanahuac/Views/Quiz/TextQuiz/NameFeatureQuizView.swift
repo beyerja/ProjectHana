@@ -357,8 +357,9 @@ struct NameFeatureQuizView: View {
             pending = questions.isEmpty ? nil : TextQuizSession(questions: questions)
         case let .new(newCards, category):
             features = MapFeatureCatalog.features(for: category)
-            // The active set is per-language; scope it to the active card store's language.
-            let store: ActiveSetStore? = UserDefaultsActiveSetStore(language: cardStore.language)
+            // The active set is per-language AND per-mode; scope it to the active language and this
+            // view's mode (Name That Place).
+            let store: ActiveSetStore? = UserDefaultsActiveSetStore(language: cardStore.language, mode: .nameFeature)
             learning = LearningSession(newCards: newCards, category: category, store: store)
         }
     }

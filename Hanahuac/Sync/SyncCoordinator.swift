@@ -71,12 +71,13 @@ final class SyncCoordinator {
 
     // MARK: - Store selection (reuses Story 002 types)
 
-    /// The active-set store to inject for `language`: ubiquitous when sync is active, local
-    /// `UserDefaults` otherwise. The active set is per-language, so the language is threaded through.
-    func makeActiveSetStore(language: String) -> ActiveSetStore {
+    /// The active-set store to inject for `(language, mode)`: ubiquitous when sync is active, local
+    /// `UserDefaults` otherwise. The active set is per-language AND per-quiz-mode, so both are threaded
+    /// through (`mode: nil` selects the pre-per-mode per-language key, for back-compat callers).
+    func makeActiveSetStore(language: String, mode: QuizModeID? = nil) -> ActiveSetStore {
         isSyncActive
-            ? makeUbiquitousActiveSetStore(language: language)
-            : UserDefaultsActiveSetStore(language: language)
+            ? makeUbiquitousActiveSetStore(language: language, mode: mode)
+            : UserDefaultsActiveSetStore(language: language, mode: mode)
     }
 
     /// The preference store to inject: ubiquitous when sync is active, local otherwise.

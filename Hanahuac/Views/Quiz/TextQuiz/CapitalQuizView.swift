@@ -322,8 +322,9 @@ struct CapitalQuizView: View {
             pending = questions.isEmpty ? nil : TextQuizSession(questions: questions)
         case .new:
             let newCards = cardStore.newCards(for: .country)
-            // The active set is per-language; scope it to the active card store's language.
-            let store = UserDefaultsActiveSetStore(language: cardStore.language)
+            // The active set is per-language AND per-mode; scope it to the active language and this
+            // view's mode (Type the Capital).
+            let store = UserDefaultsActiveSetStore(language: cardStore.language, mode: .typeCapital)
             learning = LearningSession(newCards: newCards, category: .country, store: store)
         }
     }

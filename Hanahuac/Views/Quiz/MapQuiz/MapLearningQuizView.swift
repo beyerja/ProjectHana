@@ -235,9 +235,12 @@ struct MapLearningQuizView: View {
             return
         }
         let features = MapFeatureCatalog.features(for: category ?? .country)
-        // The active set is per-language; scope it to the currently active language.
+        // The active set is per-language AND per-mode; scope it to the active language and this view's
+        // mode (Map Tab Quiz).
         let language = LanguageManager.shared.current.rawValue
-        let store: ActiveSetStore? = category != nil ? UserDefaultsActiveSetStore(language: language) : nil
+        let store: ActiveSetStore? = category != nil
+            ? UserDefaultsActiveSetStore(language: language, mode: .mapQuiz)
+            : nil
         session = MapLearningSession(
             newCards: newCards,
             allFeatures: features,

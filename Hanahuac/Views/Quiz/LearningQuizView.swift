@@ -17,9 +17,12 @@ struct LearningQuizView: View {
     private let geo = GeographyDataLoader.shared
 
     init(newCards: [ReviewCard], category: CardCategory? = nil) {
-        // The active set is per-language; scope it to the currently active language.
+        // The active set is per-language AND per-mode; scope it to the active language and this view's
+        // mode (Multiple Choice).
         let language = LanguageManager.shared.current.rawValue
-        let store: ActiveSetStore? = category != nil ? UserDefaultsActiveSetStore(language: language) : nil
+        let store: ActiveSetStore? = category != nil
+            ? UserDefaultsActiveSetStore(language: language, mode: .multipleChoice)
+            : nil
         _session = State(initialValue: LearningSession(newCards: newCards, category: category, store: store))
     }
 
