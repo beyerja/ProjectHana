@@ -11,6 +11,7 @@
 		0667BDF3A3506797F49130F7 /* ProgressMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */; };
 		07CE774FCB06D612C6E5C0DB /* QuizModeID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB8A20E0ACEDE001222E47 /* QuizModeID.swift */; };
 		09BA219B1A4B056A7AFD959A /* BorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C10211BD753EDB43C322A97 /* BorderLoader.swift */; };
+		0A0D024C464F46F94C7DDF15 /* ModeProgressSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3580FFCFBDC4E49F5CF02A35 /* ModeProgressSummary.swift */; };
 		0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */; };
 		0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */; };
 		15DEBBA2132BD4DB67D4AE7E /* ProgressBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A009B1EC5C53A5776FF842 /* ProgressBackup.swift */; };
@@ -70,6 +71,7 @@
 		92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */; };
 		9318D2A472DA5228C7650718 /* ProgressBackupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8A92BEB2B9C38CBB63762A /* ProgressBackupTests.swift */; };
 		948C446E9022BC5B0C7AE3A3 /* PerQuizModeMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */; };
+		99967CCBF62DC49B90F9C4BF /* ModeProgressSummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A31E112027070D0862AE7 /* ModeProgressSummaryTests.swift */; };
 		99ACF5363A414EA1682FCA0B /* RiverPathLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F68D9014B6C092CCEE7005 /* RiverPathLoader.swift */; };
 		9A38525C1DEC1C139BA921AA /* MapFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99FAC06BE37F9329DF0FC70 /* MapFeatureTests.swift */; };
 		9A89BF6774EB44FC0EEA5D6E /* SyncStatusPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45793BEFAE16929E78F73B0A /* SyncStatusPresentationTests.swift */; };
@@ -145,7 +147,9 @@
 		2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacApp.swift; sourceTree = "<group>"; };
 		2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningTests.swift; sourceTree = "<group>"; };
 		2FE505ACBF181DC9B41177E8 /* PerModeActiveSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerModeActiveSetTests.swift; sourceTree = "<group>"; };
+		324A31E112027070D0862AE7 /* ModeProgressSummaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeProgressSummaryTests.swift; sourceTree = "<group>"; };
 		33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningSession.swift; sourceTree = "<group>"; };
+		3580FFCFBDC4E49F5CF02A35 /* ModeProgressSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeProgressSummary.swift; sourceTree = "<group>"; };
 		3689189086A893C067FA6186 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C79D6B37134580FEAE9AD70 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		3EDD77E9938F36A3D49A28DB /* StatsChartsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsChartsSection.swift; sourceTree = "<group>"; };
@@ -267,6 +271,7 @@
 				E99FAC06BE37F9329DF0FC70 /* MapFeatureTests.swift */,
 				2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */,
 				F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */,
+				324A31E112027070D0862AE7 /* ModeProgressSummaryTests.swift */,
 				F5666DA35DFB133E8E641545 /* NameFeatureQuizTests.swift */,
 				8CFB005463FA4BC0CD7858BA /* PerLanguageProgressTests.swift */,
 				2FE505ACBF181DC9B41177E8 /* PerModeActiveSetTests.swift */,
@@ -452,6 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				B2DF1997D1D5E7FDF0F9BAEC /* LanguageProgressSummary.swift */,
+				3580FFCFBDC4E49F5CF02A35 /* ModeProgressSummary.swift */,
 				E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */,
 				3EDD77E9938F36A3D49A28DB /* StatsChartsSection.swift */,
 				C067B5B526D874D731E4EE9D /* StatsView.swift */,
@@ -627,6 +633,7 @@
 				F5FC0DE759E57E9892B08EE5 /* MapQuizView.swift in Sources */,
 				CA52ACD8483387D82F189F21 /* MappableFeature.swift in Sources */,
 				91BF4999F0EC34D6D1AB3271 /* MasteryTier.swift in Sources */,
+				0A0D024C464F46F94C7DDF15 /* ModeProgressSummary.swift in Sources */,
 				31E53F4FFE9E7836BF041B92 /* MountainRange.swift in Sources */,
 				190B6EF7CCCBA8FBF190F761 /* MultipleChoiceQuizView.swift in Sources */,
 				64BA046A2AA02BABA9422B62 /* MultipleChoiceSession.swift in Sources */,
@@ -680,6 +687,7 @@
 				9A38525C1DEC1C139BA921AA /* MapFeatureTests.swift in Sources */,
 				9F0CD581EDE922EAF670F9A8 /* MapLearningTests.swift in Sources */,
 				D81EDE85F2EF406BCE8CAA1C /* MapQuizRegionHelperTests.swift in Sources */,
+				99967CCBF62DC49B90F9C4BF /* ModeProgressSummaryTests.swift in Sources */,
 				49E3DC2EA9B65062D932545E /* NameFeatureQuizTests.swift in Sources */,
 				B9F99F753E98BB7121C19491 /* PerLanguageProgressTests.swift in Sources */,
 				32B0E3EAA85EEB6CF349C877 /* PerModeActiveSetTests.swift in Sources */,

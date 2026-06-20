@@ -59,6 +59,7 @@
 "stats.by_category" = "분류별";
 "stats.showing_language" = "표시 중:";
 "stats.by_language" = "언어별";
+"stats.by_mode" = "퀴즈 유형별";
 "stats.category_header" = "분류";
 "stats.mastery_tiers" = "숙달 단계";
 "stats.tier.not_started" = "시작 안 함";
