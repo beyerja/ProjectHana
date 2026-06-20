@@ -1,0 +1,14 @@
+# CODEOWNERS — obligatory independent review gate
+#
+# This assigns the entire repository to @Hanahuac-Bot as the required code owner.
+# A code-owner approval from the bot is required before merging to `main` — but ONLY
+# once branch protection is activated (see .github/branch-protection.md).
+#
+# SAFE MID-RUN: committing this CODEOWNERS file alone does NOT block any merge.
+# CODEOWNERS only designates *who* owns which paths; it does nothing on its own.
+# The merge gate is enforced solely by branch protection
+# (required_pull_request_reviews.require_code_owner_reviews). Until that branch
+# protection is enabled, this file has no blocking effect, so it is safe to commit
+# while this run's own PRs are still in flight.
+
+* @Hanahuac-Bot
