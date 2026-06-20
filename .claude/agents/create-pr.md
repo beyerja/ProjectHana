@@ -18,9 +18,12 @@ git push -u origin <branch>
 
 Create a PR targeting main using `gh`. **Write the body to a file with the Write tool, then pass
 `--body-file`** — never a heredoc or `--body "$(…)"` (command substitution / heredocs are always
-prompted; see CLAUDE.md → "Emit allowlistable command shapes"):
+prompted; see CLAUDE.md → "Emit allowlistable command shapes"). **Write the body file as
+`<story-dir>/pr-body.md`, not bare `.workflow/…`** — the story dir is already gitignored, so the
+scratch file never lingers as an untracked stray (a prior run left a stray `.workflow/pr-body-002.md`
+behind):
 ```
-gh pr create --base main --head <branch> --title "<story title>" --body-file <path-to-body-file>
+gh pr create --base main --head <branch> --title "<story title>" --body-file <story-dir>/pr-body.md
 ```
 - Body file contents: goal, bulleted summary of changes, test plan checklist.
 
