@@ -1,0 +1,40 @@
+// Append these entries to `permissions.allow` in .claude/settings.json.
+// All are read-only or bounded to the pre-authorized worktrees parent dir; none newly
+// auto-approves a standalone destructive command beyond the existing posture
+// (the global allowlist already grants `git add/commit/push/merge/reset/rm/...` from cwd).
+
+// --- read-only pipe filters (the largest prompt bucket: `… 2>&1 | tail -N`) ---
+"Bash(tail *)",
+"Bash(head *)",
+"Bash(wc *)",
+"Bash(sort *)",
+"Bash(cut *)",
+"Bash(comm *)",
+"Bash(uniq *)",
+"Bash(nl *)",
+"Bash(column *)",
+"Bash(jq *)",
+"Bash(sleep *)",
+"Bash(grep -r *)",
+
+// --- generalized worktree git (so a NEW slug never re-prompts the same verbs) ---
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* status*)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* add *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* commit -F *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* push*)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* log*)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* diff*)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* show*)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* checkout *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* switch *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* merge *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* fetch*)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* branch*)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* check-ignore *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* rev-parse *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* ls-files*)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* restore *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* stash*)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* mv *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* rm *)",
+"Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* worktree *)"
