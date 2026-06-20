@@ -93,6 +93,7 @@ struct MapQuizView: View {
             Task {
                 try? await Task.sleep(nanoseconds: delay)
                 session.advance()
+                cardStore.persistCardChanges()
                 progressStatsStore?.recordSnapshot(
                     cards: cardStore.allCards,
                     streak: StreakTracker.currentStreak(language: cardStore.language)

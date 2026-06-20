@@ -105,6 +105,31 @@ final class CardStoreTests: XCTestCase {
         XCTAssertGreaterThan(store.revision, before)
     }
 
+    func testPersistCardChangesBumpsRevision() {
+        let before = store.revision
+        store.persistCardChanges()
+        XCTAssertGreaterThan(store.revision, before)
+    }
+
+    func testPersistCardChangesPersistsCardMutation() throws {
+        // Insert and persist a card through the store so it is established on the shared context.
+        let card = ReviewCard(factID: "persist-fact", category: .country)
+        store.upsert(card)
+        XCTAssertFalse(card.hasGraduated)
+
+        // Mutate the live card in place (as a quiz session does while grading), then route the save
+        // through the new entry point rather than relying on autosave.
+        card.consecutiveCorrect = 3
+        card.hasGraduated = true
+        store.persistCardChanges()
+
+        // Re-read through a fresh store on the same context to confirm the mutation was flushed.
+        let freshStore = CardStore(modelContext: container.mainContext, language: AppLocale.en.rawValue)
+        let reread = try XCTUnwrap(freshStore.allCards.first { $0.factID == "persist-fact" })
+        XCTAssertTrue(reread.hasGraduated)
+        XCTAssertEqual(reread.consecutiveCorrect, 3)
+    }
+
     func testDeduplicateBumpsRevisionWhenDuplicatesRemoved() throws {
         // Insert two raw cards sharing a factID for the active language so deduplicate has work to do.
         let lang = AppLocale.en.rawValue

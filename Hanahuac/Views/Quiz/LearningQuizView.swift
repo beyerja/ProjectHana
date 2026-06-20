@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct LearningQuizView: View {
+    @Environment(CardStore.self) private var cardStore
     @Environment(\.dismiss) private var dismiss
 
     @State private var session: LearningSession
@@ -118,6 +119,7 @@ struct LearningQuizView: View {
             } else {
                 session.recordWrong()
             }
+            cardStore.persistCardChanges()
             answerState = .unanswered
             isAdvancing = false
             refreshQuestion()
