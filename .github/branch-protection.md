@@ -35,8 +35,19 @@ gh api -X PUT repos/beyerja/ProjectHana/branches/main/protection --input .github
 This enables branch protection on `main` requiring **one approving review from the code owner**
 (`require_code_owner_reviews: true`, `required_approving_review_count: 1`). The body
 ([`.github/branch-protection-main.json`](./branch-protection-main.json)) also sets
-`enforce_admins: true`, `dismiss_stale_reviews: true`, and disables force-pushes/deletions; status
-checks and push restrictions are left explicitly unset (`null`).
+`enforce_admins: true`, `dismiss_stale_reviews: true`, and disables force-pushes/deletions.
+
+Crucially, the body **preserves the existing required CI status checks** — `gitleaks` and
+`Build & Test` with `strict: true` — so activating the review gate does **not** drop the CI merge
+gate. Both the CI checks and the obligatory code-owner review are required to merge.
+
+> **Warning — a full `PUT .../protection` REPLACES the entire protection object; it does not
+> merge.** The request body must therefore enumerate *every* requirement to keep — the committed
+> JSON does this (it re-states the existing `required_status_checks` alongside the new
+> `required_pull_request_reviews`). If the repo's CI contexts change (checks renamed/added/removed),
+> update `required_status_checks.contexts` in this JSON to match the current checks **before**
+> activating, or activation will silently drop or stale the CI gate. `restrictions` is left unset
+> (`null`).
 
 ## Verify the gate is active
 
