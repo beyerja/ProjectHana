@@ -93,9 +93,11 @@ The body must start with the marker line and state the verdict, a short rational
 
 Find an existing summary comment by its marker, then update it in place if present, otherwise create one:
 ```sh
-# Find the existing marker comment id (empty if none yet):
+# Find the existing marker comment's numeric id (empty if none yet). Select `.databaseId`, NOT `.id`:
+# the REST endpoint `repos/.../issues/comments/{id}` needs the numeric databaseId, whereas `.id` is the
+# GraphQL node id (`IC_kwDO…`) and would 404.
 existing=$(gh -R <owner/repo> pr view <number> --json comments \
-  -q '.comments[] | select(.body | contains("<!-- independent-review -->")) | .id' | head -n1)
+  -q '.comments[] | select(.body | contains("<!-- independent-review -->")) | .databaseId' | head -n1)
 
 if [ -n "$existing" ]; then
     # NB: `gh api` does NOT accept `-R` — the repo belongs in the endpoint path.
