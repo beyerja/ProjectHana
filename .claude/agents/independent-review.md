@@ -118,8 +118,9 @@ You emit **one verdict per round**. The bounded loop around you is:
 
 1. You review and emit `STATUS: APPROVED` or `STATUS: CHANGES_REQUESTED` (+ inline comments + summary).
 2. On `CHANGES_REQUESTED`, an **implement agent** (a separate spawn) addresses **every** comment, **replies
-   to each review thread marking it resolved**, runs the project checks (`just lint`, `just test`), and
-   pushes the fixes.
+   to each review thread acknowledging the fix** (a reply alone does NOT resolve the thread on GitHub —
+   true resolution needs the `resolveReviewThread` GraphQL mutation, out of scope here), runs the project
+   checks (`just lint`, `just test`), and pushes the fixes.
 3. The orchestrator then **re-spawns a fresh `independent-review`** (you, cold again) on the updated PR.
 4. Repeat until `APPROVED`, capped at **3 rounds**; after the cap the orchestrator escalates to the user.
 

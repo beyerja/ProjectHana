@@ -32,9 +32,11 @@ merge a story PR.
 
    Key the loop off the reviewer's STATUS output, capped at **3 rounds**:
    - STATUS: CHANGES_REQUESTED → spawn an `implement-story` (implement) agent — again a **separate spawn,
-     never the reviewer** — to address **every** inline comment, **reply to each review thread marking it
-     resolved**, run the project checks (`just lint`, `just test`), and push the fixes. Then **re-spawn a
-     fresh `independent-review`** (cold again) on the updated PR. This counts as one round.
+     never the reviewer** — to address **every** inline comment, **reply to each review thread acknowledging
+     the fix** (a reply alone does NOT resolve the thread on GitHub — resolving needs the
+     `resolveReviewThread` GraphQL mutation, which is out of scope here), run the project checks
+     (`just lint`, `just test`), and push the fixes. Then **re-spawn a fresh `independent-review`** (cold
+     again) on the updated PR. This counts as one round.
    - STATUS: APPROVED → continue to step 6.
 
    After **3 rounds** without reaching APPROVED, **STOP looping and ESCALATE to the user** (do not loop
