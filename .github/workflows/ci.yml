@@ -1,20 +1,24 @@
 name: CI
 
-# The workflow triggers on ALL pushes to main and PRs targeting main — there is
-# intentionally NO workflow-level `paths:` filter. A path filter at this level would
-# skip the whole workflow on docs-only/workflow-only changes, leaving the required
-# "Build & Test" check stuck in "Pending" forever and blocking the PR from merging.
+# The workflow triggers on pushes/PRs to main AND to feature integration branches
+# (`feat/**`) — there is intentionally NO workflow-level `paths:` filter. A path filter
+# at this level would skip the whole workflow on docs-only/workflow-only changes, leaving
+# the required "Build & Test" check stuck in "Pending" forever and blocking the PR from
+# merging.
 #
-# Instead, a cheap `changes` job detects whether any build-relevant files changed and
-# the expensive macOS `Build & Test` job is gated on that. When nothing relevant
+# `feat/**` is included so that per-story PRs which target a feature integration branch
+# (e.g. `feat/downloadable-language-packs`) instead of `main` still get CI. Without it,
+# story PRs merge into the integration branch completely untested.
+#
+# Instead of a path filter, a cheap `changes` job detects whether any build-relevant files
+# changed and the expensive macOS `Build & Test` job is gated on that. When nothing relevant
 # changed, "Build & Test" is *skipped* — and GitHub treats a skipped required check as
-# passing, so non-code PRs are no longer blocked while still satisfying branch
-# protection.
+# passing, so non-code PRs are no longer blocked while still satisfying branch protection.
 on:
   push:
-    branches: [main]
+    branches: [main, 'feat/**']
   pull_request:
-    branches: [main]
+    branches: [main, 'feat/**']
 
 jobs:
   changes:
