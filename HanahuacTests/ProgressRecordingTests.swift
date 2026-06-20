@@ -29,7 +29,10 @@ final class ProgressRecordingTests: XCTestCase {
 
     /// Simulate what a quiz view does on review completion: advance the session, then record.
     private func recordAfterReview() {
-        statsStore.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
+        statsStore.recordSnapshot(
+            cards: cardStore.allCards,
+            streak: StreakTracker.currentStreak(language: cardStore.language)
+        )
     }
 
     func testSingleReviewRecordsOneSnapshotForToday() throws {

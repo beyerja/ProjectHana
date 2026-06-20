@@ -86,7 +86,8 @@ final class MapQuizSession {
             }
         }
 
-        StreakTracker.recordReview()
+        // The streak belongs to the reviewed card's language, keeping streaks per-language.
+        StreakTracker.recordReview(language: card.language)
 
         currentIndex += 1
         if currentIndex >= cards.count {

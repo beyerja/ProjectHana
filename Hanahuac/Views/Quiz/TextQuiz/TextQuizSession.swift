@@ -65,7 +65,8 @@ final class TextQuizSession {
         let quality: Int = (answerState == .correct) ? 4 : 1
         let result = SM2Scheduler.schedule(card: q.card, quality: quality)
         SM2Scheduler.apply(result, to: q.card, quality: quality)
-        StreakTracker.recordReview()
+        // The streak belongs to the reviewed card's language, keeping streaks per-language.
+        StreakTracker.recordReview(language: q.card.language)
         currentIndex += 1
         isFinished = currentIndex >= questions.count
         if !isFinished { answerState = .unanswered }
