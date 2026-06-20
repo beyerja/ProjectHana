@@ -71,6 +71,7 @@ struct CapitalQuizView: View {
 
     private func advancePending(_ session: TextQuizSession) {
         session.advance()
+        cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
             cards: cardStore.allCards,
             streak: StreakTracker.currentStreak(language: cardStore.language)
@@ -132,6 +133,7 @@ struct CapitalQuizView: View {
 
     private func advanceLearning(_ session: LearningSession) {
         if lastWasCorrect { session.recordCorrect() } else { session.recordWrong() }
+        cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
             cards: cardStore.allCards,
             streak: StreakTracker.currentStreak(language: cardStore.language)

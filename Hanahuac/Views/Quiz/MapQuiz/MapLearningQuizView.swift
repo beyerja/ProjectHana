@@ -4,6 +4,7 @@ import SwiftUI
 /// Map-based learning view for new cards in any category.
 /// Drives `MapLearningSession` (3-consecutive-correct graduation mechanic).
 struct MapLearningQuizView: View {
+    @Environment(CardStore.self) private var cardStore
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
@@ -96,6 +97,7 @@ struct MapLearningQuizView: View {
                 } else {
                     session.recordWrong()
                 }
+                cardStore.persistCardChanges()
                 if !session.isFinished {
                     withAnimation { position = .region(session.mapRegion) }
                 }

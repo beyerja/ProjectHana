@@ -81,6 +81,20 @@ final class CardStore {
         }
     }
 
+    /// Persists in-place mutations made to live `ReviewCard` instances on the shared `ModelContext`
+    /// (e.g. the SR fields a quiz session updates while grading) and bumps the revision signal.
+    ///
+    /// This is the routing point every quiz view calls after each graded answer. The sessions mutate
+    /// their `ReviewCard` `@Model` instances directly and would otherwise rely on SwiftData autosave,
+    /// which never bumps `revision` — leaving the home count pills and Progress screen stale until a
+    /// relaunch. Calling this saves the context and bumps the signal, so the pills update immediately
+    /// even on a grading path that skips `recordSnapshot`. SR field computation is unchanged; this only
+    /// flushes and signals the already-applied mutation.
+    func persistCardChanges() {
+        try? modelContext.save()
+        markChanged()
+    }
+
     /// Inserts/updates a card in the active language. The card is stamped with this store's
     /// `language` if it does not already carry one, so cards inserted through the active store always
     /// belong to that language's track (real seeded cards are already stamped; this also keeps
