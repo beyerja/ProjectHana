@@ -15,8 +15,9 @@ final class ProgressRecordingTests: XCTestCase {
         let schema = Schema([ReviewCard.self, DailyProgressSnapshot.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         container = try ModelContainer(for: schema, configurations: [config])
-        cardStore = CardStore(modelContext: container.mainContext)
-        statsStore = ProgressStatsStore(modelContext: container.mainContext)
+        let lang = AppLocale.en.rawValue
+        cardStore = CardStore(modelContext: container.mainContext, language: lang)
+        statsStore = ProgressStatsStore(modelContext: container.mainContext, language: lang)
     }
 
     override func tearDownWithError() throws {

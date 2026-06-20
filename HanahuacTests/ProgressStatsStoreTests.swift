@@ -11,8 +11,10 @@ final class ProgressStatsStoreTests: XCTestCase {
         let schema = Schema([ReviewCard.self, DailyProgressSnapshot.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         container = try ModelContainer(for: schema, configurations: [config])
-        store = ProgressStatsStore(modelContext: container.mainContext)
+        store = ProgressStatsStore(modelContext: container.mainContext, language: Self.lang)
     }
+
+    private static let lang = AppLocale.en.rawValue
 
     override func tearDownWithError() throws {
         container = nil
@@ -125,8 +127,8 @@ final class ProgressStatsStoreTests: XCTestCase {
     func testDeduplicateCollapsesSameDayDuplicates() throws {
         let d = try day(offset: -1)
         // Insert two raw snapshots for the same day directly.
-        let a = DailyProgressSnapshot(day: d, reviewsCompleted: 5)
-        let b = DailyProgressSnapshot(day: d, reviewsCompleted: 2)
+        let a = DailyProgressSnapshot(day: d, language: Self.lang, reviewsCompleted: 5)
+        let b = DailyProgressSnapshot(day: d, language: Self.lang, reviewsCompleted: 2)
         container.mainContext.insert(a)
         container.mainContext.insert(b)
         try container.mainContext.save()
@@ -141,8 +143,8 @@ final class ProgressStatsStoreTests: XCTestCase {
 
     func testRecordSnapshotCollapsesPreexistingDuplicates() throws {
         let today = Calendar.current.startOfDay(for: .now)
-        container.mainContext.insert(DailyProgressSnapshot(day: today, reviewsCompleted: 1))
-        container.mainContext.insert(DailyProgressSnapshot(day: today, reviewsCompleted: 1))
+        container.mainContext.insert(DailyProgressSnapshot(day: today, language: Self.lang, reviewsCompleted: 1))
+        container.mainContext.insert(DailyProgressSnapshot(day: today, language: Self.lang, reviewsCompleted: 1))
         try container.mainContext.save()
         XCTAssertEqual(store.allSnapshots.count, 2)
 

@@ -138,7 +138,7 @@ final class LearningTests: XCTestCase {
     // MARK: - dueCards excludes ungraduated cards
 
     func testDueCardsExcludesNewCards() {
-        let store = CardStore(modelContext: container.mainContext)
+        let store = CardStore(modelContext: container.mainContext, language: AppLocale.en.rawValue)
         store.upsert(ReviewCard(factID: "new1", category: .country))
         store.upsert(ReviewCard(factID: "new2", category: .country))
         let due = store.dueCards()
@@ -146,7 +146,7 @@ final class LearningTests: XCTestCase {
     }
 
     func testDueCardsIncludesGraduatedCards() {
-        let store = CardStore(modelContext: container.mainContext)
+        let store = CardStore(modelContext: container.mainContext, language: AppLocale.en.rawValue)
         let card = ReviewCard(factID: "grad1", category: .country, hasGraduated: true)
         store.upsert(card)
         let due = store.dueCards()
@@ -156,7 +156,7 @@ final class LearningTests: XCTestCase {
     // MARK: - newCards return
 
     func testNewCardsReturnsOnlyUngraduated() {
-        let store = CardStore(modelContext: container.mainContext)
+        let store = CardStore(modelContext: container.mainContext, language: AppLocale.en.rawValue)
         store.upsert(ReviewCard(factID: "new1", category: .country))
         store.upsert(ReviewCard(factID: "grad1", category: .country, hasGraduated: true))
         let newCards = store.newCards()
@@ -165,7 +165,7 @@ final class LearningTests: XCTestCase {
     }
 
     func testNewCardsEmptyWhenAllGraduated() {
-        let store = CardStore(modelContext: container.mainContext)
+        let store = CardStore(modelContext: container.mainContext, language: AppLocale.en.rawValue)
         store.upsert(ReviewCard(factID: "grad1", category: .country, hasGraduated: true))
         XCTAssertTrue(store.newCards().isEmpty)
     }
