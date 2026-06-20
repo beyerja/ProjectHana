@@ -98,12 +98,15 @@ existing=$(gh -R <owner/repo> pr view <number> --json comments \
   -q '.comments[] | select(.body | contains("<!-- independent-review -->")) | .id' | head -n1)
 
 if [ -n "$existing" ]; then
-    gh -R <owner/repo> api --method PATCH "repos/<owner/repo>/issues/comments/$existing" -F body=@<body-file>
+    # NB: `gh api` does NOT accept `-R` — the repo belongs in the endpoint path.
+    gh api --method PATCH "repos/<owner/repo>/issues/comments/$existing" -F body=@<body-file>
 else
     gh -R <owner/repo> pr comment <number> --body-file <body-file>
 fi
 ```
-Always use `gh -R <owner/repo>` and `--body-file` (never `cd … && gh …`, never `--body "$(…)"`).
+Always use `--body-file` / `-F body=@<file>` for the comment body (never `cd … && gh …`, never
+`--body "$(…)"`). Use `gh -R <owner/repo>` for `gh pr …` subcommands; for `gh api` put the repo in the
+endpoint path instead (it rejects `-R`).
 
 ## Feedback-loop contract
 
