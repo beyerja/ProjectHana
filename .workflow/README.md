@@ -49,6 +49,23 @@ Each story runs through `story-workflow`, which spawns a dedicated sub-agent per
    pauses for the user to review or merge, and never assumes the user merged manually.
 7. **Verify** — `verify-story` checks the acceptance criteria; on failure it re-implements.
 
+## Obligatory review gate (CODEOWNERS + branch protection)
+
+Independent review is **obligatory**: a code-owner approval from `@Hanahuac-Bot` is required before
+merging to `main`. This is set up by [`.github/CODEOWNERS`](../.github/CODEOWNERS) (assigns the repo
+to the bot) plus branch protection on `main`.
+
+See **[`.github/branch-protection.md`](../.github/branch-protection.md)** for the single ready-to-run
+`gh api … /branches/main/protection --input .github/branch-protection-main.json` activation command,
+when and how to flip the gate on, and the deactivation/rollback command.
+
+> **Bootstrapping guard.** Committing `CODEOWNERS` is **safe mid-run** — it blocks nothing on its
+> own; only branch protection enforces the gate. The activation command is the **FINAL** step, to be
+> run **only after** this run's own PRs merge; enabling it mid-run would deadlock the workflow on its
+> own un-reviewed PRs.
+
+(Story 004 owns the fuller setup/rotation docs that expand this section.)
+
 ## Starting the workflow
 
 Tell Claude: "Start the feature workflow for <feature description>" — it will spawn the `feature-orchestrator` agent.
