@@ -88,7 +88,10 @@ struct NameFeatureQuizView: View {
 
     private func advancePending(_ session: TextQuizSession) {
         session.advance()
-        progressStatsStore?.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
+        progressStatsStore?.recordSnapshot(
+            cards: cardStore.allCards,
+            streak: StreakTracker.currentStreak(language: cardStore.language)
+        )
         inputText = ""
         fieldFocused = true
     }
@@ -148,7 +151,10 @@ struct NameFeatureQuizView: View {
         } else {
             session.recordWrong()
         }
-        progressStatsStore?.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
+        progressStatsStore?.recordSnapshot(
+            cards: cardStore.allCards,
+            streak: StreakTracker.currentStreak(language: cardStore.language)
+        )
         localAnswerState = .unanswered
         inputText = ""
         fieldFocused = true
@@ -340,7 +346,8 @@ struct NameFeatureQuizView: View {
             pending = questions.isEmpty ? nil : TextQuizSession(questions: questions)
         case let .new(newCards, category):
             features = MapFeatureCatalog.features(for: category)
-            let store: ActiveSetStore? = UserDefaultsActiveSetStore()
+            // The active set is per-language; scope it to the active card store's language.
+            let store: ActiveSetStore? = UserDefaultsActiveSetStore(language: cardStore.language)
             learning = LearningSession(newCards: newCards, category: category, store: store)
         }
     }

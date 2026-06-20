@@ -53,6 +53,8 @@
 "stats.due_today" = "Vencen hoy";
 "stats.day_streak" = "Racha de días";
 "stats.by_category" = "Por categoría";
+"stats.showing_language" = "Mostrando:";
+"stats.by_language" = "Por idioma";
 "stats.category_header" = "Categoría";
 "stats.mastery_tiers" = "Niveles de dominio";
 "stats.tier.not_started" = "Sin comenzar";

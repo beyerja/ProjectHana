@@ -53,6 +53,8 @@
 "stats.due_today" = "Heute fällig";
 "stats.day_streak" = "Tages-Streak";
 "stats.by_category" = "Nach Kategorie";
+"stats.showing_language" = "Anzeige:";
+"stats.by_language" = "Nach Sprache";
 "stats.category_header" = "Kategorie";
 "stats.mastery_tiers" = "Beherrschungsstufen";
 "stats.tier.not_started" = "Nicht begonnen";

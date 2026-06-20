@@ -227,7 +227,9 @@ struct MapLearningQuizView: View {
             return
         }
         let features = MapFeatureCatalog.features(for: category ?? .country)
-        let store: ActiveSetStore? = category != nil ? UserDefaultsActiveSetStore() : nil
+        // The active set is per-language; scope it to the currently active language.
+        let language = LanguageManager.shared.current.rawValue
+        let store: ActiveSetStore? = category != nil ? UserDefaultsActiveSetStore(language: language) : nil
         session = MapLearningSession(
             newCards: newCards,
             allFeatures: features,

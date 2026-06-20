@@ -71,9 +71,12 @@ final class SyncCoordinator {
 
     // MARK: - Store selection (reuses Story 002 types)
 
-    /// The active-set store to inject: ubiquitous when sync is active, local `UserDefaults` otherwise.
-    func makeActiveSetStore() -> ActiveSetStore {
-        isSyncActive ? makeUbiquitousActiveSetStore() : UserDefaultsActiveSetStore()
+    /// The active-set store to inject for `language`: ubiquitous when sync is active, local
+    /// `UserDefaults` otherwise. The active set is per-language, so the language is threaded through.
+    func makeActiveSetStore(language: String) -> ActiveSetStore {
+        isSyncActive
+            ? makeUbiquitousActiveSetStore(language: language)
+            : UserDefaultsActiveSetStore(language: language)
     }
 
     /// The preference store to inject: ubiquitous when sync is active, local otherwise.
@@ -100,7 +103,9 @@ final class SyncCoordinator {
     /// genuine last resort — when even a guaranteed-local container cannot open — is the store
     /// deleted. The backup is always the recovery point; the store is never wiped silently.
     static func makeModelContainer() -> ModelContainer {
-        let schema = Schema(versionedSchema: SchemaV1.self)
+        // Head schema is V2 (adds the per-language `language` column); the migration plan upgrades an
+        // existing V1 store in place (lightweight) so progress is preserved on upgrade.
+        let schema = Schema(versionedSchema: SchemaV2.self)
         let config = makeConfiguration(schema: schema)
         do {
             return try ModelContainer(

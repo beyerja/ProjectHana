@@ -93,7 +93,10 @@ struct MapQuizView: View {
             Task {
                 try? await Task.sleep(nanoseconds: delay)
                 session.advance()
-                progressStatsStore?.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
+                progressStatsStore?.recordSnapshot(
+                    cards: cardStore.allCards,
+                    streak: StreakTracker.currentStreak(language: cardStore.language)
+                )
                 if !session.isFinished {
                     withAnimation { position = .region(session.mapRegion) }
                 }

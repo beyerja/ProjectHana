@@ -76,16 +76,16 @@ final class StatsTests: XCTestCase {
 
     func testStreak_firstReview_isOne() {
         let d = freshDefaults()
-        StreakTracker.recordReview(on: .now, defaults: d)
-        XCTAssertEqual(StreakTracker.currentStreak(defaults: d), 1)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: .now, defaults: d)
+        XCTAssertEqual(StreakTracker.currentStreak(language: AppLocale.en.rawValue, defaults: d), 1)
     }
 
     func testStreak_reviewTwiceSameDay_remainsOne() {
         let d = freshDefaults()
         let today = Date.now
-        StreakTracker.recordReview(on: today, defaults: d)
-        StreakTracker.recordReview(on: today, defaults: d)
-        XCTAssertEqual(StreakTracker.currentStreak(defaults: d), 1)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: today, defaults: d)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: today, defaults: d)
+        XCTAssertEqual(StreakTracker.currentStreak(language: AppLocale.en.rawValue, defaults: d), 1)
     }
 
     func testStreak_consecutiveDays_increments() throws {
@@ -93,9 +93,9 @@ final class StatsTests: XCTestCase {
         let cal = Calendar.current
         let today = cal.startOfDay(for: .now)
         let yesterday = try XCTUnwrap(cal.date(byAdding: .day, value: -1, to: today))
-        StreakTracker.recordReview(on: yesterday, defaults: d)
-        StreakTracker.recordReview(on: today, defaults: d)
-        XCTAssertEqual(StreakTracker.currentStreak(defaults: d), 2)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: yesterday, defaults: d)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: today, defaults: d)
+        XCTAssertEqual(StreakTracker.currentStreak(language: AppLocale.en.rawValue, defaults: d), 2)
     }
 
     func testStreak_threeDaysInARow() throws {
@@ -104,10 +104,10 @@ final class StatsTests: XCTestCase {
         let today = cal.startOfDay(for: .now)
         let d1 = try XCTUnwrap(cal.date(byAdding: .day, value: -2, to: today))
         let d2 = try XCTUnwrap(cal.date(byAdding: .day, value: -1, to: today))
-        StreakTracker.recordReview(on: d1, defaults: d)
-        StreakTracker.recordReview(on: d2, defaults: d)
-        StreakTracker.recordReview(on: today, defaults: d)
-        XCTAssertEqual(StreakTracker.currentStreak(defaults: d), 3)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: d1, defaults: d)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: d2, defaults: d)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: today, defaults: d)
+        XCTAssertEqual(StreakTracker.currentStreak(language: AppLocale.en.rawValue, defaults: d), 3)
     }
 
     func testStreak_missedDay_resetsToOne() throws {
@@ -115,8 +115,34 @@ final class StatsTests: XCTestCase {
         let cal = Calendar.current
         let today = cal.startOfDay(for: .now)
         let twoDaysAgo = try XCTUnwrap(cal.date(byAdding: .day, value: -2, to: today))
-        StreakTracker.recordReview(on: twoDaysAgo, defaults: d)
-        StreakTracker.recordReview(on: today, defaults: d)
-        XCTAssertEqual(StreakTracker.currentStreak(defaults: d), 1)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: twoDaysAgo, defaults: d)
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: today, defaults: d)
+        XCTAssertEqual(StreakTracker.currentStreak(language: AppLocale.en.rawValue, defaults: d), 1)
+    }
+
+    // MARK: - Per-language streak isolation
+
+    func testStreak_isIndependentPerLanguage() throws {
+        let d = freshDefaults()
+        let cal = Calendar.current
+        let today = cal.startOfDay(for: .now)
+        let yesterday = try XCTUnwrap(cal.date(byAdding: .day, value: -1, to: today))
+        let en = AppLocale.en.rawValue
+        let ko = AppLocale.ko.rawValue
+
+        // English: two consecutive days → streak 2.
+        StreakTracker.recordReview(language: en, on: yesterday, defaults: d)
+        StreakTracker.recordReview(language: en, on: today, defaults: d)
+        // Korean: only today → streak 1.
+        StreakTracker.recordReview(language: ko, on: today, defaults: d)
+
+        XCTAssertEqual(StreakTracker.currentStreak(language: en, defaults: d), 2)
+        XCTAssertEqual(StreakTracker.currentStreak(language: ko, defaults: d), 1)
+    }
+
+    func testStreak_languageWithNoReviewsIsZero() {
+        let d = freshDefaults()
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: .now, defaults: d)
+        XCTAssertEqual(StreakTracker.currentStreak(language: AppLocale.de.rawValue, defaults: d), 0)
     }
 }

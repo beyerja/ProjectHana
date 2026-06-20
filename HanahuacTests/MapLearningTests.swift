@@ -112,7 +112,7 @@ final class MapLearningTests: XCTestCase {
 
     func testActiveSetPersistenceSameIDsOnSecondConstruction() {
         let cards = makeCards(count: 5)
-        let store = InMemoryActiveSetStore()
+        let store = InMemoryActiveSetStore(language: AppLocale.en.rawValue)
 
         let session1 = LearningSession(newCards: cards, category: .country, store: store)
         let ids1 = session1.activeSet.map(\.factID)
@@ -125,7 +125,7 @@ final class MapLearningTests: XCTestCase {
 
     func testActiveSetPersistenceFiltersGraduatedIDs() throws {
         let cards = makeCards(count: 3)
-        let store = InMemoryActiveSetStore()
+        let store = InMemoryActiveSetStore(language: AppLocale.en.rawValue)
 
         let session1 = LearningSession(newCards: cards, category: .country, store: store)
         // Graduate one card outside the session to simulate it being marked done
@@ -143,7 +143,7 @@ final class MapLearningTests: XCTestCase {
 
     func testActiveSetPersistenceEmptyAfterFilterTriggersFreshDraw() {
         let cards = makeCards(count: 2)
-        let store = InMemoryActiveSetStore()
+        let store = InMemoryActiveSetStore(language: AppLocale.en.rawValue)
 
         // First session — persists IDs
         _ = LearningSession(newCards: cards, category: .country, store: store)
@@ -165,7 +165,7 @@ final class MapLearningTests: XCTestCase {
 
     func testActiveSetPersistenceUpdatedAfterGraduation() throws {
         let cards = makeCards(count: 5)
-        let store = InMemoryActiveSetStore()
+        let store = InMemoryActiveSetStore(language: AppLocale.en.rawValue)
         let session = LearningSession(newCards: cards, category: .country, store: store)
         let initialStoredCount = store.load(for: .country).count
         XCTAssertGreaterThan(initialStoredCount, 0)
@@ -259,7 +259,7 @@ final class MapLearningTests: XCTestCase {
 
     func testMapLearningPersistenceSameIDsOnSecondConstruction() {
         let cards = makeCards(count: 5)
-        let store = InMemoryActiveSetStore()
+        let store = InMemoryActiveSetStore(language: AppLocale.en.rawValue)
 
         let session1 = MapLearningSession(
             newCards: cards,
@@ -282,7 +282,7 @@ final class MapLearningTests: XCTestCase {
 
     func testMapLearningPersistenceFiltersGraduatedIDs() throws {
         let cards = makeCards(count: 3)
-        let store = InMemoryActiveSetStore()
+        let store = InMemoryActiveSetStore(language: AppLocale.en.rawValue)
 
         let session1 = MapLearningSession(
             newCards: cards,
@@ -309,7 +309,7 @@ final class MapLearningTests: XCTestCase {
 
     func testMapLearningPersistenceEmptyAfterFilterTriggersFreshDraw() {
         let cards = makeCards(count: 2)
-        let store = InMemoryActiveSetStore()
+        let store = InMemoryActiveSetStore(language: AppLocale.en.rawValue)
 
         // First session — persists IDs
         _ = MapLearningSession(
@@ -340,7 +340,7 @@ final class MapLearningTests: XCTestCase {
 
     func testMapLearningPersistenceUpdatedAfterGraduation() throws {
         let cards = makeCards(count: 5)
-        let store = InMemoryActiveSetStore()
+        let store = InMemoryActiveSetStore(language: AppLocale.en.rawValue)
         let session = MapLearningSession(
             newCards: cards,
             allFeatures: [],

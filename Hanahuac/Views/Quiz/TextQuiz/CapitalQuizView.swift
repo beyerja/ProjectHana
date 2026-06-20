@@ -71,7 +71,10 @@ struct CapitalQuizView: View {
 
     private func advancePending(_ session: TextQuizSession) {
         session.advance()
-        progressStatsStore?.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
+        progressStatsStore?.recordSnapshot(
+            cards: cardStore.allCards,
+            streak: StreakTracker.currentStreak(language: cardStore.language)
+        )
         inputText = ""
         fieldFocused = true
     }
@@ -129,7 +132,10 @@ struct CapitalQuizView: View {
 
     private func advanceLearning(_ session: LearningSession) {
         if lastWasCorrect { session.recordCorrect() } else { session.recordWrong() }
-        progressStatsStore?.recordSnapshot(cards: cardStore.allCards, streak: StreakTracker.currentStreak())
+        progressStatsStore?.recordSnapshot(
+            cards: cardStore.allCards,
+            streak: StreakTracker.currentStreak(language: cardStore.language)
+        )
         localAnswerState = .unanswered
         inputText = ""
         fieldFocused = true
@@ -232,6 +238,16 @@ struct CapitalQuizView: View {
 
     // MARK: - Empty / completion states
 
+    /// Advance the session and record today's progress rollup (no-op when no stats store is injected,
+    /// e.g. in previews).
+    private func advance(_ session: TextQuizSession) {
+        session.advance()
+        progressStatsStore?.recordSnapshot(
+            cards: cardStore.allCards,
+            streak: StreakTracker.currentStreak(language: cardStore.language)
+        )
+    }
+
     private var nothingDue: some View {
         ContentUnavailableView(
             L10n["capital_quiz.nothing_due_title"],
@@ -293,7 +309,9 @@ struct CapitalQuizView: View {
             pending = questions.isEmpty ? nil : TextQuizSession(questions: questions)
         case .new:
             let newCards = cardStore.newCards(for: .country)
-            learning = LearningSession(newCards: newCards, category: .country, store: UserDefaultsActiveSetStore())
+            // The active set is per-language; scope it to the active card store's language.
+            let store = UserDefaultsActiveSetStore(language: cardStore.language)
+            learning = LearningSession(newCards: newCards, category: .country, store: store)
         }
     }
 }

@@ -4,7 +4,9 @@ struct StatsView: View {
     @Environment(CardStore.self) private var cardStore
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
-    @State private var streak: Int = StreakTracker.currentStreak()
+    @Environment(\.modelContext) private var modelContext
+    @State private var streak: Int = 0 // resolved from the active language in onAppear
+    @State private var showLanguageBreakdown = false
 
     private var all: [ReviewCard] {
         cardStore.allCards
@@ -21,11 +23,13 @@ struct StatsView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 28) {
+                activeLanguageHeader
                 summarySection
                 categoryBreakdownSection
                 if let progressStatsStore {
                     StatsChartsSection(snapshots: progressStatsStore.allSnapshots)
                 }
+                languageBreakdownSection
                 tierLegendSection
             }
             .padding()
@@ -33,8 +37,80 @@ struct StatsView: View {
         .background(Theme.Palette.canvas.ignoresSafeArea())
         .navigationTitle(L10n["stats.title"])
         .inlineNavigationTitle()
-        .onAppear { streak = StreakTracker.currentStreak() }
+        .onAppear { streak = StreakTracker.currentStreak(language: languageManager.current.rawValue) }
         .id(languageManager.current)
+    }
+
+    // MARK: – Active-language header
+
+    /// Labels which language's progress the default view is showing.
+    private var activeLanguageHeader: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "globe")
+                .foregroundStyle(Theme.Palette.accent)
+            Text(L10n["stats.showing_language"])
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Text(languageManager.current.displayName)
+                .font(.caption.bold())
+                .foregroundStyle(.primary)
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    // MARK: – Per-language breakdown
+
+    private var languageBreakdownSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Button {
+                withAnimation { showLanguageBreakdown.toggle() }
+            } label: {
+                HStack {
+                    Text(L10n["stats.by_language"])
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Image(systemName: showLanguageBreakdown ? "chevron.up" : "chevron.down")
+                        .font(.caption.bold())
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            if showLanguageBreakdown {
+                VStack(spacing: 1) {
+                    ForEach(LanguageProgressSummary.all(context: modelContext)) { summary in
+                        languageRow(summary)
+                    }
+                }
+                .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 14))
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+            }
+        }
+    }
+
+    private func languageRow(_ summary: LanguageProgressSummary) -> some View {
+        let isActive = summary.locale == languageManager.current
+        return HStack {
+            Text(summary.locale.displayName)
+                .font(.subheadline.weight(isActive ? .bold : .regular))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            languageMetric("\(summary.mastered)", color: Theme.Palette.correct)
+            languageMetric("\(summary.reviewTier)", color: Theme.Palette.accent)
+            languageMetric("\(summary.due)", color: Theme.Palette.new)
+            languageMetric("\(summary.streak)", color: Theme.Palette.correct)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .background(isActive ? Theme.Palette.accent.opacity(0.08) : Color.clear)
+    }
+
+    private func languageMetric(_ value: String, color: Color) -> some View {
+        Text(value)
+            .font(.subheadline.bold())
+            .foregroundStyle(color)
+            .frame(width: 40)
     }
 
     // MARK: – Summary

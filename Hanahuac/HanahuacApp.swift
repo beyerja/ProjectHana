@@ -21,6 +21,7 @@ struct HanahuacApp: App {
 
 private struct AppRootView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(LanguageManager.self) private var languageManager
     @State private var cardStore: CardStore?
     @State private var progressStatsStore: ProgressStatsStore?
 
@@ -30,17 +31,33 @@ private struct AppRootView: View {
                 ContentView()
                     .environment(store)
                     .environment(statsStore)
+                    // Re-key on the active language so SwiftUI tears down and rebuilds the subtree
+                    // (and its @State sessions) when the user switches languages — the new
+                    // language's track is shown fresh and the previous one is left untouched.
+                    .id(languageManager.current.rawValue)
             } else {
                 ProgressView("Loading…")
             }
         }
-        .onAppear {
-            guard cardStore == nil else { return }
-            let store = CardStore(modelContext: modelContext)
-            let data = GeographyDataLoader.load()
-            store.seedIfNeeded(with: data)
-            cardStore = store
-            progressStatsStore = ProgressStatsStore(modelContext: modelContext)
+        .onAppear { rebuildStores(for: languageManager.current) }
+        // Rebuild the language-scoped stores whenever the active language changes so progress for
+        // each language stays fully independent and persistent.
+        .onChange(of: languageManager.current) { _, newLocale in
+            rebuildStores(for: newLocale)
         }
+    }
+
+    private func rebuildStores(for locale: AppLocale) {
+        let language = locale.rawValue
+        // Skip if the stores already reflect the active language (avoids redundant re-seeding).
+        if cardStore?.language == language, progressStatsStore?.language == language { return }
+        // One-time upgrade migration: attribute pre-existing global progress to the active language.
+        // Runs before seeding so it never races empty-language rows that seeding would create.
+        ProgressMigrator.migrateIfNeeded(context: modelContext, activeLanguage: language)
+        let store = CardStore(modelContext: modelContext, language: language)
+        let data = GeographyDataLoader.load()
+        store.seedIfNeeded(with: data)
+        cardStore = store
+        progressStatsStore = ProgressStatsStore(modelContext: modelContext, language: language)
     }
 }

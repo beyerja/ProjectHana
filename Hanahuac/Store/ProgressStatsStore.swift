@@ -2,23 +2,33 @@ import Foundation
 import Observation
 import SwiftData
 
-/// Persists and reads the daily progress rollup (`DailyProgressSnapshot`).
+/// Persists and reads the daily progress rollup (`DailyProgressSnapshot`) for a *single active
+/// language*.
 ///
-/// Mirrors `CardStore`'s shape: it owns a `ModelContext`, exposes a fetch accessor, and enforces
-/// per-day uniqueness in app logic via an upsert (CloudKit forbids `@Attribute(.unique)`, so two
-/// devices can independently write a snapshot for the same day; `recordSnapshot` and `deduplicate`
-/// converge those to one).
+/// Mirrors `CardStore`'s shape: it owns a `ModelContext`, is constructed with the active `language`
+/// (an `AppLocale.rawValue`), exposes language-scoped fetch accessors, and enforces per-day
+/// uniqueness *within that language* in app logic via an upsert (CloudKit forbids
+/// `@Attribute(.unique)`, so two devices can independently write a snapshot for the same
+/// (day, language); `recordSnapshot` and `deduplicate` converge those to one). Each language keeps
+/// its own day-by-day history; the same `day` across two languages is not a duplicate.
 @Observable
 final class ProgressStatsStore {
     private let modelContext: ModelContext
 
-    init(modelContext: ModelContext) {
+    /// The `AppLocale.rawValue` whose snapshots this store reads and writes.
+    let language: String
+
+    init(modelContext: ModelContext, language: String) {
         self.modelContext = modelContext
+        self.language = language
     }
 
-    /// All snapshots, oldest day first.
+    /// All snapshots for the active language, oldest day first.
     var allSnapshots: [DailyProgressSnapshot] {
-        var descriptor = FetchDescriptor<DailyProgressSnapshot>()
+        let lang = language
+        var descriptor = FetchDescriptor<DailyProgressSnapshot>(
+            predicate: #Predicate { $0.language == lang }
+        )
         descriptor.sortBy = [SortDescriptor(\.day)]
         return (try? modelContext.fetch(descriptor)) ?? []
     }
@@ -40,9 +50,9 @@ final class ProgressStatsStore {
     ) {
         let day = Calendar.current.startOfDay(for: date)
 
-        // Collapse any pre-existing duplicates for this day (e.g. from a CloudKit merge) first.
+        // Collapse any pre-existing duplicates for this (day, language) first.
         let snapshot = canonicalSnapshot(for: day) ?? {
-            let new = DailyProgressSnapshot(day: day)
+            let new = DailyProgressSnapshot(day: day, language: language)
             modelContext.insert(new)
             return new
         }()
@@ -86,9 +96,10 @@ final class ProgressStatsStore {
         try? modelContext.save()
     }
 
-    /// Collapses snapshots that share a `day` down to a single canonical snapshot, keeping the one
-    /// with the most reviews (then most graduated, then most mastered, as deterministic tie-breaks).
-    /// Returns the number of snapshots removed.
+    /// Collapses snapshots that share a `day` *within the active language* down to a single
+    /// canonical snapshot, keeping the one with the most reviews (then most graduated, then most
+    /// mastered, as deterministic tie-breaks). The same `day` in another language is NOT a
+    /// duplicate. Returns the number of snapshots removed.
     @discardableResult
     func deduplicate() -> Int {
         let grouped = Dictionary(grouping: allSnapshots) { Calendar.current.startOfDay(for: $0.day) }

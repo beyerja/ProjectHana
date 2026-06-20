@@ -28,12 +28,14 @@ private struct PreviewStoreModifier: ViewModifier {
             // In-memory preview container creation cannot fail in practice.
             // swiftlint:disable:next force_try
             let container = try! ModelContainer(for: schema, configurations: [config])
-            let s = CardStore(modelContext: container.mainContext)
+            let language = LanguageManager.shared.current.rawValue
+            let s = CardStore(modelContext: container.mainContext, language: language)
             s.seedIfNeeded(with: GeographyDataLoader.load())
             store = s
-            let stats = ProgressStatsStore(modelContext: container.mainContext)
+            let stats = ProgressStatsStore(modelContext: container.mainContext, language: language)
             #if DEBUG
                 for snapshot in DailyProgressSnapshot.sampleHistory() {
+                    snapshot.language = language
                     container.mainContext.insert(snapshot)
                 }
                 try? container.mainContext.save()
