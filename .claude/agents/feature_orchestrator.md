@@ -47,10 +47,18 @@ sub-agent for each:
 4. **Story loop** — for each story in `.workflow/stories.md` where status ≠ done:
    - Spawn `story-workflow` agent with the story's directory path
    - If the story comes back FAILED, re-run it (pass prior failure context)
-5. **Create PR** — spawn `create-pr` agent to push the current branch and open a PR against main with a description derived from `.workflow/feature.md`. Skip if a PR for this branch already exists.
+5. **Create PR** — first **integrate the latest `main`** into the feature branch (`git fetch origin`
+   then `git merge origin/main`), because `main` may have advanced since the worktree was cut — long
+   runs routinely see it move *several times* mid-flight. Resolve conflicts (regenerate
+   `Hanahuac.xcodeproj` rather than hand-merging the pbxproj; integrate with — don't duplicate —
+   infra a newer `main` PR already added, e.g. the versioned-schema/migration files), then re-run
+   `just lint` + `just test` and fix any new call sites a `main`-side change introduced against your
+   new APIs. Only then spawn `create-pr` to push and open the PR against main (skip if one already
+   exists). A stale-base PR shows `mergeState: DIRTY` with no checks — that means re-integrate `main`.
 6. **Wait for CI** — spawn `wait-for-ci` agent with the PR number from step 5
-   - STATUS: FAIL → fix the failure (spawn `implement-story` on the responsible story with CI failure as context), push, then repeat from step 6
+   - STATUS: FAIL → fix the failure (spawn `implement-story` on the responsible story with CI failure as context), push, then repeat from step 6. NOTE: CI runs against a **clean** store/build, so it catches failures a stale local simulator masks (e.g. SwiftData container-init aborts) — reproduce those locally with `xcrun simctl erase` before assuming a fix works.
    - STATUS: PASS → continue
+   - If `main` advances again while CI runs and the PR goes `DIRTY`, re-integrate `main` (step 5) and re-push.
 7. **Verify feature** — spawn `verify-feature` agent
    - STATUS: FAILED → identify responsible story, return to step 4 for that story
    - STATUS: DONE → continue

@@ -54,10 +54,16 @@ gate fails the build on these recurring violations — get them right while writ
 **SwiftData schema changes**
 When adding or removing fields on an `@Model` type:
 - The store opens through a **versioned schema + migration plan** (`Hanahuac/Sync/HanahuacSchema.swift`:
-  `SchemaV1` / `HanahuacMigrationPlan`). For a backwards-compatible (additive/lightweight) change, add a
-  new `SchemaVN` version and append a `.lightweight(fromVersion:toVersion:)` stage to the plan so the
-  existing on-disk store migrates **in place** (the user's progress is preserved). Do NOT rely on the
-  recovery path to discard data: `SyncCoordinator.makeModelContainer()` is intentionally
+  `SchemaV2` / `HanahuacMigrationPlan`). For a purely **additive** change (a new stored property that
+  carries a model-level default), DO NOT add a second `VersionedSchema` joined by
+  `.lightweight(fromVersion:toVersion:)`: a plan listing two versions that both point at the *same live
+  `@Model` types* aborts at container creation on a clean store with "retrieve an NSManagedObjectModel
+  version checksum while the model is still editable" (a stale local store masks it — it only shows up in
+  CI / after `simctl erase`). Instead bump the single head `SchemaVN` to the new shape and list ONLY it
+  (no stages); SwiftData performs the additive lightweight migration automatically and the existing
+  on-disk store upgrades **in place** (progress preserved). A real multi-version `.lightweight`/custom
+  stage is only correct between *distinct frozen* schema types (a NON-additive change). Either way, do
+  NOT rely on the recovery path to discard data: `SyncCoordinator.makeModelContainer()` is intentionally
   **non-destructive** — it backs the store up before any wipe and only wipes as a last resort.
 - Non-optional fields without a default value still crash on launch against a store that predates a
   proper migration. When iterating in the simulator, wipe the simulator's store (`xcrun simctl uninstall
