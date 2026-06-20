@@ -51,6 +51,9 @@ private struct AppRootView: View {
         let language = locale.rawValue
         // Skip if the stores already reflect the active language (avoids redundant re-seeding).
         if cardStore?.language == language, progressStatsStore?.language == language { return }
+        // One-time upgrade migration: attribute pre-existing global progress to the active language.
+        // Runs before seeding so it never races empty-language rows that seeding would create.
+        ProgressMigrator.migrateIfNeeded(context: modelContext, activeLanguage: language)
         let store = CardStore(modelContext: modelContext, language: language)
         let data = GeographyDataLoader.load()
         store.seedIfNeeded(with: data)

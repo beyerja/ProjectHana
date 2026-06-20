@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0114442720969F5864F55E6D /* PilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96647996ABAD24F4AB1F1941 /* PilePickerView.swift */; };
+		0667BDF3A3506797F49130F7 /* ProgressMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */; };
 		09BA219B1A4B056A7AFD959A /* BorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C10211BD753EDB43C322A97 /* BorderLoader.swift */; };
 		0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */; };
 		0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */; };
@@ -23,6 +24,7 @@
 		336381EEDC9A560F046C30C2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108E300896C44A17DFF98AED /* HomeView.swift */; };
 		349F2725D5ABAE6225537557 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EDCEF7B89BAFA774D2290F /* Theme.swift */; };
 		39E70882FFB1F0CD0D62FE90 /* GeographyDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56B267CB810DA87B1D70D42 /* GeographyDataLoader.swift */; };
+		3B8A466A7ADF199D163A44FA /* ProgressMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E3A6C56976B4F809760D23B /* ProgressMigrator.swift */; };
 		3BBC403170A14E326775578F /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B33F57D3ABE2A906E747101 /* L10n.swift */; };
 		3FED385A8C9B097850517F7F /* CardStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E69AF0C2DECD04EE4B147777 /* CardStore.swift */; };
 		410A526F6517C786D9480588 /* ProgressStatsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85289DD2C1AE0AE38568540 /* ProgressStatsStore.swift */; };
@@ -117,6 +119,7 @@
 		16C96CAC8649DD9B837C7678 /* AppLocaleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocaleTests.swift; sourceTree = "<group>"; };
 		19F68D9014B6C092CCEE7005 /* RiverPathLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RiverPathLoader.swift; sourceTree = "<group>"; };
 		1BE902F9973E13AC591CEBF4 /* seas.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = seas.json; sourceTree = "<group>"; };
+		1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressMigratorTests.swift; sourceTree = "<group>"; };
 		1F3DE116C4E72605CC5529EB /* LocalizedGeoNameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedGeoNameTests.swift; sourceTree = "<group>"; };
 		24E8429BB7FEDE82E96359FF /* TextQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextQuizSession.swift; sourceTree = "<group>"; };
 		2512100D917D9763B4ABB694 /* HanahuacLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacLogo.swift; sourceTree = "<group>"; };
@@ -133,6 +136,7 @@
 		45793BEFAE16929E78F73B0A /* SyncStatusPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatusPresentationTests.swift; sourceTree = "<group>"; };
 		46B3C69015B149060636051F /* MapLearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningQuizView.swift; sourceTree = "<group>"; };
 		4A9B4E84299EBAF69A5F57C4 /* KeyValueStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStore.swift; sourceTree = "<group>"; };
+		4E3A6C56976B4F809760D23B /* ProgressMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressMigrator.swift; sourceTree = "<group>"; };
 		4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapitalQuizView.swift; sourceTree = "<group>"; };
 		538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStatsStoreTests.swift; sourceTree = "<group>"; };
 		5E4F1B169628C363C05DB0D5 /* nah */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nah; path = nah.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -236,6 +240,7 @@
 				2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */,
 				F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */,
 				8CFB005463FA4BC0CD7858BA /* PerLanguageProgressTests.swift */,
+				1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */,
 				9CFA705339BAA792E8E11E85 /* ProgressRecordingTests.swift */,
 				538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */,
 				7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */,
@@ -435,6 +440,7 @@
 			children = (
 				4A9B4E84299EBAF69A5F57C4 /* KeyValueStore.swift */,
 				E3DFD56E1A9339FE9D6066DF /* PreferenceStore.swift */,
+				4E3A6C56976B4F809760D23B /* ProgressMigrator.swift */,
 				D1BC90F822B42EFC30C7EADC /* ProgressSchemaMigration.swift */,
 				BB14B38C73AC73496B822ADD /* SyncCoordinator.swift */,
 				9F56156DD1B70D620044397E /* SyncFeatureFlag.swift */,
@@ -586,6 +592,7 @@
 				53C2E037B85C8C89A414C2D4 /* PoleLabelCalculator.swift in Sources */,
 				4ED995FD4863E55F89107C10 /* PreferenceStore.swift in Sources */,
 				2180297825B2EE4291F570E2 /* PreviewStore.swift in Sources */,
+				3B8A466A7ADF199D163A44FA /* ProgressMigrator.swift in Sources */,
 				92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */,
 				80DBD247EEFBA0E0E3786C94 /* ProgressSchemaMigration.swift in Sources */,
 				410A526F6517C786D9480588 /* ProgressStatsStore.swift in Sources */,
@@ -629,6 +636,7 @@
 				9F0CD581EDE922EAF670F9A8 /* MapLearningTests.swift in Sources */,
 				D81EDE85F2EF406BCE8CAA1C /* MapQuizRegionHelperTests.swift in Sources */,
 				B9F99F753E98BB7121C19491 /* PerLanguageProgressTests.swift in Sources */,
+				0667BDF3A3506797F49130F7 /* ProgressMigratorTests.swift in Sources */,
 				69F5820A4B8C2E591AD48173 /* ProgressRecordingTests.swift in Sources */,
 				0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */,
 				FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */,
