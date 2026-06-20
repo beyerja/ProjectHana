@@ -34,6 +34,10 @@
 "settings.section.icloud" = "iCloud";
 "settings.language" = "언어";
 "settings.language.picker_title" = "앱 언어";
+"settings.language.downloading" = "다운로드 중…";
+"settings.language.download_failed" = "다운로드 실패";
+"settings.language.retry" = "다시 시도";
+"settings.language.available" = "사용 가능";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud 동기화";

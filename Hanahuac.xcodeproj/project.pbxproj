@@ -88,6 +88,7 @@
 		A8993F9B6F5EE4D9BF4EB35F /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DF698B124B767490E9361E /* LanguagePickerView.swift */; };
 		A8A94D2FDC44E49B9B0443FD /* QuizRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421BD7E949578F4FFA0BF9CF /* QuizRoute.swift */; };
 		ABA0A32BD133FC613F22CF09 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC57AFB83614F6804D3671A1 /* LanguageManager.swift */; };
+		AC241A2971A0A8704AA8497A /* LanguagePackRowState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5A7375CC86B1E599880C7A /* LanguagePackRowState.swift */; };
 		AEC45EB17BDE7F455C1CB7AE /* GeographyDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */; };
 		B0632565DFC723E523F01B3F /* MapFeatureRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F40EAE285B31D3FD21213A /* MapFeatureRendering.swift */; };
 		B144EBDC8C5F79A95B883FB5 /* AppLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C96CAC8649DD9B837C7678 /* AppLocaleTests.swift */; };
@@ -125,6 +126,8 @@
 		F5FC0DE759E57E9892B08EE5 /* MapQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE10D9C12442D7186628F76 /* MapQuizView.swift */; };
 		F85BD5459DFBA29F33879E88 /* CapitalQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */; };
 		FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */; };
+		FD15DC32B3786C1FDFCFD9D0 /* LanguagePickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E121E5EFCFF7540FBBF8ED76 /* LanguagePickerViewModelTests.swift */; };
+		FE56A7EE206BE3573E5980B7 /* LanguagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9CA1C0AAF0A663E0C337CA /* LanguagePickerViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,6 +213,7 @@
 		96A6378C2D06D307933A42E1 /* LearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningTests.swift; sourceTree = "<group>"; };
 		9716AF7F0E3C9128332682BD /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
 		983C356AE304785D4A76665B /* River.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = River.swift; sourceTree = "<group>"; };
+		9C5A7375CC86B1E599880C7A /* LanguagePackRowState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePackRowState.swift; sourceTree = "<group>"; };
 		9C5E0A4C8378942A60E6FAC8 /* SyncStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatus.swift; sourceTree = "<group>"; };
 		9CFA705339BAA792E8E11E85 /* ProgressRecordingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRecordingTests.swift; sourceTree = "<group>"; };
 		9E7710CFEA52939B5CC38E2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -236,10 +240,12 @@
 		C7DF698B124B767490E9361E /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		C7E2B565AEAAD1F772460F00 /* Hanahuac.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Hanahuac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2EADA5AE08E3AB2FDD015B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		CC9CA1C0AAF0A663E0C337CA /* LanguagePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerViewModel.swift; sourceTree = "<group>"; };
 		CE3DAF1FE3C961B24E3BE876 /* GeoNameResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNameResolverTests.swift; sourceTree = "<group>"; };
 		D0AE603D47A5DB8ED986C7F0 /* MapQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizSession.swift; sourceTree = "<group>"; };
 		D7E9A0245D99D63AB926FF88 /* LanguageCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCatalog.swift; sourceTree = "<group>"; };
 		DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasteryTier.swift; sourceTree = "<group>"; };
+		E121E5EFCFF7540FBBF8ED76 /* LanguagePickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerViewModelTests.swift; sourceTree = "<group>"; };
 		E3DFD56E1A9339FE9D6066DF /* PreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceStore.swift; sourceTree = "<group>"; };
 		E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoleLabelCalculator.swift; sourceTree = "<group>"; };
 		E6065359AA37AEFC736E0B30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -293,6 +299,7 @@
 				28541D220A20441BA2942BE5 /* LanguageManagerTests.swift */,
 				41D6ED9A00E4D4C2F2CF6776 /* LanguagePackBootstrapTests.swift */,
 				7883D7A9EFF23861283B4D12 /* LanguagePackDownloadStateTests.swift */,
+				E121E5EFCFF7540FBBF8ED76 /* LanguagePickerViewModelTests.swift */,
 				96A6378C2D06D307933A42E1 /* LearningTests.swift */,
 				1F3DE116C4E72605CC5529EB /* LocalizedGeoNameTests.swift */,
 				6C092259C29945C5CE6C89A2 /* LocalizedQuizPromptTests.swift */,
@@ -372,7 +379,9 @@
 		6CB4D1FD21A55029214EDBAB /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				9C5A7375CC86B1E599880C7A /* LanguagePackRowState.swift */,
 				C7DF698B124B767490E9361E /* LanguagePickerView.swift */,
+				CC9CA1C0AAF0A663E0C337CA /* LanguagePickerViewModel.swift */,
 				CC2EADA5AE08E3AB2FDD015B /* SettingsView.swift */,
 				7C111D9D119AAE2A508D7CA8 /* SyncStatusPresentation.swift */,
 			);
@@ -670,7 +679,9 @@
 				838EA759CFB9995D4D5AA18C /* LanguagePackBootstrap.swift in Sources */,
 				357724FCA6993E12ED2FB9B6 /* LanguagePackDownloadState.swift in Sources */,
 				BD53949E8ED47196CDEF6B47 /* LanguagePackProvider.swift in Sources */,
+				AC241A2971A0A8704AA8497A /* LanguagePackRowState.swift in Sources */,
 				A8993F9B6F5EE4D9BF4EB35F /* LanguagePickerView.swift in Sources */,
+				FE56A7EE206BE3573E5980B7 /* LanguagePickerViewModel.swift in Sources */,
 				8F98A26714D0217280C040A3 /* LanguageProgressSummary.swift in Sources */,
 				ED9937F2AC4E976EA91CB3C1 /* LearningQuizView.swift in Sources */,
 				16A319228D8757B6F595F322 /* LearningSession.swift in Sources */,
@@ -737,6 +748,7 @@
 				D1B5CF9272BC39C196371B53 /* LanguageManagerTests.swift in Sources */,
 				402988DDCA5A46927A62B5A2 /* LanguagePackBootstrapTests.swift in Sources */,
 				D03C47D9178B52406068A3F1 /* LanguagePackDownloadStateTests.swift in Sources */,
+				FD15DC32B3786C1FDFCFD9D0 /* LanguagePickerViewModelTests.swift in Sources */,
 				8D0E371BF5449F8DC3E68A81 /* LearningTests.swift in Sources */,
 				D271184A77C56BA40576BA3D /* LocalizedGeoNameTests.swift in Sources */,
 				C68CFF1817E61FD869159D72 /* LocalizedQuizPromptTests.swift in Sources */,
