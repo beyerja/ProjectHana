@@ -21,7 +21,12 @@ struct StatsView: View {
     }
 
     var body: some View {
-        ScrollView {
+        // Read both stores' mutation signals so SwiftUI Observation ties this view's invalidation to
+        // their writes; the fetch-derived computed properties below read no @Observable stored property
+        // and would otherwise never refresh after a quiz mutates cards or records a snapshot.
+        _ = cardStore.revision
+        _ = progressStatsStore?.revision
+        return ScrollView {
             VStack(spacing: 28) {
                 activeLanguageHeader
                 summarySection
