@@ -4,8 +4,14 @@ import SwiftUI
 /// Map-based learning view for new cards in any category.
 /// Drives `MapLearningSession` (3-consecutive-correct graduation mechanic).
 struct MapLearningQuizView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(LanguageManager.self) private var languageManager
+
+    /// The Map Tab Quiz "learn new cards" flow, so it persists into the `mapQuiz` store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .mapQuiz)
+    }
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
 

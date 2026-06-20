@@ -9,6 +9,10 @@ enum HomeQuizMode: Hashable {
     /// "Name the Country" mode).
     case nameFeature
 
+    /// All quiz modes, in display order. (`HomeQuizMode` carries no associated values, so this is the
+    /// stable full set the per-mode breakdown iterates over; the store layer iterates `QuizModeID`.)
+    static let allModes: [HomeQuizMode] = [.mapQuiz, .multipleChoice, .typeCapital, .nameFeature]
+
     /// The stable persisted token (`QuizModeID`) this UI mode maps to. Progress is keyed by this raw
     /// value, so the model/store/migrator layers (which have no SwiftUI dependency) share one constant
     /// set with the views via this bridge.

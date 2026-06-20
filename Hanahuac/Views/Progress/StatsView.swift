@@ -1,19 +1,22 @@
 import SwiftUI
 
 struct StatsView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.modelContext) private var modelContext
     @State private var streak: Int = 0 // resolved from the active language in onAppear
     @State private var showLanguageBreakdown = false
 
+    /// The default Progress view is mode-aggregated: it sums each fact's progress across all quiz
+    /// modes (per-mode breakdown is added in a later story). `allCards`/`dueCards` come from the
+    /// provider's union over the per-mode stores.
     private var all: [ReviewCard] {
-        cardStore.allCards
+        cardStoreProvider.allCards
     }
 
     private var dueCount: Int {
-        cardStore.dueCards().count
+        cardStoreProvider.dueCards().count
     }
 
     private var reviewedCount: Int {
@@ -24,7 +27,7 @@ struct StatsView: View {
         // Read both stores' mutation signals so SwiftUI Observation ties this view's invalidation to
         // their writes; the fetch-derived computed properties below read no @Observable stored property
         // and would otherwise never refresh after a quiz mutates cards or records a snapshot.
-        _ = cardStore.revision
+        _ = cardStoreProvider.revision
         _ = progressStatsStore?.revision
         return ScrollView {
             VStack(spacing: 28) {
