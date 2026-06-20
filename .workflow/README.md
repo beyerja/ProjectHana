@@ -27,6 +27,28 @@ This directory is managed by the feature-orchestrator agent and its sub-agents.
 | `merged` | PR merged, awaiting verification |
 | `done` | Verified and complete |
 
+## Per-story lifecycle (`story-workflow`)
+
+Each story runs through `story-workflow`, which spawns a dedicated sub-agent per step:
+
+1. **Break tasks** — `break-tasks`.
+2. **Implement** — `implement-story` (the implement agent).
+3. **Create PR** — `create-pr`.
+4. **Wait for CI** — `wait-for-ci`. Must be green before review; on failure, re-implement and re-push.
+5. **Independent review** — runs **after CI passes** so the reviewer sees code that builds. A fresh,
+   **cold-context** `independent-review` agent — a **separate spawn from the implement agent** (the
+   4-eye principle: the change is reviewed by someone who did not write it) — reviews the PR diff and
+   emits a verdict via STATUS:
+   - `CHANGES_REQUESTED` → a separate implement agent addresses every inline comment, replies to each
+     thread marking it resolved, runs `just lint`/`just test`, and pushes; then a **fresh**
+     `independent-review` runs again. This feedback loop is **bounded to 3 rounds**; after 3 rounds
+     without approval the workflow **escalates to the user** instead of looping further.
+   - `APPROVED` → continue.
+6. **Merge** — once the reviewer emits `APPROVED` **and** CI is green, the workflow merges
+   **autonomously** by spawning `merge-pr`. There is **no human review/merge gate**: the workflow never
+   pauses for the user to review or merge, and never assumes the user merged manually.
+7. **Verify** — `verify-story` checks the acceptance criteria; on failure it re-implements.
+
 ## Starting the workflow
 
 Tell Claude: "Start the feature workflow for <feature description>" — it will spawn the `feature-orchestrator` agent.
