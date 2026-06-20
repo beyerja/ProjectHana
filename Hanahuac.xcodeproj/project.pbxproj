@@ -58,6 +58,7 @@
 		89BAB351841F9FF51443F22D /* QuizPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF2AEB96E37A3798632C4A8 /* QuizPlaceholderView.swift */; };
 		8BD76201C8B44BDBE5A83E8B /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C79D6B37134580FEAE9AD70 /* Country.swift */; };
 		8D0E371BF5449F8DC3E68A81 /* LearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A6378C2D06D307933A42E1 /* LearningTests.swift */; };
+		8F98A26714D0217280C040A3 /* LanguageProgressSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF1997D1D5E7FDF0F9BAEC /* LanguageProgressSummary.swift */; };
 		8FF3959B891ECBCF499BCEE3 /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */; };
 		91BF4999F0EC34D6D1AB3271 /* MasteryTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */; };
 		92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */; };
@@ -173,6 +174,7 @@
 		A8A920142B5EE81A611BBC5C /* ActiveSetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSetStore.swift; sourceTree = "<group>"; };
 		B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
 		B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoaderTests.swift; sourceTree = "<group>"; };
+		B2DF1997D1D5E7FDF0F9BAEC /* LanguageProgressSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageProgressSummary.swift; sourceTree = "<group>"; };
 		B8BC8FDD71EB406D6A8DF545 /* sea-borders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sea-borders.json"; sourceTree = "<group>"; };
 		BB14B38C73AC73496B822ADD /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
 		BCFB55464417EC0B009B6930 /* CardDedupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDedupTests.swift; sourceTree = "<group>"; };
@@ -414,6 +416,7 @@
 		B0C9E55D8F6E10C673C56345 /* Progress */ = {
 			isa = PBXGroup;
 			children = (
+				B2DF1997D1D5E7FDF0F9BAEC /* LanguageProgressSummary.swift */,
 				E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */,
 				3EDD77E9938F36A3D49A28DB /* StatsChartsSection.swift */,
 				C067B5B526D874D731E4EE9D /* StatsView.swift */,
@@ -574,6 +577,7 @@
 				3BBC403170A14E326775578F /* L10n.swift in Sources */,
 				ABA0A32BD133FC613F22CF09 /* LanguageManager.swift in Sources */,
 				A8993F9B6F5EE4D9BF4EB35F /* LanguagePickerView.swift in Sources */,
+				8F98A26714D0217280C040A3 /* LanguageProgressSummary.swift in Sources */,
 				ED9937F2AC4E976EA91CB3C1 /* LearningQuizView.swift in Sources */,
 				16A319228D8757B6F595F322 /* LearningSession.swift in Sources */,
 				EB2A8A989227BF8833037F02 /* MapFeatureCatalog.swift in Sources */,

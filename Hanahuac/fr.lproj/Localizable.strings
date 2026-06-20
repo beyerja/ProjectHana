@@ -53,6 +53,8 @@
 "stats.due_today" = "À réviser aujourd'hui";
 "stats.day_streak" = "Jours consécutifs";
 "stats.by_category" = "Par catégorie";
+"stats.showing_language" = "Affichage :";
+"stats.by_language" = "Par langue";
 "stats.category_header" = "Catégorie";
 "stats.mastery_tiers" = "Niveaux de maîtrise";
 "stats.tier.not_started" = "Non commencé";

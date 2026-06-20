@@ -57,6 +57,8 @@
 "stats.due_today" = "오늘 예정";
 "stats.day_streak" = "연속 학습일";
 "stats.by_category" = "분류별";
+"stats.showing_language" = "표시 중:";
+"stats.by_language" = "언어별";
 "stats.category_header" = "분류";
 "stats.mastery_tiers" = "숙달 단계";
 "stats.tier.not_started" = "시작 안 함";

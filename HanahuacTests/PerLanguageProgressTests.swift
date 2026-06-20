@@ -149,4 +149,53 @@ final class PerLanguageProgressTests: XCTestCase {
         XCTAssertEqual(enAgain.allSnapshots.count, 1)
         XCTAssertEqual(enAgain.allSnapshots.first?.streak, 9)
     }
+
+    // MARK: - Per-language breakdown summary (Story 006)
+
+    private func freshDefaults() throws -> UserDefaults {
+        let name = "test.summary.\(UUID().uuidString)"
+        let d = try XCTUnwrap(UserDefaults(suiteName: name))
+        d.removePersistentDomain(forName: name)
+        return d
+    }
+
+    func testSummaryReflectsOnlyItsLanguageAndIsReadOnly() throws {
+        let en = cardStore(.en)
+        // One mastered card (reps high, ease high), one review card, one due card.
+        let mastered = ReviewCard(factID: "m", category: .country, repetitionCount: 6, hasGraduated: true)
+        let review = ReviewCard(factID: "r", category: .country, repetitionCount: 3, hasGraduated: true)
+        let due = ReviewCard(
+            factID: "d", category: .country, repetitionCount: 3,
+            nextReviewDate: .distantPast, hasGraduated: true
+        )
+        en.upsert(mastered)
+        en.upsert(review)
+        en.upsert(due)
+        // Korean gets a single card so it is non-empty but distinct.
+        cardStore(.ko).upsert(ReviewCard(factID: "k", category: .country, repetitionCount: 1))
+
+        let d = try freshDefaults()
+        StreakTracker.recordReview(language: AppLocale.en.rawValue, on: .now, defaults: d)
+
+        let enSummary = LanguageProgressSummary.make(for: .en, context: container.mainContext, defaults: d)
+        XCTAssertEqual(enSummary.reviewed, 3)
+        XCTAssertEqual(enSummary.mastered, 1)
+        XCTAssertGreaterThanOrEqual(enSummary.due, 1)
+        XCTAssertEqual(enSummary.streak, 1)
+
+        let koSummary = LanguageProgressSummary.make(for: .ko, context: container.mainContext, defaults: d)
+        XCTAssertEqual(koSummary.reviewed, 1)
+        XCTAssertEqual(koSummary.mastered, 0)
+        XCTAssertEqual(koSummary.streak, 0, "Korean has no streak; English's streak did not bleed in")
+
+        // Computing summaries did not mutate any track.
+        XCTAssertEqual(en.allCards.count, 3, "Summary computation is read-only")
+    }
+
+    func testSummaryAllCoversEveryLocaleWithZerosForEmpty() throws {
+        let d = try freshDefaults()
+        let summaries = LanguageProgressSummary.all(context: container.mainContext, defaults: d)
+        XCTAssertEqual(summaries.count, AppLocale.allCases.count)
+        XCTAssertTrue(summaries.allSatisfy { !$0.hasProgress }, "All languages empty → zeroed summaries")
+    }
 }
