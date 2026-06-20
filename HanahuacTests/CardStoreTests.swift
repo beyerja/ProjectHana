@@ -130,6 +130,32 @@ final class CardStoreTests: XCTestCase {
         XCTAssertEqual(reread.consecutiveCorrect, 3)
     }
 
+    func testPersistCardChangesUpdatesPileCountsTheRevisionDependencyReadsFrom() {
+        // A fresh card is "new" (not graduated) and so appears in newCards; it is not due. This is the
+        // exact data path PilePickerView's `_ = cardStore.revision` read depends on: when a quiz grades
+        // the card out of the new pile, persistCardChanges() must both bump revision and change the
+        // counts the pile picker fetches.
+        let card = ReviewCard(factID: "pile-shift", category: .country)
+        store.upsert(card)
+        XCTAssertEqual(store.newCards(for: .country).count, 1, "Card should start in the new pile")
+        XCTAssertEqual(store.dueCards(for: .country).count, 0, "Card should not start in the pending pile")
+
+        // Grade the card out of both piles: graduating it removes it from new, and a future review date
+        // keeps it out of pending.
+        card.hasGraduated = true
+        card.nextReviewDate = .distantFuture
+        let before = store.revision
+        store.persistCardChanges()
+
+        XCTAssertGreaterThan(store.revision, before, "persistCardChanges must bump the revision signal")
+        XCTAssertEqual(store.newCards(for: .country).count, 0, "Graduated card should leave the new pile")
+        XCTAssertEqual(store.dueCards(for: .country).count, 0, "Future-dated card should not be pending")
+
+        // Confirm the mutation is durable via a fresh store re-read on the same context.
+        let freshStore = CardStore(modelContext: container.mainContext, language: AppLocale.en.rawValue)
+        XCTAssertEqual(freshStore.newCards(for: .country).count, 0)
+    }
+
     func testDeduplicateBumpsRevisionWhenDuplicatesRemoved() throws {
         // Insert two raw cards sharing a factID for the active language so deduplicate has work to do.
         let lang = AppLocale.en.rawValue
