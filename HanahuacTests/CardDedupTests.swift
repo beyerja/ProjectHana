@@ -12,7 +12,7 @@ final class CardDedupTests: XCTestCase {
         let schema = Schema([ReviewCard.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         container = try ModelContainer(for: schema, configurations: [config])
-        store = CardStore(modelContext: container.mainContext)
+        store = CardStore(modelContext: container.mainContext, language: AppLocale.en.rawValue)
         geoData = GeographyDataLoader.load()
     }
 

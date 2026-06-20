@@ -71,7 +71,7 @@ final class SyncCoordinatorTests: XCTestCase {
 
     func testMakeModelContainerProducesUsableLocalContainer() {
         let container = SyncCoordinator.makeModelContainer()
-        let store = CardStore(modelContext: ModelContext(container))
+        let store = CardStore(modelContext: ModelContext(container), language: AppLocale.en.rawValue)
         store.upsert(ReviewCard(factID: "smoke-test", category: .country))
         XCTAssertTrue(store.allCards.contains { $0.factID == "smoke-test" })
         store.resetAll()
