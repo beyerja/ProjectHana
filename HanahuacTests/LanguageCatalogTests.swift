@@ -84,6 +84,30 @@ final class LanguageCatalogTests: XCTestCase {
         }
     }
 
+    // MARK: - ODR tag mapping (story 004)
+
+    func testBaseLanguagesHaveNoODRTags() {
+        XCTAssertTrue(AppLocale.en.odrTags.isEmpty, "base language en must never carry ODR tags")
+        XCTAssertTrue(AppLocale.esMX.odrTags.isEmpty, "base language es-MX must never carry ODR tags")
+    }
+
+    func testDownloadableLanguagesYieldExpectedODRTags() {
+        XCTAssertEqual(AppLocale.fr.odrTags, ["lang-fr"])
+        XCTAssertEqual(AppLocale.de.odrTags, ["lang-de"])
+        XCTAssertEqual(AppLocale.ko.odrTags, ["lang-ko"])
+        XCTAssertEqual(AppLocale.nah.odrTags, ["lang-nah"])
+    }
+
+    func testEveryDownloadablePackHasNonEmptyTags_andBaseHasNone() {
+        for locale in AppLocale.allCases {
+            if locale.isBundledBaseLanguage {
+                XCTAssertTrue(locale.odrTags.isEmpty, "\(locale.rawValue) is base → no tags")
+            } else {
+                XCTAssertFalse(locale.odrTags.isEmpty, "\(locale.rawValue) is downloadable → has a tag")
+            }
+        }
+    }
+
     // MARK: - AppLocale catalog-backed accessors
 
     func testAppLocaleFallbackChainMatchesDescriptor() {

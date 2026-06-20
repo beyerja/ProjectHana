@@ -63,8 +63,50 @@ protocol LanguagePackProvider {
 ///
 /// This lives on a concrete enum rather than a protocol extension because Swift forbids reading a
 /// static member through a protocol metatype (which the resolver's default argument needs). Call sites
-/// use the `LanguagePackProvider.active` alias below.
+/// use the `LanguagePackProviderHolder.active` accessor below.
+///
+/// ## Concurrency
+/// The ODR provider (story 004) downloads off the main thread and swaps `active` from a background
+/// completion handler, while synchronous, non-isolated resolution call sites (`L10n.string`, geo
+/// `localizedName`/`localizedCapital`) read `active` from any thread. To keep those reads race-free
+/// without forcing the whole synchronous resolution surface onto `@MainActor`, the backing storage is
+/// guarded by an `os_unfair_lock`: every get/set is mutually exclusive. The accessor type stays
+/// `LanguagePackProvider` so no call site changes beyond going through the computed property.
 enum LanguagePackProviderHolder {
-    /// The current provider. Tests that mutate this should restore the previous value in `tearDown`.
-    static var active: LanguagePackProvider = BundledLanguagePackProvider()
+    /// The lock guarding ``backingProvider``. Cheap, non-reentrant; only ever held for the duration of
+    /// a single pointer load/store.
+    private static let lock = NSLock()
+
+    /// The lock-guarded backing storage. Never read or written directly — go through ``active``.
+    private static var backingProvider: LanguagePackProvider = BundledLanguagePackProvider()
+
+    /// The current provider, read/written under ``lock`` so the async ODR provider can swap it from a
+    /// background thread while synchronous resolvers read it concurrently. Tests that mutate this
+    /// should restore the previous value in `tearDown`.
+    static var active: LanguagePackProvider {
+        get {
+            lock.lock()
+            defer {
+                lock.unlock()
+            }
+            return backingProvider
+        }
+        set {
+            lock.lock()
+            defer {
+                lock.unlock()
+            }
+            backingProvider = newValue
+        }
+    }
+
+    /// The single selection-path entry point: ask the active provider to lazily download `locale`'s
+    /// pack if it is delivered on demand. A no-op for providers that have nothing to download (the
+    /// bundled provider), so the selection path calls this unconditionally without branching on the
+    /// concrete provider type or on a language's delivery mode. Forwarded to ``ODRLanguagePackProvider``
+    /// when active; the actual ODR request is itself a no-op for base/already-downloaded languages.
+    @MainActor
+    static func requestDownloadIfNeeded(for locale: AppLocale) {
+        (active as? ODRLanguagePackProvider)?.requestDownload(for: locale)
+    }
 }

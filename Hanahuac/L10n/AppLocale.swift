@@ -38,6 +38,13 @@ enum AppLocale: String, CaseIterable, Identifiable {
         descriptor.availability == .bundledBase
     }
 
+    /// The On-Demand-Resources tag(s) that deliver this language's downloadable pack, or an empty set
+    /// for bundled base languages (en, es-MX), which are NEVER requested over ODR. Catalog-backed;
+    /// consumed by story 004's ODR provider to key its `NSBundleResourceRequest`.
+    var odrTags: Set<String> {
+        descriptor.odrTags
+    }
+
     /// Languages whose content/UI-string fallback chain is selected → Mexican Spanish (`es-MX`) →
     /// English, rather than the historical selected → English used by `fr`/`de`. These are the
     /// languages added with partial translation coverage, for which Mexican Spanish is a closer

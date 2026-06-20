@@ -35,4 +35,31 @@ struct LanguageDescriptor: Equatable {
     /// Whether this language is a bundled base language or a downloadable pack. Drives later
     /// stories' download UI; has no effect on the L10n fallback behavior re-architected here.
     let availability: Availability
+
+    /// The On-Demand-Resources tag(s) that deliver this language's downloadable pack (`.lproj` UI
+    /// strings plus geo-name JSON), or an empty set for ``Availability/bundledBase`` languages, which
+    /// ship in the app and are NEVER requested over ODR. Story 004's ODR provider keys its
+    /// `NSBundleResourceRequest` off these tags. By convention the tag for a downloadable language is
+    /// `"lang-<code>"` (e.g. `"lang-fr"`).
+    let odrTags: Set<String>
+
+    init(
+        code: String,
+        displayName: String,
+        fallbackChain: [AppLocale],
+        availability: Availability,
+        odrTags: Set<String>? = nil
+    ) {
+        self.code = code
+        self.displayName = displayName
+        self.fallbackChain = fallbackChain
+        self.availability = availability
+        // Base languages never carry tags; downloadable packs default to the conventional
+        // `"lang-<code>"` tag when not given an explicit set.
+        if let odrTags {
+            self.odrTags = odrTags
+        } else {
+            self.odrTags = availability == .downloadablePack ? ["lang-\(code)"] : []
+        }
+    }
 }
