@@ -144,7 +144,9 @@ struct MultipleChoiceQuizView: View {
             session.advance()
             cardStore.persistCardChanges()
             progressStatsStore?.recordSnapshot(
-                cards: cardStore.allCards,
+                allCards: cardStoreProvider.allCards,
+                modeCards: cardStore.allCards,
+                mode: .multipleChoice,
                 streak: StreakTracker.currentStreak(language: cardStore.language)
             )
             isAdvancing = false

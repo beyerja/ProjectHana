@@ -41,6 +41,7 @@
 		50B17A2F93D184FEAED3D88D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FDCB200865136E842DB317 /* ContentView.swift */; };
 		53C2E037B85C8C89A414C2D4 /* PoleLabelCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */; };
 		58EC26C66D332F8E7B88B468 /* MapLearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */; };
+		591EF8E1C86152E7D979EBAC /* PerModeSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D6DF935BA62491E7164B00 /* PerModeSnapshotTests.swift */; };
 		5AF36D6B52E58FCE7835FA9E /* CardDedupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFB55464417EC0B009B6930 /* CardDedupTests.swift */; };
 		5B59B89F003E80B24BAA470D /* sea-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = B8BC8FDD71EB406D6A8DF545 /* sea-borders.json */; };
 		5C3F3A38388D7D8C23D5E66F /* MapQuizRegionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */; };
@@ -167,6 +168,7 @@
 		6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPinCoordinateProvider.swift; sourceTree = "<group>"; };
 		6D781685E371E70F4ACB23A6 /* QuizSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSummaryView.swift; sourceTree = "<group>"; };
 		6D8E85F2AA5FFFC3920B316C /* country-borders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "country-borders.json"; sourceTree = "<group>"; };
+		72D6DF935BA62491E7164B00 /* PerModeSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerModeSnapshotTests.swift; sourceTree = "<group>"; };
 		758AF9EF8095AC6033447A90 /* StreakTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakTracker.swift; sourceTree = "<group>"; };
 		78224CB10B7DA7818B0C15AD /* DailyProgressSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgressSnapshot.swift; sourceTree = "<group>"; };
 		78FDCB200865136E842DB317 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */,
 				F5666DA35DFB133E8E641545 /* NameFeatureQuizTests.swift */,
 				8CFB005463FA4BC0CD7858BA /* PerLanguageProgressTests.swift */,
+				72D6DF935BA62491E7164B00 /* PerModeSnapshotTests.swift */,
 				5906EC2E701B118E0EF8A915 /* PerQuizModeProgressTests.swift */,
 				1B8A92BEB2B9C38CBB63762A /* ProgressBackupTests.swift */,
 				1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */,
@@ -673,6 +676,7 @@
 				D81EDE85F2EF406BCE8CAA1C /* MapQuizRegionHelperTests.swift in Sources */,
 				49E3DC2EA9B65062D932545E /* NameFeatureQuizTests.swift in Sources */,
 				B9F99F753E98BB7121C19491 /* PerLanguageProgressTests.swift in Sources */,
+				591EF8E1C86152E7D979EBAC /* PerModeSnapshotTests.swift in Sources */,
 				E09F28AA2229C8780C0723C6 /* PerQuizModeProgressTests.swift in Sources */,
 				9318D2A472DA5228C7650718 /* ProgressBackupTests.swift in Sources */,
 				0667BDF3A3506797F49130F7 /* ProgressMigratorTests.swift in Sources */,
