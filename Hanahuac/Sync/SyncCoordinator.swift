@@ -103,9 +103,10 @@ final class SyncCoordinator {
     /// genuine last resort — when even a guaranteed-local container cannot open — is the store
     /// deleted. The backup is always the recovery point; the store is never wiped silently.
     static func makeModelContainer() -> ModelContainer {
-        // Head schema is V2 (adds the per-language `language` column); the migration plan upgrades an
-        // existing V1 store in place (lightweight) so progress is preserved on upgrade.
-        let schema = Schema(versionedSchema: SchemaV2.self)
+        // Head schema is V3 (adds the per-quiz-mode `quizMode` column atop V2's `language`); the
+        // migration plan upgrades an existing older store in place (lightweight) so progress is
+        // preserved on upgrade.
+        let schema = Schema(versionedSchema: SchemaV3.self)
         let config = makeConfiguration(schema: schema)
         do {
             return try ModelContainer(
