@@ -1,8 +1,13 @@
 import SwiftUI
 
 struct LearningQuizView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(\.dismiss) private var dismiss
+
+    /// The Multiple Choice "learn new cards" flow, so it persists into the `multipleChoice` store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .multipleChoice)
+    }
 
     @State private var session: LearningSession
     @State private var currentQuestion: MCQQuestion?

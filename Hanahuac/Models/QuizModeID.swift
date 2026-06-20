@@ -20,4 +20,14 @@ enum QuizModeID: String, CaseIterable {
 
     /// The token the one-time migration stamps onto all pre-existing (empty-`quizMode`) progress.
     static let legacyMigrationTarget: QuizModeID = .mapQuiz
+
+    /// The categories this mode serves cards for. `typeCapital` is Countries-only (only countries have
+    /// capitals); every other mode serves all categories. The store provider seeds only these
+    /// categories for a mode, so a mode never holds cards for a category it cannot quiz.
+    var servedCategories: [CardCategory] {
+        switch self {
+        case .typeCapital: [.country]
+        case .mapQuiz, .multipleChoice, .nameFeature: CardCategory.allCases
+        }
+    }
 }

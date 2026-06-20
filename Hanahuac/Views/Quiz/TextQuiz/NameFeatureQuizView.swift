@@ -16,12 +16,17 @@ struct NameFeatureQuizView: View {
         case new(newCards: [ReviewCard], category: CardCategory)
     }
 
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
     let source: Source
+
+    /// The map-pin "Name that place" mode, so it reads/writes the `nameFeature` store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .nameFeature)
+    }
 
     @State private var pending: TextQuizSession?
     @State private var learning: LearningSession?

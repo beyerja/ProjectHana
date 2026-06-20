@@ -1,11 +1,16 @@
 import SwiftUI
 
 struct PilePickerView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(LanguageManager.self) private var languageManager
 
     let mode: HomeQuizMode
     let category: CardCategory
+
+    /// The pile counts for THIS row's mode come from that mode's own store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: mode)
+    }
 
     private var newCount: Int {
         mode.supportsNew ? cardStore.newCards(for: category).count : 0

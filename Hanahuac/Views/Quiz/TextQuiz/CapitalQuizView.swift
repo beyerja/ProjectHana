@@ -6,12 +6,17 @@ import SwiftUI
 /// - `.new` (new cards) → a `LearningSession` (3-consecutive-correct graduation),
 ///   ending in a graduation completion screen.
 struct CapitalQuizView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
     let pile: Pile
+
+    /// "Type the Capital" is its own quiz mode, so it reads/writes the `typeCapital` store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .typeCapital)
+    }
 
     @State private var pending: TextQuizSession?
     @State private var learning: LearningSession?

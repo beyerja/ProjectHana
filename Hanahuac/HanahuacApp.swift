@@ -22,14 +22,14 @@ struct HanahuacApp: App {
 private struct AppRootView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(LanguageManager.self) private var languageManager
-    @State private var cardStore: CardStore?
+    @State private var cardStoreProvider: CardStoreProvider?
     @State private var progressStatsStore: ProgressStatsStore?
 
     var body: some View {
         Group {
-            if let store = cardStore, let statsStore = progressStatsStore {
+            if let provider = cardStoreProvider, let statsStore = progressStatsStore {
                 ContentView()
-                    .environment(store)
+                    .environment(provider)
                     .environment(statsStore)
                     // Re-key on the active language so SwiftUI tears down and rebuilds the subtree
                     // (and its @State sessions) when the user switches languages — the new
@@ -50,14 +50,17 @@ private struct AppRootView: View {
     private func rebuildStores(for locale: AppLocale) {
         let language = locale.rawValue
         // Skip if the stores already reflect the active language (avoids redundant re-seeding).
-        if cardStore?.language == language, progressStatsStore?.language == language { return }
-        // One-time upgrade migration: attribute pre-existing global progress to the active language.
-        // Runs before seeding so it never races empty-language rows that seeding would create.
+        if cardStoreProvider?.language == language, progressStatsStore?.language == language { return }
+        // One-time upgrade migration: attribute pre-existing global progress to the active language
+        // and (per-quiz-mode story) the legacy Map Tab Quiz mode. Runs before seeding so it never
+        // races empty-language/empty-quizMode rows that seeding would create.
         ProgressMigrator.migrateIfNeeded(context: modelContext, activeLanguage: language)
-        let store = CardStore(modelContext: modelContext, language: language)
         let data = GeographyDataLoader.load()
-        store.seedIfNeeded(with: data)
-        cardStore = store
+        // One CardStore per quiz mode, scoped to (language, mode); each is seeded for the categories
+        // its mode serves so progress is independent per mode.
+        let provider = CardStoreProvider(modelContext: modelContext, language: language, geographyData: data)
+        provider.seedAllModes()
+        cardStoreProvider = provider
         progressStatsStore = ProgressStatsStore(modelContext: modelContext, language: language)
     }
 }
