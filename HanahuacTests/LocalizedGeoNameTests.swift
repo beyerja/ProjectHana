@@ -1,7 +1,44 @@
 import XCTest
 @testable import Hanahuac
 
+/// Geo `localizedName`/`localizedCapital` resolution now flows through the active
+/// ``LanguagePackProvider`` keyed by the geo `id`, walking the fallback chain
+/// (selected → es-MX for ko/nah → en) across the provider's pack data and falling back to the
+/// model's bundled base (`name`/`capital`).
+///
+/// These tests activate a ``BundledLanguagePackProvider`` built from the SAME model under test, so
+/// the pack data carries exactly that model's per-language fields — proving the seam is the
+/// resolution path while preserving the original field-based outcomes.
 final class LocalizedGeoNameTests: XCTestCase {
+    private var savedProvider: LanguagePackProvider!
+
+    override func setUp() {
+        super.setUp()
+        savedProvider = LanguagePackProviderHolder.active
+    }
+
+    override func tearDown() {
+        LanguagePackProviderHolder.active = savedProvider
+        super.tearDown()
+    }
+
+    /// Activate a bundled provider whose packs are built from exactly the supplied geo models, so the
+    /// provider's pack data is the only source `localizedName`/`localizedCapital` can resolve from.
+    private func activateProvider(
+        countries: [Country] = [],
+        rivers: [River] = [],
+        mountains: [MountainRange] = [],
+        seas: [Sea] = []
+    ) {
+        let geography = GeographyData(
+            countries: countries,
+            rivers: rivers,
+            mountains: mountains,
+            seas: seas
+        )
+        LanguagePackProviderHolder.active = BundledLanguagePackProvider(geography: geography)
+    }
+
     // MARK: - Country
 
     func testCountry_allLocales_returnCorrectName() {
@@ -23,6 +60,7 @@ final class LocalizedGeoNameTests: XCTestCase {
             lat: 51,
             lon: 10
         )
+        activateProvider(countries: [country])
 
         XCTAssertEqual(country.localizedName(for: .en), "Germany")
         XCTAssertEqual(country.localizedName(for: .fr), "Allemagne")
@@ -33,6 +71,7 @@ final class LocalizedGeoNameTests: XCTestCase {
 
     func testCountry_missingFrenchName_fallsBackToEnglish() {
         let country = makeCountry(name: "Testland", nameDe: "Testland DE", nameEs: "Testland ES")
+        activateProvider(countries: [country])
 
         XCTAssertEqual(
             country.localizedName(for: .fr),
@@ -43,6 +82,7 @@ final class LocalizedGeoNameTests: XCTestCase {
 
     func testCountry_missingGermanName_fallsBackToEnglish() {
         let country = makeCountry(name: "Testland", nameFr: "Testland FR")
+        activateProvider(countries: [country])
 
         XCTAssertEqual(
             country.localizedName(for: .de),
@@ -53,6 +93,7 @@ final class LocalizedGeoNameTests: XCTestCase {
 
     func testCountry_missingSpanishName_fallsBackToEnglish() {
         let country = makeCountry(name: "Testland")
+        activateProvider(countries: [country])
 
         XCTAssertEqual(
             country.localizedName(for: .esMX),
@@ -64,6 +105,7 @@ final class LocalizedGeoNameTests: XCTestCase {
     /// Korean/Nahuatl name present → used directly.
     func testCountry_koAndNah_useTheirOwnName() {
         let country = makeCountry(name: "Testland", nameEs: "Tierra de Prueba", nameKo: "테스트랜드", nameNah: "Tlahtōllān")
+        activateProvider(countries: [country])
 
         XCTAssertEqual(country.localizedName(for: .ko), "테스트랜드")
         XCTAssertEqual(country.localizedName(for: .nah), "Tlahtōllān")
@@ -72,6 +114,7 @@ final class LocalizedGeoNameTests: XCTestCase {
     /// Korean/Nahuatl name missing but Spanish present → falls back to Mexican Spanish, not English.
     func testCountry_koAndNah_fallBackToSpanishBeforeEnglish() {
         let country = makeCountry(name: "Testland", nameEs: "Tierra de Prueba")
+        activateProvider(countries: [country])
 
         XCTAssertEqual(country.localizedName(for: .ko), "Tierra de Prueba")
         XCTAssertEqual(country.localizedName(for: .nah), "Tierra de Prueba")
@@ -80,6 +123,7 @@ final class LocalizedGeoNameTests: XCTestCase {
     /// Korean/Nahuatl and Spanish both missing → falls back to English.
     func testCountry_koAndNah_fallBackToEnglishWhenSpanishAlsoMissing() {
         let country = makeCountry(name: "Testland")
+        activateProvider(countries: [country])
 
         XCTAssertEqual(country.localizedName(for: .ko), "Testland")
         XCTAssertEqual(country.localizedName(for: .nah), "Testland")
@@ -105,6 +149,7 @@ final class LocalizedGeoNameTests: XCTestCase {
             lat: 46,
             lon: 2
         )
+        activateProvider(countries: [country])
 
         XCTAssertEqual(country.localizedCapital(for: .en), "Paris")
         XCTAssertEqual(country.localizedCapital(for: .esMX), "París")
@@ -127,6 +172,7 @@ final class LocalizedGeoNameTests: XCTestCase {
             sourceLat: 46.8, sourceLon: 9.2,
             mouthLat: 51.9, mouthLon: 4.0
         )
+        activateProvider(rivers: [river])
 
         XCTAssertEqual(river.localizedName(for: .en), "Rhine")
         XCTAssertEqual(river.localizedName(for: .fr), "Rhin")
@@ -149,6 +195,7 @@ final class LocalizedGeoNameTests: XCTestCase {
             sourceLat: 0, sourceLon: 0,
             mouthLat: 1, mouthLon: 1
         )
+        activateProvider(rivers: [river])
 
         XCTAssertEqual(river.localizedName(for: .fr), "TestRiver")
         XCTAssertEqual(river.localizedName(for: .de), "TestRiver")
@@ -174,6 +221,7 @@ final class LocalizedGeoNameTests: XCTestCase {
             highestPeak: "Mont Blanc",
             elevationMetres: 4808
         )
+        activateProvider(mountains: [range])
 
         XCTAssertEqual(range.localizedName(for: .en), "Alps")
         XCTAssertEqual(range.localizedName(for: .fr), "Alpes")
@@ -197,6 +245,7 @@ final class LocalizedGeoNameTests: XCTestCase {
             highestPeak: "TestPeak",
             elevationMetres: 1000
         )
+        activateProvider(mountains: [range])
 
         XCTAssertEqual(range.localizedName(for: .fr), "TestRange")
         XCTAssertEqual(range.localizedName(for: .esMX), "TestRange")
@@ -218,6 +267,7 @@ final class LocalizedGeoNameTests: XCTestCase {
             lat: 35.0,
             lon: 18.0
         )
+        activateProvider(seas: [sea])
 
         XCTAssertEqual(sea.localizedName(for: .en), "Mediterranean Sea")
         XCTAssertEqual(sea.localizedName(for: .fr), "Mer Méditerranée")
@@ -239,6 +289,7 @@ final class LocalizedGeoNameTests: XCTestCase {
             lat: 0,
             lon: 0
         )
+        activateProvider(seas: [sea])
 
         XCTAssertEqual(sea.localizedName(for: .fr), "TestSea")
         XCTAssertEqual(sea.localizedName(for: .esMX), "TestSea")
@@ -252,6 +303,7 @@ final class LocalizedGeoNameTests: XCTestCase {
     /// per-language fields do, proving `localizedName`/`localizedCapital` resolve through pack data
     /// (built from the bundled JSON) rather than a hardcoded per-locale switch.
     func testBundledPackData_matchesModelResolution() throws {
+        // Use the real shipped geography (the default active provider already covers it).
         let provider = BundledLanguagePackProvider()
         let data = GeographyDataLoader.shared
 
@@ -266,19 +318,22 @@ final class LocalizedGeoNameTests: XCTestCase {
     }
 
     /// Korean/Nahuatl resolution still walks the fallback chain (selected → es-MX → en) after the
-    /// switch-to-resolver refactor, matching the previous per-field switch outputs.
+    /// switch-to-provider refactor, matching the previous per-field switch outputs.
     func testResolution_walksFallbackChain_afterRefactor() {
         // No Nahuatl name, Spanish present → Mexican Spanish, never English.
         let country = makeCountry(name: "Testland", nameEs: "Tierra de Prueba")
-        XCTAssertEqual(country.localizedName(for: .nah), "Tierra de Prueba")
         // No Spanish either → English base.
-        let bare = makeCountry(name: "Bareland")
+        let bare = makeCountry(id: "yy", name: "Bareland")
+        activateProvider(countries: [country, bare])
+
+        XCTAssertEqual(country.localizedName(for: .nah), "Tierra de Prueba")
         XCTAssertEqual(bare.localizedName(for: .ko), "Bareland")
     }
 
     // MARK: - Helpers
 
     private func makeCountry(
+        id: String = "xx",
         name: String,
         nameFr: String? = nil,
         nameDe: String? = nil,
@@ -287,7 +342,7 @@ final class LocalizedGeoNameTests: XCTestCase {
         nameNah: String? = nil
     ) -> Country {
         Country(
-            id: "xx",
+            id: id,
             name: name,
             nameFr: nameFr,
             nameDe: nameDe,

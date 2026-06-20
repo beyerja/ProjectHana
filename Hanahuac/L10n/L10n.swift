@@ -29,10 +29,15 @@ enum L10n {
     /// own table with English as the final safety net.
     static func string(_ key: String, locale: AppLocale) -> String {
         for code in bundleCandidates(for: locale) {
-            guard let path = Bundle.main.path(forResource: code, ofType: "lproj"),
-                  let bundle = Bundle(path: path) else {
+            // Route each candidate code through the active provider's resolved string bundle, so
+            // string resolution flows through the same seam as geo names. With the bundled provider
+            // this returns the in-app `.lproj` (behavior unchanged); future ODR/CDN providers can
+            // surface a downloaded bundle without touching this call site. An unrecognized code (none
+            // exist today) is skipped, falling through to the next candidate.
+            guard let candidateLocale = AppLocale(rawValue: code) else {
                 continue
             }
+            let bundle = LanguagePackProviderHolder.active.stringBundle(for: candidateLocale)
             let value = bundle.localizedString(forKey: key, value: missing, table: nil)
             if value != missing {
                 return value

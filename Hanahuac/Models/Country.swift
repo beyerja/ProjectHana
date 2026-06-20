@@ -57,34 +57,17 @@ struct Country: Codable, Identifiable, Hashable {
         self.lon = lon
     }
 
-    /// Per-language names keyed by language code, consumed by ``GeoNameResolver`` instead of a
-    /// hardcoded per-locale `switch`. Built from this instance's bundled-JSON-backed fields; the
-    /// bundled provider exposes the same data as ``GeoNamePackData``.
-    private var namesByCode: [String: String] {
-        [
-            AppLocale.fr.rawValue: nameFr,
-            AppLocale.de.rawValue: nameDe,
-            AppLocale.esMX.rawValue: nameEs,
-            AppLocale.ko.rawValue: nameKo,
-            AppLocale.nah.rawValue: nameNah
-        ].compactMapValues { $0 }
-    }
-
-    private var capitalsByCode: [String: String] {
-        [
-            AppLocale.fr.rawValue: capitalFr,
-            AppLocale.de.rawValue: capitalDe,
-            AppLocale.esMX.rawValue: capitalEs,
-            AppLocale.ko.rawValue: capitalKo,
-            AppLocale.nah.rawValue: capitalNah
-        ].compactMapValues { $0 }
-    }
-
+    /// The localized name for `locale`, resolved through the active ``LanguagePackProvider``'s pack
+    /// data keyed by this country's `id`, walking the fallback chain (selected → es-MX for ko/nah →
+    /// en) and falling back to the bundled English `name` when no pack carries a value.
     func localizedName(for locale: AppLocale) -> String {
-        GeoNameResolver.resolve(locale, byCode: namesByCode, base: name)
+        GeoNameResolver.resolveThroughProvider(id: id, locale: locale, field: .name, base: name)
     }
 
+    /// The localized capital for `locale`, resolved through the active ``LanguagePackProvider``'s
+    /// pack data keyed by this country's `id`, with the bundled English `capital` as the final
+    /// fallback.
     func localizedCapital(for locale: AppLocale) -> String {
-        GeoNameResolver.resolve(locale, byCode: capitalsByCode, base: capital)
+        GeoNameResolver.resolveThroughProvider(id: id, locale: locale, field: .capital, base: capital)
     }
 }

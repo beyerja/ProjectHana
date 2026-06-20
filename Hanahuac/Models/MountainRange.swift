@@ -44,19 +44,9 @@ struct MountainRange: Codable, Identifiable, Hashable {
         self.elevationMetres = elevationMetres
     }
 
-    /// Per-language names keyed by language code, consumed by ``GeoNameResolver`` instead of a
-    /// hardcoded per-locale `switch`.
-    private var namesByCode: [String: String] {
-        [
-            AppLocale.fr.rawValue: nameFr,
-            AppLocale.de.rawValue: nameDe,
-            AppLocale.esMX.rawValue: nameEs,
-            AppLocale.ko.rawValue: nameKo,
-            AppLocale.nah.rawValue: nameNah
-        ].compactMapValues { $0 }
-    }
-
+    /// The localized name for `locale`, resolved through the active ``LanguagePackProvider``'s pack
+    /// data keyed by this range's `id`, with the bundled English `name` as the final fallback.
     func localizedName(for locale: AppLocale) -> String {
-        GeoNameResolver.resolve(locale, byCode: namesByCode, base: name)
+        GeoNameResolver.resolveThroughProvider(id: id, locale: locale, field: .name, base: name)
     }
 }

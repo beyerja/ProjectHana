@@ -6,11 +6,29 @@ import XCTest
 @MainActor
 final class LocalizedQuizPromptTests: XCTestCase {
     private var container: ModelContainer!
+    private var savedProvider: LanguagePackProvider!
 
     override func setUpWithError() throws {
         let schema = Schema([ReviewCard.self])
         let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
         container = try ModelContainer(for: schema, configurations: [config])
+
+        // Geo `localizedName`/`localizedCapital` resolve through the active provider keyed by geo id,
+        // so activate a bundled provider built from this test's own fixtures (otherwise the default
+        // provider, built from the real shipped geography, would not carry these test ids).
+        savedProvider = LanguagePackProviderHolder.active
+        let geography = GeographyData(
+            countries: sampleCountries(),
+            rivers: sampleRivers(),
+            mountains: [],
+            seas: []
+        )
+        LanguagePackProviderHolder.active = BundledLanguagePackProvider(geography: geography)
+    }
+
+    override func tearDown() {
+        LanguagePackProviderHolder.active = savedProvider
+        super.tearDown()
     }
 
     // MARK: - countryCapitalQuestions: prompt contains localized country name
