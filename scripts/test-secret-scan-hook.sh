@@ -10,6 +10,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 HOOK="${SCRIPT_DIR}/hooks/pre-commit-secret-scan.sh"
 
 # Shared harness: TMPROOT (+cleanup trap), pass/fail counters (pass/fail), ok()/ko().
@@ -114,11 +115,90 @@ test_rejects_mixed_real_and_fake() {
     fi
 }
 
+# --- (d) the committed hook actually RUNS under core.hooksPath=.githooks --------------------------
+# Regression for the silently-inert-hook finding: this repo sets core.hooksPath=.githooks, so a shim
+# under $GIT_DIR/hooks/ never runs. This test stands up a throwaway repo configured exactly like the
+# real one — copy in .githooks/ + scripts/hooks/, set core.hooksPath=.githooks — and drives real
+# `git commit` invocations to prove the secret scan fires from the version-controlled hook.
+
+# Build a repo whose hooks are wired exactly like ProjectHana (core.hooksPath -> committed .githooks).
+new_repo_with_committed_hooks() {
+    local dir
+    dir="$(mktemp -d "${TMPROOT}/hookrepoXXXXXX")"
+    git -C "${dir}" init -q -b feature
+    git -C "${dir}" config user.email test@example.com
+    git -C "${dir}" config user.name "Test"
+    git -C "${dir}" config commit.gpgsign false
+    # Replicate the committed hook layout and activate it the way install-hooks.sh does.
+    mkdir -p "${dir}/.githooks" "${dir}/scripts/hooks"
+    cp "${REPO_ROOT}/.githooks/pre-commit" "${dir}/.githooks/pre-commit"
+    cp "${HOOK}" "${dir}/scripts/hooks/pre-commit-secret-scan.sh"
+    chmod +x "${dir}/.githooks/pre-commit" "${dir}/scripts/hooks/pre-commit-secret-scan.sh"
+    git -C "${dir}" config core.hooksPath .githooks
+    printf 'initial\n' > "${dir}/base.txt"
+    git -C "${dir}" add base.txt
+    git -C "${dir}" commit -q -m "base"
+    printf '%s' "${dir}"
+}
+
+# Attempt a real commit in the given repo; echo the exit code (non-zero means the hook aborted it).
+try_commit() {
+    local dir="$1" msg="$2" rc
+    set +e
+    git -C "${dir}" commit -q -m "${msg}" >/dev/null 2>&1
+    rc=$?
+    set -e
+    printf '%s' "${rc}"
+}
+
+test_hookspath_rejects_token() {
+    local dir rc
+    dir="$(new_repo_with_committed_hooks)"
+    printf 'token = "%s"\n' "$(classic_token)" > "${dir}/leak.txt"
+    git -C "${dir}" add leak.txt
+    rc="$(try_commit "${dir}" "should be blocked")"
+    if [[ "${rc}" -ne 0 ]]; then
+        ok "core.hooksPath: real git commit of a planted token is REJECTED (exit ${rc})"
+    else
+        ko "core.hooksPath: committed hook did NOT run — planted token committed (exit 0)"
+    fi
+}
+
+test_hookspath_allows_clean() {
+    local dir rc
+    dir="$(new_repo_with_committed_hooks)"
+    printf 'func greet() { print("hi") }\n' > "${dir}/clean.swift"
+    git -C "${dir}" add clean.swift
+    rc="$(try_commit "${dir}" "clean change on feature branch")"
+    if [[ "${rc}" -eq 0 ]]; then
+        ok "core.hooksPath: clean commit on a non-main branch succeeds (main guard intact)"
+    else
+        ko "core.hooksPath: clean commit on feature branch should succeed, exited ${rc}"
+    fi
+}
+
+test_hookspath_blocks_main() {
+    local dir rc
+    dir="$(new_repo_with_committed_hooks)"
+    git -C "${dir}" branch -m main
+    printf 'change\n' > "${dir}/onmain.txt"
+    git -C "${dir}" add onmain.txt
+    rc="$(try_commit "${dir}" "direct to main")"
+    if [[ "${rc}" -ne 0 ]]; then
+        ok "core.hooksPath: direct commit to 'main' is still blocked (exit ${rc})"
+    else
+        ko "core.hooksPath: main-branch guard did not fire, exited 0"
+    fi
+}
+
 echo "== test-secret-scan-hook.sh =="
 test_rejects_classic
 test_rejects_fine_grained
 test_rejects_mixed_real_and_fake
 test_allows_ordinary
+test_hookspath_rejects_token
+test_hookspath_allows_clean
+test_hookspath_blocks_main
 
 echo
 # shellcheck disable=SC2154  # pass/fail are set in the sourced test-lib.sh

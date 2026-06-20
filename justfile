@@ -142,7 +142,8 @@ lint-yaml:
     direnv exec . yamllint "${yamlfiles[@]}"
     echo "yaml: clean."
 
-# Register the committed git hooks (secret-scanning pre-commit) into .git/hooks. Run once per clone.
+# Activate the committed git hooks by setting core.hooksPath=.githooks (secret-scan + main guard).
+# Run once per clone. Idempotent.
 install-hooks:
     bash scripts/install-hooks.sh
 
