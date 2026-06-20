@@ -24,6 +24,13 @@ final class DailyProgressSnapshot {
     /// Calendar-day boundary (`startOfDay`) this snapshot summarizes.
     var day: Date = Calendar.current.startOfDay(for: .now)
 
+    /// The `AppLocale.rawValue` this snapshot's stats belong to. Stats are tracked independently per
+    /// language, so the canonical identity of a snapshot is (`day`, `language`). An empty string is
+    /// the legacy/unassigned sentinel for rows created before per-language progress existed; the
+    /// one-time upgrade migration stamps those with the active locale. Defaulted (never
+    /// `@Attribute(.unique)`) to stay CloudKit-sync-ready.
+    var language: String = ""
+
     /// Number of reviews completed across all quiz modes on this day (cumulative, last-write-wins
     /// within the day via upsert).
     var reviewsCompleted: Int = 0
@@ -57,6 +64,7 @@ final class DailyProgressSnapshot {
 
     init(
         day: Date = Calendar.current.startOfDay(for: .now),
+        language: String = "",
         reviewsCompleted: Int = 0,
         cardsGraduated: Int = 0,
         streak: Int = 0,
@@ -72,6 +80,7 @@ final class DailyProgressSnapshot {
         seaMastered: Int = 0
     ) {
         self.day = day
+        self.language = language
         self.reviewsCompleted = reviewsCompleted
         self.cardsGraduated = cardsGraduated
         self.streak = streak

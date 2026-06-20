@@ -49,6 +49,7 @@
 		746B09167C861A24BC5F5CB7 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = FDBB60735040472DC32CCCC4 /* mountains.json */; };
 		79BEDF36CA641A0AB2262AA5 /* HanahuacLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2512100D917D9763B4ABB694 /* HanahuacLogo.swift */; };
 		7CDA86A9E84DA8D1EEB1C188 /* CountryPinCoordinateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */; };
+		80DBD247EEFBA0E0E3786C94 /* ProgressSchemaMigration.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC90F822B42EFC30C7EADC /* ProgressSchemaMigration.swift */; };
 		8531320041BBF033569F4760 /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14B38C73AC73496B822ADD /* SyncCoordinator.swift */; };
 		85AE02B97BA161330D662BDA /* River.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983C356AE304785D4A76665B /* River.swift */; };
 		866338A08A8637603AB53C2E /* QuizSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D781685E371E70F4ACB23A6 /* QuizSummaryView.swift */; };
@@ -180,6 +181,7 @@
 		C7E2B565AEAAD1F772460F00 /* Hanahuac.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Hanahuac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2EADA5AE08E3AB2FDD015B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D0AE603D47A5DB8ED986C7F0 /* MapQuizSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizSession.swift; sourceTree = "<group>"; };
+		D1BC90F822B42EFC30C7EADC /* ProgressSchemaMigration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSchemaMigration.swift; sourceTree = "<group>"; };
 		DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasteryTier.swift; sourceTree = "<group>"; };
 		E3DFD56E1A9339FE9D6066DF /* PreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceStore.swift; sourceTree = "<group>"; };
 		E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoleLabelCalculator.swift; sourceTree = "<group>"; };
@@ -430,6 +432,7 @@
 			children = (
 				4A9B4E84299EBAF69A5F57C4 /* KeyValueStore.swift */,
 				E3DFD56E1A9339FE9D6066DF /* PreferenceStore.swift */,
+				D1BC90F822B42EFC30C7EADC /* ProgressSchemaMigration.swift */,
 				BB14B38C73AC73496B822ADD /* SyncCoordinator.swift */,
 				9F56156DD1B70D620044397E /* SyncFeatureFlag.swift */,
 				9C5E0A4C8378942A60E6FAC8 /* SyncStatus.swift */,
@@ -581,6 +584,7 @@
 				4ED995FD4863E55F89107C10 /* PreferenceStore.swift in Sources */,
 				2180297825B2EE4291F570E2 /* PreviewStore.swift in Sources */,
 				92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */,
+				80DBD247EEFBA0E0E3786C94 /* ProgressSchemaMigration.swift in Sources */,
 				410A526F6517C786D9480588 /* ProgressStatsStore.swift in Sources */,
 				89BAB351841F9FF51443F22D /* QuizPlaceholderView.swift in Sources */,
 				A8A94D2FDC44E49B9B0443FD /* QuizRoute.swift in Sources */,

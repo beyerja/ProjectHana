@@ -97,7 +97,13 @@ final class SyncCoordinator {
         let schema = Schema([ReviewCard.self, DailyProgressSnapshot.self])
         let config = makeConfiguration(schema: schema)
         do {
-            return try ModelContainer(for: schema, configurations: [config])
+            // Pass the versioned migration plan so adding the defaulted `language` column upgrades an
+            // existing on-disk store in place (lightweight) instead of tripping the wipe path below.
+            return try ModelContainer(
+                for: schema,
+                migrationPlan: ProgressMigrationPlan.self,
+                configurations: config
+            )
         } catch {
             // Schema changed without a migration plan (or store incompatible) — wipe and start fresh.
             let storeURL = URL.applicationSupportDirectory.appending(path: "default.store")
