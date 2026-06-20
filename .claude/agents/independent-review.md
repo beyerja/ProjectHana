@@ -50,9 +50,12 @@ self-approval**. Therefore:
 - **NEVER run `gh pr review --request-changes`.**
 - Do NOT introduce or depend on any formal review-state (APPROVE / REQUEST_CHANGES) gate anywhere.
 
-Both **inline comments** and a **`COMMENT`-type review** are allowed on your own PR — those are what you
-use. `/code-review --comment` posts the inline comments; you add the summary comment (below). The
-**authoritative verdict is carried in your STATUS output**, which the orchestrator reads:
+You post only plain comments — both allowed on your own PR — and never a formal review state:
+
+- **Inline, line-level comments** on the diff, posted by `/code-review --comment`.
+- A single **issue-level summary comment** carrying a stable marker (see below), which you add.
+
+The **authoritative verdict is carried in your STATUS output**, which the orchestrator reads:
 
 - `STATUS: APPROVED` — no blocking findings; the change is ready to merge.
 - `STATUS: CHANGES_REQUESTED` — at least one blocking finding; the implementer must address it.
