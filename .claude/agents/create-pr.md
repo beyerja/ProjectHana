@@ -10,11 +10,23 @@ Requires: story directory path.
 just log start create-pr "<story-id>" || true
 ```
 
-Read `<story-dir>/spec.md` and recent commits. Push the current branch (use `git -C <worktree> …` in a
-worktree run rather than `cd … && git push`):
+Read `<story-dir>/spec.md` and recent commits. **First integrate the latest `origin/main` into the
+story branch BEFORE pushing**, because branch protection requires the PR head to be up to date and
+`main` routinely advances mid-run:
+```
+git -C <worktree> fetch origin main
+git -C <worktree> rebase origin/main   # rebase (linear) > merge here: a merge commit that adds no
+                                       # build-relevant diff vs base does NOT retrigger pull_request CI,
+                                       # leaving the PR BLOCKED with no checks. A rebased head always does.
+```
+Resolve any conflicts (regenerate `Hanahuac.xcodeproj` rather than hand-merging the pbxproj), then push
+(use `git -C <worktree> …` in a worktree run rather than `cd … && git push`):
 ```
 git push -u origin <branch>
 ```
+(If `main` advances again *after* the PR is open and it goes BLOCKED/DIRTY, re-integrate. Force-push is
+blocked under Auto mode, so once a branch is already pushed prefer `git merge origin/main` + push; only
+when that produces no CI run, nudge it with a single `git commit --allow-empty` + push.)
 
 Create a PR targeting main using `gh`. **Write the body to a file with the Write tool, then pass
 `--body-file`** — never a heredoc or `--body "$(…)"` (command substitution / heredocs are always

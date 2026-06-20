@@ -1,0 +1,7 @@
+{
+  "body": "Behavior change worth tracking (non-blocking; this PR documents it as deferred to Story 003): `cardStore.allCards` now returns only the **active mode's** cards, where the single ambient store previously returned the whole language's cards. So `recordSnapshot(cards:...)` upserts the `(day, language, quizMode==\"\")` aggregate snapshot with just one mode's counts — after a mapQuiz review the persisted daily snapshot reflects only mapQuiz, after an MCQ review only MCQ, so the stored daily history will under-count vs. the true cross-mode aggregate. The live Progress-screen totals stay correct (StatsView reads `provider.allCards`), so this is purely the persisted snapshot. Story 003 reworks snapshot recording to write per-mode rows plus a true aggregate — make sure that story passes `provider.allCards` (or accumulates) here so the aggregate snapshot stops being overwritten by a single mode. Same pattern in MultipleChoiceQuizView/CapitalQuizView/NameFeatureQuizView.",
+  "commit_id": "9363b7aba9e934172e1bdaf9ca008f7f57d63e07",
+  "path": "Hanahuac/Views/Quiz/MapQuiz/MapQuizView.swift",
+  "line": 104,
+  "side": "RIGHT"
+}

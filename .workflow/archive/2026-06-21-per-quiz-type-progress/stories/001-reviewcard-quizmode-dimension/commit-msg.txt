@@ -1,0 +1,21 @@
+feat(progress): add quizMode dimension to progress models (SchemaV3)
+
+Introduce `quizMode` as an orthogonal second dimension alongside `language`
+so spaced-repetition progress can be tracked independently per quiz mode.
+This story is the additive data-model foundation only — no store/runtime
+behavior changes yet (every path still defaults quizMode to "").
+
+- Add Foundation-only `QuizModeID` enum (mapQuiz/multipleChoice/typeCapital/
+  nameFeature) as the stable persisted token, with `legacyMigrationTarget`
+  (= mapQuiz) for the upgrade migration; bridge to the SwiftUI `HomeQuizMode`
+  via `quizModeID` / `init(quizModeID:)`.
+- Add defaulted `quizMode: String = ""` to `ReviewCard` and
+  `DailyProgressSnapshot` (CloudKit-safe: defaulted, no `.unique`). Card
+  identity becomes (factID, language, quizMode); the empty snapshot is the
+  mode-aggregated rollup.
+- Bump head schema to `SchemaV3` (additive lightweight migration, single
+  version, no stages — same pattern as V2); open the container against it.
+- Add `QuizModeDimensionTests` covering defaults, cross-mode coexistence of
+  the same (factID, language), token round-trip, and the migration target.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
