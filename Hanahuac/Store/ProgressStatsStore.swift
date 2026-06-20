@@ -18,6 +18,19 @@ final class ProgressStatsStore {
     /// The `AppLocale.rawValue` whose snapshots this store reads and writes.
     let language: String
 
+    /// Monotonic mutation counter bumped after every persisted change. The fetch accessor
+    /// (`allSnapshots`) runs a fresh `FetchDescriptor` and reads no `@Observable` stored property, so
+    /// SwiftUI Observation registers no dependency on it. A view that reads `revision` in its `body`
+    /// (even discarding the value) ties its invalidation to this counter and therefore recomputes its
+    /// fetch-derived numbers after each mutation.
+    private(set) var revision: Int = 0
+
+    /// Bumps `revision` after a persisted mutation. `&+=` (wrapping add) keeps a long-lived store from
+    /// trapping on overflow.
+    private func markChanged() {
+        revision &+= 1
+    }
+
     init(modelContext: ModelContext, language: String) {
         self.modelContext = modelContext
         self.language = language
@@ -94,6 +107,7 @@ final class ProgressStatsStore {
         snapshot.seaMastered = perCategoryMastered[.sea, default: 0]
 
         try? modelContext.save()
+        markChanged()
     }
 
     /// Collapses snapshots that share a `day` *within the active language* down to a single
@@ -111,7 +125,10 @@ final class ProgressStatsStore {
                 removed += 1
             }
         }
-        if removed > 0 { try? modelContext.save() }
+        if removed > 0 {
+            try? modelContext.save()
+            markChanged()
+        }
         return removed
     }
 

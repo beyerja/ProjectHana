@@ -151,4 +151,23 @@ final class ProgressStatsStoreTests: XCTestCase {
         store.recordSnapshot(cards: [card(.country, reps: 3)], streak: 1)
         XCTAssertEqual(store.allSnapshots.count, 1, "recordSnapshot should collapse same-day duplicates")
     }
+
+    // MARK: - Revision signal (Observation regression guard)
+
+    func testRecordSnapshotBumpsRevision() {
+        let before = store.revision
+        store.recordSnapshot(cards: [card(.country, reps: 3)], streak: 1)
+        XCTAssertGreaterThan(store.revision, before)
+    }
+
+    func testDeduplicateBumpsRevisionWhenDuplicatesRemoved() throws {
+        let d = try day(offset: -1)
+        container.mainContext.insert(DailyProgressSnapshot(day: d, language: Self.lang, reviewsCompleted: 5))
+        container.mainContext.insert(DailyProgressSnapshot(day: d, language: Self.lang, reviewsCompleted: 2))
+        try container.mainContext.save()
+        let before = store.revision
+        let removed = store.deduplicate()
+        XCTAssertEqual(removed, 1)
+        XCTAssertGreaterThan(store.revision, before)
+    }
 }

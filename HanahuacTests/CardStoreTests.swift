@@ -83,4 +83,62 @@ final class CardStoreTests: XCTestCase {
         let card = ReviewCard(factID: "de", category: .country)
         XCTAssertEqual(card.intervalDays, 0)
     }
+
+    // MARK: - Revision signal (Observation regression guard)
+
+    func testUpsertBumpsRevision() {
+        let before = store.revision
+        store.upsert(ReviewCard(factID: "rev-upsert", category: .country))
+        XCTAssertGreaterThan(store.revision, before)
+    }
+
+    func testResetAllBumpsRevision() {
+        store.seedIfNeeded(with: geoData)
+        let before = store.revision
+        store.resetAll()
+        XCTAssertGreaterThan(store.revision, before)
+    }
+
+    func testSeedIfNeededBumpsRevision() {
+        let before = store.revision
+        store.seedIfNeeded(with: geoData)
+        XCTAssertGreaterThan(store.revision, before)
+    }
+
+    func testPersistCardChangesBumpsRevision() {
+        let before = store.revision
+        store.persistCardChanges()
+        XCTAssertGreaterThan(store.revision, before)
+    }
+
+    func testPersistCardChangesPersistsCardMutation() throws {
+        // Insert and persist a card through the store so it is established on the shared context.
+        let card = ReviewCard(factID: "persist-fact", category: .country)
+        store.upsert(card)
+        XCTAssertFalse(card.hasGraduated)
+
+        // Mutate the live card in place (as a quiz session does while grading), then route the save
+        // through the new entry point rather than relying on autosave.
+        card.consecutiveCorrect = 3
+        card.hasGraduated = true
+        store.persistCardChanges()
+
+        // Re-read through a fresh store on the same context to confirm the mutation was flushed.
+        let freshStore = CardStore(modelContext: container.mainContext, language: AppLocale.en.rawValue)
+        let reread = try XCTUnwrap(freshStore.allCards.first { $0.factID == "persist-fact" })
+        XCTAssertTrue(reread.hasGraduated)
+        XCTAssertEqual(reread.consecutiveCorrect, 3)
+    }
+
+    func testDeduplicateBumpsRevisionWhenDuplicatesRemoved() throws {
+        // Insert two raw cards sharing a factID for the active language so deduplicate has work to do.
+        let lang = AppLocale.en.rawValue
+        container.mainContext.insert(ReviewCard(factID: "dup", language: lang, category: .country))
+        container.mainContext.insert(ReviewCard(factID: "dup", language: lang, category: .country))
+        try container.mainContext.save()
+        let before = store.revision
+        let removed = store.deduplicate()
+        XCTAssertEqual(removed, 1)
+        XCTAssertGreaterThan(store.revision, before)
+    }
 }

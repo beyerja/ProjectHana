@@ -88,6 +88,7 @@ struct NameFeatureQuizView: View {
 
     private func advancePending(_ session: TextQuizSession) {
         session.advance()
+        cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
             cards: cardStore.allCards,
             streak: StreakTracker.currentStreak(language: cardStore.language)
@@ -151,6 +152,7 @@ struct NameFeatureQuizView: View {
         } else {
             session.recordWrong()
         }
+        cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
             cards: cardStore.allCards,
             streak: StreakTracker.currentStreak(language: cardStore.language)

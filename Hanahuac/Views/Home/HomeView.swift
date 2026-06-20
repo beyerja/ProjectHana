@@ -6,7 +6,11 @@ struct HomeView: View {
     @State private var navigationPath = NavigationPath()
 
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        // Read the store's mutation signal so SwiftUI Observation ties this view's invalidation to
+        // CardStore writes; the count-pill fetches below read no @Observable stored property and would
+        // otherwise never refresh after a quiz mutates ReviewCard rows.
+        _ = cardStore.revision
+        return NavigationStack(path: $navigationPath) {
             ScrollView {
                 VStack(spacing: 28) {
                     HanahuacWordmark()
