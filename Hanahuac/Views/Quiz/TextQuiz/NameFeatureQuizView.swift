@@ -95,7 +95,9 @@ struct NameFeatureQuizView: View {
         session.advance()
         cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .nameFeature,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
         inputText = ""
@@ -159,7 +161,9 @@ struct NameFeatureQuizView: View {
         }
         cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .nameFeature,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
         localAnswerState = .unanswered

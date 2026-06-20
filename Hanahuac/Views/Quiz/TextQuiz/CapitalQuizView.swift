@@ -78,7 +78,9 @@ struct CapitalQuizView: View {
         session.advance()
         cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .typeCapital,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
         inputText = ""
@@ -140,7 +142,9 @@ struct CapitalQuizView: View {
         if lastWasCorrect { session.recordCorrect() } else { session.recordWrong() }
         cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .typeCapital,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
         localAnswerState = .unanswered
@@ -250,7 +254,9 @@ struct CapitalQuizView: View {
     private func advance(_ session: TextQuizSession) {
         session.advance()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .typeCapital,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
     }

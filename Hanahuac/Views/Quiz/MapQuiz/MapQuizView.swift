@@ -101,7 +101,9 @@ struct MapQuizView: View {
                 session.advance()
                 cardStore.persistCardChanges()
                 progressStatsStore?.recordSnapshot(
-                    cards: cardStore.allCards,
+                    allCards: cardStoreProvider.allCards,
+                    modeCards: cardStore.allCards,
+                    mode: .mapQuiz,
                     streak: StreakTracker.currentStreak(language: cardStore.language)
                 )
                 if !session.isFinished {
