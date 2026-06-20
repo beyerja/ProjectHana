@@ -90,27 +90,62 @@ final class SyncCoordinator {
     /// - flag ON: a configuration that attaches the private CloudKit database, compiled only behind
     ///   `#if CLOUDKIT_SYNC` so the default build never references the entitlement-bound API.
     ///
-    /// On failure the on-disk store is wiped and recreated (data re-seeds from bundled JSON), so a
-    /// schema change — or an iCloud sign-out that orphans a CloudKit-backed store — degrades to a
-    /// fresh local store rather than crashing.
+    /// The store is opened through a versioned schema + `HanahuacMigrationPlan`, so an
+    /// additive/lightweight schema change in a new build migrates the existing store **in place**
+    /// (progress preserved) instead of failing.
+    ///
+    /// If the container still cannot be opened, the recovery path is **non-destructive**: the
+    /// existing store is first copied to a timestamped backup under
+    /// `~/Library/Application Support/Hanahuac-backups/` (see ``ProgressBackup``), and only as a
+    /// genuine last resort — when even a guaranteed-local container cannot open — is the store
+    /// deleted. The backup is always the recovery point; the store is never wiped silently.
     static func makeModelContainer() -> ModelContainer {
-        let schema = Schema([ReviewCard.self, DailyProgressSnapshot.self])
+        let schema = Schema(versionedSchema: SchemaV1.self)
         let config = makeConfiguration(schema: schema)
         do {
-            return try ModelContainer(for: schema, configurations: [config])
+            return try ModelContainer(
+                for: schema,
+                migrationPlan: HanahuacMigrationPlan.self,
+                configurations: [config]
+            )
         } catch {
-            // Schema changed without a migration plan (or store incompatible) — wipe and start fresh.
-            let storeURL = URL.applicationSupportDirectory.appending(path: "default.store")
-            for suffix in ["", "-shm", "-wal"] {
-                try? FileManager.default.removeItem(at: URL(fileURLWithPath: storeURL.path + suffix))
-            }
-            // Fall back to a guaranteed-local configuration so the app still launches.
-            let localConfig = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-            do {
-                return try ModelContainer(for: schema, configurations: [localConfig])
-            } catch {
-                fatalError("Failed to create ModelContainer: \(error)")
-            }
+            return recoverContainer(schema: schema, primaryError: error)
+        }
+    }
+
+    /// Non-destructive recovery when the primary `ModelContainer` open fails.
+    ///
+    /// Order of operations (data safety first):
+    /// 1. Back up the existing store to a timestamped `…-autorecover` directory (best-effort).
+    /// 2. Try a guaranteed-local container WITHOUT deleting anything — a store that opens here keeps
+    ///    all the user's progress.
+    /// 3. Only if that also fails, delete the store (the backup from step 1 is the recovery point)
+    ///    and try once more so the app can still launch.
+    private static func recoverContainer(schema: Schema, primaryError: Error) -> ModelContainer {
+        let storeURL = URL.applicationSupportDirectory.appending(path: "default.store")
+        let localConfig = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+        // Step 1: back up before touching anything.
+        let backupDir = ProgressBackup.backUpStore(at: storeURL, reason: "autorecover")
+
+        // Step 2: try local WITHOUT wiping — preserves progress if the store is openable locally.
+        if let container = try? ModelContainer(for: schema, configurations: [localConfig]) {
+            return container
+        }
+
+        // Step 3: last resort — store is genuinely unopenable. The backup (step 1) is the recovery
+        // point. Delete and recreate so the app still launches (data re-seeds from bundled JSON).
+        for suffix in ProgressBackup.storeSuffixes {
+            try? FileManager.default.removeItem(at: URL(fileURLWithPath: storeURL.path + suffix))
+        }
+        do {
+            return try ModelContainer(for: schema, configurations: [localConfig])
+        } catch {
+            let backupNote = backupDir.map { " (a backup was saved to \($0.path))" } ?? ""
+            fatalError(
+                "Failed to create ModelContainer after non-destructive recovery"
+                    + "\(backupNote). primary=\(primaryError) final=\(error)"
+            )
         }
     }
 
