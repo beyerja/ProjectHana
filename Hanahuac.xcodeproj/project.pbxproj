@@ -58,6 +58,7 @@
 		714D2A18568B15E855DEB64E /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C067B5B526D874D731E4EE9D /* StatsView.swift */; };
 		746B09167C861A24BC5F5CB7 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = FDBB60735040472DC32CCCC4 /* mountains.json */; };
 		79BEDF36CA641A0AB2262AA5 /* HanahuacLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2512100D917D9763B4ABB694 /* HanahuacLogo.swift */; };
+		7A34F85C53C896F2C81A9BDC /* ProviderRoutedResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD75F682720C991065C69C3A /* ProviderRoutedResolutionTests.swift */; };
 		7CDA86A9E84DA8D1EEB1C188 /* CountryPinCoordinateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */; };
 		812DFE17082BC252E6440055 /* LanguageDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648BDEC0124956A7329F1B6A /* LanguageDescriptor.swift */; };
 		8531320041BBF033569F4760 /* SyncCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB14B38C73AC73496B822ADD /* SyncCoordinator.swift */; };
@@ -211,6 +212,7 @@
 		BB14B38C73AC73496B822ADD /* SyncCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncCoordinator.swift; sourceTree = "<group>"; };
 		BCFB55464417EC0B009B6930 /* CardDedupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDedupTests.swift; sourceTree = "<group>"; };
 		BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2SchedulerTests.swift; sourceTree = "<group>"; };
+		BD75F682720C991065C69C3A /* ProviderRoutedResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderRoutedResolutionTests.swift; sourceTree = "<group>"; };
 		C067B5B526D874D731E4EE9D /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		C1A0BDD7AD08FB4D44215D35 /* PreviewStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewStore.swift; sourceTree = "<group>"; };
 		C24D1F0D98466C85ACE2D994 /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */,
 				9CFA705339BAA792E8E11E85 /* ProgressRecordingTests.swift */,
 				538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */,
+				BD75F682720C991065C69C3A /* ProviderRoutedResolutionTests.swift */,
 				7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */,
 				BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */,
 				132EB6CB2BB0B527A3C57527 /* StatsTests.swift */,
@@ -719,6 +722,7 @@
 				0667BDF3A3506797F49130F7 /* ProgressMigratorTests.swift in Sources */,
 				69F5820A4B8C2E591AD48173 /* ProgressRecordingTests.swift in Sources */,
 				0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */,
+				7A34F85C53C896F2C81A9BDC /* ProviderRoutedResolutionTests.swift in Sources */,
 				FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */,
 				0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */,
 				C6C390DA85F5759C498E9345 /* StatsTests.swift in Sources */,

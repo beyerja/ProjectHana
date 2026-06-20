@@ -52,3 +52,19 @@ protocol LanguagePackProvider {
     /// The availability state of this locale's pack.
     func state(for locale: AppLocale) -> LanguagePackState
 }
+
+/// The single, app-wide, swappable holder of the active ``LanguagePackProvider``.
+///
+/// Every resolution call site (``L10n`` string lookup and geo `localizedName`/`localizedCapital`)
+/// routes through `LanguagePackProvider.active`, so nothing branches on the concrete provider type. It
+/// defaults to the always-available ``BundledLanguagePackProvider`` — making resolution behavior
+/// identical to the pre-feature app — and is settable so later stories (ODR/CDN) and tests can swap in
+/// a different provider without touching any call site.
+///
+/// This lives on a concrete enum rather than a protocol extension because Swift forbids reading a
+/// static member through a protocol metatype (which the resolver's default argument needs). Call sites
+/// use the `LanguagePackProvider.active` alias below.
+enum LanguagePackProviderHolder {
+    /// The current provider. Tests that mutate this should restore the previous value in `tearDown`.
+    static var active: LanguagePackProvider = BundledLanguagePackProvider()
+}
