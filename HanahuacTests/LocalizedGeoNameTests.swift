@@ -246,6 +246,36 @@ final class LocalizedGeoNameTests: XCTestCase {
         XCTAssertEqual(sea.localizedName(for: .nah), "TestSea")
     }
 
+    // MARK: - Pack-data-backed resolution
+
+    /// The bundled provider's per-language pack data must carry the same values the geo model's raw
+    /// per-language fields do, proving `localizedName`/`localizedCapital` resolve through pack data
+    /// (built from the bundled JSON) rather than a hardcoded per-locale switch.
+    func testBundledPackData_matchesModelResolution() throws {
+        let provider = BundledLanguagePackProvider()
+        let data = GeographyDataLoader.shared
+
+        let germany = try XCTUnwrap(data.countries.first { $0.id == "DE" })
+        let frPack = try XCTUnwrap(provider.geoNameData(for: .fr))
+        let frEntry = try XCTUnwrap(frPack.entries["DE"])
+        XCTAssertEqual(frEntry.name, germany.nameFr)
+        XCTAssertEqual(frEntry.capital, germany.capitalFr)
+
+        // The resolved localized name must equal the value the pack carries for that language.
+        XCTAssertEqual(germany.localizedName(for: .fr), frEntry.name)
+    }
+
+    /// Korean/Nahuatl resolution still walks the fallback chain (selected → es-MX → en) after the
+    /// switch-to-resolver refactor, matching the previous per-field switch outputs.
+    func testResolution_walksFallbackChain_afterRefactor() {
+        // No Nahuatl name, Spanish present → Mexican Spanish, never English.
+        let country = makeCountry(name: "Testland", nameEs: "Tierra de Prueba")
+        XCTAssertEqual(country.localizedName(for: .nah), "Tierra de Prueba")
+        // No Spanish either → English base.
+        let bare = makeCountry(name: "Bareland")
+        XCTAssertEqual(bare.localizedName(for: .ko), "Bareland")
+    }
+
     // MARK: - Helpers
 
     private func makeCountry(

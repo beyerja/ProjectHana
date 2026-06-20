@@ -44,14 +44,19 @@ struct River: Codable, Identifiable, Hashable {
         self.mouthLon = mouthLon
     }
 
+    /// Per-language names keyed by language code, consumed by ``GeoNameResolver`` instead of a
+    /// hardcoded per-locale `switch`.
+    private var namesByCode: [String: String] {
+        [
+            AppLocale.fr.rawValue: nameFr,
+            AppLocale.de.rawValue: nameDe,
+            AppLocale.esMX.rawValue: nameEs,
+            AppLocale.ko.rawValue: nameKo,
+            AppLocale.nah.rawValue: nameNah
+        ].compactMapValues { $0 }
+    }
+
     func localizedName(for locale: AppLocale) -> String {
-        switch locale {
-        case .fr: nameFr ?? name
-        case .de: nameDe ?? name
-        case .esMX: nameEs ?? name
-        case .ko: nameKo ?? nameEs ?? name
-        case .nah: nameNah ?? nameEs ?? name
-        case .en: name
-        }
+        GeoNameResolver.resolve(locale, byCode: namesByCode, base: name)
     }
 }

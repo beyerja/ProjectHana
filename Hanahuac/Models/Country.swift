@@ -57,26 +57,34 @@ struct Country: Codable, Identifiable, Hashable {
         self.lon = lon
     }
 
+    /// Per-language names keyed by language code, consumed by ``GeoNameResolver`` instead of a
+    /// hardcoded per-locale `switch`. Built from this instance's bundled-JSON-backed fields; the
+    /// bundled provider exposes the same data as ``GeoNamePackData``.
+    private var namesByCode: [String: String] {
+        [
+            AppLocale.fr.rawValue: nameFr,
+            AppLocale.de.rawValue: nameDe,
+            AppLocale.esMX.rawValue: nameEs,
+            AppLocale.ko.rawValue: nameKo,
+            AppLocale.nah.rawValue: nameNah
+        ].compactMapValues { $0 }
+    }
+
+    private var capitalsByCode: [String: String] {
+        [
+            AppLocale.fr.rawValue: capitalFr,
+            AppLocale.de.rawValue: capitalDe,
+            AppLocale.esMX.rawValue: capitalEs,
+            AppLocale.ko.rawValue: capitalKo,
+            AppLocale.nah.rawValue: capitalNah
+        ].compactMapValues { $0 }
+    }
+
     func localizedName(for locale: AppLocale) -> String {
-        switch locale {
-        case .fr: nameFr ?? name
-        case .de: nameDe ?? name
-        case .esMX: nameEs ?? name
-        // ko/nah: selected language → Mexican Spanish → English.
-        case .ko: nameKo ?? nameEs ?? name
-        case .nah: nameNah ?? nameEs ?? name
-        case .en: name
-        }
+        GeoNameResolver.resolve(locale, byCode: namesByCode, base: name)
     }
 
     func localizedCapital(for locale: AppLocale) -> String {
-        switch locale {
-        case .fr: capitalFr ?? capital
-        case .de: capitalDe ?? capital
-        case .esMX: capitalEs ?? capital
-        case .ko: capitalKo ?? capitalEs ?? capital
-        case .nah: capitalNah ?? capitalEs ?? capital
-        case .en: capital
-        }
+        GeoNameResolver.resolve(locale, byCode: capitalsByCode, base: capital)
     }
 }
