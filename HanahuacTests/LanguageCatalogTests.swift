@@ -6,8 +6,8 @@ import XCTest
 final class LanguageCatalogTests: XCTestCase {
     // MARK: - Catalog shape
 
-    func testCatalogContainsExactlySixLanguages() {
-        XCTAssertEqual(LanguageCatalog.all.count, 6)
+    func testCatalogContainsExactlySevenLanguages() {
+        XCTAssertEqual(LanguageCatalog.all.count, 7)
     }
 
     /// Catalog ordering must match `AppLocale.allCases` so the picker order is preserved.
@@ -80,6 +80,7 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .fr).displayName, "Français")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .de).displayName, "Deutsch")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .esMX).displayName, "Español (México)")
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .esES).displayName, "Español (España)")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ko).displayName, "한국어")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .nah).displayName, "Nāhuatl")
     }
@@ -104,6 +105,11 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .nah).fallbackChain, [.nah, .esMX, .en])
     }
 
+    /// Spain Spanish resolves through its own pack, then Mexican Spanish, then English.
+    func testFallbackChainForSpainSpanishRoutesThroughMexicanSpanish() {
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .esES).fallbackChain, [.esES, .esMX, .en])
+    }
+
     // MARK: - Availability flag
 
     func testBundledBaseLanguages() {
@@ -114,7 +120,7 @@ final class LanguageCatalogTests: XCTestCase {
     }
 
     func testDownloadablePackLanguages() {
-        for locale in [AppLocale.fr, .de, .ko, .nah] {
+        for locale in [AppLocale.fr, .de, .esES, .ko, .nah] {
             XCTAssertEqual(
                 LanguageCatalog.descriptor(for: locale).availability,
                 .downloadablePack,
@@ -137,6 +143,7 @@ final class LanguageCatalogTests: XCTestCase {
     func testDownloadableLanguagesYieldExpectedODRTags() {
         XCTAssertEqual(AppLocale.fr.odrTags, ["lang-fr"])
         XCTAssertEqual(AppLocale.de.odrTags, ["lang-de"])
+        XCTAssertEqual(AppLocale.esES.odrTags, ["lang-es-ES"])
         XCTAssertEqual(AppLocale.ko.odrTags, ["lang-ko"])
         XCTAssertEqual(AppLocale.nah.odrTags, ["lang-nah"])
     }

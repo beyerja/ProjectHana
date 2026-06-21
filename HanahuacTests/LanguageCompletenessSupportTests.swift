@@ -29,6 +29,32 @@ final class LanguageCompletenessSupportTests: XCTestCase {
         XCTAssertEqual(LanguageCompletenessSupport.geoCoverageGaps(for: .esMX), .empty)
     }
 
+    // MARK: - es-ES (Story 002) completeness
+
+    /// es-ES ships a COMPLETE UI string set: zero keys missing relative to the English base. When the
+    /// ODR `.lproj` pack is not mounted in this environment the helper degrades to the empty set, so
+    /// either way there must be no missing keys.
+    func testSpainSpanishHasNoMissingUIKeys() {
+        XCTAssertTrue(
+            LanguageCompletenessSupport.missingUIKeys(for: .esES).isEmpty,
+            "es-ES must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// es-ES ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a Castilian
+    /// name, so the bundled provider's pack reports no gaps for .esES.
+    func testSpainSpanishHasFullGeoCoverage() {
+        let report = LanguageCompletenessSupport.geoCoverageGaps(for: .esES)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "es-ES is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "es-ES is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
     /// A downloadable locale yields a well-formed coverage report: the gap sets are constrained to the
     /// bundled source geo ids, and the helper returns rather than crashing regardless of pack state.
     func testGeoCoverageGapsForDownloadableLocaleIsWellFormed() {

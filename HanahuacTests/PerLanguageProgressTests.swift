@@ -104,6 +104,12 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.en, .ko)
     }
 
+    /// Story 002: Spain Spanish keeps a progress track fully isolated from Mexican Spanish (they are
+    /// distinct base codes, so the same factID/day coexists across the two).
+    func testProgressIsolationForSpainSpanish() {
+        assertProgressIsolated(.esES, .esMX)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {

@@ -22,10 +22,13 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "de-AT")), .de)
     }
 
-    /// Any es-* locale resolves to .esMX (acceptance criteria).
+    /// Any es-* locale resolves to .esMX (acceptance criteria). Even though `.esES` now exists as a
+    /// distinct, picker-selectable language, a Spain-region device locale (`es_ES`/`es-ES`) must NEVER
+    /// auto-select it — every es-* locale keeps defaulting to Mexican Spanish.
     func testMatchingSpanishVariants() {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-MX")), .esMX)
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-ES")), .esMX)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-AR")), .esMX)
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es")), .esMX)
     }
@@ -56,12 +59,24 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.fr.id, "fr")
         XCTAssertEqual(AppLocale.de.id, "de")
         XCTAssertEqual(AppLocale.esMX.id, "es-MX")
+        XCTAssertEqual(AppLocale.esES.id, "es-ES")
         XCTAssertEqual(AppLocale.ko.id, "ko")
         XCTAssertEqual(AppLocale.nah.id, "nah")
     }
 
     func testAllCasesCount() {
-        XCTAssertEqual(AppLocale.allCases.count, 6)
+        XCTAssertEqual(AppLocale.allCases.count, 7)
+    }
+
+    /// es-ES is enumerated in the picker with its native display name "Español (España)" and sits
+    /// immediately after es-MX, matching the catalog order.
+    func testSpainSpanishEnumeratedWithNativeDisplayName() throws {
+        XCTAssertTrue(AppLocale.allCases.contains(.esES))
+        XCTAssertEqual(AppLocale.esES.displayName, "Español (España)")
+        let codes = AppLocale.allCases.map(\.rawValue)
+        let mxIndex = try XCTUnwrap(codes.firstIndex(of: "es-MX"))
+        let esIndex = try XCTUnwrap(codes.firstIndex(of: "es-ES"))
+        XCTAssertEqual(esIndex, mxIndex + 1, "es-ES must immediately follow es-MX")
     }
 
     /// The picker is driven by `allCases`, so the two new languages must be enumerated with their
@@ -92,6 +107,12 @@ final class AppLocaleTests: XCTestCase {
     func testBundleCandidatesForKoAndNahGoThroughSpanishThenEnglish() {
         XCTAssertEqual(L10n.bundleCandidates(for: .ko), ["ko", "es-MX", "en"])
         XCTAssertEqual(L10n.bundleCandidates(for: .nah), ["nah", "es-MX", "en"])
+    }
+
+    /// es-ES resolves UI strings through its own pack, then Mexican Spanish, then English.
+    func testBundleCandidatesForSpainSpanishGoThroughMexicanSpanishThenEnglish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .esES), ["es-ES", "es-MX", "en"])
+        XCTAssertTrue(AppLocale.esES.fallsBackThroughSpanish)
     }
 
     func testBundleCandidatesForEstablishedLocalesEndInEnglish() {
