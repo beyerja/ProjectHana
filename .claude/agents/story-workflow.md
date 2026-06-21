@@ -24,31 +24,37 @@ merge a story PR.
 4. **Wait for CI** — spawn `wait-for-ci` agent with the PR number from step 3 and the story-id
    - STATUS: FAIL → fix the failure (go to step 2 with CI failure as context), then re-push; repeat from step 4
    - STATUS: PASS → continue
-5. **Independent review loop** — ordered AFTER CI passes (step 4) so the reviewer sees code that builds.
-   Spawn the `independent-review` agent as a **fresh, cold-context invocation** that is **explicitly
-   distinct from the implement agent** of step 2: the reviewer and the implementer are **separate spawns**,
-   so the change is reviewed by someone who did not write it (the 4-eye principle). NEVER reuse the
-   implement agent — or its context — to review its own work. The reviewer reads the PR diff cold.
+5. **Two-eye review loop** — ordered AFTER CI passes (step 4) so reviewers see code that builds. Two
+   distinct, cold-context reviewers form a real 4-eye gate. Both are **separate spawns from the implement
+   agent of step 2** — NEVER reuse the implementer or its context to review its own work. Cap the loop at
+   **3 rounds**.
 
-   Key the loop off the reviewer's STATUS output, capped at **3 rounds**:
-   - STATUS: CHANGES_REQUESTED → spawn an `implement-story` (implement) agent — again a **separate spawn,
-     never the reviewer** — to address **every** inline comment, **reply to each review thread acknowledging
-     the fix** (a reply alone does NOT resolve the thread on GitHub), run the project checks
-     (`just lint`, `just test`), and push the fixes. Then **re-spawn a fresh `independent-review`** (cold
-     again) on the updated PR. On that re-spawn, the reviewer (the **bot**, as the review author) resolves
-     the now-addressed threads it authored via the `resolveReviewThread` GraphQL mutation through the bot
-     wrapper `scripts/gh-review-bot.sh` — the implement agent acknowledges via replies, the bot performs
-     the actual resolution. When the bot token is absent (the wrapper exits non-zero), thread resolution is
-     SKIPPED and the loop proceeds on STATUS alone. This counts as one round.
-   - STATUS: APPROVED → continue to step 6.
+   a. **Deep review + verdict** — spawn the `independent-review` agent (fresh, cold). It runs the deep
+      `/code-review` pass, posts inline comments + a summary, and emits STATUS. It does **NOT** submit the
+      formal bot review (invoking the `/code-review` skill ends its turn before it could).
+      - STATUS: CHANGES_REQUESTED → spawn an `implement-story` agent (a **separate spawn, never a reviewer**)
+        to address **every** inline comment, **reply to each review thread acknowledging the fix** (a reply
+        alone does NOT resolve the thread on GitHub), run the project checks (`just lint`, `just test`), and
+        push. Then **re-spawn a fresh `independent-review`** on the updated PR. Counts as one round.
+      - STATUS: APPROVED → continue to 5b.
+   b. **Independent confirm + formal submission** — spawn the `code-owner-review` agent (fresh, cold, and
+      distinct from BOTH the implementer and the `independent-review` agent). It re-verifies the diff a
+      second time **without** the `/code-review` skill (so its turn completes), reaches its **own** verdict,
+      runs the **CI self-heal** (re-trigger if the head has no required checks), and — through the bot
+      wrapper `scripts/gh-review-bot.sh` — submits the formal `Hanahuac-Bot` review state (with read-back
+      proof) and resolves addressed bot-authored threads via `resolveReviewThread`. When the bot token is
+      absent (wrapper exits non-zero), the formal state + thread resolution are SKIPPED and the loop
+      proceeds on STATUS alone.
+      - STATUS: CHANGES_REQUESTED → spawn an `implement-story` agent to address it and push, then go back to
+        **5a** (re-spawn `independent-review`). Counts as one round.
+      - STATUS: APPROVED (and, when the bot token is present, the bot `APPROVE` posted) → continue to step 6.
 
-   After **3 rounds** without reaching APPROVED, **STOP looping and ESCALATE to the user** (do not loop
-   further); leave the PR open for the user to decide.
-
-   (There is no human-review gate: the workflow never pauses for the user to review or merge a PR. The
-   only human touch-point in this loop is the 3-round escalation above.)
-6. **Merge** — once the reviewer emitted APPROVED **and** CI is green, spawn `merge-pr` **unconditionally**.
-   Do not assume the user already merged and do not wait for a human merge click.
+   After **3 rounds** without both reviewers reaching APPROVED, **STOP looping and ESCALATE to the user**
+   (do not loop further); leave the PR open. (There is no human-review gate: the workflow never pauses for
+   the user to review or merge a PR except this 3-round escalation.)
+6. **Merge** — once **both** `independent-review` and `code-owner-review` emitted APPROVED **and** CI is
+   green, spawn `merge-pr` **unconditionally**. Do not assume the user already merged and do not wait for a
+   human merge click.
 7. **Verify** — spawn `verify-story` agent
    - STATUS: FAILED → go to step 2 (re-implement with failure context)
    - STATUS: DONE → finish
