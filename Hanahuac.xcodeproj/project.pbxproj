@@ -51,6 +51,7 @@
 		53C2E037B85C8C89A414C2D4 /* PoleLabelCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */; };
 		58EC26C66D332F8E7B88B468 /* MapLearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */; };
 		591EF8E1C86152E7D979EBAC /* PerModeSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D6DF935BA62491E7164B00 /* PerModeSnapshotTests.swift */; };
+		59610D4132574F326CA4F7F4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 09C983AE0A9C597DCF6A0311 /* PrivacyInfo.xcprivacy */; };
 		5AF36D6B52E58FCE7835FA9E /* CardDedupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFB55464417EC0B009B6930 /* CardDedupTests.swift */; };
 		5B59B89F003E80B24BAA470D /* sea-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = B8BC8FDD71EB406D6A8DF545 /* sea-borders.json */; };
 		5BAEC15BDDEF91EF2C6A0D77 /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 914F7F50B73E40FC2B62296E /* de.lproj */; settings = {ASSET_TAGS = ("lang-de", ); }; };
@@ -162,6 +163,7 @@
 		02EDCEF7B89BAFA774D2290F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		03855B642B11712EBF8D668F /* GeoNamePackLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamePackLoader.swift; sourceTree = "<group>"; };
 		092EDB83127EC04669B7E3A1 /* nah-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "nah-geo.json"; sourceTree = "<group>"; };
+		09C983AE0A9C597DCF6A0311 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0A0366476E524E78AE0F9CED /* ResourceRequesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRequesting.swift; sourceTree = "<group>"; };
 		0B0CB3D27BCC4041F5D39D95 /* GeoNamePackDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamePackDataTests.swift; sourceTree = "<group>"; };
 		0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerQuizModeMigratorTests.swift; sourceTree = "<group>"; };
@@ -541,6 +543,7 @@
 				7ADE4B399AC14E2CEF23B541 /* ko.lproj */,
 				59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */,
 				C7079D6DD469A5CC6D2878CC /* nah.lproj */,
+				09C983AE0A9C597DCF6A0311 /* PrivacyInfo.xcprivacy */,
 				02EDCEF7B89BAFA774D2290F /* Theme.swift */,
 				A6B3B0ECC243484FDB1A137F /* L10n */,
 				963BDC31BD0B0D1A170DD0F9 /* Models */,
@@ -685,6 +688,7 @@
 			files = (
 				D1D468680D674A6511855845 /* Assets.xcassets in Resources */,
 				CB1BC56B0D4FF4D335F98ADD /* Localizable.strings in Resources */,
+				59610D4132574F326CA4F7F4 /* PrivacyInfo.xcprivacy in Resources */,
 				CDC0C11EC4692BC78215E08F /* countries.json in Resources */,
 				50738B4C009D70A58A9AEBE8 /* country-borders.json in Resources */,
 				2A8E707ECE564E2350919D5E /* de-geo.json in Resources */,

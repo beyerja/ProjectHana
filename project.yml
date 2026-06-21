@@ -30,6 +30,9 @@ targets:
       # here), so only the four non-base languages are excluded.
       - path: Hanahuac
         excludes:
+          # Declared explicitly below as an always-bundled resource; exclude here so it is not
+          # auto-enumerated into a second, duplicate Copy-Resources entry.
+          - "PrivacyInfo.xcprivacy"
           - "Resources/fr-geo.json"
           - "Resources/de-geo.json"
           - "Resources/ko-geo.json"
@@ -38,6 +41,10 @@ targets:
           - "de.lproj"
           - "ko.lproj"
           - "nah.lproj"
+      # Apple privacy manifest — always bundled (no resourceTags), copied into the app bundle's
+      # Copy-Resources phase so the App Store toolchain finds PrivacyInfo.xcprivacy at the bundle root.
+      - path: Hanahuac/PrivacyInfo.xcprivacy
+        buildPhase: resources
       # Non-base languages (fr, de, ko, nah) are delivered as On-Demand Resources. Each language's
       # UI strings (.lproj) AND its geo-name pack JSON carry the same `lang-<code>` tag the provider
       # (ODRLanguagePackProvider, via LanguageDescriptor.odrTags) requests, so the build's ODR tag
