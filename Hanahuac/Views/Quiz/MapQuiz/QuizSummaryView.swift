@@ -3,6 +3,10 @@ import SwiftUI
 struct QuizSummaryView: View {
     @Environment(\.dismiss) private var dismiss
 
+    /// Result-icon point size that scales with the user's Dynamic Type setting (relative to the
+    /// largeTitle text style) instead of a fixed 64pt.
+    @ScaledMetric(relativeTo: .largeTitle) private var iconSize: CGFloat = 64
+
     let reviewed: Int
     let correct: Int
     let nextDue: Date?
@@ -18,15 +22,20 @@ struct QuizSummaryView: View {
 
             VStack(spacing: 8) {
                 Image(systemName: accuracy >= 70 ? "star.fill" : "checkmark.circle.fill")
-                    .font(.system(size: 64))
-                    .foregroundStyle(accuracy >= 70 ? Theme.Palette.accent : Theme.Palette.accent)
+                    .font(.system(size: iconSize))
+                    .foregroundStyle(Theme.Palette.accent)
+                    .accessibilityHidden(true)
                 Text(L10n["quiz_summary.session_complete"])
                     .font(.title.bold())
             }
 
             VStack(spacing: 16) {
                 statRow(label: L10n["quiz_summary.cards_reviewed"], value: "\(reviewed)")
-                statRow(label: L10n["quiz_summary.correct"], value: "\(correct) (\(accuracy)%)")
+                statRow(
+                    label: L10n["quiz_summary.correct"],
+                    value: "\(correct) (\(accuracy)%)",
+                    accessibilityValue: "\(correct). \(String(format: L10n["a11y.summary.accuracy"], accuracy))"
+                )
                 if let next = nextDue {
                     statRow(
                         label: L10n["quiz_summary.next_review"],
@@ -48,18 +57,26 @@ struct QuizSummaryView: View {
                 .foregroundStyle(.white)
                 .padding(.horizontal)
                 .padding(.bottom)
+                .accessibilityHint(L10n["a11y.done.hint"])
         }
         .navigationTitle(L10n["quiz_summary.results"])
         .inlineNavigationTitle()
         .navigationBarBackButtonHidden()
     }
 
-    private func statRow(label: String, value: String) -> some View {
+    private func statRow(
+        label: String,
+        value: String,
+        accessibilityValue: String? = nil
+    ) -> some View {
         HStack {
             Text(label).foregroundStyle(.secondary)
             Spacer()
             Text(value).bold()
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(label)
+        .accessibilityValue(accessibilityValue ?? value)
     }
 }
 

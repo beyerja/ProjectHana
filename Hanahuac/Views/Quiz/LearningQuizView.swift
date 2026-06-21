@@ -14,6 +14,9 @@ struct LearningQuizView: View {
     @State private var answerState: MCQAnswerState = .unanswered
     @State private var isAdvancing = false
 
+    /// Completion-icon point size that scales with Dynamic Type (relative to largeTitle).
+    @ScaledMetric(relativeTo: .largeTitle) private var completionIconSize: CGFloat = 64
+
     private let geo = GeographyDataLoader.shared
 
     init(newCards: [ReviewCard], category: CardCategory? = nil) {
@@ -74,6 +77,11 @@ struct LearningQuizView: View {
             Text(String(format: L10n["learn.active_count"], session.activeSet.count))
                 .font(.subheadline).foregroundStyle(.secondary)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            String(format: L10n["a11y.graduated"], session.graduatedCount, session.totalNewCards)
+        )
+        .accessibilityValue(String(format: L10n["a11y.active"], session.activeSet.count))
     }
 
     private func promptCard(question: MCQQuestion) -> some View {
@@ -83,6 +91,8 @@ struct LearningQuizView: View {
             .padding(24)
             .frame(maxWidth: .infinity)
             .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
+            .accessibilityLabel(L10n["a11y.prompt.label"])
+            .accessibilityValue(question.prompt)
     }
 
     private func optionButtons(question: MCQQuestion) -> some View {
@@ -100,7 +110,43 @@ struct LearningQuizView: View {
                         .foregroundStyle(buttonForeground(for: option))
                 }
                 .disabled(answerState != .unanswered || isAdvancing)
+                .accessibilityLabel(option.label)
+                .accessibilityValue(optionStateValue(for: option))
+                .accessibilityAddTraits(isSelected(option) ? .isSelected : [])
+                .accessibilityHint(answerState == .unanswered ? L10n["a11y.option.hint"] : "")
             }
+        }
+    }
+
+    /// Whether VoiceOver should mark this option as selected — the option the user chose, regardless
+    /// of correctness. Mirrors `answerState` so state is conveyed via trait, not color alone.
+    private func isSelected(_ option: MCQOption) -> Bool {
+        switch answerState {
+        case .unanswered:
+            false
+        case let .correct(id):
+            option.id == id
+        case let .incorrect(chosenID, _):
+            option.id == chosenID
+        }
+    }
+
+    /// The spoken state for an option after an answer is locked in: correct / incorrect / nothing
+    /// while unanswered. Derived from `answerState` (the same source as `buttonColor`).
+    private func optionStateValue(for option: MCQOption) -> String {
+        switch answerState {
+        case .unanswered:
+            return ""
+        case let .correct(id):
+            return option.id == id ? L10n["a11y.state.correct"] : ""
+        case let .incorrect(chosenID, correctID):
+            if option.id == chosenID {
+                return L10n["a11y.state.incorrect"]
+            }
+            if option.id == correctID {
+                return L10n["a11y.state.correct"]
+            }
+            return ""
         }
     }
 
@@ -149,8 +195,9 @@ struct LearningQuizView: View {
 
             VStack(spacing: 8) {
                 Image(systemName: "graduationcap.fill")
-                    .font(.system(size: 64))
+                    .font(.system(size: completionIconSize))
                     .foregroundStyle(Theme.Palette.accent)
+                    .accessibilityHidden(true)
                 Text(L10n["learn.complete_title"])
                     .font(.title.bold())
                 Text(L10n["learn.complete_desc"])
@@ -168,6 +215,7 @@ struct LearningQuizView: View {
             .padding()
             .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal)
+            .accessibilityElement(children: .combine)
 
             Spacer()
 
@@ -179,6 +227,7 @@ struct LearningQuizView: View {
                 .foregroundStyle(.white)
                 .padding(.horizontal)
                 .padding(.bottom)
+                .accessibilityHint(L10n["a11y.done.hint"])
         }
         .navigationTitle(L10n["learn.results"])
         .inlineNavigationTitle()

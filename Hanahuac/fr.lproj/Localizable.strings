@@ -168,3 +168,24 @@
 /* Map learning quiz */
 "learn_map.title" = "Apprentissage carte";
 "learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "Question";
+"a11y.progress" = "Question %d sur %d";
+"a11y.score" = "%d correctes";
+"a11y.graduated" = "%d sur %d acquises";
+"a11y.active" = "%d en cours";
+"a11y.answer_field.label" = "Réponse";
+"a11y.answer_field.hint" = "Saisis ta réponse, puis active Vérifier.";
+"a11y.check.hint" = "Vérifie ta réponse.";
+"a11y.next.hint" = "Passe à la question suivante.";
+"a11y.option.hint" = "Touche deux fois pour choisir cette réponse.";
+"a11y.state.selected" = "sélectionnée";
+"a11y.state.correct" = "bonne réponse";
+"a11y.state.incorrect" = "mauvaise réponse";
+"a11y.state.not_answered" = "sans réponse";
+"a11y.feedback.correct" = "Correct";
+"a11y.feedback.incorrect" = "Incorrect";
+"a11y.summary.accuracy" = "%d pour cent de réussite";
+"a11y.summary.result_icon" = "Résultat de la session";
+"a11y.done.hint" = "Ferme ce quiz.";
