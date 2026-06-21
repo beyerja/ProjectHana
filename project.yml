@@ -50,6 +50,7 @@ targets:
       # they stay resolvable by `Bundle.main.path(forResource: code, ofType: "lproj")` once the ODR
       # pack is present. `buildPhase: resources` keeps the JSON in the Copy-Resources phase.
       - path: Hanahuac/fr.lproj
+        type: folder
         buildPhase: resources
         resourceTags: [lang-fr]
       - path: Hanahuac/Resources/fr-geo.json

@@ -178,7 +178,7 @@
 		2DEBADCA4691A5AC9A317ACF /* HomeQuizModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQuizModeTests.swift; sourceTree = "<group>"; };
 		2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacApp.swift; sourceTree = "<group>"; };
 		2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningTests.swift; sourceTree = "<group>"; };
-		302E69CA8F8A5505BFDE51D8 /* fr.lproj */ = {isa = PBXFileReference; path = fr.lproj; sourceTree = "<group>"; };
+		302E69CA8F8A5505BFDE51D8 /* fr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fr.lproj; path = Hanahuac/fr.lproj; sourceTree = SOURCE_ROOT; };
 		33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningSession.swift; sourceTree = "<group>"; };
 		3C79D6B37134580FEAE9AD70 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		3EDD77E9938F36A3D49A28DB /* StatsChartsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsChartsSection.swift; sourceTree = "<group>"; };
