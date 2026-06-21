@@ -1,0 +1,1019 @@
+{
+  "version": 1,
+  "code": "de",
+  "entries": {
+    "AD": {
+      "name": "Andorra",
+      "capital": "Andorra la Vella"
+    },
+    "AE": {
+      "name": "Vereinigte Arabische Emirate",
+      "capital": "Abu Dhabi"
+    },
+    "AF": {
+      "name": "Afghanistan",
+      "capital": "Kabul"
+    },
+    "AG": {
+      "name": "Antigua und Barbuda",
+      "capital": "Saint John's"
+    },
+    "AL": {
+      "name": "Albanien",
+      "capital": "Tirana"
+    },
+    "AM": {
+      "name": "Armenien",
+      "capital": "Eriwan"
+    },
+    "AO": {
+      "name": "Angola",
+      "capital": "Luanda"
+    },
+    "AR": {
+      "name": "Argentinien",
+      "capital": "Buenos Aires"
+    },
+    "AT": {
+      "name": "Österreich",
+      "capital": "Wien"
+    },
+    "AU": {
+      "name": "Australien",
+      "capital": "Canberra"
+    },
+    "AZ": {
+      "name": "Aserbaidschan",
+      "capital": "Baku"
+    },
+    "BA": {
+      "name": "Bosnien und Herzegowina",
+      "capital": "Sarajevo"
+    },
+    "BB": {
+      "name": "Barbados",
+      "capital": "Bridgetown"
+    },
+    "BD": {
+      "name": "Bangladesch",
+      "capital": "Dhaka"
+    },
+    "BE": {
+      "name": "Belgien",
+      "capital": "Brüssel"
+    },
+    "BF": {
+      "name": "Burkina Faso",
+      "capital": "Ouagadougou"
+    },
+    "BG": {
+      "name": "Bulgarien",
+      "capital": "Sofia"
+    },
+    "BH": {
+      "name": "Bahrain",
+      "capital": "Manama"
+    },
+    "BI": {
+      "name": "Burundi",
+      "capital": "Gitega"
+    },
+    "BJ": {
+      "name": "Benin",
+      "capital": "Porto-Novo"
+    },
+    "BN": {
+      "name": "Brunei",
+      "capital": "Bandar Seri Begawan"
+    },
+    "BO": {
+      "name": "Bolivien",
+      "capital": "Sucre"
+    },
+    "BR": {
+      "name": "Brasilien",
+      "capital": "Brasília"
+    },
+    "BS": {
+      "name": "Bahamas",
+      "capital": "Nassau"
+    },
+    "BT": {
+      "name": "Bhutan",
+      "capital": "Thimphu"
+    },
+    "BW": {
+      "name": "Botswana",
+      "capital": "Gaborone"
+    },
+    "BY": {
+      "name": "Weißrussland",
+      "capital": "Minsk"
+    },
+    "BZ": {
+      "name": "Belize",
+      "capital": "Belmopan"
+    },
+    "CA": {
+      "name": "Kanada",
+      "capital": "Ottawa"
+    },
+    "CD": {
+      "name": "Demokratische Republik Kongo",
+      "capital": "Kinshasa"
+    },
+    "CF": {
+      "name": "Zentralafrikanische Republik",
+      "capital": "Bangui"
+    },
+    "CG": {
+      "name": "Republik Kongo",
+      "capital": "Brazzaville"
+    },
+    "CH": {
+      "name": "Schweiz",
+      "capital": "Bern"
+    },
+    "CI": {
+      "name": "Elfenbeinküste",
+      "capital": "Yamoussoukro"
+    },
+    "CL": {
+      "name": "Chile",
+      "capital": "Santiago de Chile"
+    },
+    "CM": {
+      "name": "Kamerun",
+      "capital": "Jaunde"
+    },
+    "CN": {
+      "name": "China",
+      "capital": "Peking"
+    },
+    "CO": {
+      "name": "Kolumbien",
+      "capital": "Bogotá"
+    },
+    "CR": {
+      "name": "Costa Rica",
+      "capital": "San José"
+    },
+    "CU": {
+      "name": "Kuba",
+      "capital": "Havanna"
+    },
+    "CV": {
+      "name": "Kap Verde",
+      "capital": "Praia"
+    },
+    "CY": {
+      "name": "Zypern",
+      "capital": "Nikosia"
+    },
+    "CZ": {
+      "name": "Tschechien",
+      "capital": "Prag"
+    },
+    "DE": {
+      "name": "Deutschland",
+      "capital": "Berlin"
+    },
+    "DJ": {
+      "name": "Dschibuti",
+      "capital": "Dschibuti"
+    },
+    "DK": {
+      "name": "Dänemark",
+      "capital": "Kopenhagen"
+    },
+    "DM": {
+      "name": "Dominica",
+      "capital": "Roseau"
+    },
+    "DO": {
+      "name": "Dominikanische Republik",
+      "capital": "Santo Domingo"
+    },
+    "DZ": {
+      "name": "Algerien",
+      "capital": "Algier"
+    },
+    "EC": {
+      "name": "Ecuador",
+      "capital": "Quito"
+    },
+    "EE": {
+      "name": "Estland",
+      "capital": "Tallinn"
+    },
+    "EG": {
+      "name": "Ägypten",
+      "capital": "Kairo"
+    },
+    "ER": {
+      "name": "Eritrea",
+      "capital": "Asmara"
+    },
+    "ES": {
+      "name": "Spanien",
+      "capital": "Madrid"
+    },
+    "ET": {
+      "name": "Äthiopien",
+      "capital": "Addis Abeba"
+    },
+    "FI": {
+      "name": "Finnland",
+      "capital": "Helsinki"
+    },
+    "FJ": {
+      "name": "Fidschi",
+      "capital": "Suva"
+    },
+    "FM": {
+      "name": "Mikronesien",
+      "capital": "Palikir"
+    },
+    "FR": {
+      "name": "Frankreich",
+      "capital": "Paris"
+    },
+    "GA": {
+      "name": "Gabun",
+      "capital": "Libreville"
+    },
+    "GB": {
+      "name": "Vereinigtes Königreich",
+      "capital": "London"
+    },
+    "GD": {
+      "name": "Grenada",
+      "capital": "Saint George's"
+    },
+    "GE": {
+      "name": "Georgien",
+      "capital": "Tiflis"
+    },
+    "GH": {
+      "name": "Ghana",
+      "capital": "Accra"
+    },
+    "GM": {
+      "name": "Gambia",
+      "capital": "Banjul"
+    },
+    "GN": {
+      "name": "Guinea",
+      "capital": "Conakry"
+    },
+    "GQ": {
+      "name": "Äquatorialguinea",
+      "capital": "Malabo"
+    },
+    "GR": {
+      "name": "Griechenland",
+      "capital": "Athen"
+    },
+    "GT": {
+      "name": "Guatemala",
+      "capital": "Guatemala-Stadt"
+    },
+    "GW": {
+      "name": "Guinea-Bissau",
+      "capital": "Bissau"
+    },
+    "GY": {
+      "name": "Guyana",
+      "capital": "Georgetown"
+    },
+    "HN": {
+      "name": "Honduras",
+      "capital": "Tegucigalpa"
+    },
+    "HR": {
+      "name": "Kroatien",
+      "capital": "Zagreb"
+    },
+    "HT": {
+      "name": "Haiti",
+      "capital": "Port-au-Prince"
+    },
+    "HU": {
+      "name": "Ungarn",
+      "capital": "Budapest"
+    },
+    "ID": {
+      "name": "Indonesien",
+      "capital": "Jakarta"
+    },
+    "IE": {
+      "name": "Irland",
+      "capital": "Dublin"
+    },
+    "IL": {
+      "name": "Israel",
+      "capital": "Jerusalem"
+    },
+    "IN": {
+      "name": "Indien",
+      "capital": "Neu-Delhi"
+    },
+    "IQ": {
+      "name": "Irak",
+      "capital": "Bagdad"
+    },
+    "IR": {
+      "name": "Iran",
+      "capital": "Teheran"
+    },
+    "IS": {
+      "name": "Island",
+      "capital": "Reykjavík"
+    },
+    "IT": {
+      "name": "Italien",
+      "capital": "Rom"
+    },
+    "JM": {
+      "name": "Jamaika",
+      "capital": "Kingston"
+    },
+    "JO": {
+      "name": "Jordanien",
+      "capital": "Amman"
+    },
+    "JP": {
+      "name": "Japan",
+      "capital": "Tokio"
+    },
+    "KE": {
+      "name": "Kenia",
+      "capital": "Nairobi"
+    },
+    "KG": {
+      "name": "Kirgisistan",
+      "capital": "Bischkek"
+    },
+    "KH": {
+      "name": "Kambodscha",
+      "capital": "Phnom Penh"
+    },
+    "KI": {
+      "name": "Kiribati",
+      "capital": "South Tarawa"
+    },
+    "KM": {
+      "name": "Komoren",
+      "capital": "Moroni"
+    },
+    "KN": {
+      "name": "St. Kitts und Nevis",
+      "capital": "Basseterre"
+    },
+    "KP": {
+      "name": "Nordkorea",
+      "capital": "Pjöngjang"
+    },
+    "KR": {
+      "name": "Südkorea",
+      "capital": "Seoul"
+    },
+    "KW": {
+      "name": "Kuwait",
+      "capital": "Kuwait-Stadt"
+    },
+    "KZ": {
+      "name": "Kasachstan",
+      "capital": "Astana"
+    },
+    "LA": {
+      "name": "Laos",
+      "capital": "Vientiane"
+    },
+    "LB": {
+      "name": "Libanon",
+      "capital": "Beirut"
+    },
+    "LC": {
+      "name": "St. Lucia",
+      "capital": "Castries"
+    },
+    "LI": {
+      "name": "Liechtenstein",
+      "capital": "Vaduz"
+    },
+    "LK": {
+      "name": "Sri Lanka",
+      "capital": "Sri Jayawardenepura Kotte"
+    },
+    "LR": {
+      "name": "Liberia",
+      "capital": "Monrovia"
+    },
+    "LS": {
+      "name": "Lesotho",
+      "capital": "Maseru"
+    },
+    "LT": {
+      "name": "Litauen",
+      "capital": "Wilna"
+    },
+    "LU": {
+      "name": "Luxemburg",
+      "capital": "Luxemburg"
+    },
+    "LV": {
+      "name": "Lettland",
+      "capital": "Riga"
+    },
+    "LY": {
+      "name": "Libyen",
+      "capital": "Tripolis"
+    },
+    "MA": {
+      "name": "Marokko",
+      "capital": "Rabat"
+    },
+    "MC": {
+      "name": "Monaco",
+      "capital": "Monaco"
+    },
+    "MD": {
+      "name": "Moldau",
+      "capital": "Chișinău"
+    },
+    "ME": {
+      "name": "Montenegro",
+      "capital": "Podgorica"
+    },
+    "MG": {
+      "name": "Madagaskar",
+      "capital": "Antananarivo"
+    },
+    "MH": {
+      "name": "Marshallinseln",
+      "capital": "Majuro"
+    },
+    "MK": {
+      "name": "Nordmazedonien",
+      "capital": "Skopje"
+    },
+    "ML": {
+      "name": "Mali",
+      "capital": "Bamako"
+    },
+    "MM": {
+      "name": "Myanmar",
+      "capital": "Naypyidaw"
+    },
+    "MN": {
+      "name": "Mongolei",
+      "capital": "Ulaanbaatar"
+    },
+    "MR": {
+      "name": "Mauretanien",
+      "capital": "Nouakchott"
+    },
+    "MT": {
+      "name": "Malta",
+      "capital": "Valletta"
+    },
+    "MU": {
+      "name": "Mauritius",
+      "capital": "Port Louis"
+    },
+    "MV": {
+      "name": "Malediven",
+      "capital": "Malé"
+    },
+    "MW": {
+      "name": "Malawi",
+      "capital": "Lilongwe"
+    },
+    "MX": {
+      "name": "Mexiko",
+      "capital": "Mexiko-Stadt"
+    },
+    "MY": {
+      "name": "Malaysia",
+      "capital": "Kuala Lumpur"
+    },
+    "MZ": {
+      "name": "Mosambik",
+      "capital": "Maputo"
+    },
+    "NA": {
+      "name": "Namibia",
+      "capital": "Windhuk"
+    },
+    "NE": {
+      "name": "Niger",
+      "capital": "Niamey"
+    },
+    "NG": {
+      "name": "Nigeria",
+      "capital": "Abuja"
+    },
+    "NI": {
+      "name": "Nicaragua",
+      "capital": "Managua"
+    },
+    "NL": {
+      "name": "Niederlande",
+      "capital": "Amsterdam"
+    },
+    "NO": {
+      "name": "Norwegen",
+      "capital": "Oslo"
+    },
+    "NP": {
+      "name": "Nepal",
+      "capital": "Kathmandu"
+    },
+    "NR": {
+      "name": "Nauru",
+      "capital": "Yaren"
+    },
+    "NZ": {
+      "name": "Neuseeland",
+      "capital": "Wellington"
+    },
+    "OM": {
+      "name": "Oman",
+      "capital": "Maskat"
+    },
+    "PA": {
+      "name": "Panama",
+      "capital": "Panama-Stadt"
+    },
+    "PE": {
+      "name": "Peru",
+      "capital": "Lima"
+    },
+    "PG": {
+      "name": "Papua-Neuguinea",
+      "capital": "Port Moresby"
+    },
+    "PH": {
+      "name": "Philippinen",
+      "capital": "Manila"
+    },
+    "PK": {
+      "name": "Pakistan",
+      "capital": "Islamabad"
+    },
+    "PL": {
+      "name": "Polen",
+      "capital": "Warschau"
+    },
+    "PS": {
+      "name": "Palästina",
+      "capital": "Ramallah"
+    },
+    "PT": {
+      "name": "Portugal",
+      "capital": "Lissabon"
+    },
+    "PW": {
+      "name": "Palau",
+      "capital": "Ngerulmud"
+    },
+    "PY": {
+      "name": "Paraguay",
+      "capital": "Asunción"
+    },
+    "QA": {
+      "name": "Katar",
+      "capital": "Doha"
+    },
+    "RO": {
+      "name": "Rumänien",
+      "capital": "Bukarest"
+    },
+    "RS": {
+      "name": "Serbien",
+      "capital": "Belgrad"
+    },
+    "RU": {
+      "name": "Russland",
+      "capital": "Moskau"
+    },
+    "RW": {
+      "name": "Ruanda",
+      "capital": "Kigali"
+    },
+    "SA": {
+      "name": "Saudi-Arabien",
+      "capital": "Riad"
+    },
+    "SB": {
+      "name": "Salomonen",
+      "capital": "Honiara"
+    },
+    "SC": {
+      "name": "Seychellen",
+      "capital": "Victoria"
+    },
+    "SD": {
+      "name": "Sudan",
+      "capital": "Khartum"
+    },
+    "SE": {
+      "name": "Schweden",
+      "capital": "Stockholm"
+    },
+    "SG": {
+      "name": "Singapur",
+      "capital": "Singapur"
+    },
+    "SI": {
+      "name": "Slowenien",
+      "capital": "Laibach"
+    },
+    "SK": {
+      "name": "Slowakei",
+      "capital": "Bratislava"
+    },
+    "SL": {
+      "name": "Sierra Leone",
+      "capital": "Freetown"
+    },
+    "SM": {
+      "name": "San Marino",
+      "capital": "San Marino"
+    },
+    "SN": {
+      "name": "Senegal",
+      "capital": "Dakar"
+    },
+    "SO": {
+      "name": "Somalia",
+      "capital": "Mogadischu"
+    },
+    "SR": {
+      "name": "Suriname",
+      "capital": "Paramaribo"
+    },
+    "SS": {
+      "name": "Südsudan",
+      "capital": "Juba"
+    },
+    "ST": {
+      "name": "São Tomé und Príncipe",
+      "capital": "São Tomé"
+    },
+    "SV": {
+      "name": "El Salvador",
+      "capital": "San Salvador"
+    },
+    "SY": {
+      "name": "Syrien",
+      "capital": "Damaskus"
+    },
+    "SZ": {
+      "name": "Eswatini",
+      "capital": "Mbabane"
+    },
+    "TD": {
+      "name": "Tschad",
+      "capital": "N'Djamena"
+    },
+    "TG": {
+      "name": "Togo",
+      "capital": "Lomé"
+    },
+    "TH": {
+      "name": "Thailand",
+      "capital": "Bangkok"
+    },
+    "TJ": {
+      "name": "Tadschikistan",
+      "capital": "Duschanbe"
+    },
+    "TL": {
+      "name": "Osttimor",
+      "capital": "Dili"
+    },
+    "TM": {
+      "name": "Turkmenistan",
+      "capital": "Aschgabat"
+    },
+    "TN": {
+      "name": "Tunesien",
+      "capital": "Tunis"
+    },
+    "TO": {
+      "name": "Tonga",
+      "capital": "Nukuʻalofa"
+    },
+    "TR": {
+      "name": "Türkei",
+      "capital": "Ankara"
+    },
+    "TT": {
+      "name": "Trinidad und Tobago",
+      "capital": "Port of Spain"
+    },
+    "TV": {
+      "name": "Tuvalu",
+      "capital": "Funafuti"
+    },
+    "TW": {
+      "name": "Taiwan",
+      "capital": "Taipeh"
+    },
+    "TZ": {
+      "name": "Tansania",
+      "capital": "Dodoma"
+    },
+    "UA": {
+      "name": "Ukraine",
+      "capital": "Kiew"
+    },
+    "UG": {
+      "name": "Uganda",
+      "capital": "Kampala"
+    },
+    "US": {
+      "name": "Vereinigte Staaten",
+      "capital": "Washington, D.C."
+    },
+    "UY": {
+      "name": "Uruguay",
+      "capital": "Montevideo"
+    },
+    "UZ": {
+      "name": "Usbekistan",
+      "capital": "Taschkent"
+    },
+    "VA": {
+      "name": "Vatikanstadt",
+      "capital": "Vatikanstadt"
+    },
+    "VC": {
+      "name": "St. Vincent und die Grenadinen",
+      "capital": "Kingstown"
+    },
+    "VE": {
+      "name": "Venezuela",
+      "capital": "Caracas"
+    },
+    "VN": {
+      "name": "Vietnam",
+      "capital": "Hanoi"
+    },
+    "VU": {
+      "name": "Vanuatu",
+      "capital": "Port Vila"
+    },
+    "WS": {
+      "name": "Samoa",
+      "capital": "Apia"
+    },
+    "XK": {
+      "name": "Kosovo",
+      "capital": "Pristina"
+    },
+    "YE": {
+      "name": "Jemen",
+      "capital": "Sanaa"
+    },
+    "ZA": {
+      "name": "Südafrika",
+      "capital": "Pretoria"
+    },
+    "ZM": {
+      "name": "Sambia",
+      "capital": "Lusaka"
+    },
+    "ZW": {
+      "name": "Simbabwe",
+      "capital": "Harare"
+    },
+    "alps": {
+      "name": "Alpen"
+    },
+    "altai": {
+      "name": "Altai"
+    },
+    "amazon": {
+      "name": "Amazonas"
+    },
+    "amur": {
+      "name": "Amur"
+    },
+    "andes": {
+      "name": "Anden"
+    },
+    "appalachians": {
+      "name": "Appalachen"
+    },
+    "arabian-sea": {
+      "name": "Arabisches Meer"
+    },
+    "arctic": {
+      "name": "Arktischer Ozean"
+    },
+    "atlantic": {
+      "name": "Atlantischer Ozean"
+    },
+    "atlas": {
+      "name": "Atlasgebirge"
+    },
+    "bay-of-bengal": {
+      "name": "Golf von Bengalen"
+    },
+    "bering": {
+      "name": "Beringsee"
+    },
+    "black-sea": {
+      "name": "Schwarzes Meer"
+    },
+    "caribbean": {
+      "name": "Karibisches Meer"
+    },
+    "carpathians": {
+      "name": "Karpaten"
+    },
+    "caspian-sea": {
+      "name": "Kaspisches Meer"
+    },
+    "caucasus": {
+      "name": "Kaukasus"
+    },
+    "colorado": {
+      "name": "Colorado"
+    },
+    "columbia": {
+      "name": "Columbia"
+    },
+    "congo": {
+      "name": "Kongo"
+    },
+    "coral-sea": {
+      "name": "Korallenmeer"
+    },
+    "danube": {
+      "name": "Donau"
+    },
+    "dnieper": {
+      "name": "Dnjepr"
+    },
+    "drakensberg": {
+      "name": "Drakensberge"
+    },
+    "east-china": {
+      "name": "Ostchinesisches Meer"
+    },
+    "eastern-rift-highlands": {
+      "name": "Ostafrikanisches Rift-Hochland"
+    },
+    "ethiopian-highlands": {
+      "name": "Äthiopisches Hochland"
+    },
+    "euphrates": {
+      "name": "Euphrat"
+    },
+    "ganges": {
+      "name": "Ganges"
+    },
+    "great-dividing-range": {
+      "name": "Große Wasserscheide"
+    },
+    "gulf-of-mexico": {
+      "name": "Golf von Mexiko"
+    },
+    "himalayas": {
+      "name": "Himalaya"
+    },
+    "hindu-kush": {
+      "name": "Hindukusch"
+    },
+    "indian": {
+      "name": "Indischer Ozean"
+    },
+    "indus": {
+      "name": "Indus"
+    },
+    "irrawaddy": {
+      "name": "Irrawaddy"
+    },
+    "karakoram": {
+      "name": "Karakorum"
+    },
+    "kunlun": {
+      "name": "Kunlun-Gebirge"
+    },
+    "lena": {
+      "name": "Lena"
+    },
+    "mediterranean": {
+      "name": "Mittelmeer"
+    },
+    "mekong": {
+      "name": "Mekong"
+    },
+    "mississippi": {
+      "name": "Mississippi"
+    },
+    "missouri": {
+      "name": "Missouri"
+    },
+    "murray": {
+      "name": "Murray"
+    },
+    "niger": {
+      "name": "Niger"
+    },
+    "nile": {
+      "name": "Nil"
+    },
+    "north-sea": {
+      "name": "Nordsee"
+    },
+    "ob": {
+      "name": "Ob"
+    },
+    "orange": {
+      "name": "Oranje"
+    },
+    "orinoco": {
+      "name": "Orinoco"
+    },
+    "pacific": {
+      "name": "Pazifischer Ozean"
+    },
+    "pamir": {
+      "name": "Pamir"
+    },
+    "parana": {
+      "name": "Paraná"
+    },
+    "persian-gulf": {
+      "name": "Persischer Golf"
+    },
+    "pyrenees": {
+      "name": "Pyrenäen"
+    },
+    "red-sea": {
+      "name": "Rotes Meer"
+    },
+    "rhine": {
+      "name": "Rhein"
+    },
+    "rockies": {
+      "name": "Rocky Mountains"
+    },
+    "sao-francisco": {
+      "name": "São Francisco"
+    },
+    "scandinavian-mountains": {
+      "name": "Skandinavisches Gebirge"
+    },
+    "senegal-river": {
+      "name": "Senegal"
+    },
+    "sierra-nevada-us": {
+      "name": "Sierra Nevada"
+    },
+    "south-china": {
+      "name": "Südchinesisches Meer"
+    },
+    "southern": {
+      "name": "Südlicher Ozean"
+    },
+    "southern-alps": {
+      "name": "Südalpen"
+    },
+    "tasman-sea": {
+      "name": "Tasmansee"
+    },
+    "tian-shan": {
+      "name": "Tianshan"
+    },
+    "tigris": {
+      "name": "Tigris"
+    },
+    "tocantins": {
+      "name": "Tocantins"
+    },
+    "volga": {
+      "name": "Wolga"
+    },
+    "yangtze": {
+      "name": "Jangtse"
+    },
+    "yellow-river": {
+      "name": "Gelber Fluss"
+    },
+    "yenisei": {
+      "name": "Jenissei"
+    },
+    "zagros": {
+      "name": "Zagros-Gebirge"
+    },
+    "zambezi": {
+      "name": "Sambesi"
+    }
+  }
+}

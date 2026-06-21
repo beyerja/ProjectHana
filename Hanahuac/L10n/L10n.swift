@@ -29,10 +29,15 @@ enum L10n {
     /// own table with English as the final safety net.
     static func string(_ key: String, locale: AppLocale) -> String {
         for code in bundleCandidates(for: locale) {
-            guard let path = Bundle.main.path(forResource: code, ofType: "lproj"),
-                  let bundle = Bundle(path: path) else {
+            // Route each candidate code through the active provider's resolved string bundle, so
+            // string resolution flows through the same seam as geo names. With the bundled provider
+            // this returns the in-app `.lproj` (behavior unchanged); future ODR/CDN providers can
+            // surface a downloaded bundle without touching this call site. An unrecognized code (none
+            // exist today) is skipped, falling through to the next candidate.
+            guard let candidateLocale = AppLocale(rawValue: code) else {
                 continue
             }
+            let bundle = LanguagePackProviderHolder.active.stringBundle(for: candidateLocale)
             let value = bundle.localizedString(forKey: key, value: missing, table: nil)
             if value != missing {
                 return value
@@ -51,13 +56,19 @@ enum L10n {
 
     /// The ordered `.lproj` resource codes to consult for `locale`.
     ///
-    /// `ko`/`nah` fall through Mexican Spanish before English (`["ko", "es-MX", "en"]`); the
-    /// established locales keep their historical selected → English chain.
+    /// Derived from the catalog descriptor's `fallbackChain`: `ko`/`nah` fall through Mexican
+    /// Spanish before English (`["ko", "es-MX", "en"]`); the established locales keep their
+    /// historical selected → English chain. English (`en`) is always appended as the final safety
+    /// net, preserving the historical `["en", "en"]` output for the English base.
     static func bundleCandidates(for locale: AppLocale) -> [String] {
-        if locale.fallsBackThroughSpanish {
-            return [locale.rawValue, AppLocale.esMX.rawValue, AppLocale.en.rawValue]
+        var codes = locale.fallbackChain.map(\.rawValue)
+        codes.append(AppLocale.en.rawValue)
+        // Drop a duplicated trailing English entry so multi-locale chains keep a single `"en"`
+        // terminator while the English base retains its historical `["en", "en"]` output.
+        if codes.count > 2, codes.suffix(2) == [AppLocale.en.rawValue, AppLocale.en.rawValue] {
+            codes.removeLast()
         }
-        return [locale.rawValue, AppLocale.en.rawValue]
+        return codes
     }
 
     /// Returns the sub-bundle inside the main bundle that provides strings for `locale` — the first

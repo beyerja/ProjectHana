@@ -1,23 +1,29 @@
 name: CI
 
-# The workflow triggers on ALL pushes to main and PRs targeting main — there is
-# intentionally NO workflow-level `paths:` filter. A path filter at this level would
-# skip the whole workflow on docs-only/workflow-only changes, leaving the required
-# "Build & Test" check stuck in "Pending" forever and blocking the PR from merging.
+# The workflow triggers on pushes/PRs to main AND to feature integration branches
+# (`feat/**`) — there is intentionally NO workflow-level `paths:` filter. A path filter
+# at this level would skip the whole workflow on docs-only/workflow-only changes, leaving
+# the required "Build & Test" check stuck in "Pending" forever and blocking the PR from
+# merging.
 #
-# Instead, a cheap `changes` job detects whether any build-relevant files changed and
-# the expensive macOS `Build & Test` job ALWAYS runs but gates its costly build/test
-# *steps* on that signal. We deliberately do NOT skip the whole job via a job-level
-# `if:`: a job skipped that way reports a `skipped` conclusion, and branch protection
-# does NOT reliably treat a skipped *required* check as satisfied — it leaves the PR
-# `BLOCKED` (observed on docs-only PRs). By always running the job and no-op'ing its
-# steps on non-build changes, "Build & Test" always reports a real `success`, so docs/
-# workflow-only PRs stay mergeable while still satisfying the required check.
+# `feat/**` is included so that per-story PRs which target a feature integration branch
+# (e.g. `feat/downloadable-language-packs`) instead of `main` still get CI. Without it,
+# story PRs merge into the integration branch completely untested.
+#
+# Instead of a path filter, a cheap `changes` job detects whether any build-relevant files
+# changed and the expensive macOS `Build & Test` job ALWAYS runs but gates its costly
+# build/test *steps* on that signal. We deliberately do NOT skip the whole job via a
+# job-level `if:`: a job skipped that way reports a `skipped` conclusion, and branch
+# protection does NOT reliably treat a skipped *required* check as satisfied — it leaves the
+# PR `BLOCKED` (observed on docs-/workflow-only PRs such as the workflow archive commits). By
+# always running the job and no-op'ing its steps on non-build changes, "Build & Test" always
+# reports a real `success`, so docs/workflow-only PRs stay mergeable while still satisfying
+# the required check.
 on:
   push:
-    branches: [main]
+    branches: [main, 'feat/**']
   pull_request:
-    branches: [main]
+    branches: [main, 'feat/**']
 
 jobs:
   changes:
