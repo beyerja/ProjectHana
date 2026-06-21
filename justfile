@@ -98,8 +98,15 @@ ci branch:
 
 # Run every linter (fail-on-violation). Mirrors the CI lint job; all tools come from the
 # flake dev shell via direnv (no hardcoded /nix paths).
-lint: lint-swift lint-py lint-sh lint-nix lint-yaml
+lint: lint-swift lint-py lint-sh lint-nix lint-yaml l10n-check
     @echo "lint: all linters passed."
+
+# Static localization-completeness gate: every BASE (en, es-MX) and fully-translated downloadable
+# (de, fr, ko) locale must contain the full canonical key set; nah is allowed to be partial (it
+# resolves missing keys via nah -> es-MX -> en fallback). Stdlib-only python; exits non-zero on any
+# missing required key. Folded into `just lint` so CI enforces completeness.
+l10n-check:
+    python3 scripts/check-l10n-completeness.py
 
 # Lint Swift sources: SwiftLint rules (strict) + swiftformat --lint (formatting gate).
 lint-swift:

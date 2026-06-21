@@ -59,6 +59,7 @@
 "stats.by_category" = "By Category";
 "stats.showing_language" = "Showing:";
 "stats.by_language" = "By Language";
+"stats.by_mode" = "By Quiz Type";
 "stats.category_header" = "Category";
 "stats.mastery_tiers" = "Mastery Tiers";
 "stats.tier.not_started" = "Not started";
