@@ -11,3 +11,6 @@ Hanahuac (*ha-na-wak*, "One World") is a personalized geography learning app for
 - [iCloud Progress Sync (CloudKit-ready)](docs/icloud-sync.md) — the sync architecture ships
   disabled by default; this doc lists the exact steps to enable live sync once a paid Apple
   Developer account exists.
+- [Bot credentials (Hanahuac-Bot)](docs/bot-credentials.md) — how the bot's GitHub token is stored
+  in the macOS Keychain, used via `scripts/gh-review-bot.sh`, scanned for by the pre-commit hook
+  (`just install-hooks`), and rotated.

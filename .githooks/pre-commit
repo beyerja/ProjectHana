@@ -1,7 +1,24 @@
 #!/bin/sh
+# Version-controlled pre-commit hook. This repo sets core.hooksPath=.githooks, so git runs THIS file
+# (and ignores $GIT_DIR/hooks/). It composes two independent checks; either failure aborts the commit:
+#   1. block direct commits to 'main';
+#   2. defense-in-depth secret scan of staged content (scripts/hooks/pre-commit-secret-scan.sh).
+
+# --- 1. block direct commits to 'main' ------------------------------------------------------------
 branch=$(git symbolic-ref --short HEAD 2>/dev/null)
 if [ "$branch" = "main" ]; then
   echo "error: direct commits to 'main' are not allowed."
   echo "       Create a feature branch and open a PR instead."
   exit 1
+fi
+
+# --- 2. secret scan -------------------------------------------------------------------------------
+# Resolve the scan script relative to the repo root so it runs regardless of CWD. The hook normally
+# runs from the repo root, but `git rev-parse --show-toplevel` makes this robust either way.
+repo_root=$(git rev-parse --show-toplevel 2>/dev/null)
+secret_scan="${repo_root}/scripts/hooks/pre-commit-secret-scan.sh"
+if [ -x "$secret_scan" ]; then
+  "$secret_scan" || exit $?
+elif [ -f "$secret_scan" ]; then
+  sh "$secret_scan" || exit $?
 fi
