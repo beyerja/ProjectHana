@@ -20,6 +20,19 @@ struct MapFeaturePinView: View {
         }
     }
 
+    /// Spoken state so correct/incorrect is conveyed to VoiceOver without relying on the pin
+    /// colour alone. Neutral pins carry no value (they are simply selectable places).
+    private var accessibilityStateValue: String {
+        switch state {
+        case .neutral:
+            ""
+        case .correct, .correctRevealed:
+            L10n["a11y.state.correct"]
+        case .incorrectTapped:
+            L10n["a11y.state.incorrect"]
+        }
+    }
+
     var body: some View {
         VStack(spacing: 2) {
             Circle()
@@ -37,6 +50,10 @@ struct MapFeaturePinView: View {
             }
         }
         .animation(.easeInOut(duration: 0.2), value: state)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(name)
+        .accessibilityValue(accessibilityStateValue)
+        .accessibilityAddTraits(.isButton)
     }
 }
 

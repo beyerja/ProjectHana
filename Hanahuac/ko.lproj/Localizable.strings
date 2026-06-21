@@ -193,3 +193,7 @@
 "a11y.summary.accuracy" = "정확도 %d 퍼센트";
 "a11y.summary.result_icon" = "세션 결과";
 "a11y.done.hint" = "이 퀴즈를 닫습니다.";
+"a11y.map.pin.hint" = "이 장소를 선택하려면 두 번 탭하세요.";
+"a11y.map.prompt.label" = "지도에서 찾기";
+"a11y.map.progress" = "%d개 중 %d번째 장소";
+"a11y.map.streak" = "연속 %d / 3개 정답";

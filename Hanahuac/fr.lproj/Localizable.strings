@@ -189,3 +189,7 @@
 "a11y.summary.accuracy" = "%d pour cent de réussite";
 "a11y.summary.result_icon" = "Résultat de la session";
 "a11y.done.hint" = "Ferme ce quiz.";
+"a11y.map.pin.hint" = "Touchez deux fois pour choisir ce lieu.";
+"a11y.map.prompt.label" = "Trouver sur la carte";
+"a11y.map.progress" = "Lieu %d sur %d";
+"a11y.map.streak" = "%d sur 3 corrects d'affilée";

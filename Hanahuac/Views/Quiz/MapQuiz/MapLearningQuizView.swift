@@ -67,6 +67,7 @@ struct MapLearningQuizView: View {
                             MapFeaturePinView(state: state, name: feature.localizedName(for: languageManager.current))
                         }
                         .disabled(answerState != .unanswered || isAdvancing || isPinching)
+                        .accessibilityHint(answerState == .unanswered ? L10n["a11y.map.pin.hint"] : "")
                     }
                 }
                 featureOverlays(for: session.annotationFeatures, answerState: answerState)
@@ -123,20 +124,30 @@ struct MapLearningQuizView: View {
     // MARK: - Prompt
 
     private func promptBanner(session: MapLearningSession) -> some View {
-        VStack(spacing: 4) {
+        let featureName = session.currentFeature?.localizedName(for: languageManager.current) ?? ""
+        let graduatedText = String(
+            format: L10n["learn.graduated_count"],
+            session.graduatedCount,
+            session.totalNewCards
+        )
+        return VStack(spacing: 4) {
             Text(L10n["map_quiz.tap_on_map"])
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Text(session.currentFeature?.localizedName(for: languageManager.current) ?? "")
+                .multilineTextAlignment(.center)
+            Text(featureName)
                 .font(.title2.bold())
-            HStack(spacing: 12) {
-                Text(String(format: L10n["learn.graduated_count"], session.graduatedCount, session.totalNewCards))
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                if let card = session.current {
-                    Text(String(format: L10n["learn_map.streak"], card.consecutiveCorrect))
-                        .font(.caption.bold())
-                        .foregroundStyle(Theme.Palette.new)
+                .multilineTextAlignment(.center)
+            // Let the two progress pills reflow vertically at large Dynamic Type sizes instead
+            // of clipping; HStack keeps them side-by-side at default sizes.
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 12) {
+                    graduatedLabel(graduatedText)
+                    streakLabel(session: session)
+                }
+                VStack(spacing: 4) {
+                    graduatedLabel(graduatedText)
+                    streakLabel(session: session)
                 }
             }
         }
@@ -145,6 +156,34 @@ struct MapLearningQuizView: View {
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
         .padding(.top, 8)
         .padding(.horizontal)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(L10n["a11y.map.prompt.label"]): \(featureName)")
+        .accessibilityValue(learningProgressValue(session: session, graduatedText: graduatedText))
+    }
+
+    private func graduatedLabel(_ text: String) -> some View {
+        Text(text)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+    }
+
+    @ViewBuilder
+    private func streakLabel(session: MapLearningSession) -> some View {
+        if let card = session.current {
+            Text(String(format: L10n["learn_map.streak"], card.consecutiveCorrect))
+                .font(.caption.bold())
+                .foregroundStyle(Theme.Palette.new)
+        }
+    }
+
+    /// Combined spoken progress: graduated count plus the current card's streak, so the learning
+    /// progress is conveyed without relying on the coloured streak pill alone.
+    private func learningProgressValue(session: MapLearningSession, graduatedText: String) -> String {
+        guard let card = session.current else {
+            return graduatedText
+        }
+        let streak = String(format: L10n["a11y.map.streak"], card.consecutiveCorrect)
+        return "\(graduatedText), \(streak)"
     }
 
     // MARK: - Feedback
@@ -166,11 +205,30 @@ struct MapLearningQuizView: View {
         Text(text)
             .font(.headline)
             .foregroundStyle(.white)
+            .multilineTextAlignment(.center)
             .padding(.horizontal, 24)
             .padding(.vertical, 14)
             .background(color, in: RoundedRectangle(cornerRadius: 14))
             .padding(.bottom, 24)
             .padding(.horizontal)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(feedbackAccessibilityLabel(session: session))
+    }
+
+    /// Announces the result (correct / incorrect) and the correct feature name, so the outcome is
+    /// not conveyed by banner colour alone.
+    private func feedbackAccessibilityLabel(session: MapLearningSession) -> String {
+        switch session.answerState {
+        case .correct:
+            let name = session.currentFeature?.localizedName(for: languageManager.current) ?? ""
+            return "\(L10n["a11y.feedback.correct"]). \(name)"
+        case let .incorrect(_, correctID):
+            let name = session.allFeatures.first { $0.id == correctID }?
+                .localizedName(for: languageManager.current) ?? correctID
+            return "\(L10n["a11y.feedback.incorrect"]). \(name)"
+        case .unanswered:
+            return ""
+        }
     }
 
     // MARK: - Completion
@@ -192,10 +250,14 @@ struct MapLearningQuizView: View {
                     .padding(.horizontal)
             }
 
-            HStack {
-                Text(L10n["learn.cards_graduated"]).foregroundStyle(.secondary)
-                Spacer()
-                Text("\(session.graduatedCount)").bold()
+            HStack(alignment: .firstTextBaseline) {
+                Text(L10n["learn.cards_graduated"])
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Spacer(minLength: 12)
+                Text("\(session.graduatedCount)")
+                    .bold()
+                    .fixedSize()
             }
             .padding()
             .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
