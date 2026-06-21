@@ -86,6 +86,15 @@ call site, add an **explicit memberwise `init` that defaults the new field(s)** 
 `nameKo: String? = nil`); `Codable` still decodes the new key via `decodeIfPresent`. Faster and
 lower-risk than touching dozens of call sites.
 
+**Tests must not assert on ambient bundle/resource presence — drive through the seam**
+A test that asserts a resource is present in (or absent from) `Bundle.main` is environment-dependent and
+will pass locally but fail in clean CI. The Catalyst/sim dev build embeds tagged ODR resources in the
+test host, but a clean CI/App-Store build splits them into on-demand asset packs, so `Bundle.main`
+contents differ. Any test about pack presence/absence or offline-fallback behavior must resolve through
+the provider seam with an **explicit test double** (e.g. a local `PackAbsentProvider` that returns the
+intended state), restoring the active provider in `setUp`/`tearDown` — never rely on what happens to be
+embedded in `Bundle.main` at runtime.
+
 **Xcode project is generated — never hand-edit the pbxproj**
 The project is generated from `project.yml` by xcodegen. Source/resource files are enumerated
 from folder paths (`Hanahuac/`, `HanahuacTests/`), so after **adding or removing any file** run:
@@ -96,6 +105,12 @@ Then `just test`. Do NOT manually edit `Hanahuac.xcodeproj/project.pbxproj` — 
 `just generate`. To change targets, settings, schemes, or the bundle id, edit `project.yml` and
 regenerate. (Files inside `*.xcassets` — e.g. app-icon PNGs — are folder-referenced and need no
 regeneration.)
+
+When you add several **parallel** entries to `project.yml` (e.g. one per locale: `fr.lproj`, `de.lproj`,
+`ko.lproj`, …), make them **structurally identical** — same keys (`type: folder`, `resourceTags`, etc.).
+One entry missing a key (e.g. a `.lproj` without `type: folder`) silently generates a different pbxproj
+path (a `<group>` instead of a folder ref), changing ODR delivery/resolution on a real split build. After
+regenerating, diff the generated entries to confirm the parallel set matches.
 
 **Git hooks must install under the repo's actual `core.hooksPath` — and be tested there**
 This repo sets `core.hooksPath=.githooks`, so git runs `.githooks/<hook>`, NOT `$GIT_DIR/hooks/<hook>`.

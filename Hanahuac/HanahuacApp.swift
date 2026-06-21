@@ -9,6 +9,14 @@ struct HanahuacApp: App {
 
     @State private var syncCoordinator = SyncCoordinator()
 
+    init() {
+        // Install the On-Demand-Resources provider as the active language-pack provider, backed by the
+        // shared download store the picker observes. Without this, selecting a downloadable language
+        // would never trigger an ODR download (the holder's downcast would always be nil). `App.init`
+        // runs on the main actor, matching `requestDownloadIfNeeded`/the store's `@MainActor` isolation.
+        LanguagePackBootstrap.installForProduction()
+    }
+
     var body: some Scene {
         WindowGroup {
             AppRootView()

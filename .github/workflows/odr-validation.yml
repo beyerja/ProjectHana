@@ -1,0 +1,87 @@
+name: "ODR Validation"
+
+# On-Demand-Resources validation is slow (it builds the app on a macOS runner) and is therefore
+# NOT a per-PR gate: there is intentionally no `pull_request` trigger. Mirroring codeql.yml /
+# secret-scan.yml's async pattern, it runs on push to `main` and on a weekly schedule; findings
+# surface in the run logs and are triaged over time. The fast, blocking PR checks (ci.yml / lint.yml)
+# stay fast and unchanged.
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Weekly validation of the default branch (Mondays 07:00 UTC).
+    - cron: "0 7 * * 1"
+  # Allow manual runs from the Actions tab.
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref to save CI minutes.
+concurrency:
+  group: odr-validation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate ODR packs (data-only + base-only launch path)
+    runs-on: macos-15
+    timeout-minutes: 45
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      # Regenerate the project from project.yml so the validated ODR tag wiring is exactly what a
+      # release build produces (never trust a possibly-stale committed pbxproj for this check).
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      # Assert the geo packs are up to date with the bundled source data; fails if someone edited the
+      # source geo JSON without regenerating the packs.
+      - name: Geo packs up to date
+        run: python3 scripts/generate-geo-packs.py --check
+
+      # Data-only guarantee + ODR tag contract + no custom trust code (scripts/verify-odr-packs.sh).
+      - name: Verify packs are data-only and tags match the contract
+        run: bash scripts/verify-odr-packs.sh
+
+      # Build the app to prove the ODR-tagged project compiles and the asset-tag wiring is valid.
+      - name: Build (Mac Catalyst)
+        run: |
+          set -o pipefail
+          xcodebuild build \
+            -project Hanahuac.xcodeproj \
+            -scheme Hanahuac \
+            -destination 'platform=macOS,variant=Mac Catalyst' \
+            -configuration Debug \
+            -derivedDataPath build/odr-validation \
+            CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+
+      # Validate the zero-packs offline base-only launch path (static bundle check): the built app
+      # contains the always-bundled base languages (en + es-MX) and the non-base languages are
+      # declared as On-Demand Resources. (On Mac Catalyst the tagged resources are embedded for local
+      # dev; the iOS-device/App-Store build splits them into asset packs — see the script's note.)
+      - name: Validate zero-packs base-only bundle
+        run: bash scripts/verify-base-only-bundle.sh build/odr-validation
+
+      # Exercise the zero-packs base-only path at RUNTIME: the language-pack tests
+      # (ODRLanguagePackProviderTests / BundledLanguagePackProviderTests / ProviderRoutedResolution)
+      # cover the app resolving strings and geo names with NO packs downloaded, degrading through the
+      # fallback chain (selected -> es-MX -> en) without crashing.
+      - name: Test (base-only / zero-packs runtime path)
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Hanahuac.xcodeproj \
+            -scheme Hanahuac \
+            -destination 'platform=macOS,variant=Mac Catalyst' \
+            -configuration Debug \
+            -derivedDataPath build/odr-validation \
+            CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+            -only-testing:HanahuacTests/ODRLanguagePackProviderTests \
+            -only-testing:HanahuacTests/BundledLanguagePackProviderTests \
+            -only-testing:HanahuacTests/ProviderRoutedResolutionTests \
+            -only-testing:HanahuacTests/LanguagePackBootstrapTests

@@ -30,6 +30,10 @@
 "settings.section.icloud" = "iCloud";
 "settings.language" = "Language";
 "settings.language.picker_title" = "App Language";
+"settings.language.downloading" = "Downloading…";
+"settings.language.download_failed" = "Download failed";
+"settings.language.retry" = "Retry";
+"settings.language.available" = "Available";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud Sync";

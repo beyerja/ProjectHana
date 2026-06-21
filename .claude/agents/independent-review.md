@@ -160,6 +160,14 @@ This COMMENT fallback is the **documented DEFAULT** until the bot token is provi
      verdict `CHANGES_REQUESTED`.
    - **No blocking findings** (clean, or only non-blocking nits already posted inline) →
      verdict `APPROVED`.
+
+   **Before APPROVING, verify each AC is reachable at runtime — not just that the code compiles and
+   has tests.** Trace every new type/seam from its definition to the production call site that actually
+   constructs and installs it (the composition root / app init), not only its unit tests. A change can
+   compile, pass its own tests, and still leave an AC unmet because the new component is never wired into
+   the running app (e.g. a provider/protocol implemented but never installed as the active one — a
+   production downcast stays nil and the feature does nothing). If a new behavior has no production
+   call path, that is a **blocking** finding (AC unmet), regardless of test coverage.
 5. **Submit the formal review + resolve addressed threads (additive — STATUS is still authoritative):**
    - Submit the matching FORMAL review state as the bot through the wrapper (see *Formal review
      submission*): `scripts/gh-review-bot.sh gh -R <owner/repo> pr review <number> --approve` on
