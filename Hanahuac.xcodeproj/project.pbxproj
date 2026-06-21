@@ -15,6 +15,7 @@
 		0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */; };
 		0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */; };
 		108DFB8DC33A70A787D1FF24 /* GeoModel+PackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C971DDAF9ECCC063A87229 /* GeoModel+PackData.swift */; };
+		12FF05A3C0A7B0D9649FED58 /* L10nCompletenessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8960B99BAFCF760678DA076 /* L10nCompletenessTests.swift */; };
 		15DEBBA2132BD4DB67D4AE7E /* ProgressBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A009B1EC5C53A5776FF842 /* ProgressBackup.swift */; };
 		16A319228D8757B6F595F322 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C30D9ED535AEDD850E02807 /* LearningSession.swift */; };
 		17EDC98B738E0A1FF613B15F /* AppLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A287A2E1964EE9A8ECFAB7 /* AppLocale.swift */; };
@@ -273,6 +274,7 @@
 		C7079D6DD469A5CC6D2878CC /* nah.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nah.lproj; path = Hanahuac/nah.lproj; sourceTree = SOURCE_ROOT; };
 		C7DF698B124B767490E9361E /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		C7E2B565AEAAD1F772460F00 /* Hanahuac.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Hanahuac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8960B99BAFCF760678DA076 /* L10nCompletenessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nCompletenessTests.swift; sourceTree = "<group>"; };
 		CC2EADA5AE08E3AB2FDD015B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CC9CA1C0AAF0A663E0C337CA /* LanguagePickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerViewModel.swift; sourceTree = "<group>"; };
 		CE3DAF1FE3C961B24E3BE876 /* GeoNameResolverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNameResolverTests.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */,
 				2DEBADCA4691A5AC9A317ACF /* HomeQuizModeTests.swift */,
 				EF0CCAA2F2AF702B15300352 /* L10nBundleResolutionTests.swift */,
+				C8960B99BAFCF760678DA076 /* L10nCompletenessTests.swift */,
 				601D195FA5082ACE0F09162E /* LanguageCatalogTests.swift */,
 				28541D220A20441BA2942BE5 /* LanguageManagerTests.swift */,
 				41D6ED9A00E4D4C2F2CF6776 /* LanguagePackBootstrapTests.swift */,
@@ -814,6 +817,7 @@
 				2AE1D2E426F022C999D475F9 /* HanahuacTests.swift in Sources */,
 				65821E378B8AF18D360C8A2E /* HomeQuizModeTests.swift in Sources */,
 				2C070983399A1915D3A6BCEB /* L10nBundleResolutionTests.swift in Sources */,
+				12FF05A3C0A7B0D9649FED58 /* L10nCompletenessTests.swift in Sources */,
 				F026FA55B3908340BB301534 /* LanguageCatalogTests.swift in Sources */,
 				D1B5CF9272BC39C196371B53 /* LanguageManagerTests.swift in Sources */,
 				402988DDCA5A46927A62B5A2 /* LanguagePackBootstrapTests.swift in Sources */,
