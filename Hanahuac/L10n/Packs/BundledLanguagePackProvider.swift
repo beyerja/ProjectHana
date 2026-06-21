@@ -39,12 +39,12 @@ struct BundledLanguagePackProvider: LanguagePackProvider {
 
     /// Build one validated ``GeoNamePackData`` per non-base language from the bundled geo data.
     ///
-    /// Only the per-language translation columns (fr/de/es-MX/ko/nah) become packs; the English base
-    /// name lives on the geo model itself and is the resolver's final fallback, so it needs no pack.
-    /// Each candidate pack is run through ``GeoNamePackLoader/validate(_:)`` and dropped (rather than
-    /// crashing) if it fails validation.
+    /// Only the per-language translation columns (fr/de/es-MX/es-ES/ko/nah) become packs; the English
+    /// base name lives on the geo model itself and is the resolver's final fallback, so it needs no
+    /// pack. Each candidate pack is run through ``GeoNamePackLoader/validate(_:)`` and dropped (rather
+    /// than crashing) if it fails validation.
     private static func buildPacks(from geography: GeographyData) -> [String: GeoNamePackData] {
-        let packLanguages: [AppLocale] = [.fr, .de, .esMX, .ko, .nah]
+        let packLanguages: [AppLocale] = [.fr, .de, .esMX, .esES, .ko, .nah]
         var result: [String: GeoNamePackData] = [:]
         for locale in packLanguages {
             let entries = entries(for: locale, in: geography)
