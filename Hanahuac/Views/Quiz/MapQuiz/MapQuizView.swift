@@ -56,7 +56,7 @@ struct MapQuizView: View {
         // closure does not register observation and the overlays would never update.
         let answerState = session.answerState
         ZStack(alignment: .bottom) {
-            Map(position: $position) {
+            Map(position: $position, bounds: QuizRegionMath.cameraBounds(for: session.mapRegion)) {
                 ForEach(session.annotationFeatures, id: \.id) { feature in
                     let state = mapPinState(featureID: feature.id, answerState: answerState)
                     Annotation("", coordinate: feature.pinCoordinate) {

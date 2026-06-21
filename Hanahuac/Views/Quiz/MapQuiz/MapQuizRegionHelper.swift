@@ -1,5 +1,6 @@
 import Foundation
 import MapKit
+import SwiftUI
 
 /// Shared helper for building the map quiz annotation set and visible region.
 ///
@@ -159,6 +160,44 @@ enum QuizRegionMath {
         return MKCoordinateRegion(
             center: CLLocationCoordinate2D(latitude: jitteredLat, longitude: jitteredLon),
             span: MKCoordinateSpan(latitudeDelta: spanLat, longitudeDelta: spanLon)
+        )
+    }
+
+    /// Approximate metres per degree of latitude (constant; longitude is scaled by
+    /// cos(latitude) in `cameraDistance(for:)`).
+    static let metersPerDegreeLatitude = 111_320.0
+
+    /// Headroom multiplier applied to the region span when deriving the camera's
+    /// `maximumDistance`. Slightly above the fitted span so the framed region is
+    /// honoured exactly while still hard-capping how far the camera may zoom out —
+    /// far below the extent of the full-course river / large sea-mountain overlays.
+    static let cameraDistanceHeadroom = 1.15
+
+    /// The camera distance (in metres, the units of `MapCameraBounds`/`MapCamera`)
+    /// that frames `region`'s span. Used to cap the map camera so it cannot zoom out
+    /// to encompass overlay geometry (full river courses, large sea/mountain border
+    /// polygons) that extends far beyond the candidate-pin bounding box.
+    ///
+    /// Derived from the larger on-screen (latitude-compression corrected) extent so
+    /// neither axis clips, then converted from degrees to metres.
+    static func cameraDistance(for region: MKCoordinateRegion) -> Double {
+        let cosLat = max(0.2, cos(region.center.latitude * .pi / 180))
+        let latExtentMeters = region.span.latitudeDelta * metersPerDegreeLatitude
+        let lonExtentMeters = region.span.longitudeDelta * cosLat * metersPerDegreeLatitude
+        return max(latExtentMeters, lonExtentMeters)
+    }
+
+    /// Camera bounds that pin the map to the candidate-pin `region` so overlay
+    /// geometry (full-course river `linePath`, large sea/mountain `borderRings`)
+    /// cannot re-frame the camera away from the pins. Constrains the camera centre to
+    /// the region and caps the zoom-out distance to the region's framed span — the
+    /// single shared mechanism used by both `MapQuizView` and `MapLearningQuizView`
+    /// for every category. Framing stays derived purely from the bounding box of all
+    /// candidate pins, independent of which pin is the answer (no hint leak).
+    static func cameraBounds(for region: MKCoordinateRegion) -> MapCameraBounds {
+        MapCameraBounds(
+            centerCoordinateBounds: region,
+            maximumDistance: cameraDistance(for: region) * cameraDistanceHeadroom
         )
     }
 
