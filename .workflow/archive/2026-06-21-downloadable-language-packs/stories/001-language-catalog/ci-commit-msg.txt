@@ -1,0 +1,13 @@
+ci: run CI on feature integration branches (feat/**)
+
+The CI workflow triggered only on pushes/PRs to `main`, so per-story PRs that
+target a feature integration branch (e.g. feat/downloadable-language-packs)
+never dispatched any checks and would merge into the integration branch
+completely untested.
+
+Add `feat/**` to the push and pull_request branch triggers so story PRs against
+an integration branch get the same Build & Test gate as PRs to main. The
+existing `changes` path-filter job still skips the costly macOS build for
+non-code changes.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>

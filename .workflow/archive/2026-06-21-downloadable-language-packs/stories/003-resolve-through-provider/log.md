@@ -1,0 +1,7 @@
+# Log — Resolve UI strings and geo names through the LanguagePackProvider seam
+2026-06-20 break-tasks: DONE, 9 tasks
+2026-06-20 implement-story: DONE — tasks 001-009 complete (001-006/008 already present in working tree; finished 007 by routing NameFeatureQuizTests through a fixture-built bundled provider, ran 009 audit). lint + test green.
+2026-06-20 create-pr: DONE — https://github.com/beyerja/ProjectHana/pull/120
+2026-06-20 independent-review: APPROVED — all 6 ACs met; 3 non-blocking notes (unisolated active global, L10n double-walk, doc alias typo)
+2026-06-20 merge-pr: DONE — squash-merged #120 into feat/downloadable-language-packs (merge commit d57f9057587e6a6c813ac630abab841c01f634d2)
+2026-06-20 verify-story: DONE — all 6 ACs verified on branch at d57f905. L10n.string routes every fallback candidate through LanguagePackProviderHolder.active.stringBundle, terminates on raw key. Country/River/MountainRange/Sea localizedName/localizedCapital route through GeoNameResolver.resolveThroughProvider keyed by id; no resolution call site reads nameFr/capitalKo (only model storage + bundled-provider rawName/rawCapital pack assembly). Absent pack (nil geoNameData) and empty/malformed pack degrade to bundled base via resolver fall-through; loader never fatalErrors. No call site branches on concrete provider type. Test target builds & runs all suites (ProviderRoutedResolution, L10nBundleResolution, LocalizedGeoName, LocalizedQuizPrompt, NameFeatureQuiz, GeoNameResolver, GeoNamePackData) — xcodebuild test => ** TEST SUCCEEDED **.
