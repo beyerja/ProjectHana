@@ -189,3 +189,7 @@
 "a11y.summary.accuracy" = "%d por ciento de acierto";
 "a11y.summary.result_icon" = "Resultado de la sesión";
 "a11y.done.hint" = "Cierra este cuestionario.";
+"a11y.map.pin.hint" = "Toca dos veces para elegir este lugar.";
+"a11y.map.prompt.label" = "Encuentra en el mapa";
+"a11y.map.progress" = "Lugar %d de %d";
+"a11y.map.streak" = "%d de 3 correctas seguidas";
