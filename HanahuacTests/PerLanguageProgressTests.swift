@@ -33,6 +33,77 @@ final class PerLanguageProgressTests: XCTestCase {
         ReviewCard(factID: "f-\(locale.rawValue)", language: locale.rawValue, category: .country, repetitionCount: reps)
     }
 
+    // MARK: - Reusable locale-parameterized isolation helper
+
+    /// Assert that progress recorded under locale `a` stays fully isolated from locale `b`, and that a
+    /// shared `factID`/day coexists across the two tracks. Per-language stories (002–009) only ADD a
+    /// call with their new locale; they never change this helper or the existing test semantics.
+    ///
+    /// The helper seeds a card and a daily snapshot under `a`, then asserts `b`'s `CardStore`/
+    /// `ProgressStatsStore` rows (keyed by `language` rawValue) stay empty, and that the same
+    /// `factID`/day persists independently in both tracks once `b` records its own.
+    private func assertProgressIsolated(
+        _ a: AppLocale,
+        _ b: AppLocale,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let factID = "shared-fact"
+        let cardA = cardStore(a)
+        let cardB = cardStore(b)
+        cardA.upsert(ReviewCard(factID: factID, category: .country))
+        XCTAssertEqual(cardA.allCards.count, 1, "\(a.rawValue) must hold its own card", file: file, line: line)
+        XCTAssertTrue(
+            cardB.allCards.isEmpty,
+            "\(b.rawValue) cards must not see \(a.rawValue)'s card",
+            file: file,
+            line: line
+        )
+
+        let statsA = statsStore(a)
+        let statsB = statsStore(b)
+        statsA.recordSnapshot(cards: [reviewedCard(a)], streak: 1)
+        XCTAssertEqual(
+            statsA.allSnapshots.count,
+            1,
+            "\(a.rawValue) must hold its own snapshot",
+            file: file,
+            line: line
+        )
+        XCTAssertTrue(
+            statsB.allSnapshots.isEmpty,
+            "\(b.rawValue) snapshots must not see \(a.rawValue)'s snapshot",
+            file: file,
+            line: line
+        )
+
+        // The same factID/day coexists across tracks: once b records its own, both persist.
+        cardB.upsert(ReviewCard(factID: factID, category: .country))
+        statsB.recordSnapshot(cards: [reviewedCard(b, reps: 5)], streak: 2)
+        XCTAssertEqual(
+            cardA.allCards.filter { $0.factID == factID }.count,
+            1,
+            "\(a.rawValue) keeps its \(factID) card",
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(
+            cardB.allCards.filter { $0.factID == factID }.count,
+            1,
+            "\(b.rawValue) keeps its \(factID) card",
+            file: file,
+            line: line
+        )
+        XCTAssertEqual(cardA.deduplicate(), 0, "cross-language same factID is not a duplicate", file: file, line: line)
+        XCTAssertEqual(statsA.allSnapshots.count, 1, "\(a.rawValue) snapshot unchanged", file: file, line: line)
+        XCTAssertEqual(statsB.allSnapshots.count, 1, "\(b.rawValue) snapshot unchanged", file: file, line: line)
+    }
+
+    /// Exercises the reusable helper on an existing locale pair, satisfying AC#3.
+    func testProgressIsolationHelperOnExistingLocalePair() {
+        assertProgressIsolated(.en, .ko)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {

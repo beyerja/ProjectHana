@@ -17,6 +17,49 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(catalogCodes, appLocaleCodes)
     }
 
+    // MARK: - Generic enum↔catalog invariants (foundational; auto-cover future languages)
+
+    /// Every `AppLocale` case must map to exactly one `LanguageDescriptor`, proving a one-to-one
+    /// enum↔descriptor relationship that automatically covers any language added later.
+    func testEveryAppLocaleHasExactlyOneDescriptor() {
+        for locale in AppLocale.allCases {
+            let matches = LanguageCatalog.all.filter {
+                $0.code == locale.rawValue
+            }
+            XCTAssertEqual(
+                matches.count,
+                1,
+                "\(locale.rawValue) must have exactly one descriptor, found \(matches.count)"
+            )
+        }
+    }
+
+    /// Re-affirm catalog order generically, expressed directly over `AppLocale.allCases` so a future
+    /// language inserted into the enum is held to the same ordering contract.
+    func testCatalogOrderMatchesAllCasesGenerically() {
+        XCTAssertEqual(LanguageCatalog.all.map(\.code), AppLocale.allCases.map(\.rawValue))
+    }
+
+    /// The ODR-tag convention is enforced generically over every case: bundled-base locales carry no
+    /// tags, downloadable locales carry exactly `["lang-<code>"]` built from the rawValue. No
+    /// hardcoded language list, so any future language is validated automatically.
+    func testODRTagsAreGenericallyConsistentOverAllCases() {
+        for locale in AppLocale.allCases {
+            if locale.isBundledBaseLanguage {
+                XCTAssertTrue(
+                    locale.odrTags.isEmpty,
+                    "\(locale.rawValue) is bundled-base → must carry no ODR tags"
+                )
+            } else {
+                XCTAssertEqual(
+                    locale.odrTags,
+                    ["lang-\(locale.rawValue)"],
+                    "\(locale.rawValue) is downloadable → must carry exactly [lang-\(locale.rawValue)]"
+                )
+            }
+        }
+    }
+
     // MARK: - Descriptor lookup
 
     func testDescriptorLookupForEveryAppLocale() {
