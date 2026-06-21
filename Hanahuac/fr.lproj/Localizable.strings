@@ -59,6 +59,7 @@
 "stats.by_category" = "Par catégorie";
 "stats.showing_language" = "Affichage :";
 "stats.by_language" = "Par langue";
+"stats.by_mode" = "Par type de quiz";
 "stats.category_header" = "Catégorie";
 "stats.mastery_tiers" = "Niveaux de maîtrise";
 "stats.tier.not_started" = "Non commencé";

@@ -27,6 +27,79 @@ This directory is managed by the feature-orchestrator agent and its sub-agents.
 | `merged` | PR merged, awaiting verification |
 | `done` | Verified and complete |
 
+## Per-story lifecycle (`story-workflow`)
+
+Each story runs through `story-workflow`, which spawns a dedicated sub-agent per step:
+
+1. **Break tasks** — `break-tasks`.
+2. **Implement** — `implement-story` (the implement agent).
+3. **Create PR** — `create-pr`.
+4. **Wait for CI** — `wait-for-ci`. Must be green before review; on failure, re-implement and re-push.
+5. **Independent review** — runs **after CI passes** so the reviewer sees code that builds. A fresh,
+   **cold-context** `independent-review` agent — a **separate spawn from the implement agent** (the
+   4-eye principle: the change is reviewed by someone who did not write it) — reviews the PR diff and
+   emits a verdict via STATUS:
+   - `CHANGES_REQUESTED` → a separate implement agent addresses every inline comment, replies to each
+     thread marking it resolved, runs `just lint`/`just test`, and pushes; then a **fresh**
+     `independent-review` runs again. This feedback loop is **bounded to 3 rounds**; after 3 rounds
+     without approval the workflow **escalates to the user** instead of looping further.
+   - `APPROVED` → continue.
+6. **Merge** — once the reviewer emits `APPROVED` **and** CI is green, the workflow merges
+   **autonomously** by spawning `merge-pr`. There is **no human review/merge gate**: the workflow never
+   pauses for the user to review or merge, and never assumes the user merged manually.
+7. **Verify** — `verify-story` checks the acceptance criteria; on failure it re-implements.
+
+## Obligatory review gate (CODEOWNERS + branch protection)
+
+Independent review is **obligatory**: a code-owner approval from `@Hanahuac-Bot` is required before
+merging to `main`. This is set up by [`.github/CODEOWNERS`](../.github/CODEOWNERS) (assigns the repo
+to the bot) plus branch protection on `main`.
+
+### Bot-authenticated formal review submission
+
+The `independent-review` agent submits a **formal GitHub review state** under the **`Hanahuac-Bot`**
+identity via `scripts/gh-review-bot.sh gh pr review`. A separate bot account is required because the
+plain `gh` user running the workflow is the **same** account that opened the PR, and GitHub **blocks
+self-approval** by the PR opener — the bot, as a distinct collaborator, is not blocked. The wrapper
+reads the bot's token from the macOS Keychain and never exposes it; agents only ever invoke the
+wrapper. See **[`docs/bot-credentials.md`](../docs/bot-credentials.md)** for the canonical setup +
+rotation steps and the token-safety guarantees.
+
+### Formal review states (additive) vs the authoritative `STATUS`
+
+The formal state is **additive** — it never replaces the agent's `STATUS:` line, which remains the
+**authoritative loop signal** the orchestrator branches on:
+
+- `APPROVE` — paired with `STATUS: APPROVED`.
+- `REQUEST_CHANGES` — paired with `STATUS: CHANGES_REQUESTED`.
+- `COMMENT` **fallback** — when the bot token is absent (the wrapper fails closed), the reviewer posts
+  a non-formal `COMMENT`-type review as the PR-opener and records that the formal state was SKIPPED.
+  The loop still functions on `STATUS` alone.
+
+### Thread resolution via `resolveReviewThread`
+
+A reply comment alone does **not** resolve a review thread on GitHub. True resolution requires the
+`resolveReviewThread` GraphQL mutation, performed by the **bot** (the review author) through the
+wrapper on a re-review round, after the implementer has acknowledged the fix on each thread. When the
+bot token is absent, thread resolution is likewise SKIPPED and the loop proceeds on `STATUS` alone.
+
+### The obligatory CODEOWNERS + branch-protection gate (with bootstrapping guard)
+
+See **[`.github/branch-protection.md`](../.github/branch-protection.md)** for the single ready-to-run
+activation command and when/how to flip the gate on:
+
+```sh
+gh api -X PUT repos/beyerja/ProjectHana/branches/main/protection --input .github/branch-protection-main.json
+```
+
+> **Bootstrapping guard.** Committing `CODEOWNERS` is **safe mid-run** — it blocks nothing on its
+> own; only branch protection enforces the gate. The activation command above is the **FINAL** step,
+> to be run **only after** this run's own PRs merge; enabling it mid-run would deadlock the workflow
+> on its own un-reviewed PRs. `.github/branch-protection.md` also documents verification and the
+> deactivation/rollback command.
+
+The fuller setup/rotation docs live in **[`docs/bot-credentials.md`](../docs/bot-credentials.md)**.
+
 ## Starting the workflow
 
 Tell Claude: "Start the feature workflow for <feature description>" — it will spawn the `feature-orchestrator` agent.

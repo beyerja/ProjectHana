@@ -1,19 +1,23 @@
 import SwiftUI
 
 struct StatsView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.modelContext) private var modelContext
     @State private var streak: Int = 0 // resolved from the active language in onAppear
     @State private var showLanguageBreakdown = false
+    @State private var showModeBreakdown = false
 
+    /// The default Progress view is mode-aggregated: it sums each fact's progress across all quiz
+    /// modes (per-mode breakdown is added in a later story). `allCards`/`dueCards` come from the
+    /// provider's union over the per-mode stores.
     private var all: [ReviewCard] {
-        cardStore.allCards
+        cardStoreProvider.allCards
     }
 
     private var dueCount: Int {
-        cardStore.dueCards().count
+        cardStoreProvider.dueCards().count
     }
 
     private var reviewedCount: Int {
@@ -21,7 +25,12 @@ struct StatsView: View {
     }
 
     var body: some View {
-        ScrollView {
+        // Read both stores' mutation signals so SwiftUI Observation ties this view's invalidation to
+        // their writes; the fetch-derived computed properties below read no @Observable stored property
+        // and would otherwise never refresh after a quiz mutates cards or records a snapshot.
+        _ = cardStoreProvider.revision
+        _ = progressStatsStore?.revision
+        return ScrollView {
             VStack(spacing: 28) {
                 activeLanguageHeader
                 summarySection
@@ -29,6 +38,7 @@ struct StatsView: View {
                 if let progressStatsStore {
                     StatsChartsSection(snapshots: progressStatsStore.allSnapshots)
                 }
+                modeBreakdownSection
                 languageBreakdownSection
                 tierLegendSection
             }
@@ -111,6 +121,57 @@ struct StatsView: View {
             .font(.subheadline.bold())
             .foregroundStyle(color)
             .frame(width: 40)
+    }
+
+    // MARK: – Per-mode breakdown
+
+    /// Collapsed by default, so the Progress screen's default totals stay mode-aggregated. Expanding it
+    /// shows each quiz mode's individual totals for the active language (mastered / review / due) —
+    /// backed by `ModeProgressSummary`. `typeCapital` naturally shows only its Countries cards.
+    private var modeBreakdownSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Button {
+                withAnimation { showModeBreakdown.toggle() }
+            } label: {
+                HStack {
+                    Text(L10n["stats.by_mode"])
+                        .font(.headline)
+                        .foregroundStyle(.secondary)
+                    Spacer()
+                    Image(systemName: showModeBreakdown ? "chevron.up" : "chevron.down")
+                        .font(.caption.bold())
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .buttonStyle(.plain)
+
+            if showModeBreakdown {
+                VStack(spacing: 1) {
+                    let summaries = ModeProgressSummary.all(
+                        language: languageManager.current.rawValue,
+                        context: modelContext
+                    )
+                    ForEach(summaries) { summary in
+                        modeRow(summary)
+                    }
+                }
+                .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 14))
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+            }
+        }
+    }
+
+    private func modeRow(_ summary: ModeProgressSummary) -> some View {
+        HStack {
+            Text(L10n[HomeQuizMode(quizModeID: summary.mode).titleKey])
+                .font(.subheadline)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            languageMetric("\(summary.mastered)", color: Theme.Palette.correct)
+            languageMetric("\(summary.reviewTier)", color: Theme.Palette.accent)
+            languageMetric("\(summary.due)", color: Theme.Palette.new)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
     }
 
     // MARK: – Summary

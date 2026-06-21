@@ -160,6 +160,18 @@ lint-yaml:
     direnv exec . yamllint "${yamlfiles[@]}"
     echo "yaml: clean."
 
+# Activate the committed git hooks by setting core.hooksPath=.githooks (secret-scan + main guard).
+# Run once per clone. Idempotent.
+install-hooks:
+    bash scripts/install-hooks.sh
+
+# Run the token-free bot-script tests (wrapper + secret-scan hook). No real token required.
+test-bot-scripts:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    bash scripts/test-gh-review-bot.sh
+    bash scripts/test-secret-scan-hook.sh
+
 # Delegate to agent telemetry logger
 log *args:
     bash scripts/agent-log.sh {{args}}

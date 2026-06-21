@@ -1,0 +1,8 @@
+## Tasks
+- [x] 001: Add an observable `private(set) var revision: Int = 0` and a `private func markChanged() { revision &+= 1 }` helper to `CardStore`, and call `markChanged()` after each `modelContext.save()` in `upsert`, `resetAll`, `seedIfNeeded`, `deduplicate`, and `ensureGraduationConsistency` (only on the conditional save). Use `&+=` for overflow safety.
+- [x] 002: Add an observable `private(set) var revision: Int = 0` and a `private func markChanged() { revision &+= 1 }` helper to `ProgressStatsStore`, and call `markChanged()` after each `modelContext.save()` in `recordSnapshot` and `deduplicate` (only on the conditional save). Use `&+=` for overflow safety.
+- [x] 003: In `HomeView`, read `cardStore.revision` once in `body` (discarding the value) before the count-pill fetches run, so SwiftUI Observation ties the view's invalidation to `CardStore` mutations. Keep the existing `.id(languageManager.current)` rebuild intact.
+- [x] 004: In `StatsView`, read `cardStore.revision` and `progressStatsStore?.revision` once in `body` (discarding the values) before the fetch-derived computed properties run, so Observation ties the view to both stores' mutations. Keep the existing `.id(languageManager.current)` rebuild intact.
+- [x] 005: Add regression tests to `HanahuacTests/CardStoreTests.swift` asserting `revision` increments on `upsert`, `resetAll`, `seedIfNeeded`, and `deduplicate` (capturing before/after values).
+- [x] 006: Add regression tests to `HanahuacTests/ProgressStatsStoreTests.swift` asserting `revision` increments on `recordSnapshot` and `deduplicate` (capturing before/after values).
+- [x] 007: Run `just lint` and `just test` and resolve any failures.

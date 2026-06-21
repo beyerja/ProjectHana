@@ -1,12 +1,16 @@
 import SwiftUI
 
 struct HomeView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(LanguageManager.self) private var languageManager
     @State private var navigationPath = NavigationPath()
 
     var body: some View {
-        NavigationStack(path: $navigationPath) {
+        // Read the provider's aggregate mutation signal so SwiftUI Observation ties this view's
+        // invalidation to a write in ANY mode's CardStore; the per-mode count-pill fetches below read
+        // no @Observable stored property and would otherwise never refresh after a quiz mutates rows.
+        _ = cardStoreProvider.revision
+        return NavigationStack(path: $navigationPath) {
             ScrollView {
                 VStack(spacing: 28) {
                     HanahuacWordmark()
@@ -83,8 +87,9 @@ struct HomeView: View {
     // MARK: – Quiz mode buttons
 
     private func quizModeButton(mode: HomeQuizMode, category: CardCategory) -> some View {
-        let newCount = mode.supportsNew ? cardStore.newCards(for: category).count : 0
-        let pendingCount = cardStore.dueCards(for: category).count
+        let store = cardStoreProvider.store(for: mode)
+        let newCount = mode.supportsNew ? store.newCards(for: category).count : 0
+        let pendingCount = store.dueCards(for: category).count
         let isEnabled = newCount > 0 || pendingCount > 0
 
         return Button {
@@ -182,19 +187,21 @@ struct HomeView: View {
 
     @ViewBuilder
     private func directQuizView(mode: HomeQuizMode, category: CardCategory, pile: Pile) -> some View {
+        // The new-card piles read the *mode's own* store so each mode learns an independent set.
+        let store = cardStoreProvider.store(for: mode)
         switch (mode, pile) {
         case (.mapQuiz, .new):
-            MapLearningQuizView(newCards: cardStore.newCards(for: category), category: category)
+            MapLearningQuizView(newCards: store.newCards(for: category), category: category)
         case (.mapQuiz, .pending):
             MapQuizView(category: category)
         case (.multipleChoice, .new):
-            LearningQuizView(newCards: cardStore.newCards(for: category), category: category)
+            LearningQuizView(newCards: store.newCards(for: category), category: category)
         case (.multipleChoice, .pending):
             MultipleChoiceQuizView(category: category)
         case (.typeCapital, _):
             CapitalQuizView(pile: pile)
         case (.nameFeature, .new):
-            NameFeatureQuizView(source: .new(newCards: cardStore.newCards(for: category), category: category))
+            NameFeatureQuizView(source: .new(newCards: store.newCards(for: category), category: category))
         case (.nameFeature, .pending):
             NameFeatureQuizView(source: .pending(category: category))
         }

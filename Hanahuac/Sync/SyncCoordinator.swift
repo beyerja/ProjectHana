@@ -71,12 +71,13 @@ final class SyncCoordinator {
 
     // MARK: - Store selection (reuses Story 002 types)
 
-    /// The active-set store to inject for `language`: ubiquitous when sync is active, local
-    /// `UserDefaults` otherwise. The active set is per-language, so the language is threaded through.
-    func makeActiveSetStore(language: String) -> ActiveSetStore {
+    /// The active-set store to inject for `(language, mode)`: ubiquitous when sync is active, local
+    /// `UserDefaults` otherwise. The active set is per-language AND per-quiz-mode, so both are threaded
+    /// through (`mode: nil` selects the pre-per-mode per-language key, for back-compat callers).
+    func makeActiveSetStore(language: String, mode: QuizModeID? = nil) -> ActiveSetStore {
         isSyncActive
-            ? makeUbiquitousActiveSetStore(language: language)
-            : UserDefaultsActiveSetStore(language: language)
+            ? makeUbiquitousActiveSetStore(language: language, mode: mode)
+            : UserDefaultsActiveSetStore(language: language, mode: mode)
     }
 
     /// The preference store to inject: ubiquitous when sync is active, local otherwise.
@@ -103,9 +104,10 @@ final class SyncCoordinator {
     /// genuine last resort — when even a guaranteed-local container cannot open — is the store
     /// deleted. The backup is always the recovery point; the store is never wiped silently.
     static func makeModelContainer() -> ModelContainer {
-        // Head schema is V2 (adds the per-language `language` column); the migration plan upgrades an
-        // existing V1 store in place (lightweight) so progress is preserved on upgrade.
-        let schema = Schema(versionedSchema: SchemaV2.self)
+        // Head schema is V3 (adds the per-quiz-mode `quizMode` column atop V2's `language`); the
+        // migration plan upgrades an existing older store in place (lightweight) so progress is
+        // preserved on upgrade.
+        let schema = Schema(versionedSchema: SchemaV3.self)
         let config = makeConfiguration(schema: schema)
         do {
             return try ModelContainer(

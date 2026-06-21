@@ -6,12 +6,17 @@ import SwiftUI
 /// - `.new` (new cards) → a `LearningSession` (3-consecutive-correct graduation),
 ///   ending in a graduation completion screen.
 struct CapitalQuizView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
     let pile: Pile
+
+    /// "Type the Capital" is its own quiz mode, so it reads/writes the `typeCapital` store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .typeCapital)
+    }
 
     @State private var pending: TextQuizSession?
     @State private var learning: LearningSession?
@@ -71,8 +76,11 @@ struct CapitalQuizView: View {
 
     private func advancePending(_ session: TextQuizSession) {
         session.advance()
+        cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .typeCapital,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
         inputText = ""
@@ -132,8 +140,11 @@ struct CapitalQuizView: View {
 
     private func advanceLearning(_ session: LearningSession) {
         if lastWasCorrect { session.recordCorrect() } else { session.recordWrong() }
+        cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .typeCapital,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
         localAnswerState = .unanswered
@@ -243,7 +254,9 @@ struct CapitalQuizView: View {
     private func advance(_ session: TextQuizSession) {
         session.advance()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .typeCapital,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
     }
@@ -309,8 +322,9 @@ struct CapitalQuizView: View {
             pending = questions.isEmpty ? nil : TextQuizSession(questions: questions)
         case .new:
             let newCards = cardStore.newCards(for: .country)
-            // The active set is per-language; scope it to the active card store's language.
-            let store = UserDefaultsActiveSetStore(language: cardStore.language)
+            // The active set is per-language AND per-mode; scope it to the active language and this
+            // view's mode (Type the Capital).
+            let store = UserDefaultsActiveSetStore(language: cardStore.language, mode: .typeCapital)
             learning = LearningSession(newCards: newCards, category: .country, store: store)
         }
     }

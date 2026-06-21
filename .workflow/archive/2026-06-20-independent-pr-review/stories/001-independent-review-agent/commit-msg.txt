@@ -1,0 +1,17 @@
+feat(agents): add independent-review, retire review-pr
+
+Add .claude/agents/independent-review.md: a fresh, cold-context 4-eye
+reviewer for an already-opened PR. It reuses the /code-review skill with
+--comment as the review engine (inline line-level findings), handles the
+GitHub self-review constraint by NEVER running gh pr review
+--approve/--request-changes and instead carrying its verdict via STATUS
+output (APPROVED / CHANGES_REQUESTED), posts a single summary comment with
+a stable <!-- independent-review --> marker updated across rounds, and
+documents the bounded feedback-loop contract (3-round cap enforced by the
+orchestrator in story 002). Notes the bot-PAT formal-APPROVE path as a
+future enhancement, out of scope.
+
+Retire .claude/agents/review-pr.md (superseded). Only story-workflow.md
+still references review-pr, left intact for story 002 to rewire.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>

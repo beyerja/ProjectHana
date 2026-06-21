@@ -1,8 +1,15 @@
 import SwiftUI
 
 struct MultipleChoiceQuizView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
+
+    /// This view quizzes the Multiple Choice pending pile, so it reads/writes the `multipleChoice`
+    /// store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .multipleChoice)
+    }
+
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
@@ -135,8 +142,11 @@ struct MultipleChoiceQuizView: View {
         Task {
             try? await Task.sleep(nanoseconds: delay)
             session.advance()
+            cardStore.persistCardChanges()
             progressStatsStore?.recordSnapshot(
-                cards: cardStore.allCards,
+                allCards: cardStoreProvider.allCards,
+                modeCards: cardStore.allCards,
+                mode: .multipleChoice,
                 streak: StreakTracker.currentStreak(language: cardStore.language)
             )
             isAdvancing = false

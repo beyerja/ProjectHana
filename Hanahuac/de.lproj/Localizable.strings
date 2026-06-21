@@ -59,6 +59,7 @@
 "stats.by_category" = "Nach Kategorie";
 "stats.showing_language" = "Anzeige:";
 "stats.by_language" = "Nach Sprache";
+"stats.by_mode" = "Nach Quiztyp";
 "stats.category_header" = "Kategorie";
 "stats.mastery_tiers" = "Beherrschungsstufen";
 "stats.tier.not_started" = "Nicht begonnen";

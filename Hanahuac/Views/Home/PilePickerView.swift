@@ -1,11 +1,16 @@
 import SwiftUI
 
 struct PilePickerView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(LanguageManager.self) private var languageManager
 
     let mode: HomeQuizMode
     let category: CardCategory
+
+    /// The pile counts for THIS row's mode come from that mode's own store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: mode)
+    }
 
     private var newCount: Int {
         mode.supportsNew ? cardStore.newCards(for: category).count : 0
@@ -16,7 +21,11 @@ struct PilePickerView: View {
     }
 
     var body: some View {
-        ScrollView {
+        // Read the store's mutation signal so SwiftUI Observation ties this view's invalidation to
+        // CardStore writes; the newCount/pendingCount fetches below read no @Observable stored property
+        // and would otherwise never refresh after a quiz mutates ReviewCard rows.
+        _ = cardStore.revision
+        return ScrollView {
             VStack(spacing: 12) {
                 if newCount > 0 {
                     NavigationLink(value: QuizRoute.quiz(mode: mode, category: category, pile: .new)) {

@@ -2,8 +2,14 @@ import MapKit
 import SwiftUI
 
 struct MapQuizView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
+
+    /// This view quizzes the Map Tab Quiz pending pile, so it reads/writes the `mapQuiz` store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .mapQuiz)
+    }
+
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
@@ -93,8 +99,11 @@ struct MapQuizView: View {
             Task {
                 try? await Task.sleep(nanoseconds: delay)
                 session.advance()
+                cardStore.persistCardChanges()
                 progressStatsStore?.recordSnapshot(
-                    cards: cardStore.allCards,
+                    allCards: cardStoreProvider.allCards,
+                    modeCards: cardStore.allCards,
+                    mode: .mapQuiz,
                     streak: StreakTracker.currentStreak(language: cardStore.language)
                 )
                 if !session.isFinished {
