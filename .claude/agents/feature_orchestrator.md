@@ -25,14 +25,25 @@ worktree. Do this before any other step:
    (`../ProjectHana-worktrees/<slug>`) — never as scattered `../ProjectHana-<slug>` siblings — so a
    single `permissions.additionalDirectories` grant pre-authorizes every current and future worktree
    and no directory-access prompt fires per run (see `.workflow/README.md` → "Running workflows in
-   parallel"):
+   parallel"). **First check whether this slug's worktree already exists** — an earlier attempt may have
+   been interrupted, leaving the worktree, branch, and a partially-written `.workflow/` behind.
+   `git worktree add -b` *fails* against an existing path/branch, so resume instead of recreating:
    ```sh
    slug=<feature-slug>
    mkdir -p "../ProjectHana-worktrees"
-   git worktree add -b "feat/$slug" "../ProjectHana-worktrees/$slug" main
+   if git worktree list --porcelain | grep -q "ProjectHana-worktrees/$slug"; then
+     :                                            # RESUME: worktree already exists, reuse it as-is
+   else
+     git worktree add -b "feat/$slug" "../ProjectHana-worktrees/$slug" main
+   fi
    direnv allow "../ProjectHana-worktrees/$slug"   # a fresh worktree's .envrc is unauthorized; without
                                                    # this the first `just` recipe dies with "direnv: .envrc is blocked"
    ```
+   When resuming an existing worktree, **read its `.workflow/log.md` first** to learn how far the prior
+   attempt got, and treat each phase as idempotent: skip any step whose artifact is already present and
+   complete (e.g. don't re-spawn `clarify-feature` if `.workflow/feature.md` already holds an
+   authoritative spec; don't re-create a story whose `status.md` reads done). Pick up at the first
+   incomplete step. Record `RESUMED existing worktree` and the resume point in `.workflow/log.md`.
    Export `HANA_FEATURE_SLUG="$slug"` for every sub-agent so branch names, `just` build paths, and
    telemetry are isolated. The shared telemetry sink still resolves to the primary checkout
    (see `scripts/agent-log.sh`), so cross-run aggregation keeps working. (When REUSING a pre-existing
