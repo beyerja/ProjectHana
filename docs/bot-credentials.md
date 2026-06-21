@@ -16,15 +16,22 @@ out-of-band**: no agent mints the PAT, grants collaborator access, or stores the
 These three steps require a human and are intentionally **not** automatable by an agent — an agent
 **never sees the token**. All three are performed out-of-band by a maintainer:
 
-1. **Mint the bot's fine-grained PAT.** Sign in as the `Hanahuac-Bot` GitHub account and create a
-   **fine-grained** personal access token. Scope it to **ONLY this repository** (not "all repositories")
-   and grant exactly these repository permissions — no more:
+1. **Mint the bot's classic PAT.** Sign in as the `Hanahuac-Bot` GitHub account and create a
+   **classic** personal access token (Settings → Developer settings → **Tokens (classic)**) with the
+   single scope:
 
-   - **Pull requests: Read and write**
-   - **Contents: Read-only**
-   - **Metadata: Read-only** (mandatory; GitHub selects it automatically)
+   - **`public_repo`** — write access to this *public* repo's PRs, reviews, and comments. (Use the
+     broader **`repo`** scope only if `ProjectHana` is ever made private.)
 
    Copy the token once — GitHub shows it only at creation time.
+
+   > **Why classic, not fine-grained.** `ProjectHana` is a *public* repo owned by the personal
+   > account `beyerja`, and `Hanahuac-Bot` is an outside collaborator. A fine-grained PAT from the
+   > bot authenticates and can *read*, but every write (e.g. submitting a formal PR review) returns
+   > `403 Resource not accessible by personal access token` even with Pull requests: Read/Write set —
+   > fine-grained PATs do not grant write to a *different personal account's* repo via outside
+   > collaboration. A classic PAT does. (If the repo ever moves into a GitHub organization, a
+   > fine-grained PAT or a GitHub App becomes the better least-privilege option.)
 
 2. **Add `Hanahuac-Bot` as a repository collaborator with Write access, and accept the invite.** As a
    repo admin, invite the `Hanahuac-Bot` account as a collaborator with the **Write** role (Settings →
@@ -89,8 +96,8 @@ Rotate the token periodically and immediately if you suspect exposure. **No repo
 code change is required** — the wrapper always reads the current Keychain value, so rotation is purely
 a Keychain + GitHub operation:
 
-1. **Mint a new** fine-grained PAT as `Hanahuac-Bot` with the **same scopes** as the original
-   (this repo only; Pull requests: Read/Write, Contents: Read, Metadata: Read). Copy it once.
+1. **Mint a new** classic PAT as `Hanahuac-Bot` with the **same scope** as the original
+   (`public_repo`, or `repo` if the repo is ever private). Copy it once.
 2. **Update the Keychain item in place** with the `-U` upsert form (identical to the store command —
    `-U` updates the existing item):
 

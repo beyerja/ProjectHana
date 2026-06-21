@@ -1,64 +1,60 @@
-# Obligatory review gate — branch protection for `main`
+# Obligatory review gate — how `main` is protected
 
-This repository makes independent review **obligatory**: a code-owner approval from the bot
+This repository makes independent review **obligatory**: an approving review from the code owner
 (`@Hanahuac-Bot`, see [`CODEOWNERS`](./CODEOWNERS)) is required before any change merges to `main`.
 
-The gate is made of two pieces:
+## The gate is a repository RULESET, not classic branch protection
 
-1. **[`CODEOWNERS`](./CODEOWNERS)** (committed) — designates `@Hanahuac-Bot` as the required code
-   owner for the whole repo (`* @Hanahuac-Bot`).
-2. **Branch protection on `main`** (activated by the command below) — the part that actually
-   *enforces* the gate by requiring a code-owner approval before merge.
+Enforcement comes from a pre-existing **repository ruleset** (`main`, id `17373423`,
+`enforcement: active`) whose `pull_request` rule sets `require_code_owner_review: true`. This is
+**separate** from classic branch protection — `gh api repos/beyerja/ProjectHana/branches/main/protection`
+shows no required reviews. The gate is two pieces working together:
 
-## Why committing CODEOWNERS is safe mid-run
+1. **The ruleset** (already active; managed in the GitHub UI under Settings → Rules → Rulesets) —
+   the part that actually *enforces* a code-owner approval.
+2. **[`CODEOWNERS`](./CODEOWNERS)** (committed) — designates `@Hanahuac-Bot` as the code owner for
+   the whole repo (`* @Hanahuac-Bot`).
 
-Committing `CODEOWNERS` **does not block any merge on its own**. CODEOWNERS only declares *who*
-owns which paths; it has no enforcement effect until branch protection references it via
-`required_pull_request_reviews.require_code_owner_reviews`. So this file is safe to commit while
-this run's own PRs are still in flight — nothing is gated yet.
+## Committing CODEOWNERS activates the gate — provision the bot FIRST
 
-## FINAL ACTIVATION STEP — run ONLY AFTER this run's own PRs are merged
+There is **no separate activation command**. The ruleset's `require_code_owner_review` does nothing
+while no CODEOWNERS file exists, but the instant CODEOWNERS lands on `main`, every PR to `main`
+requires an approving review from `@Hanahuac-Bot`.
 
-> **Bootstrapping guard.** Do **NOT** run the activation command mid-run. Enabling branch
-> protection while this run's own PRs are still open would deadlock the workflow: every open PR
-> would suddenly require a code-owner approval that the autonomous workflow cannot grant for its
-> own in-flight changes. Activate the gate **only after** all of this run's PRs have merged to
-> `main`, as the very last step.
+> **Bootstrapping order (learned the hard way).** Provision the bot — add `Hanahuac-Bot` as a Write
+> collaborator and store its **classic** PAT in the Keychain (see
+> [`docs/bot-credentials.md`](../docs/bot-credentials.md)) — **before** CODEOWNERS reaches `main`.
+> Otherwise the first PR after CODEOWNERS lands deadlocks: it needs a bot approval the bot cannot yet
+> give. (This is exactly what happened to the closing PR of the feature that introduced this gate.)
 
-The JSON request body lives in a committed file so the command stays a clean, copy-pasteable,
-allowlistable shape (no heredoc, no inline JSON, no `cd &&`). Run from the repo root:
+## How the bot approves
 
-```sh
-gh api -X PUT repos/beyerja/ProjectHana/branches/main/protection --input .github/branch-protection-main.json
-```
-
-This enables branch protection on `main` requiring **one approving review from the code owner**
-(`require_code_owner_reviews: true`, `required_approving_review_count: 1`). The body
-([`.github/branch-protection-main.json`](./branch-protection-main.json)) also sets
-`enforce_admins: true`, `dismiss_stale_reviews: true`, and disables force-pushes/deletions.
-
-Crucially, the body **preserves the existing required CI status checks** — `gitleaks` and
-`Build & Test` with `strict: true` — so activating the review gate does **not** drop the CI merge
-gate. Both the CI checks and the obligatory code-owner review are required to merge.
-
-> **Warning — a full `PUT .../protection` REPLACES the entire protection object; it does not
-> merge.** The request body must therefore enumerate *every* requirement to keep — the committed
-> JSON does this (it re-states the existing `required_status_checks` alongside the new
-> `required_pull_request_reviews`). If the repo's CI contexts change (checks renamed/added/removed),
-> update `required_status_checks.contexts` in this JSON to match the current checks **before**
-> activating, or activation will silently drop or stale the CI gate. `restrictions` is left unset
-> (`null`).
-
-## Verify the gate is active
+The `independent-review` agent submits the code owner's approval as `@Hanahuac-Bot` through the
+wrapper, which never exposes the token:
 
 ```sh
-gh api repos/beyerja/ProjectHana/branches/main/protection
+scripts/gh-review-bot.sh gh -R beyerja/ProjectHana pr review <number> --approve
 ```
 
-## Deactivation / rollback
+A bot `APPROVE` flips a code-owner-gated PR from `mergeStateStatus: BLOCKED` to `CLEAN`. (`gh`'s
+`reviewDecision` field can read empty when the required approver is mapped via a ruleset rather than
+the classic reviewers list — `mergeStateStatus: CLEAN` is the authoritative signal that the gate is
+satisfied.)
 
-To remove branch protection from `main` (e.g. to recover from a deadlock or reconfigure):
+## CI checks are NOT part of this gate
+
+The ruleset enforces code-owner review only; it does **not** make CI status checks a required merge
+gate. The feature workflow's own `wait-for-ci` step already blocks merges on red CI, so the
+autonomous path stays safe. If you also want CI to be a hard gate for **manual / UI** merges, add a
+`required_status_checks` rule (contexts `gitleaks`, `Build & Test`) to ruleset `17373423` in the
+GitHub UI.
+
+## Inspect or manage the gate
 
 ```sh
-gh api -X DELETE repos/beyerja/ProjectHana/branches/main/protection
+gh api repos/beyerja/ProjectHana/rulesets             # list rulesets
+gh api repos/beyerja/ProjectHana/rulesets/17373423    # this gate's rules
 ```
+
+To temporarily lift the gate (e.g. to recover from a deadlock), edit or disable the ruleset in the
+GitHub UI (Settings → Rules → Rulesets → `main`), or add yourself as a bypass actor.
