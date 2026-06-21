@@ -32,6 +32,11 @@ Steps:
 
    **If no checks are found** (e.g. the PR only modifies files outside CI path filters such as `.claude/` or `.workflow/`), `gh pr checks` will report nothing. Treat this as STATUS: PASS — no CI path triggered.
 
+   **A SKIPPED check is a PASS, not an incomplete run.** A path-filtered job (e.g. `Build & Test`
+   skipped because the PR has no build-relevant Swift delta) reports state `SKIPPED`/`NEUTRAL`;
+   `--watch` exits 0 and that is correct — do NOT treat a skipped expected check as "CI didn't finish"
+   and re-push or wait. Only an actual `FAILURE`/`TIMED_OUT`/`CANCELLED` is a fail.
+
 3. If checks pass: output STATUS: PASS.
 
 4. If checks fail: run `gh pr checks <number>` (without --watch) to get the current check summary, include it in the output, then output STATUS: FAIL.
