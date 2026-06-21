@@ -5,6 +5,7 @@
     "name_fr": "Océan Pacifique",
     "name_de": "Pazifischer Ozean",
     "name_es": "Océano Pacífico",
+    "name_es_es": "Océano Pacífico",
     "name_ko": "태평양",
     "name_nah": "Pacífico Hueyātl",
     "lat": 0.0,
@@ -16,6 +17,7 @@
     "name_fr": "Océan Atlantique",
     "name_de": "Atlantischer Ozean",
     "name_es": "Océano Atlántico",
+    "name_es_es": "Océano Atlántico",
     "name_ko": "대서양",
     "lat": 0.0,
     "lon": -30.0
@@ -26,6 +28,7 @@
     "name_fr": "Océan Indien",
     "name_de": "Indischer Ozean",
     "name_es": "Océano Índico",
+    "name_es_es": "Océano Índico",
     "name_ko": "인도양",
     "lat": -20.0,
     "lon": 80.0
@@ -36,6 +39,7 @@
     "name_fr": "Océan Austral",
     "name_de": "Südlicher Ozean",
     "name_es": "Océano Antártico",
+    "name_es_es": "Océano Antártico",
     "name_ko": "남극해",
     "lat": -60.0,
     "lon": 0.0
@@ -46,6 +50,7 @@
     "name_fr": "Océan Arctique",
     "name_de": "Arktischer Ozean",
     "name_es": "Océano Ártico",
+    "name_es_es": "Océano Ártico",
     "name_ko": "북극해",
     "lat": 85.0,
     "lon": 0.0
@@ -56,6 +61,7 @@
     "name_fr": "Mer Méditerranée",
     "name_de": "Mittelmeer",
     "name_es": "Mar Mediterráneo",
+    "name_es_es": "Mar Mediterráneo",
     "name_ko": "지중해",
     "lat": 35.0,
     "lon": 18.0
@@ -66,6 +72,7 @@
     "name_fr": "Mer des Caraïbes",
     "name_de": "Karibisches Meer",
     "name_es": "Mar Caribe",
+    "name_es_es": "Mar Caribe",
     "name_ko": "카리브해",
     "name_nah": "Caribe Hueyātl",
     "lat": 15.0,
@@ -77,6 +84,7 @@
     "name_fr": "Mer de Chine méridionale",
     "name_de": "Südchinesisches Meer",
     "name_es": "Mar de China Meridional",
+    "name_es_es": "Mar de China Meridional",
     "name_ko": "남중국해",
     "lat": 12.0,
     "lon": 114.0
@@ -87,6 +95,7 @@
     "name_fr": "Mer de Béring",
     "name_de": "Beringsee",
     "name_es": "Mar de Bering",
+    "name_es_es": "Mar de Bering",
     "name_ko": "베링해",
     "lat": 58.0,
     "lon": -175.0
@@ -97,6 +106,7 @@
     "name_fr": "Golfe du Mexique",
     "name_de": "Golf von Mexiko",
     "name_es": "Golfo de México",
+    "name_es_es": "Golfo de México",
     "name_ko": "멕시코만",
     "lat": 25.0,
     "lon": -90.0
@@ -107,6 +117,7 @@
     "name_fr": "Mer du Nord",
     "name_de": "Nordsee",
     "name_es": "Mar del Norte",
+    "name_es_es": "Mar del Norte",
     "name_ko": "북해",
     "lat": 56.0,
     "lon": 4.0
@@ -117,6 +128,7 @@
     "name_fr": "Mer Rouge",
     "name_de": "Rotes Meer",
     "name_es": "Mar Rojo",
+    "name_es_es": "Mar Rojo",
     "name_ko": "홍해",
     "lat": 22.0,
     "lon": 37.5
@@ -127,6 +139,7 @@
     "name_fr": "Mer Noire",
     "name_de": "Schwarzes Meer",
     "name_es": "Mar Negro",
+    "name_es_es": "Mar Negro",
     "name_ko": "흑해",
     "lat": 43.0,
     "lon": 34.0
@@ -137,6 +150,7 @@
     "name_fr": "Mer Caspienne",
     "name_de": "Kaspisches Meer",
     "name_es": "Mar Caspio",
+    "name_es_es": "Mar Caspio",
     "name_ko": "카스피해",
     "lat": 42.0,
     "lon": 51.0
@@ -147,6 +161,7 @@
     "name_fr": "Golfe Persique",
     "name_de": "Persischer Golf",
     "name_es": "Golfo Pérsico",
+    "name_es_es": "Golfo Pérsico",
     "name_ko": "페르시아만",
     "lat": 26.0,
     "lon": 52.0
@@ -157,6 +172,7 @@
     "name_fr": "Mer de Chine orientale",
     "name_de": "Ostchinesisches Meer",
     "name_es": "Mar de China Oriental",
+    "name_es_es": "Mar de China Oriental",
     "name_ko": "동중국해",
     "lat": 29.0,
     "lon": 124.0
@@ -167,6 +183,7 @@
     "name_fr": "Golfe du Bengale",
     "name_de": "Golf von Bengalen",
     "name_es": "Bahía de Bengala",
+    "name_es_es": "Bahía de Bengala",
     "name_ko": "벵골만",
     "lat": 15.0,
     "lon": 88.0
@@ -177,6 +194,7 @@
     "name_fr": "Mer d'Arabie",
     "name_de": "Arabisches Meer",
     "name_es": "Mar Arábigo",
+    "name_es_es": "Mar Arábigo",
     "name_ko": "아라비아해",
     "lat": 17.0,
     "lon": 65.0
@@ -187,6 +205,7 @@
     "name_fr": "Mer de Corail",
     "name_de": "Korallenmeer",
     "name_es": "Mar del Coral",
+    "name_es_es": "Mar del Coral",
     "name_ko": "산호해",
     "lat": -18.0,
     "lon": 153.0
@@ -197,6 +216,7 @@
     "name_fr": "Mer de Tasman",
     "name_de": "Tasmansee",
     "name_es": "Mar de Tasmania",
+    "name_es_es": "Mar de Tasmania",
     "name_ko": "태즈먼해",
     "lat": -40.0,
     "lon": 160.0

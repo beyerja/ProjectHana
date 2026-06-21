@@ -1,0 +1,169 @@
+/* Castilian (Peninsular) Spanish */
+
+/* HomeView */
+"home.tagline" = "Un mundo, una prueba a la vez";
+"home.categories" = "Categorías";
+"home.category.countries" = "Países";
+"home.category.rivers" = "Ríos";
+"home.category.mountains" = "Montañas";
+"home.category.seas" = "Mares";
+"home.view_progress" = "Ver progreso";
+"home.tile.new" = "Nuevo";
+"home.tile.pending" = "Pendiente";
+"home.tile.all_done" = "Todo al día";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Prueba en el mapa";
+"quiz.mode.map_tap.desc" = "Toca el país correcto en el mapa";
+"quiz.mode.type_capital.title" = "Escribe la capital";
+"quiz.mode.type_capital.desc" = "«¿Cuál es la capital de X?»";
+"quiz.mode.name_feature.title" = "Nombra el lugar";
+"quiz.mode.name_feature.desc" = "Escribe el nombre del lugar marcado en el mapa";
+"quiz.mode.multiple_choice.title" = "Opción múltiple";
+"quiz.mode.multiple_choice.desc" = "Elige la capital entre 4 opciones";
+"quiz.cards_due.singular" = "tarjeta pendiente";
+"quiz.cards_due.plural" = "tarjetas pendientes";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Ajustes";
+"settings.section.general" = "General";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "Idioma";
+"settings.language.picker_title" = "Idioma de la aplicación";
+"settings.language.downloading" = "Descargando…";
+"settings.language.download_failed" = "Error de descarga";
+"settings.language.retry" = "Reintentar";
+"settings.language.available" = "Disponible";
+
+/* iCloud sync */
+"settings.sync.toggle" = "Sincronización con iCloud";
+"settings.sync.status_label" = "Estado";
+"settings.sync.status.off" = "Desactivada";
+"settings.sync.status.unavailable" = "No disponible";
+"settings.sync.status.on" = "Activada";
+"settings.sync.status.syncing" = "Sincronizando…";
+"settings.sync.status.idle" = "Actualizado";
+"settings.sync.status.error" = "Error";
+"settings.sync.unavailable_note" = "La sincronización con iCloud no está disponible. Inicia sesión en iCloud y usa una versión con la sincronización habilitada.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Progreso muy pronto";
+"progress.placeholder_desc" = "Tus estadísticas de aprendizaje aparecerán aquí.";
+"progress.title" = "Progreso";
+
+/* StatsView */
+"stats.title" = "Progreso";
+"stats.cards_reviewed" = "Tarjetas repasadas";
+"stats.due_today" = "Vencen hoy";
+"stats.day_streak" = "Racha de días";
+"stats.by_category" = "Por categoría";
+"stats.showing_language" = "Mostrando:";
+"stats.by_language" = "Por idioma";
+"stats.category_header" = "Categoría";
+"stats.mastery_tiers" = "Niveles de dominio";
+"stats.tier.not_started" = "Sin empezar";
+"stats.tier.reps_1_2" = "Reps. 1–2";
+"stats.tier.reps_3_4" = "Reps. 3–4";
+"stats.tier.mastered" = "Reps. ≥ 5, EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Tendencias a lo largo del tiempo";
+"stats.charts.range.7d" = "7 días";
+"stats.charts.range.30d" = "30 días";
+"stats.charts.range.all" = "Todo";
+"stats.charts.category.all" = "Todas";
+"stats.charts.mastery_growth" = "Progreso del dominio";
+"stats.charts.reviews_completed" = "Repasos completados";
+"stats.charts.cards_graduated" = "Tarjetas graduadas";
+"stats.charts.streak_history" = "Racha";
+"stats.charts.series.review" = "Repaso";
+"stats.charts.series.mastered" = "Dominadas";
+"stats.charts.empty" = "Sigue aprendiendo para ver aquí tus tendencias de progreso.";
+
+/* LearningQuizView */
+"learn.title" = "Aprender";
+"learn.results" = "Resultados";
+"learn.exit" = "Salir";
+"learn.done" = "Hecho";
+"learn.no_cards_title" = "No hay tarjetas para aprender";
+"learn.no_cards_desc" = "Todas las tarjetas ya están en tu plan de repaso.";
+"learn.graduated_count" = "%d / %d graduadas";
+"learn.active_count" = "%d activas";
+"learn.complete_title" = "¡Aprendizaje completado!";
+"learn.complete_desc" = "Todas las tarjetas se han añadido a tu plan de repaso.";
+"learn.cards_graduated" = "Tarjetas graduadas";
+
+/* MapQuizView */
+"map_quiz.title" = "Prueba en el mapa";
+"map_quiz.exit" = "Salir";
+"map_quiz.tap_on_map" = "Toca el mapa";
+"map_quiz.nothing_due_title" = "Nada pendiente";
+"map_quiz.nothing_due_desc" = "No hay tarjetas pendientes por ahora. ¡Vuelve más tarde!";
+"map_quiz.feedback.correct" = "¡Correcto!";
+"map_quiz.feedback.incorrect_prefix" = "Incorrecto: era";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Resultados";
+"quiz_summary.session_complete" = "¡Sesión completada!";
+"quiz_summary.cards_reviewed" = "Tarjetas repasadas";
+"quiz_summary.correct" = "Correctas";
+"quiz_summary.next_review" = "Próximo repaso";
+"quiz_summary.done" = "Hecho";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Nada pendiente";
+"mcq_quiz.nothing_due_desc" = "No hay tarjetas pendientes por ahora.";
+"mcq_quiz.exit" = "Salir";
+"mcq_quiz.correct_count" = "%d correctas";
+"mcq_quiz.nav.country" = "Prueba de países";
+"mcq_quiz.nav.river" = "Prueba de ríos";
+"mcq_quiz.nav.mountain" = "Prueba de montañas";
+"mcq_quiz.nav.sea" = "Prueba de mares";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Nada pendiente";
+"capital_quiz.nothing_due_desc" = "No hay tarjetas pendientes por ahora.";
+"capital_quiz.exit" = "Salir";
+"capital_quiz.check" = "Comprobar";
+"capital_quiz.next" = "Siguiente →";
+"capital_quiz.placeholder" = "Escribe tu respuesta…";
+"capital_quiz.feedback.correct" = "¡Correcto! ✓";
+"capital_quiz.feedback.wrong_prefix" = "La respuesta es:";
+"capital_quiz.nav.capital" = "Prueba de capitales";
+"capital_quiz.nav.country" = "Prueba de países";
+"capital_quiz.correct_count" = "%d correctas";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Nombra este lugar";
+"name_feature.nav" = "Nombra el lugar";
+"name_feature.nothing_due_title" = "Nada pendiente";
+"name_feature.nothing_due_desc" = "No hay tarjetas pendientes por ahora.";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Prueba muy pronto";
+"quiz_placeholder.desc" = "La prueba de %@ estará disponible en la próxima actualización.";
+"quiz_placeholder.all_categories" = "Todas las categorías";
+
+/* Continent labels */
+"continent.africa" = "África";
+"continent.asia" = "Asia";
+"continent.europe" = "Europa";
+"continent.north_america" = "América del Norte";
+"continent.oceania" = "Oceanía";
+"continent.south_america" = "América del Sur";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "¿Cuál es la capital de %@?";
+"quiz.prompt.continent_of" = "¿En qué continente se encuentra %@?";
+"quiz.prompt.country_of_capital" = "¿Qué país tiene %@ como capital?";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "Aprender tarjetas nuevas";
+"learn.mode_picker.map.title" = "Prueba en el mapa";
+"learn.mode_picker.map.desc" = "Toca el país correcto en el mapa";
+"learn.mode_picker.mcq.title" = "Opción múltiple";
+"learn.mode_picker.mcq.desc" = "Elige la respuesta entre 4 opciones";
+
+/* Map learning quiz */
+"learn_map.title" = "Aprendizaje en el mapa";
+"learn_map.streak" = "%d / 3";
