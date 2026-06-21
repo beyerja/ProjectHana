@@ -31,6 +31,24 @@ generate:
 icon:
     xcrun swift scripts/make-icon.swift
 
+# Regenerate the per-language geo-name ODR pack JSON (fr/de/ko/nah) from the bundled geo data.
+geo-packs:
+    python3 scripts/generate-geo-packs.py
+
+# Verify the committed geo packs are up to date with the bundled geo source data.
+geo-packs-check:
+    python3 scripts/generate-geo-packs.py --check
+
+# Verify the ODR-tagged packs are DATA-ONLY (no executable/Mach-O content) and that no custom
+# network/crypto/signature/hash-verification trust code was introduced. Basis for the async CI job.
+verify-odr-packs:
+    bash scripts/verify-odr-packs.sh
+
+# Validate the zero-packs offline base-only launch path against the locally built Mac Catalyst app:
+# base languages (en/es-MX) present, non-base languages declared on-demand. Depends on build-mac.
+verify-base-only: build-mac
+    bash scripts/verify-base-only-bundle.sh '{{mac_dd}}'
+
 # Run the full test suite on the simulator (per-worktree DerivedData + destination when `wt` is set)
 test:
     xcodebuild test \

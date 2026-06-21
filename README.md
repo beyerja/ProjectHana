@@ -11,3 +11,6 @@ Hanahuac (*ha-na-wak*, "One World") is a personalized geography learning app for
 - [iCloud Progress Sync (CloudKit-ready)](docs/icloud-sync.md) — the sync architecture ships
   disabled by default; this doc lists the exact steps to enable live sync once a paid Apple
   Developer account exists.
+- [On-Demand Resource language packs](docs/odr-packaging.md) — how the non-base language packs
+  (fr/de/ko/nah UI strings + geo-name JSON) ship as version-tagged On-Demand Resources, how to
+  regenerate the geo packs, the release-tied versioning rule, and the async validation CI.
