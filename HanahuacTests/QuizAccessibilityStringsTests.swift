@@ -30,7 +30,11 @@ final class QuizAccessibilityStringsTests: XCTestCase {
         "a11y.feedback.incorrect",
         "a11y.summary.accuracy",
         "a11y.summary.result_icon",
-        "a11y.done.hint"
+        "a11y.done.hint",
+        "a11y.map.pin.hint",
+        "a11y.map.prompt.label",
+        "a11y.map.progress",
+        "a11y.map.streak"
     ]
 
     /// Each key resolves to a non-key, non-empty value for every locale via the fallback chain.
@@ -54,8 +58,8 @@ final class QuizAccessibilityStringsTests: XCTestCase {
     /// Parameterized accessibility strings keep their format specifiers so the runtime
     /// `String(format:)` calls in the views substitute correctly in every locale.
     func testParameterizedKeysPreserveFormatSpecifiers() {
-        let doubleIntKeys = ["a11y.progress", "a11y.graduated"]
-        let singleIntKeys = ["a11y.score", "a11y.active", "a11y.summary.accuracy"]
+        let doubleIntKeys = ["a11y.progress", "a11y.graduated", "a11y.map.progress"]
+        let singleIntKeys = ["a11y.score", "a11y.active", "a11y.summary.accuracy", "a11y.map.streak"]
         for locale in AppLocale.allCases {
             for key in doubleIntKeys {
                 let format = L10n.string(key, locale: locale)
