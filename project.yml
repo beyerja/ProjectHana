@@ -19,14 +19,64 @@ targets:
     platform: iOS
     deploymentTarget: "17.0"
     sources:
+      # Main source/resource tree. The non-base languages' resources are declared SEPARATELY below as
+      # ODR-tagged sources, so they are excluded here to avoid being auto-enumerated into the
+      # always-bundled Resources build phase:
+      #   - the four `<code>-geo.json` geo-name packs (delivered on demand), and
+      #   - the fr/de/ko/nah `.lproj` UI strings — excluded so XcodeGen does not fold them into a
+      #     single always-bundled `Localizable.strings` variant group; re-added below as individually
+      #     ODR-taggable `.lproj` folder references.
+      # en/es-MX have no separate geo pack and stay always-bundled (their `.lproj` are auto-detected
+      # here), so only the four non-base languages are excluded.
       - path: Hanahuac
-    resources:
-      - path: Hanahuac/en.lproj
+        excludes:
+          - "Resources/fr-geo.json"
+          - "Resources/de-geo.json"
+          - "Resources/ko-geo.json"
+          - "Resources/nah-geo.json"
+          - "fr.lproj"
+          - "de.lproj"
+          - "ko.lproj"
+          - "nah.lproj"
+      # Non-base languages (fr, de, ko, nah) are delivered as On-Demand Resources. Each language's
+      # UI strings (.lproj) AND its geo-name pack JSON carry the same `lang-<code>` tag the provider
+      # (ODRLanguagePackProvider, via LanguageDescriptor.odrTags) requests, so the build's ODR tag
+      # contract matches the runtime request exactly. Packs are built per app version; there is no
+      # OTA/out-of-band update path.
+      #
+      # The `.lproj` directories are added as folder references (`type: folder`) so each is one
+      # individually taggable resource — preventing XcodeGen from merging them into a single
+      # always-bundled `Localizable.strings` variant group. Copied into the bundle as `<code>.lproj/`,
+      # they stay resolvable by `Bundle.main.path(forResource: code, ofType: "lproj")` once the ODR
+      # pack is present. `buildPhase: resources` keeps the JSON in the Copy-Resources phase.
       - path: Hanahuac/fr.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-fr]
+      - path: Hanahuac/Resources/fr-geo.json
+        buildPhase: resources
+        resourceTags: [lang-fr]
       - path: Hanahuac/de.lproj
-      - path: Hanahuac/es-MX.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-de]
+      - path: Hanahuac/Resources/de-geo.json
+        buildPhase: resources
+        resourceTags: [lang-de]
       - path: Hanahuac/ko.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-ko]
+      - path: Hanahuac/Resources/ko-geo.json
+        buildPhase: resources
+        resourceTags: [lang-ko]
       - path: Hanahuac/nah.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-nah]
+      - path: Hanahuac/Resources/nah-geo.json
+        buildPhase: resources
+        resourceTags: [lang-nah]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.hanahuac.app

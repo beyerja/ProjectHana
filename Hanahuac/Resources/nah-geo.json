@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "code": "nah",
+  "entries": {
+    "CN": {
+      "name": "Chīnatlālli"
+    },
+    "ES": {
+      "name": "Caxtillān"
+    },
+    "GT": {
+      "name": "Cuauhtēmallān"
+    },
+    "JP": {
+      "name": "Xōchitlālpan"
+    },
+    "MX": {
+      "name": "Mēxihco",
+      "capital": "Mēxihco Āltepētl"
+    },
+    "US": {
+      "name": "Tlācateccoyān"
+    },
+    "amazon": {
+      "name": "Amazonas Ātōyātl"
+    },
+    "andes": {
+      "name": "Andes Tepētl"
+    },
+    "caribbean": {
+      "name": "Caribe Hueyātl"
+    },
+    "mississippi": {
+      "name": "Mississippi Ātōyātl"
+    },
+    "pacific": {
+      "name": "Pacífico Hueyātl"
+    }
+  }
+}
