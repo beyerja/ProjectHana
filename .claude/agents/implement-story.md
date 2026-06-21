@@ -24,6 +24,14 @@ Ensure you are on `$branch` (create it from the worktree's base branch if needed
 flat `story/<story-id>` — always go through `HANA_FEATURE_SLUG` so single-checkout runs keep the
 legacy name while worktree runs are namespaced.
 
+**For a bug-fix story, confirm the root cause in code before changing anything.** When the story is a
+fix (not a new feature), the leading hypothesis in the spec is a *hypothesis*, not a verified cause —
+trace the actual code path and prove the mechanism before editing. State in the story log what you
+confirmed AND which competing theories you ruled out (e.g. for a mis-centering bug: confirm the camera
+path, then rule out the region math, a lat/lon swap, and a data error). Fixing the first plausible
+theory without this often patches a symptom and leaves the real defect; the cheap confirmation pass up
+front is what makes the fix land at the right altitude in one shared code path.
+
 For each unchecked task:
 1. Implement following existing project patterns
 2. Run project checks. **In a worktree run, invoke `just` at the worktree path** —

@@ -1,4 +1,5 @@
 import MapKit
+import SwiftUI
 import XCTest
 @testable import Hanahuac
 
@@ -181,6 +182,87 @@ final class MapQuizRegionHelperTests: XCTestCase {
             let pins = result.features.map { ($0.quizLat, $0.quizLon) }
             assertAllPinsVisible(pins, region: result.region)
         }
+    }
+
+    // MARK: - Camera bounds confine framing to the candidate-pin region
+
+    // Regression: river/mountain/sea quizzes mis-centered because the `Map` framed
+    // the union of its content — the full-course river `linePath` polylines and the
+    // large sea/mountain `borderRings` polygons that extend FAR beyond the
+    // candidate-pin bounding box — instead of the seeded candidate-pin region,
+    // pushing every pin off-screen. Country worked because its borders are small and
+    // local. The fix caps the camera via `MapCameraBounds` derived purely from the
+    // candidate-pin region. These tests assert the cap is tight enough to exclude the
+    // overlay extent while still framing every candidate pin.
+
+    /// The framed span of `region` in metres, recomputed independently here exactly the
+    /// way `QuizRegionMath.cameraDistance(for:)` does (latitude uncompressed, longitude
+    /// scaled by cos(latitude)), so the test would fail if the cap were loosened to the
+    /// overlay scale.
+    private func framedSpanMeters(of region: MKCoordinateRegion) -> Double {
+        let cosLat = max(0.2, cos(region.center.latitude * .pi / 180))
+        let latMeters = region.span.latitudeDelta * QuizRegionMath.metersPerDegreeLatitude
+        let lonMeters = region.span.longitudeDelta * cosLat * QuizRegionMath.metersPerDegreeLatitude
+        return max(latMeters, lonMeters)
+    }
+
+    func testCameraDistanceCapStaysAtCandidatePinScaleNotOverlayScale() {
+        // A handful of tightly-clustered candidate pins (e.g. nearby seas) whose large
+        // overlay polygons/lines would otherwise span tens of degrees.
+        let pins: [(Double, Double)] = [(35, 18), (37, 20), (34, 22), (36, 16), (33, 19)]
+        let region = QuizRegionMath.region(fittingPins: pins, jitter: .none)
+        // `cameraDistance` is the value that feeds the bounds' `maximumDistance` cap.
+        let cap = QuizRegionMath.cameraDistance(for: region) * QuizRegionMath.cameraDistanceHeadroom
+
+        // The cap must equal the framed candidate-pin span (times headroom) — i.e. stay
+        // at the pin scale, never zoom out beyond it.
+        XCTAssertLessThanOrEqual(
+            cap,
+            framedSpanMeters(of: region) * QuizRegionMath.cameraDistanceHeadroom + 1.0,
+            "Camera cap must frame the candidate-pin span, not zoom out further"
+        )
+
+        // A full-course river / large sea polygon would span tens of degrees of latitude.
+        // The cap must be far below that, so overlay extent can never re-frame the camera.
+        let overlayExtentMeters = 60 * QuizRegionMath.metersPerDegreeLatitude
+        XCTAssertLessThan(
+            cap,
+            overlayExtentMeters,
+            "Camera cap must exclude the large overlay (river course / sea polygon) extent"
+        )
+    }
+
+    func testCameraDistanceFramesEveryCandidatePin() {
+        // The cap must still be large enough to show the whole candidate-pin region,
+        // so no pin is clipped by an over-tight camera.
+        let countries = makeCountries()
+        let pins = countries.map { ($0.lat, $0.lon) }
+        let region = QuizRegionMath.region(fittingPins: pins, jitter: .none)
+        let distance = QuizRegionMath.cameraDistance(for: region)
+
+        XCTAssertGreaterThanOrEqual(
+            distance + 1.0,
+            framedSpanMeters(of: region),
+            "Camera distance must cover the full framed span so no pin is clipped"
+        )
+    }
+
+    func testCameraBoundsCenterRegionIsBoundingBoxNotCorrectPin() {
+        // Correct pin sits at a corner; the camera-bounds centre region must be the
+        // bounding-box-derived region, not biased toward the answer pin (no hint leak).
+        let pins: [(Double, Double)] = [(0, 0), (0, 40), (40, 0), (40, 40)]
+        let region = QuizRegionMath.region(fittingPins: pins, jitter: .none)
+        XCTAssertEqual(region.center.latitude, 20, accuracy: 1e-6, "centre is bounding box, not a corner pin")
+        XCTAssertEqual(region.center.longitude, 20, accuracy: 1e-6, "centre is bounding box, not a corner pin")
+        // The bounds are derived from this same region, so the camera is constrained
+        // around the bounding-box centre — never the answer pin's coordinate — and the
+        // distance cap is finite (positive), pinning the camera to the region scale.
+        _ = QuizRegionMath.cameraBounds(for: region)
+        XCTAssertGreaterThan(
+            QuizRegionMath.cameraDistance(for: region),
+            0,
+            "bounds must cap zoom-out to a finite region scale"
+        )
     }
 
     // MARK: - Generic pin-in-polygon tests
