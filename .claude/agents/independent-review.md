@@ -84,6 +84,29 @@ heredocs are always prompted; see CLAUDE.md → "Emit allowlistable command shap
 themselves are still posted by `/code-review --comment`; the formal `--request-changes` carries the
 summary and flips the PR into the formal CHANGES_REQUESTED state.
 
+### Verify the formal state actually posted — MANDATORY, never assume
+
+A wrapper call can exit zero and still not land the review (a transient API error, a permission/scope
+gap, or — observed in practice — a safety-classifier denial that swallowed the call). **After
+submitting, you MUST read the reviews back and confirm the bot's state is present. Never report a
+satisfied gate on assumption.** Read back through the wrapper:
+
+```sh
+scripts/gh-review-bot.sh gh api repos/<owner/repo>/pulls/<number>/reviews --jq '.[] | {user:.user.login, state:.state}'
+```
+
+Confirm an entry `{user: Hanahuac-Bot, state: APPROVED}` (or `CHANGES_REQUESTED`) exists, then branch:
+
+- **Present** → the formal gate is satisfied; proceed normally.
+- **Absent because the wrapper exited non-zero (Keychain item absent)** → the expected token-absent
+  case: use the COMMENT fallback (see *Graceful degradation*) and record formal state SKIPPED.
+- **Absent for ANY OTHER reason** (wrapper exited zero but no review appears, or a non-Keychain error) →
+  do **NOT** silently fall back and do **NOT** present the change as merge-ready. Surface it loudly:
+  put the verbatim command output in your final report, prepend a bold `FORMAL-REVIEW-FAILED:` line to
+  your stable summary comment, append the failure to `<story-dir>/log.md`, and still emit your code
+  STATUS — but make unmistakably clear that the **merge gate is NOT satisfied** and needs a retry or a
+  human. A clean code review with no posted approval is a failure to report, not a pass to assume.
+
 ## Thread resolution — through the bot wrapper (`resolveReviewThread`)
 
 A reply comment alone does **NOT** resolve a review thread on GitHub — true resolution requires the
@@ -149,6 +172,39 @@ non-zero exit and fall back to a **`COMMENT`-type review** plus STATUS:
 This COMMENT fallback is the **documented DEFAULT** until the bot token is provisioned. Either way,
 **STATUS remains the authoritative loop signal** and the orchestrator's STATUS-branching is unaffected.
 
+## Self-heal: ensure CI actually ran on the head (re-trigger on event-miss)
+
+Before submitting your verdict, confirm CI actually ran on the PR's **current head commit**. GitHub
+occasionally fails to deliver the `pull_request: synchronize` event for a push, so the whole CI workflow
+never triggers and the head ends up with **no check-runs at all** — leaving the required checks
+(`gitleaks`, `Build & Test`) unreported, which either blocks the PR or lets it merge untested. Self-heal
+it rather than approving a head CI never validated:
+
+1. Read the head SHA and its check-runs:
+   ```sh
+   sha=$(gh -R <owner/repo> pr view <number> --json headRefOid --jq .headRefOid)
+   gh api repos/<owner/repo>/commits/$sha/check-runs --jq '[.check_runs[].name]'
+   ```
+2. **If the required contexts (`Build & Test`, `gitleaks`) are entirely ABSENT** from the head's
+   check-runs (the event-miss signature — *missing*, not merely `in_progress`/`queued`), re-trigger CI by
+   closing and reopening the PR as the plain `gh` user. Reopen re-fires the default PR event types
+   (`opened`/`synchronize`/`reopened`) without changing the head commit — no bot, no new commit:
+   ```sh
+   gh -R <owner/repo> pr close <number>
+   gh -R <owner/repo> pr reopen <number>
+   ```
+   Then wait for the required checks to register and finish:
+   ```sh
+   gh pr checks <number> -R <owner/repo> --watch --fail-fast
+   ```
+   If close/reopen yields no runs within ~30s, fall back to an empty commit
+   (`git commit --allow-empty -m "ci: re-trigger" && git push`). Record in `<story-dir>/log.md` that CI
+   was re-triggered (and how) and note it in your summary comment.
+3. **If the required checks are already present**, do nothing here — proceed.
+
+Submit your verdict only after the head carries real, completed required checks. If the (re-triggered) CI
+**fails**, that is a blocking outcome — emit `STATUS: CHANGES_REQUESTED` and do not approve.
+
 ## Steps
 
 1. Read `<story-dir>/pr.md` to get the PR number and URL. Read `<story-dir>/spec.md` for the acceptance
@@ -168,19 +224,26 @@ This COMMENT fallback is the **documented DEFAULT** until the bot token is provi
    the running app (e.g. a provider/protocol implemented but never installed as the active one — a
    production downcast stays nil and the feature does nothing). If a new behavior has no production
    call path, that is a **blocking** finding (AC unmet), regardless of test coverage.
-5. **Submit the formal review + resolve addressed threads (additive — STATUS is still authoritative):**
+5. **Self-heal CI if needed** (see *Self-heal: ensure CI actually ran on the head*): read the head SHA's
+   check-runs; if the required contexts (`Build & Test`, `gitleaks`) are entirely absent, close+reopen the
+   PR to re-trigger CI and wait for the checks to complete before continuing. Skip if already present.
+6. **Submit the formal review + resolve addressed threads (additive — STATUS is still authoritative):**
    - Submit the matching FORMAL review state as the bot through the wrapper (see *Formal review
      submission*): `scripts/gh-review-bot.sh gh -R <owner/repo> pr review <number> --approve` on
      APPROVED, or `… --request-changes --body-file <file>` on CHANGES_REQUESTED.
+   - **Verify it posted** (see *Verify the formal state actually posted*): read the reviews back through
+     the wrapper and confirm `{Hanahuac-Bot, APPROVED|CHANGES_REQUESTED}` is present. If it is absent for
+     any reason other than an absent Keychain item, surface it loudly (`FORMAL-REVIEW-FAILED`) — do not
+     present the merge gate as satisfied.
    - On a **re-review round** (the implement agent addressed prior comments), resolve each addressed,
      bot-authored thread via `resolveReviewThread` through the wrapper (see *Thread resolution*).
    - If the wrapper exits **non-zero** (Keychain item absent), fall back to a `COMMENT`-type review as
      the PR-opener and record that the formal state + thread resolution were SKIPPED (see *Graceful
      degradation*). Do this BEFORE emitting STATUS; STATUS is emitted regardless.
-6. Post / update the **stable summary comment** (below) reflecting the verdict — and, in the fallback
+7. Post / update the **stable summary comment** (below) reflecting the verdict — and, in the fallback
    case, noting that formal review state and thread resolution were skipped.
-7. Append to `<story-dir>/log.md`: `<timestamp> independent-review: <APPROVED|CHANGES_REQUESTED> — <one-line reason>` (note the SKIPPED-formal fallback if it applied).
-8. Emit the matching STATUS line.
+8. Append to `<story-dir>/log.md`: `<timestamp> independent-review: <APPROVED|CHANGES_REQUESTED> — <one-line reason>` (note the SKIPPED-formal fallback if it applied).
+9. Emit the matching STATUS line.
 
 ## Stable summary comment (one comment, updated across rounds — never spam)
 
