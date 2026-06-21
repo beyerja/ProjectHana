@@ -44,14 +44,9 @@ struct River: Codable, Identifiable, Hashable {
         self.mouthLon = mouthLon
     }
 
+    /// The localized name for `locale`, resolved through the active ``LanguagePackProvider``'s pack
+    /// data keyed by this river's `id`, with the bundled English `name` as the final fallback.
     func localizedName(for locale: AppLocale) -> String {
-        switch locale {
-        case .fr: nameFr ?? name
-        case .de: nameDe ?? name
-        case .esMX: nameEs ?? name
-        case .ko: nameKo ?? nameEs ?? name
-        case .nah: nameNah ?? nameEs ?? name
-        case .en: name
-        }
+        GeoNameResolver.resolveThroughProvider(id: id, locale: locale, field: .name, base: name)
     }
 }

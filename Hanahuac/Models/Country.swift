@@ -57,26 +57,17 @@ struct Country: Codable, Identifiable, Hashable {
         self.lon = lon
     }
 
+    /// The localized name for `locale`, resolved through the active ``LanguagePackProvider``'s pack
+    /// data keyed by this country's `id`, walking the fallback chain (selected → es-MX for ko/nah →
+    /// en) and falling back to the bundled English `name` when no pack carries a value.
     func localizedName(for locale: AppLocale) -> String {
-        switch locale {
-        case .fr: nameFr ?? name
-        case .de: nameDe ?? name
-        case .esMX: nameEs ?? name
-        // ko/nah: selected language → Mexican Spanish → English.
-        case .ko: nameKo ?? nameEs ?? name
-        case .nah: nameNah ?? nameEs ?? name
-        case .en: name
-        }
+        GeoNameResolver.resolveThroughProvider(id: id, locale: locale, field: .name, base: name)
     }
 
+    /// The localized capital for `locale`, resolved through the active ``LanguagePackProvider``'s
+    /// pack data keyed by this country's `id`, with the bundled English `capital` as the final
+    /// fallback.
     func localizedCapital(for locale: AppLocale) -> String {
-        switch locale {
-        case .fr: capitalFr ?? capital
-        case .de: capitalDe ?? capital
-        case .esMX: capitalEs ?? capital
-        case .ko: capitalKo ?? capitalEs ?? capital
-        case .nah: capitalNah ?? capitalEs ?? capital
-        case .en: capital
-        }
+        GeoNameResolver.resolveThroughProvider(id: id, locale: locale, field: .capital, base: capital)
     }
 }

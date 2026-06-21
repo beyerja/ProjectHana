@@ -112,6 +112,25 @@ One entry missing a key (e.g. a `.lproj` without `type: folder`) silently genera
 path (a `<group>` instead of a folder ref), changing ODR delivery/resolution on a real split build. After
 regenerating, diff the generated entries to confirm the parallel set matches.
 
+**Git hooks must install under the repo's actual `core.hooksPath` — and be tested there**
+This repo sets `core.hooksPath=.githooks`, so git runs `.githooks/<hook>`, NOT `$GIT_DIR/hooks/<hook>`.
+A hook written into `$GIT_DIR/hooks/` is **silently inert** — it never fires (a real miss this workflow
+cost 3 review rounds). When adding hook behavior: compose it into the committed `.githooks/<hook>` (and
+have the installer set `core.hooksPath` idempotently), never drop a shim into `$GIT_DIR/hooks/`. Then
+make at least one regression test stand up a throwaway repo wired **exactly** like this one
+(`core.hooksPath=.githooks`, the `.githooks/` dir + scan script copied in) and drive a **real**
+`git commit` to prove the hook executes — a test that commits in a default repo without `core.hooksPath`
+passes while the shipped hook is dead.
+
+**A full-object PUT replaces the whole resource — enumerate fields you must preserve**
+When committing a config payload applied via a replace-semantics call (notably
+`gh api -X PUT repos/.../branches/.../protection` with `--input <branch-protection>.json`), the PUT
+**replaces the entire object** — any field set to `null` or omitted WIPES that setting. A
+`required_status_checks: null` in the body would delete main's existing required CI checks (gitleaks,
+Build & Test) on activation. Before committing such a payload, GET the live resource read-only and
+enumerate every field that must survive (e.g. `{strict:true, contexts:[<live checks>]}`), and note in
+the accompanying doc that the PUT replaces the whole object.
+
 **Builds and tests go through `just` — no manual env**
 Use `just build-sim`, `just test`, `just build-mac`, `just generate`, `just icon`. These carry the
 correct toolchain via flake + direnv. Never prefix commands with `DEVELOPER_DIR=…`, `ZDOTDIR=…`, or
