@@ -185,7 +185,9 @@ rounds instead of posting a new comment each time. Use the HTML-comment marker:
 
 Write the comment body to a file with the **Write** tool (never a heredoc / `--body "$(…)"` — command
 substitution and heredocs are always prompted; see CLAUDE.md → "Emit allowlistable command shapes").
-The body must start with the marker line and state the verdict, a short rationale, and the round number.
+**Write it as `<story-dir>/review-comment.md`, not bare `.workflow/…`** — the story dir is already
+gitignored, so the scratch body never lingers as an untracked stray. The body must start with the
+marker line and state the verdict, a short rationale, and the round number.
 
 Find an existing summary comment by its marker, then update it in place if present, otherwise create one:
 ```sh

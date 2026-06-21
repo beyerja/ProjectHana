@@ -1,8 +1,10 @@
 import Foundation
 import SwiftData
 
-/// One-time, idempotent migration that attributes pre-existing **global** progress to the language
-/// that is active at upgrade time. Every other language starts empty.
+/// One-time, idempotent migrations that attribute pre-existing **global** progress to the language
+/// that is active at upgrade time (every other language starts empty) AND to the **Map Tab Quiz**
+/// mode (every other quiz mode starts empty — all legacy progress was effectively the Map Tab Quiz).
+/// The two steps have independent version flags so each stays idempotent on its own.
 ///
 /// Before per-language progress, all progress was stored with no language dimension:
 /// - SwiftData rows (`ReviewCard`, `DailyProgressSnapshot`) — after the schema gained `language`,
@@ -24,6 +26,10 @@ enum ProgressMigrator {
     /// describes a per-device upgrade event, not user content.
     static let versionKey = "progress.perLanguageMigration.v1.done"
 
+    /// Persisted marker for the per-quiz-mode migration (independent of the per-language flag so each
+    /// step stays idempotent on its own).
+    static let quizModeVersionKey = "progress.perQuizModeMigration.v1.done"
+
     /// Performs the migration for `activeLanguage` (an `AppLocale.rawValue`).
     ///
     /// - Parameters:
@@ -35,6 +41,17 @@ enum ProgressMigrator {
         activeLanguage: String,
         defaults: UserDefaults = .standard
     ) {
+        migratePerLanguageIfNeeded(context: context, activeLanguage: activeLanguage, defaults: defaults)
+        migratePerQuizModeIfNeeded(context: context, activeLanguage: activeLanguage, defaults: defaults)
+    }
+
+    /// The original per-language migration: attribute pre-existing global progress to `activeLanguage`.
+    /// Idempotent via `versionKey`.
+    private static func migratePerLanguageIfNeeded(
+        context: ModelContext,
+        activeLanguage: String,
+        defaults: UserDefaults
+    ) {
         guard !defaults.bool(forKey: versionKey) else { return }
 
         stampSwiftDataRows(context: context, language: activeLanguage)
@@ -42,6 +59,63 @@ enum ProgressMigrator {
         migrateActiveSetKeys(language: activeLanguage, defaults: defaults)
 
         defaults.set(true, forKey: versionKey)
+    }
+
+    /// The per-quiz-mode migration: all pre-existing progress was effectively the Map Tab Quiz, so
+    /// stamp every empty-`quizMode` `ReviewCard` with `mapQuiz` and copy the legacy per-language active
+    /// set into the `mapQuiz` per-mode key. The other three modes start empty/fresh.
+    ///
+    /// **Snapshots are intentionally NOT stamped:** after per-mode snapshot recording, the
+    /// empty-`quizMode` `DailyProgressSnapshot` row IS the mode-aggregated rollup the Progress screen's
+    /// default chart reads, and legacy daily snapshots already represent the all-modes total for those
+    /// past days. Stamping them `mapQuiz` would empty the default aggregate history, so they are left at
+    /// `quizMode == ""`.
+    ///
+    /// Idempotent via `quizModeVersionKey` plus per-step presence checks. Runs AFTER the per-language
+    /// step (so legacy rows already carry the active language) and BEFORE the per-mode stores seed (so
+    /// the `mapQuiz` store inherits the migrated cards rather than re-seeding fresh ones).
+    private static func migratePerQuizModeIfNeeded(
+        context: ModelContext,
+        activeLanguage: String,
+        defaults: UserDefaults
+    ) {
+        guard !defaults.bool(forKey: quizModeVersionKey) else { return }
+
+        stampCardsWithMapQuizMode(context: context)
+        migrateActiveSetToMapQuiz(language: activeLanguage, defaults: defaults)
+
+        defaults.set(true, forKey: quizModeVersionKey)
+    }
+
+    /// Stamps every `ReviewCard` whose `quizMode` is empty with the `mapQuiz` token. Only empty-quizMode
+    /// rows are touched (matched in Swift, like the empty-language stamp), so a re-run is a no-op.
+    /// `DailyProgressSnapshot` rows are deliberately left untouched (see ``migratePerQuizModeIfNeeded``).
+    private static func stampCardsWithMapQuizMode(context: ModelContext) {
+        let mapQuiz = QuizModeID.legacyMigrationTarget.rawValue
+        let cards = ((try? context.fetch(FetchDescriptor<ReviewCard>())) ?? [])
+            .filter(\.quizMode.isEmpty)
+        for card in cards {
+            card.quizMode = mapQuiz
+        }
+        if !cards.isEmpty {
+            try? context.save()
+        }
+    }
+
+    /// Copies each category's legacy per-language active set into the `mapQuiz` per-mode key, only when
+    /// the target key is absent (so a re-run, or a user who already has per-mode data, is never
+    /// overwritten). The legacy per-language key is then removed. Other modes' keys are left absent.
+    private static func migrateActiveSetToMapQuiz(language: String, defaults: UserDefaults) {
+        let mapQuiz = QuizModeID.legacyMigrationTarget
+        for category in CardCategory.allCases {
+            let legacyKey = legacyPerLanguageActiveSetKey(language: language, category: category)
+            guard let legacyValue = defaults.stringArray(forKey: legacyKey) else { continue }
+            let modeKey = activeSetKey(language: language, mode: mapQuiz, category: category)
+            if defaults.stringArray(forKey: modeKey) == nil {
+                defaults.set(legacyValue, forKey: modeKey)
+            }
+            defaults.removeObject(forKey: legacyKey)
+        }
     }
 
     // MARK: - SwiftData rows

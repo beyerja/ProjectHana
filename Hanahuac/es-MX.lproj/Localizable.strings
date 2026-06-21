@@ -55,6 +55,7 @@
 "stats.by_category" = "Por categoría";
 "stats.showing_language" = "Mostrando:";
 "stats.by_language" = "Por idioma";
+"stats.by_mode" = "Por tipo de prueba";
 "stats.category_header" = "Categoría";
 "stats.mastery_tiers" = "Niveles de dominio";
 "stats.tier.not_started" = "Sin comenzar";

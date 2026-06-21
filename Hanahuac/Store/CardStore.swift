@@ -2,20 +2,27 @@ import Foundation
 import Observation
 import SwiftData
 
-/// Persists and reads the spaced-repetition card state (`ReviewCard`) for a *single active language*.
+/// Persists and reads the spaced-repetition card state (`ReviewCard`) for a *single active language
+/// AND quiz mode*.
 ///
-/// Progress is tracked independently per language: a `CardStore` is constructed with the active
-/// `language` (an `AppLocale.rawValue`) and every read/write is scoped to it. Two languages may hold
-/// a `ReviewCard` for the same `factID` without colliding — the canonical identity of a card is
-/// (`factID`, `language`). Seeding language A never touches language B, and `resetAll` only clears
-/// the active language. To present a different language's track, build a new `CardStore` with that
-/// language (the app rebuilds it when `LanguageManager.current` changes).
+/// Progress is tracked independently per language and per quiz mode: a `CardStore` is constructed with
+/// the active `language` (an `AppLocale.rawValue`) and `quizMode` (a `QuizModeID.rawValue`), and every
+/// read/write is scoped to BOTH. Two languages — or two modes within a language — may hold a
+/// `ReviewCard` for the same `factID` without colliding: the canonical identity of a card is
+/// (`factID`, `language`, `quizMode`). Seeding one (language, mode) never touches another, and
+/// `resetAll` only clears the active (language, mode). The app vends one `CardStore` per active mode
+/// through `CardStoreProvider` and rebuilds them when `LanguageManager.current` changes.
 @Observable
 final class CardStore {
     private let modelContext: ModelContext
 
     /// The `AppLocale.rawValue` whose cards this store reads and writes.
     let language: String
+
+    /// The `QuizModeID.rawValue` whose cards this store reads and writes. Empty string is the
+    /// legacy/aggregate sentinel (only used by stores built before per-mode scoping, e.g. some tests);
+    /// production stores always carry a concrete mode.
+    let quizMode: String
 
     /// Monotonic mutation counter bumped after every persisted change. The fetch accessors
     /// (`allCards`/`newCards`/`dueCards`) run a fresh `FetchDescriptor` and read no `@Observable`
@@ -30,17 +37,19 @@ final class CardStore {
         revision &+= 1
     }
 
-    init(modelContext: ModelContext, language: String) {
+    init(modelContext: ModelContext, language: String, quizMode: String = "") {
         self.modelContext = modelContext
         self.language = language
+        self.quizMode = quizMode
         ensureGraduationConsistency()
     }
 
-    /// All cards for the active language.
+    /// All cards for the active (language, quizMode).
     var allCards: [ReviewCard] {
         let lang = language
+        let mode = quizMode
         let descriptor = FetchDescriptor<ReviewCard>(
-            predicate: #Predicate { $0.language == lang }
+            predicate: #Predicate { $0.language == lang && $0.quizMode == mode }
         )
         return (try? modelContext.fetch(descriptor)) ?? []
     }
@@ -48,8 +57,11 @@ final class CardStore {
     func dueCards(for category: CardCategory? = nil) -> [ReviewCard] {
         let now = Date.now
         let lang = language
+        let mode = quizMode
         var descriptor = FetchDescriptor<ReviewCard>(
-            predicate: #Predicate { $0.language == lang && $0.nextReviewDate <= now && $0.hasGraduated }
+            predicate: #Predicate {
+                $0.language == lang && $0.quizMode == mode && $0.nextReviewDate <= now && $0.hasGraduated
+            }
         )
         descriptor.sortBy = [SortDescriptor(\.nextReviewDate)]
         let cards = (try? modelContext.fetch(descriptor)) ?? []
@@ -59,8 +71,9 @@ final class CardStore {
 
     func newCards(for category: CardCategory? = nil) -> [ReviewCard] {
         let lang = language
+        let mode = quizMode
         var descriptor = FetchDescriptor<ReviewCard>(
-            predicate: #Predicate { $0.language == lang && !$0.hasGraduated }
+            predicate: #Predicate { $0.language == lang && $0.quizMode == mode && !$0.hasGraduated }
         )
         descriptor.sortBy = [SortDescriptor(\.factID)]
         let cards = (try? modelContext.fetch(descriptor)) ?? []
@@ -95,12 +108,13 @@ final class CardStore {
         markChanged()
     }
 
-    /// Inserts/updates a card in the active language. The card is stamped with this store's
-    /// `language` if it does not already carry one, so cards inserted through the active store always
-    /// belong to that language's track (real seeded cards are already stamped; this also keeps
-    /// callers that build a bare `ReviewCard` consistent with the store they insert it into).
+    /// Inserts/updates a card in the active (language, quizMode). The card is stamped with this store's
+    /// `language`/`quizMode` if it does not already carry one, so cards inserted through the active
+    /// store always belong to that (language, mode) track (real seeded cards are already stamped; this
+    /// also keeps callers that build a bare `ReviewCard` consistent with the store they insert it into).
     func upsert(_ card: ReviewCard) {
         if card.language.isEmpty { card.language = language }
+        if card.quizMode.isEmpty { card.quizMode = quizMode }
         modelContext.insert(card)
         try? modelContext.save()
         markChanged()
@@ -117,26 +131,32 @@ final class CardStore {
     }
 
     /// Seeds the store so there is exactly one `ReviewCard` per catalog fact *for the active
-    /// language*, inserting only the factIDs that are missing for that language.
+    /// (language, quizMode)*, inserting only the factIDs that are missing for that (language, mode).
     ///
     /// This is duplicate-safe by design. CloudKit forbids `@Attribute(.unique)`, so two devices
     /// that each call this on a fresh-but-soon-to-sync store can independently create cards for
-    /// the same (factID, language). By (a) deduplicating first and (b) inserting only missing
+    /// the same (factID, language, quizMode). By (a) deduplicating first and (b) inserting only missing
     /// factIDs (rather than the old "insert everything iff the store is empty"), seeding converges
-    /// to one card per fact per language even when partial state already exists. Newly-inserted
-    /// cards are stamped with this store's `language`, so seeding one language never creates cards
-    /// for another — and a fact absent in a language simply gets no card there (the data model makes
-    /// no assumption that every language shares the identical fact set).
-    func seedIfNeeded(with data: GeographyData) {
-        // Collapse any pre-existing duplicates for this language (e.g. from a prior CloudKit merge)
-        // first, so the "already present" set below is accurate.
+    /// to one card per fact per (language, mode) even when partial state already exists. Newly-inserted
+    /// cards are stamped with this store's `language`/`quizMode`, so seeding one (language, mode) never
+    /// creates cards for another — and a fact absent in a (language, mode) simply gets no card there
+    /// (the data model makes no assumption that every language/mode shares the identical fact set).
+    ///
+    /// `categories` restricts which categories are seeded — a mode that does not serve a category
+    /// (e.g. `typeCapital`, Countries-only) passes only the categories it quizzes, so it never holds
+    /// cards for a category it cannot present. Defaults to all categories.
+    func seedIfNeeded(with data: GeographyData, categories: [CardCategory] = CardCategory.allCases) {
+        // Collapse any pre-existing duplicates for this (language, mode) (e.g. from a prior CloudKit
+        // merge) first, so the "already present" set below is accurate.
         deduplicate()
 
         var existingFactIDs = Set(allCards.map(\.factID))
+        let allowed = Set(categories)
 
         func seed(_ ids: [String], as category: CardCategory) {
+            guard allowed.contains(category) else { return }
             for id in ids where !existingFactIDs.contains(id) {
-                modelContext.insert(ReviewCard(factID: id, language: language, category: category))
+                modelContext.insert(ReviewCard(factID: id, language: language, quizMode: quizMode, category: category))
                 existingFactIDs.insert(id)
             }
         }
@@ -150,8 +170,9 @@ final class CardStore {
         markChanged()
     }
 
-    /// Collapses `ReviewCard`s that share a `factID` *within the active language* down to a single
-    /// canonical card. The same `factID` in a different language is NOT a duplicate.
+    /// Collapses `ReviewCard`s that share a `factID` *within the active (language, quizMode)* down to a
+    /// single canonical card. The same `factID` in a different language OR a different quiz mode is NOT
+    /// a duplicate (`allCards` is already scoped to this store's language and mode).
     ///
     /// CloudKit's last-writer-wins + lack of unique constraints means independent devices can both
     /// create a card for the same (fact, language). When those rows converge in one store we must
@@ -165,8 +186,8 @@ final class CardStore {
     /// Losing duplicates are deleted. Returns the number of cards removed.
     @discardableResult
     func deduplicate() -> Int {
-        // `allCards` is already language-scoped, so grouping by factID alone keys on (factID,
-        // language) for this store's language.
+        // `allCards` is already (language, quizMode)-scoped, so grouping by factID alone keys on
+        // (factID, language, quizMode) for this store's language and mode.
         let grouped = Dictionary(grouping: allCards, by: \.factID)
         var removed = 0
         for (_, cards) in grouped where cards.count > 1 {

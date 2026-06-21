@@ -12,6 +12,17 @@ just log start merge-pr "<story-id>" || true
 
 Read `<story-dir>/pr.md`. Confirm PR is approved and all CI checks pass.
 
+**If the PR is BEHIND base, update it first.** With parallel worktrees advancing `main`, a PR that
+was green can fall behind base between CI-pass and merge; branch protection's "require branches up to
+date" then blocks the squash. This is a clean fast-forward, NOT a conflict — do not re-integrate by
+hand. Check and update:
+```sh
+gh pr view <number> --json mergeStateStatus -q .mergeStateStatus
+# BEHIND  → gh pr update-branch <number>   (then re-wait for CI on the updated branch)
+# DIRTY   → real conflict: re-integrate origin/main into the branch and resolve (see create-pr / orchestrator step 5)
+# CLEAN/HAS_HOOKS/BLOCKED-by-nothing-else → proceed to merge
+```
+
 Run: `gh pr merge --squash --delete-branch`
 
 Sync to the merged main. **Worktree-aware:** in a dedicated feature worktree, do NOT

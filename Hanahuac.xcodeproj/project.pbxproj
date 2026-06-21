@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		0114442720969F5864F55E6D /* PilePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96647996ABAD24F4AB1F1941 /* PilePickerView.swift */; };
 		0667BDF3A3506797F49130F7 /* ProgressMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */; };
+		07CE774FCB06D612C6E5C0DB /* QuizModeID.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBAB8A20E0ACEDE001222E47 /* QuizModeID.swift */; };
 		09BA219B1A4B056A7AFD959A /* BorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C10211BD753EDB43C322A97 /* BorderLoader.swift */; };
+		0A0D024C464F46F94C7DDF15 /* ModeProgressSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3580FFCFBDC4E49F5CF02A35 /* ModeProgressSummary.swift */; };
 		0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */; };
 		0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */; };
 		15DEBBA2132BD4DB67D4AE7E /* ProgressBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A009B1EC5C53A5776FF842 /* ProgressBackup.swift */; };
@@ -22,6 +24,7 @@
 		2AE1D2E426F022C999D475F9 /* HanahuacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */; };
 		2C070983399A1915D3A6BCEB /* L10nBundleResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CCAA2F2AF702B15300352 /* L10nBundleResolutionTests.swift */; };
 		31E53F4FFE9E7836BF041B92 /* MountainRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DCF2D94E310309B851816E /* MountainRange.swift */; };
+		32B0E3EAA85EEB6CF349C877 /* PerModeActiveSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE505ACBF181DC9B41177E8 /* PerModeActiveSetTests.swift */; };
 		336381EEDC9A560F046C30C2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 108E300896C44A17DFF98AED /* HomeView.swift */; };
 		349F2725D5ABAE6225537557 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02EDCEF7B89BAFA774D2290F /* Theme.swift */; };
 		39E70882FFB1F0CD0D62FE90 /* GeographyDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C56B267CB810DA87B1D70D42 /* GeographyDataLoader.swift */; };
@@ -40,6 +43,7 @@
 		50B17A2F93D184FEAED3D88D /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78FDCB200865136E842DB317 /* ContentView.swift */; };
 		53C2E037B85C8C89A414C2D4 /* PoleLabelCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */; };
 		58EC26C66D332F8E7B88B468 /* MapLearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */; };
+		591EF8E1C86152E7D979EBAC /* PerModeSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72D6DF935BA62491E7164B00 /* PerModeSnapshotTests.swift */; };
 		5AF36D6B52E58FCE7835FA9E /* CardDedupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFB55464417EC0B009B6930 /* CardDedupTests.swift */; };
 		5B59B89F003E80B24BAA470D /* sea-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = B8BC8FDD71EB406D6A8DF545 /* sea-borders.json */; };
 		5C3F3A38388D7D8C23D5E66F /* MapQuizRegionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */; };
@@ -66,6 +70,8 @@
 		91BF4999F0EC34D6D1AB3271 /* MasteryTier.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */; };
 		92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */; };
 		9318D2A472DA5228C7650718 /* ProgressBackupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8A92BEB2B9C38CBB63762A /* ProgressBackupTests.swift */; };
+		948C446E9022BC5B0C7AE3A3 /* PerQuizModeMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */; };
+		99967CCBF62DC49B90F9C4BF /* ModeProgressSummaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 324A31E112027070D0862AE7 /* ModeProgressSummaryTests.swift */; };
 		99ACF5363A414EA1682FCA0B /* RiverPathLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F68D9014B6C092CCEE7005 /* RiverPathLoader.swift */; };
 		9A38525C1DEC1C139BA921AA /* MapFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99FAC06BE37F9329DF0FC70 /* MapFeatureTests.swift */; };
 		9A89BF6774EB44FC0EEA5D6E /* SyncStatusPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45793BEFAE16929E78F73B0A /* SyncStatusPresentationTests.swift */; };
@@ -94,7 +100,9 @@
 		D7EED8BCE282F82B2A86BC71 /* DailyProgressSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78224CB10B7DA7818B0C15AD /* DailyProgressSnapshot.swift */; };
 		D81EDE85F2EF406BCE8CAA1C /* MapQuizRegionHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */; };
 		D8B11A241DC46B0A17B182E2 /* ReviewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DB32874B4CD59E7A7B15526 /* ReviewCard.swift */; };
+		E09F28AA2229C8780C0723C6 /* PerQuizModeProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5906EC2E701B118E0EF8A915 /* PerQuizModeProgressTests.swift */; };
 		E1D9C05C5DE6C12A289E3C86 /* SyncableStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEF541ACBAE26DA234D3D5C3 /* SyncableStoreTests.swift */; };
+		E901DCAC9748B3A3864B2F34 /* CardStoreProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32E2FBF4E73928EF5BDC496 /* CardStoreProvider.swift */; };
 		E9648CAA64D3216116F829D1 /* SyncStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E0A4C8378942A60E6FAC8 /* SyncStatus.swift */; };
 		EB2A8A989227BF8833037F02 /* MapFeatureCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D3C61F4B563A0F99E5CB2C /* MapFeatureCatalog.swift */; };
 		EBCE0FB9926D49EB4FE9CE13 /* HanahuacSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A8968B8A0523114451E506 /* HanahuacSchema.swift */; };
@@ -103,6 +111,7 @@
 		F31CE3CE128F36466070D13C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2EADA5AE08E3AB2FDD015B /* SettingsView.swift */; };
 		F3E4BC54608032C208888F95 /* CountryBorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412DC824A749D0667C05943 /* CountryBorderLoader.swift */; };
 		F5FC0DE759E57E9892B08EE5 /* MapQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE10D9C12442D7186628F76 /* MapQuizView.swift */; };
+		F6BD6C2593294C58CA94A3C2 /* QuizModeDimensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C449FCC798C1C634D548006 /* QuizModeDimensionTests.swift */; };
 		F85BD5459DFBA29F33879E88 /* CapitalQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */; };
 		FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */; };
 /* End PBXBuildFile section */
@@ -119,6 +128,7 @@
 
 /* Begin PBXFileReference section */
 		02EDCEF7B89BAFA774D2290F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerQuizModeMigratorTests.swift; sourceTree = "<group>"; };
 		108E300896C44A17DFF98AED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
 		132EB6CB2BB0B527A3C57527 /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
@@ -136,7 +146,10 @@
 		2DEBADCA4691A5AC9A317ACF /* HomeQuizModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeQuizModeTests.swift; sourceTree = "<group>"; };
 		2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacApp.swift; sourceTree = "<group>"; };
 		2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningTests.swift; sourceTree = "<group>"; };
+		2FE505ACBF181DC9B41177E8 /* PerModeActiveSetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerModeActiveSetTests.swift; sourceTree = "<group>"; };
+		324A31E112027070D0862AE7 /* ModeProgressSummaryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeProgressSummaryTests.swift; sourceTree = "<group>"; };
 		33FE8DE13D59FB3D7E15BA78 /* MapLearningSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningSession.swift; sourceTree = "<group>"; };
+		3580FFCFBDC4E49F5CF02A35 /* ModeProgressSummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeProgressSummary.swift; sourceTree = "<group>"; };
 		3689189086A893C067FA6186 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C79D6B37134580FEAE9AD70 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		3EDD77E9938F36A3D49A28DB /* StatsChartsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsChartsSection.swift; sourceTree = "<group>"; };
@@ -149,6 +162,8 @@
 		4E3A6C56976B4F809760D23B /* ProgressMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressMigrator.swift; sourceTree = "<group>"; };
 		4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapitalQuizView.swift; sourceTree = "<group>"; };
 		538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressStatsStoreTests.swift; sourceTree = "<group>"; };
+		5906EC2E701B118E0EF8A915 /* PerQuizModeProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerQuizModeProgressTests.swift; sourceTree = "<group>"; };
+		5C449FCC798C1C634D548006 /* QuizModeDimensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModeDimensionTests.swift; sourceTree = "<group>"; };
 		5E4F1B169628C363C05DB0D5 /* nah */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nah; path = nah.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5F092FAD49DC2860FC69F0E8 /* MultipleChoiceSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceSession.swift; sourceTree = "<group>"; };
 		633F2484D956811A774A989B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -161,6 +176,7 @@
 		6D572FAEF7F010A651B0AE6D /* CountryPinCoordinateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryPinCoordinateProvider.swift; sourceTree = "<group>"; };
 		6D781685E371E70F4ACB23A6 /* QuizSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizSummaryView.swift; sourceTree = "<group>"; };
 		6D8E85F2AA5FFFC3920B316C /* country-borders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "country-borders.json"; sourceTree = "<group>"; };
+		72D6DF935BA62491E7164B00 /* PerModeSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerModeSnapshotTests.swift; sourceTree = "<group>"; };
 		758AF9EF8095AC6033447A90 /* StreakTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakTracker.swift; sourceTree = "<group>"; };
 		78224CB10B7DA7818B0C15AD /* DailyProgressSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgressSnapshot.swift; sourceTree = "<group>"; };
 		78FDCB200865136E842DB317 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -180,6 +196,7 @@
 		9CFA705339BAA792E8E11E85 /* ProgressRecordingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressRecordingTests.swift; sourceTree = "<group>"; };
 		9E7710CFEA52939B5CC38E2E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9F56156DD1B70D620044397E /* SyncFeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncFeatureFlag.swift; sourceTree = "<group>"; };
+		A32E2FBF4E73928EF5BDC496 /* CardStoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreProvider.swift; sourceTree = "<group>"; };
 		A8A920142B5EE81A611BBC5C /* ActiveSetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSetStore.swift; sourceTree = "<group>"; };
 		B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
 		B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoaderTests.swift; sourceTree = "<group>"; };
@@ -209,6 +226,7 @@
 		E9D3C61F4B563A0F99E5CB2C /* MapFeatureCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureCatalog.swift; sourceTree = "<group>"; };
 		EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sea.swift; sourceTree = "<group>"; };
 		EAFCAD670B510A8E79864C5F /* SM2Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Scheduler.swift; sourceTree = "<group>"; };
+		EBAB8A20E0ACEDE001222E47 /* QuizModeID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModeID.swift; sourceTree = "<group>"; };
 		EC57AFB83614F6804D3671A1 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		EEF2AEB96E37A3798632C4A8 /* QuizPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPlaceholderView.swift; sourceTree = "<group>"; };
 		EF0CCAA2F2AF702B15300352 /* L10nBundleResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nBundleResolutionTests.swift; sourceTree = "<group>"; };
@@ -253,13 +271,19 @@
 				E99FAC06BE37F9329DF0FC70 /* MapFeatureTests.swift */,
 				2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */,
 				F547F83002D8246EB3FA1C26 /* MapQuizRegionHelperTests.swift */,
+				324A31E112027070D0862AE7 /* ModeProgressSummaryTests.swift */,
 				F5666DA35DFB133E8E641545 /* NameFeatureQuizTests.swift */,
 				8CFB005463FA4BC0CD7858BA /* PerLanguageProgressTests.swift */,
+				2FE505ACBF181DC9B41177E8 /* PerModeActiveSetTests.swift */,
+				72D6DF935BA62491E7164B00 /* PerModeSnapshotTests.swift */,
+				0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */,
+				5906EC2E701B118E0EF8A915 /* PerQuizModeProgressTests.swift */,
 				1B8A92BEB2B9C38CBB63762A /* ProgressBackupTests.swift */,
 				1D30FC4403B709CAC9C2A5AF /* ProgressMigratorTests.swift */,
 				9CFA705339BAA792E8E11E85 /* ProgressRecordingTests.swift */,
 				538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */,
 				7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */,
+				5C449FCC798C1C634D548006 /* QuizModeDimensionTests.swift */,
 				BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */,
 				132EB6CB2BB0B527A3C57527 /* StatsTests.swift */,
 				FEF541ACBAE26DA234D3D5C3 /* SyncableStoreTests.swift */,
@@ -281,6 +305,7 @@
 			isa = PBXGroup;
 			children = (
 				E69AF0C2DECD04EE4B147777 /* CardStore.swift */,
+				A32E2FBF4E73928EF5BDC496 /* CardStoreProvider.swift */,
 				C1A0BDD7AD08FB4D44215D35 /* PreviewStore.swift */,
 				F85289DD2C1AE0AE38568540 /* ProgressStatsStore.swift */,
 				758AF9EF8095AC6033447A90 /* StreakTracker.swift */,
@@ -359,6 +384,7 @@
 				DF4707220B3DD42F6CA19AB1 /* MasteryTier.swift */,
 				F0DCF2D94E310309B851816E /* MountainRange.swift */,
 				E5B5D865F88CBD414CADF641 /* PoleLabelCalculator.swift */,
+				EBAB8A20E0ACEDE001222E47 /* QuizModeID.swift */,
 				8DB32874B4CD59E7A7B15526 /* ReviewCard.swift */,
 				983C356AE304785D4A76665B /* River.swift */,
 				19F68D9014B6C092CCEE7005 /* RiverPathLoader.swift */,
@@ -431,6 +457,7 @@
 			isa = PBXGroup;
 			children = (
 				B2DF1997D1D5E7FDF0F9BAEC /* LanguageProgressSummary.swift */,
+				3580FFCFBDC4E49F5CF02A35 /* ModeProgressSummary.swift */,
 				E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */,
 				3EDD77E9938F36A3D49A28DB /* StatsChartsSection.swift */,
 				C067B5B526D874D731E4EE9D /* StatsView.swift */,
@@ -579,6 +606,7 @@
 				09BA219B1A4B056A7AFD959A /* BorderLoader.swift in Sources */,
 				F85BD5459DFBA29F33879E88 /* CapitalQuizView.swift in Sources */,
 				3FED385A8C9B097850517F7F /* CardStore.swift in Sources */,
+				E901DCAC9748B3A3864B2F34 /* CardStoreProvider.swift in Sources */,
 				50B17A2F93D184FEAED3D88D /* ContentView.swift in Sources */,
 				8BD76201C8B44BDBE5A83E8B /* Country.swift in Sources */,
 				F3E4BC54608032C208888F95 /* CountryBorderLoader.swift in Sources */,
@@ -605,6 +633,7 @@
 				F5FC0DE759E57E9892B08EE5 /* MapQuizView.swift in Sources */,
 				CA52ACD8483387D82F189F21 /* MappableFeature.swift in Sources */,
 				91BF4999F0EC34D6D1AB3271 /* MasteryTier.swift in Sources */,
+				0A0D024C464F46F94C7DDF15 /* ModeProgressSummary.swift in Sources */,
 				31E53F4FFE9E7836BF041B92 /* MountainRange.swift in Sources */,
 				190B6EF7CCCBA8FBF190F761 /* MultipleChoiceQuizView.swift in Sources */,
 				64BA046A2AA02BABA9422B62 /* MultipleChoiceSession.swift in Sources */,
@@ -617,6 +646,7 @@
 				3B8A466A7ADF199D163A44FA /* ProgressMigrator.swift in Sources */,
 				92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */,
 				410A526F6517C786D9480588 /* ProgressStatsStore.swift in Sources */,
+				07CE774FCB06D612C6E5C0DB /* QuizModeID.swift in Sources */,
 				89BAB351841F9FF51443F22D /* QuizPlaceholderView.swift in Sources */,
 				A8A94D2FDC44E49B9B0443FD /* QuizRoute.swift in Sources */,
 				866338A08A8637603AB53C2E /* QuizSummaryView.swift in Sources */,
@@ -657,13 +687,19 @@
 				9A38525C1DEC1C139BA921AA /* MapFeatureTests.swift in Sources */,
 				9F0CD581EDE922EAF670F9A8 /* MapLearningTests.swift in Sources */,
 				D81EDE85F2EF406BCE8CAA1C /* MapQuizRegionHelperTests.swift in Sources */,
+				99967CCBF62DC49B90F9C4BF /* ModeProgressSummaryTests.swift in Sources */,
 				49E3DC2EA9B65062D932545E /* NameFeatureQuizTests.swift in Sources */,
 				B9F99F753E98BB7121C19491 /* PerLanguageProgressTests.swift in Sources */,
+				32B0E3EAA85EEB6CF349C877 /* PerModeActiveSetTests.swift in Sources */,
+				591EF8E1C86152E7D979EBAC /* PerModeSnapshotTests.swift in Sources */,
+				948C446E9022BC5B0C7AE3A3 /* PerQuizModeMigratorTests.swift in Sources */,
+				E09F28AA2229C8780C0723C6 /* PerQuizModeProgressTests.swift in Sources */,
 				9318D2A472DA5228C7650718 /* ProgressBackupTests.swift in Sources */,
 				0667BDF3A3506797F49130F7 /* ProgressMigratorTests.swift in Sources */,
 				69F5820A4B8C2E591AD48173 /* ProgressRecordingTests.swift in Sources */,
 				0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */,
 				FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */,
+				F6BD6C2593294C58CA94A3C2 /* QuizModeDimensionTests.swift in Sources */,
 				0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */,
 				C6C390DA85F5759C498E9345 /* StatsTests.swift in Sources */,
 				696206A61705E6338B07D623 /* SyncCoordinatorTests.swift in Sources */,

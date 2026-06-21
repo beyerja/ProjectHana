@@ -26,7 +26,11 @@ legacy name while worktree runs are namespaced.
 
 For each unchecked task:
 1. Implement following existing project patterns
-2. Run project checks:
+2. Run project checks. **In a worktree run, invoke `just` at the worktree path** —
+   `just -f <worktree>/justfile lint` / `… test` (the recipes are worktree-aware) — never
+   `cd <worktree> && just …`. That `cd <worktree> && …` compound is the single most-prompted command
+   in telemetry and stayed the top offender even after the rule landed in CLAUDE.md, so emit the
+   at-a-path shape here (see CLAUDE.md → "Emit allowlistable command shapes"):
    ```sh
    just lint   # fail-on-violation lint gate (Swift/Python/Shell/Nix/YAML); blocks the PR in CI
    just test
@@ -105,6 +109,15 @@ Before adding a new `extension` on any existing type (model, enum, struct), grep
 grep -r "extension <TypeName>" Hanahuac/
 ```
 If a property or method you are about to add already exists in another file, reuse it — do not redeclare it. Common culprits: `displayName`, `localizedName`, `color`, `iconName` on model types used in multiple views.
+
+**Overloaded methods that take different enums with shared case names are ambiguous at leading-dot call sites**
+When a new orthogonal dimension adds a second enum (e.g. a persisted `QuizModeID` alongside the
+SwiftUI `HomeQuizMode`, both with cases `mapQuiz`/`multipleChoice`/…), do NOT give one type two
+`func foo(for:)` overloads — one per enum. A call like `provider.foo(for: .multipleChoice)` then fails
+to compile with `ambiguous use of '.multipleChoice'` because the leading-dot literal matches both
+overloads. Give the overloads **distinct labels** (`store(for: HomeQuizMode)` vs
+`store(forModeID: QuizModeID)`) so call sites resolve unambiguously without forcing every caller to
+spell out `HomeQuizMode.multipleChoice`.
 
 **iOS-only APIs**
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `Hanahuac/Views/ViewExtensions.swift` rather than direct calls.

@@ -4,8 +4,14 @@ import SwiftUI
 /// Map-based learning view for new cards in any category.
 /// Drives `MapLearningSession` (3-consecutive-correct graduation mechanic).
 struct MapLearningQuizView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(LanguageManager.self) private var languageManager
+
+    /// The Map Tab Quiz "learn new cards" flow, so it persists into the `mapQuiz` store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .mapQuiz)
+    }
+
     @Environment(\.dismiss) private var dismiss
     @Environment(\.scenePhase) private var scenePhase
 
@@ -229,9 +235,12 @@ struct MapLearningQuizView: View {
             return
         }
         let features = MapFeatureCatalog.features(for: category ?? .country)
-        // The active set is per-language; scope it to the currently active language.
+        // The active set is per-language AND per-mode; scope it to the active language and this view's
+        // mode (Map Tab Quiz).
         let language = LanguageManager.shared.current.rawValue
-        let store: ActiveSetStore? = category != nil ? UserDefaultsActiveSetStore(language: language) : nil
+        let store: ActiveSetStore? = category != nil
+            ? UserDefaultsActiveSetStore(language: language, mode: .mapQuiz)
+            : nil
         session = MapLearningSession(
             newCards: newCards,
             allFeatures: features,

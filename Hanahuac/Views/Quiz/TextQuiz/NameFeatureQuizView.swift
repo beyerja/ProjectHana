@@ -16,12 +16,17 @@ struct NameFeatureQuizView: View {
         case new(newCards: [ReviewCard], category: CardCategory)
     }
 
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(ProgressStatsStore.self) private var progressStatsStore: ProgressStatsStore?
     @Environment(LanguageManager.self) private var languageManager
     @Environment(\.dismiss) private var dismiss
 
     let source: Source
+
+    /// The map-pin "Name that place" mode, so it reads/writes the `nameFeature` store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .nameFeature)
+    }
 
     @State private var pending: TextQuizSession?
     @State private var learning: LearningSession?
@@ -90,7 +95,9 @@ struct NameFeatureQuizView: View {
         session.advance()
         cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .nameFeature,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
         inputText = ""
@@ -154,7 +161,9 @@ struct NameFeatureQuizView: View {
         }
         cardStore.persistCardChanges()
         progressStatsStore?.recordSnapshot(
-            cards: cardStore.allCards,
+            allCards: cardStoreProvider.allCards,
+            modeCards: cardStore.allCards,
+            mode: .nameFeature,
             streak: StreakTracker.currentStreak(language: cardStore.language)
         )
         localAnswerState = .unanswered
@@ -348,8 +357,9 @@ struct NameFeatureQuizView: View {
             pending = questions.isEmpty ? nil : TextQuizSession(questions: questions)
         case let .new(newCards, category):
             features = MapFeatureCatalog.features(for: category)
-            // The active set is per-language; scope it to the active card store's language.
-            let store: ActiveSetStore? = UserDefaultsActiveSetStore(language: cardStore.language)
+            // The active set is per-language AND per-mode; scope it to the active language and this
+            // view's mode (Name That Place).
+            let store: ActiveSetStore? = UserDefaultsActiveSetStore(language: cardStore.language, mode: .nameFeature)
             learning = LearningSession(newCards: newCards, category: category, store: store)
         }
     }

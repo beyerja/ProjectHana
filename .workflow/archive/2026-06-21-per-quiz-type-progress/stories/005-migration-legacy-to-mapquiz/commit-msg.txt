@@ -1,0 +1,25 @@
+feat(progress): one-time migration of legacy progress onto Map Tab Quiz
+
+All pre-existing progress was effectively the Map Tab Quiz, so attribute it
+to the `mapQuiz` mode on upgrade. The other three modes start empty/fresh.
+
+- Split `ProgressMigrator.migrateIfNeeded` into the existing per-language
+  step plus a new per-quiz-mode step with its own version flag
+  (`progress.perQuizModeMigration.v1.done`); the per-mode step runs after
+  the per-language stamp (legacy rows already carry the active language)
+  and is independently idempotent.
+- Stamp every empty-`quizMode` `ReviewCard` with `mapQuiz`. Leave
+  `DailyProgressSnapshot` rows at `quizMode == ""` — they are the
+  mode-aggregated rollup the default Progress chart reads; stamping them
+  mapQuiz would empty the default history.
+- Copy the legacy per-language active set into the `mapQuiz` per-mode key
+  (only when absent); remove the legacy per-language key. Other modes'
+  active sets stay empty.
+- Runs before `CardStoreProvider.seedAllModes()` (already ordered in
+  AppRootView) so the mapQuiz store inherits the migrated cards.
+- Tests: legacy cards → mapQuiz, snapshots stay aggregate, active set →
+  mapQuiz key, idempotent re-run (non-empty modes untouched), fresh
+  install no-op. Updated the per-language active-set migration test for the
+  new end-state (legacy set lands in the mapQuiz key).
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>

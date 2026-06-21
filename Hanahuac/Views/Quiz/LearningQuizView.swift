@@ -1,8 +1,13 @@
 import SwiftUI
 
 struct LearningQuizView: View {
-    @Environment(CardStore.self) private var cardStore
+    @Environment(CardStoreProvider.self) private var cardStoreProvider
     @Environment(\.dismiss) private var dismiss
+
+    /// The Multiple Choice "learn new cards" flow, so it persists into the `multipleChoice` store.
+    private var cardStore: CardStore {
+        cardStoreProvider.store(for: .multipleChoice)
+    }
 
     @State private var session: LearningSession
     @State private var currentQuestion: MCQQuestion?
@@ -12,9 +17,12 @@ struct LearningQuizView: View {
     private let geo = GeographyDataLoader.shared
 
     init(newCards: [ReviewCard], category: CardCategory? = nil) {
-        // The active set is per-language; scope it to the currently active language.
+        // The active set is per-language AND per-mode; scope it to the active language and this view's
+        // mode (Multiple Choice).
         let language = LanguageManager.shared.current.rawValue
-        let store: ActiveSetStore? = category != nil ? UserDefaultsActiveSetStore(language: language) : nil
+        let store: ActiveSetStore? = category != nil
+            ? UserDefaultsActiveSetStore(language: language, mode: .multipleChoice)
+            : nil
         _session = State(initialValue: LearningSession(newCards: newCards, category: category, store: store))
     }
 

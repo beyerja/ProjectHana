@@ -9,6 +9,39 @@ enum HomeQuizMode: Hashable {
     /// "Name the Country" mode).
     case nameFeature
 
+    /// All quiz modes, in display order. (`HomeQuizMode` carries no associated values, so this is the
+    /// stable full set the per-mode breakdown iterates over; the store layer iterates `QuizModeID`.)
+    static let allModes: [HomeQuizMode] = [.mapQuiz, .multipleChoice, .typeCapital, .nameFeature]
+
+    /// The stable persisted token (`QuizModeID`) this UI mode maps to. Progress is keyed by this raw
+    /// value, so the model/store/migrator layers (which have no SwiftUI dependency) share one constant
+    /// set with the views via this bridge.
+    var quizModeID: QuizModeID {
+        switch self {
+        case .mapQuiz: .mapQuiz
+        case .multipleChoice: .multipleChoice
+        case .typeCapital: .typeCapital
+        case .nameFeature: .nameFeature
+        }
+    }
+
+    /// The persisted `quizMode` raw value for this UI mode — convenience for stores/sessions that
+    /// stamp or scope by mode.
+    var quizModeRawValue: String {
+        quizModeID.rawValue
+    }
+
+    /// Reconstructs the UI mode from a persisted `QuizModeID` (e.g. when presenting a per-mode
+    /// breakdown row from stored data).
+    init(quizModeID: QuizModeID) {
+        switch quizModeID {
+        case .mapQuiz: self = .mapQuiz
+        case .multipleChoice: self = .multipleChoice
+        case .typeCapital: self = .typeCapital
+        case .nameFeature: self = .nameFeature
+        }
+    }
+
     /// Every mode now participates in both the *new* and *pending* piles.
     var supportsNew: Bool {
         switch self {
