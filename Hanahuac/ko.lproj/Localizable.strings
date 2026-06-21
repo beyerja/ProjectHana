@@ -172,3 +172,24 @@
 /* Map learning quiz */
 "learn_map.title" = "지도 학습";
 "learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "문제";
+"a11y.progress" = "%d번째 문제, 총 %d개";
+"a11y.score" = "정답 %d개";
+"a11y.graduated" = "%d / %d 수료";
+"a11y.active" = "진행 중 %d개";
+"a11y.answer_field.label" = "답";
+"a11y.answer_field.hint" = "답을 입력한 다음 확인을 누르세요.";
+"a11y.check.hint" = "답을 확인합니다.";
+"a11y.next.hint" = "다음 문제로 넘어갑니다.";
+"a11y.option.hint" = "이 답을 선택하려면 두 번 누르세요.";
+"a11y.state.selected" = "선택됨";
+"a11y.state.correct" = "정답";
+"a11y.state.incorrect" = "오답";
+"a11y.state.not_answered" = "응답 안 함";
+"a11y.feedback.correct" = "정답";
+"a11y.feedback.incorrect" = "오답";
+"a11y.summary.accuracy" = "정확도 %d 퍼센트";
+"a11y.summary.result_icon" = "세션 결과";
+"a11y.done.hint" = "이 퀴즈를 닫습니다.";

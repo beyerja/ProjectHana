@@ -72,6 +72,11 @@ struct MultipleChoiceQuizView: View {
             Text(String(format: L10n["mcq_quiz.correct_count"], session.correctCount))
                 .font(.subheadline).foregroundStyle(Theme.Palette.correct)
         }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(
+            String(format: L10n["a11y.progress"], session.reviewedCount + 1, session.questions.count)
+        )
+        .accessibilityValue(String(format: L10n["a11y.score"], session.correctCount))
     }
 
     private func promptCard(session: MultipleChoiceSession) -> some View {
@@ -81,6 +86,8 @@ struct MultipleChoiceQuizView: View {
             .padding(24)
             .frame(maxWidth: .infinity)
             .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
+            .accessibilityLabel(L10n["a11y.prompt.label"])
+            .accessibilityValue(session.current?.prompt ?? "")
     }
 
     private func optionButtons(session: MultipleChoiceSession) -> some View {
@@ -102,7 +109,45 @@ struct MultipleChoiceQuizView: View {
                         .foregroundStyle(buttonForeground(for: option, in: session))
                 }
                 .disabled(session.answerState != .unanswered || isAdvancing)
+                .accessibilityLabel(option.label)
+                .accessibilityValue(optionStateValue(for: option, in: session))
+                .accessibilityAddTraits(isSelected(option, in: session) ? .isSelected : [])
+                .accessibilityHint(
+                    session.answerState == .unanswered ? L10n["a11y.option.hint"] : ""
+                )
             }
+        }
+    }
+
+    /// Whether VoiceOver should mark this option as selected — the option the user chose, regardless
+    /// of correctness. Mirrors `session.answerState` so state is conveyed via trait, not color alone.
+    private func isSelected(_ option: MCQOption, in session: MultipleChoiceSession) -> Bool {
+        switch session.answerState {
+        case .unanswered:
+            false
+        case let .correct(id):
+            option.id == id
+        case let .incorrect(chosenID, _):
+            option.id == chosenID
+        }
+    }
+
+    /// The spoken state for an option after an answer is locked in: correct / incorrect / not
+    /// answered. Derived from `session.answerState` (the same source as `buttonColor`).
+    private func optionStateValue(for option: MCQOption, in session: MultipleChoiceSession) -> String {
+        switch session.answerState {
+        case .unanswered:
+            return ""
+        case let .correct(id):
+            return option.id == id ? L10n["a11y.state.correct"] : ""
+        case let .incorrect(chosenID, correctID):
+            if option.id == chosenID {
+                return L10n["a11y.state.incorrect"]
+            }
+            if option.id == correctID {
+                return L10n["a11y.state.correct"]
+            }
+            return ""
         }
     }
 

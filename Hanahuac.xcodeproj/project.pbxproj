@@ -26,6 +26,7 @@
 		2A8E707ECE564E2350919D5E /* de-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 24E53794689E4224827FAB8E /* de-geo.json */; settings = {ASSET_TAGS = ("lang-de", ); }; };
 		2AE1D2E426F022C999D475F9 /* HanahuacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */; };
 		2C070983399A1915D3A6BCEB /* L10nBundleResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CCAA2F2AF702B15300352 /* L10nBundleResolutionTests.swift */; };
+		2E0B4A4421E593E427994A7B /* QuizAccessibilityStringsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD9CF8B696F621CED8AA455 /* QuizAccessibilityStringsTests.swift */; };
 		309035D2F69D964EACAD368A /* fr-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 15181AFEEE68CF6893526623 /* fr-geo.json */; settings = {ASSET_TAGS = ("lang-fr", ); }; };
 		31E53F4FFE9E7836BF041B92 /* MountainRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DCF2D94E310309B851816E /* MountainRange.swift */; };
 		32B0E3EAA85EEB6CF349C877 /* PerModeActiveSetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FE505ACBF181DC9B41177E8 /* PerModeActiveSetTests.swift */; };
@@ -289,6 +290,7 @@
 		EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sea.swift; sourceTree = "<group>"; };
 		EAFCAD670B510A8E79864C5F /* SM2Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Scheduler.swift; sourceTree = "<group>"; };
 		EBAB8A20E0ACEDE001222E47 /* QuizModeID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModeID.swift; sourceTree = "<group>"; };
+		EBD9CF8B696F621CED8AA455 /* QuizAccessibilityStringsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizAccessibilityStringsTests.swift; sourceTree = "<group>"; };
 		EC57AFB83614F6804D3671A1 /* LanguageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageManager.swift; sourceTree = "<group>"; };
 		EEF2AEB96E37A3798632C4A8 /* QuizPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizPlaceholderView.swift; sourceTree = "<group>"; };
 		EF0CCAA2F2AF702B15300352 /* L10nBundleResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nBundleResolutionTests.swift; sourceTree = "<group>"; };
@@ -354,6 +356,7 @@
 				9CFA705339BAA792E8E11E85 /* ProgressRecordingTests.swift */,
 				538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */,
 				BD75F682720C991065C69C3A /* ProviderRoutedResolutionTests.swift */,
+				EBD9CF8B696F621CED8AA455 /* QuizAccessibilityStringsTests.swift */,
 				7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */,
 				5C449FCC798C1C634D548006 /* QuizModeDimensionTests.swift */,
 				BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */,
@@ -836,6 +839,7 @@
 				69F5820A4B8C2E591AD48173 /* ProgressRecordingTests.swift in Sources */,
 				0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */,
 				7A34F85C53C896F2C81A9BDC /* ProviderRoutedResolutionTests.swift in Sources */,
+				2E0B4A4421E593E427994A7B /* QuizAccessibilityStringsTests.swift in Sources */,
 				FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */,
 				F6BD6C2593294C58CA94A3C2 /* QuizModeDimensionTests.swift in Sources */,
 				0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */,

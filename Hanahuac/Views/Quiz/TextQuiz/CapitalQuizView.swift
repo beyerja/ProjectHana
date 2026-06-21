@@ -26,6 +26,9 @@ struct CapitalQuizView: View {
     @State private var lastWasCorrect = false
     @FocusState private var fieldFocused: Bool
 
+    /// Completion-icon point size that scales with Dynamic Type (relative to largeTitle).
+    @ScaledMetric(relativeTo: .largeTitle) private var completionIconSize: CGFloat = 64
+
     private var countries: [Country] {
         GeographyDataLoader.shared.countries
     }
@@ -172,12 +175,17 @@ struct CapitalQuizView: View {
                     Text(String(format: L10n["capital_quiz.correct_count"], correctCount))
                         .font(.subheadline).foregroundStyle(Theme.Palette.correct)
                 }
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(progressText)
+                .accessibilityValue(String(format: L10n["a11y.score"], correctCount))
                 Text(prompt)
                     .font(.title3.bold())
                     .multilineTextAlignment(.center)
                     .padding(24)
                     .frame(maxWidth: .infinity)
                     .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
+                    .accessibilityLabel(L10n["a11y.prompt.label"])
+                    .accessibilityValue(prompt)
                 answerSection(
                     answerState: answerState,
                     correctAnswerOverride: correctAnswerOverride,
@@ -207,6 +215,8 @@ struct CapitalQuizView: View {
                     .submitLabel(.done)
                     .autocorrectionDisabled()
                     .neverAutocapitalize()
+                    .accessibilityLabel(L10n["a11y.answer_field.label"])
+                    .accessibilityHint(L10n["a11y.answer_field.hint"])
                 Button(L10n["capital_quiz.check"]) { onCheck(inputText) }
                     .font(.headline)
                     .frame(maxWidth: .infinity)
@@ -217,19 +227,32 @@ struct CapitalQuizView: View {
                     )
                     .foregroundStyle(.white)
                     .disabled(inputText.isEmpty)
+                    .accessibilityHint(L10n["a11y.check.hint"])
             }
             .onAppear { fieldFocused = true }
         case .correct:
-            feedback(text: L10n["capital_quiz.feedback.correct"], color: Theme.Palette.correct, onNext: onNext)
+            feedback(
+                text: L10n["capital_quiz.feedback.correct"],
+                color: Theme.Palette.correct,
+                stateLabel: L10n["a11y.feedback.correct"],
+                onNext: onNext
+            )
         case let .incorrect(correctAnswer):
             feedback(
                 text: "\(L10n["capital_quiz.feedback.wrong_prefix"]) \(correctAnswerOverride ?? correctAnswer)",
-                color: Theme.Palette.wrong, onNext: onNext
+                color: Theme.Palette.wrong,
+                stateLabel: L10n["a11y.feedback.incorrect"],
+                onNext: onNext
             )
         }
     }
 
-    private func feedback(text: String, color: Color, onNext: @escaping () -> Void) -> some View {
+    private func feedback(
+        text: String,
+        color: Color,
+        stateLabel: String,
+        onNext: @escaping () -> Void
+    ) -> some View {
         VStack(spacing: 16) {
             Text(text)
                 .font(.headline)
@@ -238,12 +261,16 @@ struct CapitalQuizView: View {
                 .padding()
                 .frame(maxWidth: .infinity)
                 .background(color.opacity(0.1), in: RoundedRectangle(cornerRadius: 14))
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("\(stateLabel). \(text)")
+                .accessibilityAddTraits(.isStaticText)
             Button(L10n["capital_quiz.next"]) { onNext() }
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
                 .background(Theme.Palette.accent, in: RoundedRectangle(cornerRadius: 14))
                 .foregroundStyle(.white)
+                .accessibilityHint(L10n["a11y.next.hint"])
         }
     }
 
@@ -282,8 +309,9 @@ struct CapitalQuizView: View {
             Spacer()
             VStack(spacing: 8) {
                 Image(systemName: "graduationcap.fill")
-                    .font(.system(size: 64))
+                    .font(.system(size: completionIconSize))
                     .foregroundStyle(Theme.Palette.accent)
+                    .accessibilityHidden(true)
                 Text(L10n["learn.complete_title"]).font(.title.bold())
                 Text(L10n["learn.complete_desc"])
                     .font(.subheadline).foregroundStyle(.secondary)
@@ -297,11 +325,13 @@ struct CapitalQuizView: View {
             .padding()
             .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
             .padding(.horizontal)
+            .accessibilityElement(children: .combine)
             Spacer()
             Button(L10n["learn.done"]) { dismiss() }
                 .font(.headline).frame(maxWidth: .infinity).padding()
                 .background(Theme.Palette.accent, in: RoundedRectangle(cornerRadius: 14))
                 .foregroundStyle(.white).padding(.horizontal).padding(.bottom)
+                .accessibilityHint(L10n["a11y.done.hint"])
         }
         .navigationTitle(L10n["learn.results"])
         .inlineNavigationTitle()
