@@ -5,10 +5,11 @@ This repository makes independent review **obligatory**: an approving review fro
 
 ## The gate is a repository RULESET, not classic branch protection
 
-Enforcement comes from a pre-existing **repository ruleset** (`main`, id `17373423`,
+The *review* requirement comes from a pre-existing **repository ruleset** (`main`, id `17373423`,
 `enforcement: active`) whose `pull_request` rule sets `require_code_owner_review: true`. This is
-**separate** from classic branch protection — `gh api repos/beyerja/ProjectHana/branches/main/protection`
-shows no required reviews. The gate is two pieces working together:
+**separate** from classic branch protection, which sets **no** required reviews
+(`required_pull_request_reviews: null`) but does still require CI checks — see "Two complementary
+gates" below. The review gate is two pieces working together:
 
 1. **The ruleset** (already active; managed in the GitHub UI under Settings → Rules → Rulesets) —
    the part that actually *enforces* a code-owner approval.
@@ -41,13 +42,26 @@ A bot `APPROVE` flips a code-owner-gated PR from `mergeStateStatus: BLOCKED` to 
 the classic reviewers list — `mergeStateStatus: CLEAN` is the authoritative signal that the gate is
 satisfied.)
 
-## CI checks are NOT part of this gate
+## Two complementary gates: review (ruleset) + CI (classic protection)
 
-The ruleset enforces code-owner review only; it does **not** make CI status checks a required merge
-gate. The feature workflow's own `wait-for-ci` step already blocks merges on red CI, so the
-autonomous path stays safe. If you also want CI to be a hard gate for **manual / UI** merges, add a
-`required_status_checks` rule (contexts `gitleaks`, `Build & Test`) to ruleset `17373423` in the
-GitHub UI.
+Two separate, already-active mechanisms gate `main`, each owning a different requirement:
+
+- **Code-owner review** → the **ruleset** `17373423` (this doc's subject).
+- **CI status checks** → **classic branch protection** on `main` (separate from the ruleset)
+  requires `gitleaks` and `Build & Test`, with `strict: true` (branch must be up to date). It sets
+  **no** required reviews (`required_pull_request_reviews: null`) — the review requirement comes
+  entirely from the ruleset. See [`SECURITY.md`](../SECURITY.md) for how that CI protection is set up.
+
+So a merge to `main` needs **both** a `@Hanahuac-Bot` approval (ruleset) **and** green required checks
+(classic protection). The removed `branch-protection-main.json` was redundant: it duplicated the
+code-owner-review requirement the ruleset already enforces (while merely re-stating the CI checks
+classic protection already requires), so dropping it changes nothing that is actually enforced.
+
+Inspect the CI side with:
+
+```sh
+gh api repos/beyerja/ProjectHana/branches/main/protection
+```
 
 ## Inspect or manage the gate
 

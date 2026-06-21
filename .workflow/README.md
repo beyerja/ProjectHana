@@ -87,8 +87,9 @@ bot token is absent, thread resolution is likewise SKIPPED and the loop proceeds
 
 Independent review is enforced by a repository **ruleset** (`main`, id `17373423`) requiring a
 code-owner approval, combined with **[`CODEOWNERS`](../.github/CODEOWNERS)** designating
-`@Hanahuac-Bot`. See **[`.github/branch-protection.md`](../.github/branch-protection.md)** for the
-full picture — how the bot approves, the CI-gate caveat, and how to inspect/manage the ruleset.
+`@Hanahuac-Bot`. CI checks (`gitleaks`, `Build & Test`) are gated separately by classic branch
+protection, so a merge needs both. See **[`.github/branch-protection.md`](../.github/branch-protection.md)**
+for the full picture — how the bot approves, the two complementary gates, and how to inspect them.
 
 > **Bootstrapping guard.** There is **no activation command** — committing `CODEOWNERS` *is* what
 > activates the gate, because the ruleset's `require_code_owner_review` rule has no effect until a
