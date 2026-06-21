@@ -55,16 +55,50 @@ Independent review is **obligatory**: a code-owner approval from `@Hanahuac-Bot`
 merging to `main`. This is set up by [`.github/CODEOWNERS`](../.github/CODEOWNERS) (assigns the repo
 to the bot) plus branch protection on `main`.
 
+### Bot-authenticated formal review submission
+
+The `independent-review` agent submits a **formal GitHub review state** under the **`Hanahuac-Bot`**
+identity via `scripts/gh-review-bot.sh gh pr review`. A separate bot account is required because the
+plain `gh` user running the workflow is the **same** account that opened the PR, and GitHub **blocks
+self-approval** by the PR opener — the bot, as a distinct collaborator, is not blocked. The wrapper
+reads the bot's token from the macOS Keychain and never exposes it; agents only ever invoke the
+wrapper. See **[`docs/bot-credentials.md`](../docs/bot-credentials.md)** for the canonical setup +
+rotation steps and the token-safety guarantees.
+
+### Formal review states (additive) vs the authoritative `STATUS`
+
+The formal state is **additive** — it never replaces the agent's `STATUS:` line, which remains the
+**authoritative loop signal** the orchestrator branches on:
+
+- `APPROVE` — paired with `STATUS: APPROVED`.
+- `REQUEST_CHANGES` — paired with `STATUS: CHANGES_REQUESTED`.
+- `COMMENT` **fallback** — when the bot token is absent (the wrapper fails closed), the reviewer posts
+  a non-formal `COMMENT`-type review as the PR-opener and records that the formal state was SKIPPED.
+  The loop still functions on `STATUS` alone.
+
+### Thread resolution via `resolveReviewThread`
+
+A reply comment alone does **not** resolve a review thread on GitHub. True resolution requires the
+`resolveReviewThread` GraphQL mutation, performed by the **bot** (the review author) through the
+wrapper on a re-review round, after the implementer has acknowledged the fix on each thread. When the
+bot token is absent, thread resolution is likewise SKIPPED and the loop proceeds on `STATUS` alone.
+
+### The obligatory CODEOWNERS + branch-protection gate (with bootstrapping guard)
+
 See **[`.github/branch-protection.md`](../.github/branch-protection.md)** for the single ready-to-run
-`gh api … /branches/main/protection --input .github/branch-protection-main.json` activation command,
-when and how to flip the gate on, and the deactivation/rollback command.
+activation command and when/how to flip the gate on:
+
+```sh
+gh api -X PUT repos/beyerja/ProjectHana/branches/main/protection --input .github/branch-protection-main.json
+```
 
 > **Bootstrapping guard.** Committing `CODEOWNERS` is **safe mid-run** — it blocks nothing on its
-> own; only branch protection enforces the gate. The activation command is the **FINAL** step, to be
-> run **only after** this run's own PRs merge; enabling it mid-run would deadlock the workflow on its
-> own un-reviewed PRs.
+> own; only branch protection enforces the gate. The activation command above is the **FINAL** step,
+> to be run **only after** this run's own PRs merge; enabling it mid-run would deadlock the workflow
+> on its own un-reviewed PRs. `.github/branch-protection.md` also documents verification and the
+> deactivation/rollback command.
 
-(Story 004 owns the fuller setup/rotation docs that expand this section.)
+The fuller setup/rotation docs live in **[`docs/bot-credentials.md`](../docs/bot-credentials.md)**.
 
 ## Starting the workflow
 

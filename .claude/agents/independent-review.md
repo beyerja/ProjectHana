@@ -71,12 +71,12 @@ review state as the bot:
 
 - **Clean / APPROVED** →
   ```sh
-  scripts/gh-review-bot.sh gh pr review <number> --approve
+  scripts/gh-review-bot.sh gh -R <owner/repo> pr review <number> --approve
   ```
 - **Blocking findings / CHANGES_REQUESTED** → write the review summary body to a file with the **Write**
   tool first, then:
   ```sh
-  scripts/gh-review-bot.sh gh pr review <number> --request-changes --body-file <body-file>
+  scripts/gh-review-bot.sh gh -R <owner/repo> pr review <number> --request-changes --body-file <body-file>
   ```
 
 Always pass the body via `--body-file` — never `--body "$(…)"`, never a heredoc (command substitution and
@@ -90,16 +90,28 @@ A reply comment alone does **NOT** resolve a review thread on GitHub — true re
 `resolveReviewThread` GraphQL mutation, which the **bot** (the review author) invokes through the wrapper.
 This is performed when the implement agent has addressed comments and the reviewer is re-spawned on the
 updated PR (see *Feedback-loop contract*): on a re-review, enumerate the still-unresolved threads the bot
-authored, confirm each is addressed, and resolve it.
+authored, confirm each is **addressed** (concrete signal below), and resolve it.
 
-1. **Enumerate unresolved thread node ids.** Thread ids are GraphQL **node ids** (e.g. `PRRT_kwDO…`),
-   NOT REST `databaseId`s. Query through the wrapper (paginate if `pageInfo.hasNextPage` is true):
+1. **Enumerate unresolved, bot-authored thread node ids.** Thread ids are GraphQL **node ids** (e.g.
+   `PRRT_kwDO…`), NOT REST `databaseId`s. Pull each thread's first comment author and body so you can
+   both filter and check the "addressed" signal. Query through the wrapper (paginate if
+   `pageInfo.hasNextPage` is true):
    ```sh
    scripts/gh-review-bot.sh gh api graphql \
-     -f query='query($owner:String!,$repo:String!,$number:Int!){ repository(owner:$owner,name:$repo){ pullRequest(number:$number){ reviewThreads(first:100){ pageInfo{ hasNextPage endCursor } nodes{ id isResolved } } } } }' \
+     -f query='query($owner:String!,$repo:String!,$number:Int!){ repository(owner:$owner,name:$repo){ pullRequest(number:$number){ reviewThreads(first:100){ pageInfo{ hasNextPage endCursor } nodes{ id isResolved comments(first:50){ nodes{ author{ login } body } } } } } } }' \
      -F owner=<owner> -F repo=<repo> -F number=<number>
    ```
-   Keep the nodes where `isResolved` is `false`.
+   **Filter to bot-authored threads:** keep only nodes where `isResolved` is `false` **and** the
+   thread's **first** comment's `author.login` is `Hanahuac-Bot` (the review author the bot owns). Do
+   NOT touch threads opened by anyone else — resolving a non-bot thread would be out of scope.
+
+   **Concrete "addressed" signal (required precondition for resolving):** keep a bot-authored thread
+   for resolution only when it carries an **acknowledging reply from the implementer** — a later
+   comment in the same thread, authored by the PR-opener (the plain `gh` user, NOT `Hanahuac-Bot`),
+   posted on the current re-review round. That implementer reply is the checkable marker that the
+   finding was handled (the implement agent replies to each thread acknowledging its fix before the
+   re-spawn). If a bot-authored thread has no such implementer reply, leave it **unresolved** — do not
+   resolve a thread on guesswork.
 2. **Resolve each addressed thread** with the mutation, one call per thread node id:
    ```sh
    scripts/gh-review-bot.sh gh api graphql \
@@ -150,8 +162,8 @@ This COMMENT fallback is the **documented DEFAULT** until the bot token is provi
      verdict `APPROVED`.
 5. **Submit the formal review + resolve addressed threads (additive — STATUS is still authoritative):**
    - Submit the matching FORMAL review state as the bot through the wrapper (see *Formal review
-     submission*): `scripts/gh-review-bot.sh gh pr review <number> --approve` on APPROVED, or
-     `… --request-changes --body-file <file>` on CHANGES_REQUESTED.
+     submission*): `scripts/gh-review-bot.sh gh -R <owner/repo> pr review <number> --approve` on
+     APPROVED, or `… --request-changes --body-file <file>` on CHANGES_REQUESTED.
    - On a **re-review round** (the implement agent addressed prior comments), resolve each addressed,
      bot-authored thread via `resolveReviewThread` through the wrapper (see *Thread resolution*).
    - If the wrapper exits **non-zero** (Keychain item absent), fall back to a `COMMENT`-type review as
