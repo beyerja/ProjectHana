@@ -83,20 +83,19 @@ A reply comment alone does **not** resolve a review thread on GitHub. True resol
 wrapper on a re-review round, after the implementer has acknowledged the fix on each thread. When the
 bot token is absent, thread resolution is likewise SKIPPED and the loop proceeds on `STATUS` alone.
 
-### The obligatory CODEOWNERS + branch-protection gate (with bootstrapping guard)
+### The obligatory CODEOWNERS + ruleset gate (with bootstrapping guard)
 
-See **[`.github/branch-protection.md`](../.github/branch-protection.md)** for the single ready-to-run
-activation command and when/how to flip the gate on:
+Independent review is enforced by a repository **ruleset** (`main`, id `17373423`) requiring a
+code-owner approval, combined with **[`CODEOWNERS`](../.github/CODEOWNERS)** designating
+`@Hanahuac-Bot`. CI checks (`gitleaks`, `Build & Test`) are gated separately by classic branch
+protection, so a merge needs both. See **[`.github/branch-protection.md`](../.github/branch-protection.md)**
+for the full picture — how the bot approves, the two complementary gates, and how to inspect them.
 
-```sh
-gh api -X PUT repos/beyerja/ProjectHana/branches/main/protection --input .github/branch-protection-main.json
-```
-
-> **Bootstrapping guard.** Committing `CODEOWNERS` is **safe mid-run** — it blocks nothing on its
-> own; only branch protection enforces the gate. The activation command above is the **FINAL** step,
-> to be run **only after** this run's own PRs merge; enabling it mid-run would deadlock the workflow
-> on its own un-reviewed PRs. `.github/branch-protection.md` also documents verification and the
-> deactivation/rollback command.
+> **Bootstrapping guard.** There is **no activation command** — committing `CODEOWNERS` *is* what
+> activates the gate, because the ruleset's `require_code_owner_review` rule has no effect until a
+> CODEOWNERS file exists. So provision the bot (Write collaborator + classic PAT in the Keychain)
+> **before** `CODEOWNERS` reaches `main`; otherwise the next PR to `main` deadlocks on a bot approval
+> that cannot yet be given.
 
 The fuller setup/rotation docs live in **[`docs/bot-credentials.md`](../docs/bot-credentials.md)**.
 
