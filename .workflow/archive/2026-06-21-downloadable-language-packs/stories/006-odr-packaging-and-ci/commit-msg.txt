@@ -1,0 +1,38 @@
+feat(odr): package non-base language packs as ODR + async validation CI
+
+Story 006: ship the fr/de/ko/nah UI strings and geo-name data as version-tagged
+On-Demand Resources, excluding them from the always-bundled binary, and add the
+build config, generators, and an async (non-per-PR) validation workflow.
+
+Packaging (project.yml, regenerated xcodeproj):
+- en/es-MX .lproj stay always-bundled and untagged (offline base-only path).
+- fr/de/ko/nah .lproj + their <code>-geo.json each carry the lang-<code> ODR tag
+  the provider requests (LanguageDescriptor.odrTags); project knownAssetTags lists
+  exactly lang-fr/de/ko/nah. Builds emit per-language .assetpack outputs.
+
+Geo packs (data-only):
+- scripts/generate-geo-packs.py (just geo-packs / geo-packs-check) emits
+  {fr,de,ko,nah}-geo.json in the GeoNamePackData schema from the bundled geo source.
+
+Validation:
+- scripts/verify-odr-packs.sh (just verify-odr-packs): tag contract, data-only
+  guarantee, geo-pack schema + freshness, and no custom network/crypto/signature
+  trust code (integrity inherited from App Store ODR code-signing).
+- scripts/verify-base-only-bundle.sh (just verify-base-only): zero-packs base-only
+  bundle check.
+- .github/workflows/odr-validation.yml: async on push:[main] + weekly cron +
+  workflow_dispatch with a concurrency group, mirroring codeql.yml/secret-scan.yml.
+  NOT added to the blocking ci.yml/lint.yml. Builds, runs the data-only check, and
+  validates the zero-packs offline base-only launch path. No OTA pack updates: packs
+  are built per app version and refresh on app update.
+
+Docs: docs/odr-packaging.md (cross-linked from README) covers the tag scheme,
+project.yml wiring, geo-pack generation, release-tied versioning, data-only
+guarantee, async CI, and how to add a language.
+
+Tests: moving the .lproj to ODR removes them from Bundle.main; the simulator
+unit-test host cannot mount ODR. Added HanahuacTests/ODRTestSupport.swift and
+updated the affected content tests to validate shipped pack content directly from
+the on-disk asset pack (skip-if-unreachable) plus the no-download offline fallback.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>

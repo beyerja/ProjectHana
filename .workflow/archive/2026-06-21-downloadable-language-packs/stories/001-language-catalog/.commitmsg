@@ -1,0 +1,21 @@
+refactor(l10n): data-driven language catalog backing AppLocale
+
+Replace the per-language switch statements in AppLocale with a single
+data-driven LanguageCatalog of LanguageDescriptor entries that own each
+language's code, native display name, ordered fallback chain, and a
+bundled-vs-downloadable availability flag.
+
+- Add LanguageDescriptor (pure value type) and LanguageCatalog (single
+  source of truth, ordered to match AppLocale.allCases) in Hanahuac/L10n/.
+- Back AppLocale.displayName, fallbackChain, fallsBackThroughSpanish, and
+  the new isBundledBaseLanguage accessor with catalog lookups.
+- Resolve AppLocale.matching simple per-code cases (en, fr, de, ko) via the
+  catalog; keep the es-* and Nahuatl ISO-639-3 special cases.
+- Derive L10n.bundleCandidates from the descriptor fallback chain, keeping
+  output byte-identical (incl. the historical ["en","en"] for the base).
+- Add LanguageCatalogTests; existing AppLocaleTests and LanguageManagerTests
+  pass unchanged.
+
+Pure internal re-architecture, no user-visible behavior change.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
