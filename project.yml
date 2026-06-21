@@ -82,6 +82,16 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.hanahuac.app
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Hanahuac
+        # App Store compliance & metadata (Info.plist generated via GENERATE_INFOPLIST_FILE).
+        # No data encryption beyond Apple-exempt HTTPS, so declare export-compliance exemption to
+        # skip the per-submission prompt.
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.education
+        # Generated UILaunchScreen so the app renders full-screen on all devices (no letterboxing).
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        # Explicit app version/build for App Store submission.
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
         SUPPORTS_MACCATALYST: YES
         MACOSX_DEPLOYMENT_TARGET: "14.0"
         SWIFT_VERSION: "5.10"
