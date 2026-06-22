@@ -73,3 +73,14 @@
 
 /* Map learning quiz */
 "learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows
+ * Partial by design: simple labels/state words are translated; parameterized and longer hint
+ * phrasing intentionally falls back to Mexican Spanish via L10n.string(_:locale:).
+ */
+"a11y.prompt.label" = "Tlahtlaniliztli";
+"a11y.answer_field.label" = "Tēnānquiliztli";
+"a11y.state.correct" = "cualli tēnānquiliztli";
+"a11y.state.incorrect" = "ahmo cualli tēnānquiliztli";
+"a11y.feedback.correct" = "Cualli";
+"a11y.feedback.incorrect" = "Ahmo cualli";

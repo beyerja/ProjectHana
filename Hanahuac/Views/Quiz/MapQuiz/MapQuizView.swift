@@ -67,6 +67,7 @@ struct MapQuizView: View {
                             MapFeaturePinView(state: state, name: feature.localizedName(for: languageManager.current))
                         }
                         .disabled(answerState != .unanswered || isAdvancing || isPinching)
+                        .accessibilityHint(answerState == .unanswered ? L10n["a11y.map.pin.hint"] : "")
                     }
                 }
                 featureOverlays(for: session.annotationFeatures, answerState: answerState)
@@ -125,12 +126,15 @@ struct MapQuizView: View {
     // MARK: – Prompt
 
     private func promptBanner(session: MapQuizSession) -> some View {
-        VStack(spacing: 4) {
+        let featureName = session.currentFeature?.localizedName(for: languageManager.current) ?? ""
+        return VStack(spacing: 4) {
             Text(L10n["map_quiz.tap_on_map"])
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Text(session.currentFeature?.localizedName(for: languageManager.current) ?? "")
+                .multilineTextAlignment(.center)
+            Text(featureName)
                 .font(.title2.bold())
+                .multilineTextAlignment(.center)
             Text("\(session.reviewedCount + 1) / \(session.cards.count)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
@@ -140,6 +144,11 @@ struct MapQuizView: View {
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
         .padding(.top, 8)
         .padding(.horizontal)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(L10n["a11y.map.prompt.label"]): \(featureName)")
+        .accessibilityValue(
+            String(format: L10n["a11y.map.progress"], session.reviewedCount + 1, session.cards.count)
+        )
     }
 
     // MARK: – Feedback
@@ -161,11 +170,30 @@ struct MapQuizView: View {
         Text(text)
             .font(.headline)
             .foregroundStyle(.white)
+            .multilineTextAlignment(.center)
             .padding(.horizontal, 24)
             .padding(.vertical, 14)
             .background(color, in: RoundedRectangle(cornerRadius: 14))
             .padding(.bottom, 24)
             .padding(.horizontal)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(feedbackAccessibilityLabel(session: session))
+    }
+
+    /// Announces the result (correct / incorrect) and the correct feature name, so the outcome is
+    /// not conveyed by banner colour alone.
+    private func feedbackAccessibilityLabel(session: MapQuizSession) -> String {
+        switch session.answerState {
+        case .correct:
+            let name = session.currentFeature?.localizedName(for: languageManager.current) ?? ""
+            return "\(L10n["a11y.feedback.correct"]). \(name)"
+        case let .incorrect(_, correctID):
+            let name = session.allFeatures.first { $0.id == correctID }?
+                .localizedName(for: languageManager.current) ?? correctID
+            return "\(L10n["a11y.feedback.incorrect"]). \(name)"
+        case .unanswered:
+            return ""
+        }
     }
 
     // MARK: – Empty state
