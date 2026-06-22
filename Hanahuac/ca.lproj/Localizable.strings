@@ -1,0 +1,171 @@
+/* Catalan (Català) */
+
+/* HomeView */
+"home.tagline" = "Un món, una prova cada vegada";
+"home.categories" = "Categories";
+"home.category.countries" = "Països";
+"home.category.rivers" = "Rius";
+"home.category.mountains" = "Muntanyes";
+"home.category.seas" = "Mars";
+"home.view_progress" = "Veure el progrés";
+"home.tile.new" = "Nou";
+"home.tile.pending" = "Pendent";
+"home.tile.all_done" = "Tot al dia";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Prova al mapa";
+"quiz.mode.map_tap.desc" = "Toca el país correcte al mapa";
+"quiz.mode.type_capital.title" = "Escriu la capital";
+"quiz.mode.type_capital.desc" = "«Quina és la capital de X?»";
+"quiz.mode.name_feature.title" = "Anomena el lloc";
+"quiz.mode.name_feature.desc" = "Escriu el nom del lloc marcat al mapa";
+"quiz.mode.multiple_choice.title" = "Opció múltiple";
+"quiz.mode.multiple_choice.desc" = "Tria la capital entre 4 opcions";
+"quiz.cards_due.singular" = "targeta pendent";
+"quiz.cards_due.plural" = "targetes pendents";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Configuració";
+"settings.section.general" = "General";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "Idioma";
+"settings.language.picker_title" = "Idioma de l'aplicació";
+"settings.language.downloading" = "S'està baixant…";
+"settings.language.download_failed" = "Ha fallat la baixada";
+"settings.language.retry" = "Torna-ho a provar";
+"settings.language.available" = "Disponible";
+
+/* iCloud sync */
+/* NOTE: "settings.sync.toggle" is deliberately omitted from Catalan to exercise the
+   fallback chain ca → es-ES → en (see L10nBundleResolutionTests). It resolves to the
+   es-ES value ("Sincronización con iCloud") before reaching English. */
+"settings.sync.status_label" = "Estat";
+"settings.sync.status.off" = "Desactivada";
+"settings.sync.status.unavailable" = "No disponible";
+"settings.sync.status.on" = "Activada";
+"settings.sync.status.syncing" = "S'està sincronitzant…";
+"settings.sync.status.idle" = "Actualitzat";
+"settings.sync.status.error" = "Error";
+"settings.sync.unavailable_note" = "La sincronització amb l'iCloud no està disponible. Inicia la sessió a l'iCloud i fes servir una versió amb la sincronització activada.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "El progrés arribarà aviat";
+"progress.placeholder_desc" = "Les teves estadístiques d'aprenentatge apareixeran aquí.";
+"progress.title" = "Progrés";
+
+/* StatsView */
+"stats.title" = "Progrés";
+"stats.cards_reviewed" = "Targetes repassades";
+"stats.due_today" = "Vencen avui";
+"stats.day_streak" = "Ratxa de dies";
+"stats.by_category" = "Per categoria";
+"stats.showing_language" = "Es mostra:";
+"stats.by_language" = "Per idioma";
+"stats.category_header" = "Categoria";
+"stats.mastery_tiers" = "Nivells de domini";
+"stats.tier.not_started" = "Sense començar";
+"stats.tier.reps_1_2" = "Reps. 1–2";
+"stats.tier.reps_3_4" = "Reps. 3–4";
+"stats.tier.mastered" = "Reps. ≥ 5, EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Tendències al llarg del temps";
+"stats.charts.range.7d" = "7 dies";
+"stats.charts.range.30d" = "30 dies";
+"stats.charts.range.all" = "Tot";
+"stats.charts.category.all" = "Totes";
+"stats.charts.mastery_growth" = "Creixement del domini";
+"stats.charts.reviews_completed" = "Repassos completats";
+"stats.charts.cards_graduated" = "Targetes graduades";
+"stats.charts.streak_history" = "Ratxa";
+"stats.charts.series.review" = "Repàs";
+"stats.charts.series.mastered" = "Dominades";
+"stats.charts.empty" = "Continua aprenent per veure aquí les teves tendències de progrés.";
+
+/* LearningQuizView */
+"learn.title" = "Aprèn";
+"learn.results" = "Resultats";
+"learn.exit" = "Surt";
+"learn.done" = "Fet";
+"learn.no_cards_title" = "No hi ha targetes per aprendre";
+"learn.no_cards_desc" = "Totes les targetes ja són al teu pla de repàs.";
+"learn.graduated_count" = "%d / %d graduades";
+"learn.active_count" = "%d actives";
+"learn.complete_title" = "Aprenentatge completat!";
+"learn.complete_desc" = "Totes les targetes s'han afegit al teu pla de repàs.";
+"learn.cards_graduated" = "Targetes graduades";
+
+/* MapQuizView */
+"map_quiz.title" = "Prova al mapa";
+"map_quiz.exit" = "Surt";
+"map_quiz.tap_on_map" = "Toca el mapa";
+"map_quiz.nothing_due_title" = "Res pendent";
+"map_quiz.nothing_due_desc" = "No hi ha targetes pendents ara mateix. Torna més tard!";
+"map_quiz.feedback.correct" = "Correcte!";
+"map_quiz.feedback.incorrect_prefix" = "Incorrecte: era";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Resultats";
+"quiz_summary.session_complete" = "Sessió completada!";
+"quiz_summary.cards_reviewed" = "Targetes repassades";
+"quiz_summary.correct" = "Correctes";
+"quiz_summary.next_review" = "Pròxim repàs";
+"quiz_summary.done" = "Fet";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Res pendent";
+"mcq_quiz.nothing_due_desc" = "No hi ha targetes pendents ara mateix.";
+"mcq_quiz.exit" = "Surt";
+"mcq_quiz.correct_count" = "%d correctes";
+"mcq_quiz.nav.country" = "Prova de països";
+"mcq_quiz.nav.river" = "Prova de rius";
+"mcq_quiz.nav.mountain" = "Prova de muntanyes";
+"mcq_quiz.nav.sea" = "Prova de mars";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Res pendent";
+"capital_quiz.nothing_due_desc" = "No hi ha targetes pendents ara mateix.";
+"capital_quiz.exit" = "Surt";
+"capital_quiz.check" = "Comprova";
+"capital_quiz.next" = "Següent →";
+"capital_quiz.placeholder" = "Escriu la teva resposta…";
+"capital_quiz.feedback.correct" = "Correcte! ✓";
+"capital_quiz.feedback.wrong_prefix" = "La resposta és:";
+"capital_quiz.nav.capital" = "Prova de capitals";
+"capital_quiz.nav.country" = "Prova de països";
+"capital_quiz.correct_count" = "%d correctes";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Anomena aquest lloc";
+"name_feature.nav" = "Anomena el lloc";
+"name_feature.nothing_due_title" = "Res pendent";
+"name_feature.nothing_due_desc" = "No hi ha targetes pendents ara mateix.";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "La prova arribarà aviat";
+"quiz_placeholder.desc" = "La prova de %@ estarà disponible a la pròxima actualització.";
+"quiz_placeholder.all_categories" = "Totes les categories";
+
+/* Continent labels */
+"continent.africa" = "Àfrica";
+"continent.asia" = "Àsia";
+"continent.europe" = "Europa";
+"continent.north_america" = "Amèrica del Nord";
+"continent.oceania" = "Oceania";
+"continent.south_america" = "Amèrica del Sud";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "Quina és la capital de %@?";
+"quiz.prompt.continent_of" = "En quin continent es troba %@?";
+"quiz.prompt.country_of_capital" = "Quin país té %@ com a capital?";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "Aprèn targetes noves";
+"learn.mode_picker.map.title" = "Prova al mapa";
+"learn.mode_picker.map.desc" = "Toca el país correcte al mapa";
+"learn.mode_picker.mcq.title" = "Opció múltiple";
+"learn.mode_picker.mcq.desc" = "Tria la resposta entre 4 opcions";
+
+/* Map learning quiz */
+"learn_map.title" = "Aprenentatge al mapa";
+"learn_map.streak" = "%d / 3";

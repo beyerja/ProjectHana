@@ -118,4 +118,118 @@ final class L10nBundleResolutionTests: XCTestCase {
     func testUnknownKey_returnsKey() {
         XCTAssertEqual(L10n.string("__no_such_key__", locale: .ko), "__no_such_key__")
     }
+
+    // MARK: - Catalan fallback chain (ca → es-ES → en)
+
+    /// The UI key Catalan deliberately leaves untranslated, present in es-ES. The Catalan
+    /// `.lproj` (ca.lproj/Localizable.strings) intentionally OMITS this key so resolution must route
+    /// through the es-ES pack — which translates it — before reaching English. Changing the omitted key
+    /// here means updating ca.lproj to match.
+    private static let catalanGapKey = "settings.sync.toggle"
+
+    /// A provider that serves the real shipped ca / es-ES `.lproj` bundles (read from their on-disk
+    /// asset packs) for those locales, and the bundled base bundle for everyone else. This drives
+    /// `L10n.string` through the actual ca → es-ES → en chain so the Catalan gap resolves to the es-ES
+    /// value before English. Skips (via the throwing loader in the test) when the asset packs are not
+    /// reachable in this environment.
+    private struct CatalanChainProvider: LanguagePackProvider {
+        let caBundle: Bundle
+        let esESBundle: Bundle
+
+        func stringBundle(for locale: AppLocale) -> Bundle {
+            switch locale {
+            case .ca:
+                caBundle
+            case .esES:
+                esESBundle
+            default:
+                L10n.bundle(for: locale)
+            }
+        }
+
+        func geoNameData(for _: AppLocale) -> GeoNamePackData? {
+            nil
+        }
+
+        func state(for _: AppLocale) -> LanguagePackState {
+            .available
+        }
+    }
+
+    /// Content guard: the Catalan pack omits the gap key while the es-ES pack translates it, so the
+    /// chain has a real intermediate Spanish value to resolve to (not English).
+    func testCatalanPack_omitsGapKey_whileSpainSpanishTranslatesIt() throws {
+        let ca = try ODRTestSupport.lprojBundle(for: .ca)
+        let esES = try ODRTestSupport.lprojBundle(for: .esES)
+        let sentinel = "__missing__"
+        XCTAssertEqual(
+            ca.localizedString(forKey: Self.catalanGapKey, value: sentinel, table: nil),
+            sentinel,
+            "Catalan must deliberately omit \(Self.catalanGapKey) to exercise the es-ES fallback"
+        )
+        XCTAssertNotEqual(
+            esES.localizedString(forKey: Self.catalanGapKey, value: sentinel, table: nil),
+            sentinel,
+            "es-ES must translate \(Self.catalanGapKey) so ca falls back to it before English"
+        )
+    }
+
+    /// Build a throwaway `.lproj` `Bundle` on disk containing exactly `pairs`, so the fallback-chain
+    /// assertion is fully deterministic regardless of whether the shipped ODR asset packs are mounted
+    /// in this environment (the simulator unit-test host has no asset-pack server).
+    private func makeStringsBundle(
+        code: String,
+        pairs: [String: String],
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) throws -> Bundle {
+        let root = FileManager.default.temporaryDirectory
+            .appendingPathComponent("ca-chain-\(UUID().uuidString)", isDirectory: true)
+        let lproj = root.appendingPathComponent("\(code).lproj", isDirectory: true)
+        try FileManager.default.createDirectory(at: lproj, withIntermediateDirectories: true)
+        let body = pairs
+            .sorted { $0.key < $1.key }
+            .map { "\"\($0.key)\" = \"\($0.value)\";" }
+            .joined(separator: "\n")
+        try body.write(
+            to: lproj.appendingPathComponent("Localizable.strings"),
+            atomically: true,
+            encoding: .utf8
+        )
+        return try XCTUnwrap(Bundle(url: lproj), "failed to build \(code).lproj bundle", file: file, line: line)
+    }
+
+    /// The deliberately-untranslated Catalan key resolves to the es-ES value, NOT English, proving the
+    /// chain routes through Spain Spanish before the English safety net.
+    ///
+    /// Deterministic: the ca bundle deliberately OMITS the gap key (mirroring ca.lproj) and the es-ES
+    /// bundle defines it, so `L10n.string(_:locale: .ca)` must walk ca → es-ES and return the Spanish
+    /// value before reaching the English base. This does not depend on the ODR asset pack being mounted.
+    func testCatalanGapKey_resolvesToSpainSpanishBeforeEnglish() throws {
+        let spanishValue = "Sincronització amb l'iCloud (es-ES)"
+        let provider = try CatalanChainProvider(
+            caBundle: makeStringsBundle(code: "ca", pairs: ["home.categories": "Categories"]),
+            esESBundle: makeStringsBundle(code: "es-ES", pairs: [Self.catalanGapKey: spanishValue])
+        )
+        LanguagePackProviderHolder.active = provider
+
+        let ca = L10n.string(Self.catalanGapKey, locale: .ca)
+        let en = L10n.string(Self.catalanGapKey, locale: .en)
+
+        XCTAssertEqual(ca, spanishValue, "Untranslated Catalan key must serve the es-ES value")
+        XCTAssertNotEqual(ca, en, "Must not fall through to English while the es-ES value exists")
+        XCTAssertNotEqual(ca, Self.catalanGapKey, "Must never surface the raw key")
+    }
+
+    /// A key Catalan DOES translate is served from the ca pack itself, not the fallback.
+    func testCatalanTranslatedKey_servedFromCatalanPack() throws {
+        let ca = try ODRTestSupport.lprojBundle(for: .ca)
+        XCTAssertEqual(ca.localizedString(forKey: "home.categories", value: nil, table: nil), "Categories")
+        XCTAssertEqual(ca.localizedString(forKey: "settings.language", value: nil, table: nil), "Idioma")
+    }
+
+    /// The candidate chain for Catalan routes ca → es-ES → en (the fallback contract this story adds).
+    func testCatalanBundleCandidatesRouteThroughSpainSpanish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .ca), ["ca", "es-ES", "en"])
+    }
 }
