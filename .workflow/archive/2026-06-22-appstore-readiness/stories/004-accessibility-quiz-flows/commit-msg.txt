@@ -1,0 +1,27 @@
+feat(a11y): VoiceOver + Dynamic Type for non-map quiz flows
+
+Story 004 — first of two accessibility stories (map-quiz annotations are
+story 005). Adds VoiceOver labels/values/hints and Dynamic-Type-scaling
+icons across the text, multiple-choice, learning, and summary quiz flows.
+
+- New shared `a11y.*` string namespace in all 6 .lproj (en/es-MX/fr/de
+  fully translated; ko fully translated; nah partial, falling back to
+  es-MX per its established convention).
+- CapitalQuizView / NameFeatureQuizView: labelled progress header, prompt
+  card, answer field (label+hint), Check/Next hints, and feedback that
+  conveys correct/incorrect state via the label (not colour alone). Map
+  pin untouched (story 005).
+- MultipleChoiceQuizView / LearningQuizView: each option is a distinct
+  element labelled by its text, with selected/correct/incorrect state via
+  .accessibilityValue + .isSelected trait (sourced from answerState, not
+  colour); combined, labelled progress headers.
+- QuizSummaryView: each statRow combined into one element; accuracy spoken
+  as a value; result icon marked decorative.
+- All fixed-size completion/result icons (.font(.system(size: 64)))
+  replaced with @ScaledMetric(relativeTo: .largeTitle) so they scale with
+  Dynamic Type.
+- New QuizAccessibilityStringsTests asserts every a11y.* key resolves
+  (non-key, non-empty) for all 6 AppLocale cases and that parameterized
+  keys keep their %d specifiers.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
