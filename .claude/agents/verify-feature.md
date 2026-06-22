@@ -17,6 +17,17 @@ Read `.workflow/feature.md` acceptance criteria and all story specs for full sco
 
 Run the full test suite. Exercise the feature end-to-end. Check each acceptance criterion explicitly.
 
+**Beware green checks that degrade-to-pass.** A passing gate is only meaningful if it actually
+exercised the thing it claims to cover. Two known blind spots on this repo:
+- The static l10n completeness gate hardcodes its locale list, so a locale added by a *different*
+  feature (merged into `main` during this run) is invisible to it.
+- The runtime locale-completeness XCTest no-ops in CI because the ODR pack bundle isn't mounted, so it
+  reads empty and passes vacuously.
+Whenever the feature touched localization, **independently diff every on-disk `Hanahuac/*.lproj`
+against the base locale** (don't trust the gate alone) and confirm no locale is missing this feature's
+keys. Generalize the instinct: when a criterion rides on an auto-pass-on-empty check, verify it by a
+second, direct means.
+
 ---
 
 ## Visual Verification
