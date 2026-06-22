@@ -168,3 +168,28 @@
 /* Map learning quiz */
 "learn_map.title" = "Aprendizaje en mapa";
 "learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "Pregunta";
+"a11y.progress" = "Pregunta %d de %d";
+"a11y.score" = "%d correctas";
+"a11y.graduated" = "%d de %d graduadas";
+"a11y.active" = "%d activas";
+"a11y.answer_field.label" = "Respuesta";
+"a11y.answer_field.hint" = "Escribe tu respuesta y luego activa Comprobar.";
+"a11y.check.hint" = "Comprueba tu respuesta.";
+"a11y.next.hint" = "Pasa a la siguiente pregunta.";
+"a11y.option.hint" = "Toca dos veces para elegir esta respuesta.";
+"a11y.state.selected" = "seleccionada";
+"a11y.state.correct" = "respuesta correcta";
+"a11y.state.incorrect" = "respuesta incorrecta";
+"a11y.state.not_answered" = "sin responder";
+"a11y.feedback.correct" = "Correcto";
+"a11y.feedback.incorrect" = "Incorrecto";
+"a11y.summary.accuracy" = "%d por ciento de acierto";
+"a11y.summary.result_icon" = "Resultado de la sesión";
+"a11y.done.hint" = "Cierra este cuestionario.";
+"a11y.map.pin.hint" = "Toca dos veces para elegir este lugar.";
+"a11y.map.prompt.label" = "Encuentra en el mapa";
+"a11y.map.progress" = "Lugar %d de %d";
+"a11y.map.streak" = "%d de 3 correctas seguidas";

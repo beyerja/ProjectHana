@@ -30,6 +30,9 @@ targets:
       # here), so only the six non-base languages are excluded.
       - path: Hanahuac
         excludes:
+          # Declared explicitly below as an always-bundled resource; exclude here so it is not
+          # auto-enumerated into a second, duplicate Copy-Resources entry.
+          - "PrivacyInfo.xcprivacy"
           - "Resources/fr-geo.json"
           - "Resources/de-geo.json"
           - "Resources/es-ES-geo.json"
@@ -42,6 +45,10 @@ targets:
           - "ca.lproj"
           - "ko.lproj"
           - "nah.lproj"
+      # Apple privacy manifest — always bundled (no resourceTags), copied into the app bundle's
+      # Copy-Resources phase so the App Store toolchain finds PrivacyInfo.xcprivacy at the bundle root.
+      - path: Hanahuac/PrivacyInfo.xcprivacy
+        buildPhase: resources
       # Non-base languages (fr, de, es-ES, ca, ko, nah) are delivered as On-Demand Resources. Each
       # language's
       # UI strings (.lproj) AND its geo-name pack JSON carry the same `lang-<code>` tag the provider
@@ -101,6 +108,16 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.hanahuac.app
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Hanahuac
+        # App Store compliance & metadata (Info.plist generated via GENERATE_INFOPLIST_FILE).
+        # No data encryption beyond Apple-exempt HTTPS, so declare export-compliance exemption to
+        # skip the per-submission prompt.
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.education
+        # Generated UILaunchScreen so the app renders full-screen on all devices (no letterboxing).
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        # Explicit app version/build for App Store submission.
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
         SUPPORTS_MACCATALYST: YES
         MACOSX_DEPLOYMENT_TARGET: "14.0"
         SWIFT_VERSION: "5.10"
