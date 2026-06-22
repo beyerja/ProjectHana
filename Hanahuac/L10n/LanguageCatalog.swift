@@ -8,7 +8,7 @@ import Foundation
 /// feasible, a matter of adding a ``LanguageDescriptor`` entry here.
 enum LanguageCatalog {
     /// All language descriptors, ordered to match ``AppLocale/allCases`` (en, fr, de, es-MX, es-ES,
-    /// ko, nah). The display names and fallback chains encode exactly the behavior of the former
+    /// ca, ko, nah). The display names and fallback chains encode exactly the behavior of the former
     /// per-case `switch` statements in `AppLocale`.
     static let all: [LanguageDescriptor] = [
         LanguageDescriptor(
@@ -39,6 +39,12 @@ enum LanguageCatalog {
             code: AppLocale.esES.rawValue,
             displayName: "Español (España)",
             fallbackChain: [.esES, .esMX, .en],
+            availability: .downloadablePack
+        ),
+        LanguageDescriptor(
+            code: AppLocale.ca.rawValue,
+            displayName: "Català",
+            fallbackChain: [.ca, .esES, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(

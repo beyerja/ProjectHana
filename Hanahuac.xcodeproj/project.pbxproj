@@ -121,6 +121,7 @@
 		CA52ACD8483387D82F189F21 /* MappableFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F515D771C91F31DA44F1CFBF /* MappableFeature.swift */; };
 		CB1BC56B0D4FF4D335F98ADD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */; };
 		CDC0C11EC4692BC78215E08F /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = C24D1F0D98466C85ACE2D994 /* countries.json */; };
+		CEDC2BEAAB541D51FDA062AB /* ca-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 1365F1B0E1F1F10054DA0689 /* ca-geo.json */; settings = {ASSET_TAGS = ("lang-ca", ); }; };
 		D03C47D9178B52406068A3F1 /* LanguagePackDownloadStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7883D7A9EFF23861283B4D12 /* LanguagePackDownloadStateTests.swift */; };
 		D16B30980B2CA326DD430AF5 /* TextQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24E8429BB7FEDE82E96359FF /* TextQuizSession.swift */; };
 		D1B5CF9272BC39C196371B53 /* LanguageManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28541D220A20441BA2942BE5 /* LanguageManagerTests.swift */; };
@@ -139,6 +140,7 @@
 		EB424397CCE4D8DE3BB12F68 /* es-ES.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 14A13B8C6A1F323E43C99D92 /* es-ES.lproj */; settings = {ASSET_TAGS = ("lang-es-ES", ); }; };
 		EBCE0FB9926D49EB4FE9CE13 /* HanahuacSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A8968B8A0523114451E506 /* HanahuacSchema.swift */; };
 		ED9937F2AC4E976EA91CB3C1 /* LearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9ED59834EB421065830ED /* LearningQuizView.swift */; };
+		EE9B4BE47B6C3B6B6EF6845F /* ca.lproj in Resources */ = {isa = PBXBuildFile; fileRef = C6AD4E60A0C8F84B62F231C0 /* ca.lproj */; settings = {ASSET_TAGS = ("lang-ca", ); }; };
 		EF399C6CE4645047AE6EF6CF /* ko-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 77724605CACC6F9A9E197D32 /* ko-geo.json */; settings = {ASSET_TAGS = ("lang-ko", ); }; };
 		F026FA55B3908340BB301534 /* LanguageCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601D195FA5082ACE0F09162E /* LanguageCatalogTests.swift */; };
 		F27547F2B084E91E0D7BE4E1 /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = F11FD6C85244DEBF7904B118 /* rivers.json */; };
@@ -172,6 +174,7 @@
 		108E300896C44A17DFF98AED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
 		132EB6CB2BB0B527A3C57527 /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
+		1365F1B0E1F1F10054DA0689 /* ca-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "ca-geo.json"; sourceTree = "<group>"; };
 		13C971DDAF9ECCC063A87229 /* GeoModel+PackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeoModel+PackData.swift"; sourceTree = "<group>"; };
 		14A13B8C6A1F323E43C99D92 /* es-ES.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "es-ES.lproj"; path = "Hanahuac/es-ES.lproj"; sourceTree = SOURCE_ROOT; };
 		14A8968B8A0523114451E506 /* HanahuacSchema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanahuacSchema.swift; sourceTree = "<group>"; };
@@ -274,6 +277,7 @@
 		C412DC824A749D0667C05943 /* CountryBorderLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryBorderLoader.swift; sourceTree = "<group>"; };
 		C4A287A2E1964EE9A8ECFAB7 /* AppLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocale.swift; sourceTree = "<group>"; };
 		C56B267CB810DA87B1D70D42 /* GeographyDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoader.swift; sourceTree = "<group>"; };
+		C6AD4E60A0C8F84B62F231C0 /* ca.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ca.lproj; path = Hanahuac/ca.lproj; sourceTree = SOURCE_ROOT; };
 		C7079D6DD469A5CC6D2878CC /* nah.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nah.lproj; path = Hanahuac/nah.lproj; sourceTree = SOURCE_ROOT; };
 		C7DF698B124B767490E9361E /* LanguagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguagePickerView.swift; sourceTree = "<group>"; };
 		C7E2B565AEAAD1F772460F00 /* Hanahuac.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Hanahuac.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -396,6 +400,7 @@
 		26BDE4E7EA764A146870B244 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				1365F1B0E1F1F10054DA0689 /* ca-geo.json */,
 				C24D1F0D98466C85ACE2D994 /* countries.json */,
 				6D8E85F2AA5FFFC3920B316C /* country-borders.json */,
 				24E53794689E4224827FAB8E /* de-geo.json */,
@@ -545,6 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				E6065359AA37AEFC736E0B30 /* Assets.xcassets */,
+				C6AD4E60A0C8F84B62F231C0 /* ca.lproj */,
 				78FDCB200865136E842DB317 /* ContentView.swift */,
 				914F7F50B73E40FC2B62296E /* de.lproj */,
 				14A13B8C6A1F323E43C99D92 /* es-ES.lproj */,
@@ -663,6 +669,7 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
 				knownAssetTags = (
+					"lang-ca",
 					"lang-de",
 					"lang-es-ES",
 					"lang-fr",
@@ -698,6 +705,8 @@
 			files = (
 				D1D468680D674A6511855845 /* Assets.xcassets in Resources */,
 				CB1BC56B0D4FF4D335F98ADD /* Localizable.strings in Resources */,
+				CEDC2BEAAB541D51FDA062AB /* ca-geo.json in Resources */,
+				EE9B4BE47B6C3B6B6EF6845F /* ca.lproj in Resources */,
 				CDC0C11EC4692BC78215E08F /* countries.json in Resources */,
 				50738B4C009D70A58A9AEBE8 /* country-borders.json in Resources */,
 				2A8E707ECE564E2350919D5E /* de-geo.json in Resources */,
