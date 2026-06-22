@@ -46,6 +46,19 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-ES")), .esMX)
     }
 
+    /// Basque auto-detects its own device locale via the catalog code-lookup path (code `eu` ==
+    /// rawValue), without perturbing the es-* → es-MX mapping. Regression guard required by the story:
+    /// an `eu` device locale selects Basque while every es-* device locale still defaults to Mexican
+    /// Spanish.
+    func testMatchingBasqueDoesNotPerturbSpanish() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "eu")), .eu)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "eu-ES")), .eu)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "eu_ES")), .eu)
+        // es-* mapping is unperturbed by adding Basque.
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-ES")), .esMX)
+    }
+
     func testMatchingKorean() {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "ko")), .ko)
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "ko-KR")), .ko)
@@ -74,12 +87,13 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.esMX.id, "es-MX")
         XCTAssertEqual(AppLocale.esES.id, "es-ES")
         XCTAssertEqual(AppLocale.ca.id, "ca")
+        XCTAssertEqual(AppLocale.eu.id, "eu")
         XCTAssertEqual(AppLocale.ko.id, "ko")
         XCTAssertEqual(AppLocale.nah.id, "nah")
     }
 
     func testAllCasesCount() {
-        XCTAssertEqual(AppLocale.allCases.count, 8)
+        XCTAssertEqual(AppLocale.allCases.count, 9)
     }
 
     /// es-ES is enumerated in the picker with its native display name "Español (España)" and sits
@@ -102,6 +116,17 @@ final class AppLocaleTests: XCTestCase {
         let esIndex = try XCTUnwrap(codes.firstIndex(of: "es-ES"))
         let caIndex = try XCTUnwrap(codes.firstIndex(of: "ca"))
         XCTAssertEqual(caIndex, esIndex + 1, "ca must immediately follow es-ES")
+    }
+
+    /// Basque is enumerated in the picker with its native display name "Euskara" and sits immediately
+    /// after ca, matching the catalog order.
+    func testBasqueEnumeratedWithNativeDisplayName() throws {
+        XCTAssertTrue(AppLocale.allCases.contains(.eu))
+        XCTAssertEqual(AppLocale.eu.displayName, "Euskara")
+        let codes = AppLocale.allCases.map(\.rawValue)
+        let caIndex = try XCTUnwrap(codes.firstIndex(of: "ca"))
+        let euIndex = try XCTUnwrap(codes.firstIndex(of: "eu"))
+        XCTAssertEqual(euIndex, caIndex + 1, "eu must immediately follow ca")
     }
 
     /// The picker is driven by `allCases`, so the two new languages must be enumerated with their
@@ -151,6 +176,15 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertFalse(
             AppLocale.ca.fallsBackThroughSpanish,
             "ca routes through es-ES, not the es-MX that fallsBackThroughSpanish tracks"
+        )
+    }
+
+    /// Basque resolves UI strings through its own pack, then Spain Spanish, then English.
+    func testBundleCandidatesForBasqueGoThroughSpainSpanishThenEnglish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .eu), ["eu", "es-ES", "en"])
+        XCTAssertFalse(
+            AppLocale.eu.fallsBackThroughSpanish,
+            "eu routes through es-ES, not the es-MX that fallsBackThroughSpanish tracks"
         )
     }
 
