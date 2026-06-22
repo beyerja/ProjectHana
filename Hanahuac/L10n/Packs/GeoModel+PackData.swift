@@ -14,6 +14,7 @@ extension Country {
         case .esMX: nameEs
         case .esES: nameEsEs
         case .ca: nameCa
+        case .eu: nameEu
         case .ko: nameKo
         case .nah: nameNah
         case .en: nil
@@ -27,6 +28,7 @@ extension Country {
         case .esMX: capitalEs
         case .esES: capitalEsEs
         case .ca: capitalCa
+        case .eu: capitalEu
         case .ko: capitalKo
         case .nah: capitalNah
         case .en: nil
@@ -42,6 +44,7 @@ extension River {
         case .esMX: nameEs
         case .esES: nameEsEs
         case .ca: nameCa
+        case .eu: nameEu
         case .ko: nameKo
         case .nah: nameNah
         case .en: nil
@@ -57,6 +60,7 @@ extension MountainRange {
         case .esMX: nameEs
         case .esES: nameEsEs
         case .ca: nameCa
+        case .eu: nameEu
         case .ko: nameKo
         case .nah: nameNah
         case .en: nil
@@ -72,6 +76,7 @@ extension Sea {
         case .esMX: nameEs
         case .esES: nameEsEs
         case .ca: nameCa
+        case .eu: nameEu
         case .ko: nameKo
         case .nah: nameNah
         case .en: nil

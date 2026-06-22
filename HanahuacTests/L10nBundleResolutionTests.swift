@@ -232,4 +232,92 @@ final class L10nBundleResolutionTests: XCTestCase {
     func testCatalanBundleCandidatesRouteThroughSpainSpanish() {
         XCTAssertEqual(L10n.bundleCandidates(for: .ca), ["ca", "es-ES", "en"])
     }
+
+    // MARK: - Basque fallback chain (eu → es-ES → en)
+
+    /// The UI key Basque deliberately leaves untranslated, present in es-ES. The Basque
+    /// `.lproj` (eu.lproj/Localizable.strings) intentionally OMITS this key so resolution must route
+    /// through the es-ES pack — which translates it — before reaching English. Changing the omitted key
+    /// here means updating eu.lproj to match.
+    private static let basqueGapKey = "settings.sync.toggle"
+
+    /// A provider that serves the real shipped eu / es-ES `.lproj` bundles (read from their on-disk
+    /// asset packs) for those locales, and the bundled base bundle for everyone else. This drives
+    /// `L10n.string` through the actual eu → es-ES → en chain so the Basque gap resolves to the es-ES
+    /// value before English.
+    private struct BasqueChainProvider: LanguagePackProvider {
+        let euBundle: Bundle
+        let esESBundle: Bundle
+
+        func stringBundle(for locale: AppLocale) -> Bundle {
+            switch locale {
+            case .eu:
+                euBundle
+            case .esES:
+                esESBundle
+            default:
+                L10n.bundle(for: locale)
+            }
+        }
+
+        func geoNameData(for _: AppLocale) -> GeoNamePackData? {
+            nil
+        }
+
+        func state(for _: AppLocale) -> LanguagePackState {
+            .available
+        }
+    }
+
+    /// Content guard: the Basque pack omits the gap key while the es-ES pack translates it, so the
+    /// chain has a real intermediate Spanish value to resolve to (not English).
+    func testBasquePack_omitsGapKey_whileSpainSpanishTranslatesIt() throws {
+        let eu = try ODRTestSupport.lprojBundle(for: .eu)
+        let esES = try ODRTestSupport.lprojBundle(for: .esES)
+        let sentinel = "__missing__"
+        XCTAssertEqual(
+            eu.localizedString(forKey: Self.basqueGapKey, value: sentinel, table: nil),
+            sentinel,
+            "Basque must deliberately omit \(Self.basqueGapKey) to exercise the es-ES fallback"
+        )
+        XCTAssertNotEqual(
+            esES.localizedString(forKey: Self.basqueGapKey, value: sentinel, table: nil),
+            sentinel,
+            "es-ES must translate \(Self.basqueGapKey) so eu falls back to it before English"
+        )
+    }
+
+    /// The deliberately-untranslated Basque key resolves to the es-ES value, NOT English, proving the
+    /// chain routes through Spain Spanish before the English safety net.
+    ///
+    /// Deterministic: the eu bundle deliberately OMITS the gap key (mirroring eu.lproj) and the es-ES
+    /// bundle defines it, so `L10n.string(_:locale: .eu)` must walk eu → es-ES and return the Spanish
+    /// value before reaching the English base. This does not depend on the ODR asset pack being mounted.
+    func testBasqueGapKey_resolvesToSpainSpanishBeforeEnglish() throws {
+        let spanishValue = "Sincronización con iCloud (es-ES)"
+        let provider = try BasqueChainProvider(
+            euBundle: makeStringsBundle(code: "eu", pairs: ["home.categories": "Kategoriak"]),
+            esESBundle: makeStringsBundle(code: "es-ES", pairs: [Self.basqueGapKey: spanishValue])
+        )
+        LanguagePackProviderHolder.active = provider
+
+        let eu = L10n.string(Self.basqueGapKey, locale: .eu)
+        let en = L10n.string(Self.basqueGapKey, locale: .en)
+
+        XCTAssertEqual(eu, spanishValue, "Untranslated Basque key must serve the es-ES value")
+        XCTAssertNotEqual(eu, en, "Must not fall through to English while the es-ES value exists")
+        XCTAssertNotEqual(eu, Self.basqueGapKey, "Must never surface the raw key")
+    }
+
+    /// A key Basque DOES translate is served from the eu pack itself, not the fallback.
+    func testBasqueTranslatedKey_servedFromBasquePack() throws {
+        let eu = try ODRTestSupport.lprojBundle(for: .eu)
+        XCTAssertEqual(eu.localizedString(forKey: "home.categories", value: nil, table: nil), "Kategoriak")
+        XCTAssertEqual(eu.localizedString(forKey: "settings.language", value: nil, table: nil), "Hizkuntza")
+    }
+
+    /// The candidate chain for Basque routes eu → es-ES → en (the fallback contract this story adds).
+    func testBasqueBundleCandidatesRouteThroughSpainSpanish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .eu), ["eu", "es-ES", "en"])
+    }
 }
