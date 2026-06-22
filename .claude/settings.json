@@ -102,7 +102,9 @@
       "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* stash*)",
       "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* mv *)",
       "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* rm *)",
-      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* worktree *)"
+      "Bash(git -C /Users/Private/Documents/Code/ProjectHana-worktrees/* worktree *)",
+
+      "Bash(scripts/gh-review-bot.sh:*)"
     ]
   }
 }

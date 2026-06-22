@@ -22,12 +22,12 @@ targets:
       # Main source/resource tree. The non-base languages' resources are declared SEPARATELY below as
       # ODR-tagged sources, so they are excluded here to avoid being auto-enumerated into the
       # always-bundled Resources build phase:
-      #   - the four `<code>-geo.json` geo-name packs (delivered on demand), and
-      #   - the fr/de/ko/nah `.lproj` UI strings — excluded so XcodeGen does not fold them into a
-      #     single always-bundled `Localizable.strings` variant group; re-added below as individually
+      #   - the five `<code>-geo.json` geo-name packs (delivered on demand), and
+      #   - the fr/de/es-ES/ko/nah `.lproj` UI strings — excluded so XcodeGen does not fold them into
+      #     a single always-bundled `Localizable.strings` variant group; re-added below as individually
       #     ODR-taggable `.lproj` folder references.
       # en/es-MX have no separate geo pack and stay always-bundled (their `.lproj` are auto-detected
-      # here), so only the four non-base languages are excluded.
+      # here), so only the five non-base languages are excluded.
       - path: Hanahuac
         excludes:
           # Declared explicitly below as an always-bundled resource; exclude here so it is not
@@ -35,17 +35,20 @@ targets:
           - "PrivacyInfo.xcprivacy"
           - "Resources/fr-geo.json"
           - "Resources/de-geo.json"
+          - "Resources/es-ES-geo.json"
           - "Resources/ko-geo.json"
           - "Resources/nah-geo.json"
           - "fr.lproj"
           - "de.lproj"
+          - "es-ES.lproj"
           - "ko.lproj"
           - "nah.lproj"
       # Apple privacy manifest — always bundled (no resourceTags), copied into the app bundle's
       # Copy-Resources phase so the App Store toolchain finds PrivacyInfo.xcprivacy at the bundle root.
       - path: Hanahuac/PrivacyInfo.xcprivacy
         buildPhase: resources
-      # Non-base languages (fr, de, ko, nah) are delivered as On-Demand Resources. Each language's
+      # Non-base languages (fr, de, es-ES, ko, nah) are delivered as On-Demand Resources. Each
+      # language's
       # UI strings (.lproj) AND its geo-name pack JSON carry the same `lang-<code>` tag the provider
       # (ODRLanguagePackProvider, via LanguageDescriptor.odrTags) requests, so the build's ODR tag
       # contract matches the runtime request exactly. Packs are built per app version; there is no
@@ -70,6 +73,13 @@ targets:
       - path: Hanahuac/Resources/de-geo.json
         buildPhase: resources
         resourceTags: [lang-de]
+      - path: Hanahuac/es-ES.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-es-ES]
+      - path: Hanahuac/Resources/es-ES-geo.json
+        buildPhase: resources
+        resourceTags: [lang-es-ES]
       - path: Hanahuac/ko.lproj
         type: folder
         buildPhase: resources

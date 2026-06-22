@@ -6,8 +6,8 @@ import XCTest
 final class LanguageCatalogTests: XCTestCase {
     // MARK: - Catalog shape
 
-    func testCatalogContainsExactlySixLanguages() {
-        XCTAssertEqual(LanguageCatalog.all.count, 6)
+    func testCatalogContainsExactlySevenLanguages() {
+        XCTAssertEqual(LanguageCatalog.all.count, 7)
     }
 
     /// Catalog ordering must match `AppLocale.allCases` so the picker order is preserved.
@@ -15,6 +15,49 @@ final class LanguageCatalogTests: XCTestCase {
         let catalogCodes = LanguageCatalog.all.map(\.code)
         let appLocaleCodes = AppLocale.allCases.map(\.rawValue)
         XCTAssertEqual(catalogCodes, appLocaleCodes)
+    }
+
+    // MARK: - Generic enum↔catalog invariants (foundational; auto-cover future languages)
+
+    /// Every `AppLocale` case must map to exactly one `LanguageDescriptor`, proving a one-to-one
+    /// enum↔descriptor relationship that automatically covers any language added later.
+    func testEveryAppLocaleHasExactlyOneDescriptor() {
+        for locale in AppLocale.allCases {
+            let matches = LanguageCatalog.all.filter {
+                $0.code == locale.rawValue
+            }
+            XCTAssertEqual(
+                matches.count,
+                1,
+                "\(locale.rawValue) must have exactly one descriptor, found \(matches.count)"
+            )
+        }
+    }
+
+    /// Re-affirm catalog order generically, expressed directly over `AppLocale.allCases` so a future
+    /// language inserted into the enum is held to the same ordering contract.
+    func testCatalogOrderMatchesAllCasesGenerically() {
+        XCTAssertEqual(LanguageCatalog.all.map(\.code), AppLocale.allCases.map(\.rawValue))
+    }
+
+    /// The ODR-tag convention is enforced generically over every case: bundled-base locales carry no
+    /// tags, downloadable locales carry exactly `["lang-<code>"]` built from the rawValue. No
+    /// hardcoded language list, so any future language is validated automatically.
+    func testODRTagsAreGenericallyConsistentOverAllCases() {
+        for locale in AppLocale.allCases {
+            if locale.isBundledBaseLanguage {
+                XCTAssertTrue(
+                    locale.odrTags.isEmpty,
+                    "\(locale.rawValue) is bundled-base → must carry no ODR tags"
+                )
+            } else {
+                XCTAssertEqual(
+                    locale.odrTags,
+                    ["lang-\(locale.rawValue)"],
+                    "\(locale.rawValue) is downloadable → must carry exactly [lang-\(locale.rawValue)]"
+                )
+            }
+        }
     }
 
     // MARK: - Descriptor lookup
@@ -37,6 +80,7 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .fr).displayName, "Français")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .de).displayName, "Deutsch")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .esMX).displayName, "Español (México)")
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .esES).displayName, "Español (España)")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ko).displayName, "한국어")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .nah).displayName, "Nāhuatl")
     }
@@ -61,6 +105,11 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .nah).fallbackChain, [.nah, .esMX, .en])
     }
 
+    /// Spain Spanish resolves through its own pack, then Mexican Spanish, then English.
+    func testFallbackChainForSpainSpanishRoutesThroughMexicanSpanish() {
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .esES).fallbackChain, [.esES, .esMX, .en])
+    }
+
     // MARK: - Availability flag
 
     func testBundledBaseLanguages() {
@@ -71,7 +120,7 @@ final class LanguageCatalogTests: XCTestCase {
     }
 
     func testDownloadablePackLanguages() {
-        for locale in [AppLocale.fr, .de, .ko, .nah] {
+        for locale in [AppLocale.fr, .de, .esES, .ko, .nah] {
             XCTAssertEqual(
                 LanguageCatalog.descriptor(for: locale).availability,
                 .downloadablePack,
@@ -94,6 +143,7 @@ final class LanguageCatalogTests: XCTestCase {
     func testDownloadableLanguagesYieldExpectedODRTags() {
         XCTAssertEqual(AppLocale.fr.odrTags, ["lang-fr"])
         XCTAssertEqual(AppLocale.de.odrTags, ["lang-de"])
+        XCTAssertEqual(AppLocale.esES.odrTags, ["lang-es-ES"])
         XCTAssertEqual(AppLocale.ko.odrTags, ["lang-ko"])
         XCTAssertEqual(AppLocale.nah.odrTags, ["lang-nah"])
     }

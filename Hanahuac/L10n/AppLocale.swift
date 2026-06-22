@@ -5,6 +5,7 @@ enum AppLocale: String, CaseIterable, Identifiable {
     case fr
     case de
     case esMX = "es-MX"
+    case esES = "es-ES"
     case ko
     case nah
 

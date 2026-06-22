@@ -35,16 +35,20 @@ Each story runs through `story-workflow`, which spawns a dedicated sub-agent per
 2. **Implement** — `implement-story` (the implement agent).
 3. **Create PR** — `create-pr`.
 4. **Wait for CI** — `wait-for-ci`. Must be green before review; on failure, re-implement and re-push.
-5. **Independent review** — runs **after CI passes** so the reviewer sees code that builds. A fresh,
-   **cold-context** `independent-review` agent — a **separate spawn from the implement agent** (the
-   4-eye principle: the change is reviewed by someone who did not write it) — reviews the PR diff and
-   emits a verdict via STATUS:
-   - `CHANGES_REQUESTED` → a separate implement agent addresses every inline comment, replies to each
-     thread marking it resolved, runs `just lint`/`just test`, and pushes; then a **fresh**
-     `independent-review` runs again. This feedback loop is **bounded to 3 rounds**; after 3 rounds
-     without approval the workflow **escalates to the user** instead of looping further.
-   - `APPROVED` → continue.
-6. **Merge** — once the reviewer emits `APPROVED` **and** CI is green, the workflow merges
+5. **Two-eye review** — runs **after CI passes** so reviewers see code that builds. Two fresh,
+   **cold-context** agents, each a **separate spawn from the implement agent** (the 4-eye principle):
+   - **a. `independent-review`** runs the deep `/code-review` pass, posts inline comments + a summary, and
+     emits a verdict via STATUS. It does **not** submit the formal bot review — invoking the `/code-review`
+     skill ends its turn first.
+   - **b. `code-owner-review`** (only after 5a is `APPROVED`) re-verifies the diff a second time, *without*
+     the `/code-review` skill so its turn completes, reaches its **own** verdict, and submits the formal
+     `Hanahuac-Bot` review through the wrapper (with read-back proof) plus the CI self-heal and thread
+     resolution.
+   - Either agent emitting `CHANGES_REQUESTED` → a separate implement agent addresses every inline comment,
+     replies to each thread acknowledging the fix, runs `just lint`/`just test`, and pushes; then a
+     **fresh** `independent-review` runs again from 5a. Bounded to **3 rounds**; after 3 rounds without
+     both approving, the workflow **escalates to the user** instead of looping further.
+6. **Merge** — once **both** reviewers emit `APPROVED` **and** CI is green, the workflow merges
    **autonomously** by spawning `merge-pr`. There is **no human review/merge gate**: the workflow never
    pauses for the user to review or merge, and never assumes the user merged manually.
 7. **Verify** — `verify-story` checks the acceptance criteria; on failure it re-implements.
@@ -57,8 +61,10 @@ to the bot) plus branch protection on `main`.
 
 ### Bot-authenticated formal review submission
 
-The `independent-review` agent submits a **formal GitHub review state** under the **`Hanahuac-Bot`**
-identity via `scripts/gh-review-bot.sh gh pr review`. A separate bot account is required because the
+The `code-owner-review` agent (the second reviewer) submits a **formal GitHub review state** under the
+**`Hanahuac-Bot`** identity via `scripts/gh-review-bot.sh gh pr review` — `independent-review` only emits
+the verdict, since invoking the `/code-review` skill ends its turn before it could submit. A separate bot
+account is required because the
 plain `gh` user running the workflow is the **same** account that opened the PR, and GitHub **blocks
 self-approval** by the PR opener — the bot, as a distinct collaborator, is not blocked. The wrapper
 reads the bot's token from the macOS Keychain and never exposes it; agents only ever invoke the
@@ -80,8 +86,9 @@ The formal state is **additive** — it never replaces the agent's `STATUS:` lin
 
 A reply comment alone does **not** resolve a review thread on GitHub. True resolution requires the
 `resolveReviewThread` GraphQL mutation, performed by the **bot** (the review author) through the
-wrapper on a re-review round, after the implementer has acknowledged the fix on each thread. When the
-bot token is absent, thread resolution is likewise SKIPPED and the loop proceeds on `STATUS` alone.
+wrapper by the `code-owner-review` agent on a re-review round, after the implementer has acknowledged the
+fix on each thread. When the bot token is absent, thread resolution is likewise SKIPPED and the loop
+proceeds on `STATUS` alone.
 
 ### The obligatory CODEOWNERS + ruleset gate (with bootstrapping guard)
 
