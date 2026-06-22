@@ -1,0 +1,9 @@
+{
+  "body": "**Blocking (aggregate-only): es-ES is silently excluded from the completeness gate.**\n\nThis gate's locale lists are hardcoded and omit `es-ES`. The main-integration merge (`c4f6674`) pulled in #154, which added `Hanahuac/es-ES.lproj/Localizable.strings` as a *complete downloadable* locale and a new `AppLocale.esES` case. But `ALL_LOCALES` here is only `en, es-MX, de, fr, ko, nah` — so `es-ES` is:\n\n1. never loaded, so it contributes nothing to the canonical key union, and\n2. never checked for missing keys, and\n3. never checked for untranslated (byte-identical-to-en) values.\n\nThe gate prints `PASS — all required locales contain the full canonical key set` while a 7th shipping locale goes completely unverified. Concretely, `es-ES.lproj` currently has ~132 keys vs the 156 canonical (it is missing the `a11y.*` keys added by #150/#151 in this same feature branch). Those missing keys still *resolve* at runtime via `es-ES → es-MX → en`, so it is not a crash — but the feature's own AC (\"Localization completeness is verified across all 6 languages\") is now violated because the merge introduced a 7th locale that falls outside the very gate the feature added.\n\nFix: add `es-ES` to `FULL_LOCALES` (it is intended to be complete), back-fill the ~24 missing `es-ES` keys so the gate passes, and add an `es-ES` byte-identical allowlist as needed. Consider deriving the locale list from `Hanahuac/*.lproj` on disk (minus an explicit partial set) so future locales can't silently slip the gate again.",
+  "commit_id": "c4f6674a415150545d552ff326217aa1e03dc883",
+  "path": "scripts/check-l10n-completeness.py",
+  "line": 40,
+  "start_line": 33,
+  "side": "RIGHT",
+  "start_side": "RIGHT"
+}

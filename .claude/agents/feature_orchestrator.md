@@ -67,7 +67,19 @@ sub-agent for each:
    `Hanahuac.xcodeproj` rather than hand-merging the pbxproj; integrate with — don't duplicate —
    infra a newer `main` PR already added, e.g. the versioned-schema/migration files), then re-run
    `just lint` + `just test` and fix any new call sites a `main`-side change introduced against your
-   new APIs. Only then spawn `create-pr` to push and open the PR against main (skip if one already
+   new APIs.
+   - **Cross-feature collisions are not just file conflicts.** A clean text merge can still leave a
+     *semantic* regression that no conflict marker flags. The classic case: your feature added new
+     localization keys (a new namespace), while a `main`-side feature independently added a *new
+     locale* — the merge silently produces a locale that is missing exactly your new keys. The static
+     l10n gate hardcodes its locale list (a brand-new locale is invisible to it) and the runtime
+     completeness XCTest degrades-to-pass in CI (the ODR pack bundle isn't mounted, so it reads
+     empty). So after integrating `main`, **re-verify l10n completeness against every on-disk
+     `Hanahuac/*.lproj`, not just the gate's hardcoded list**: diff each locale's keys against the
+     base locale and translate any keys a new locale is missing because of your namespace. Apply the
+     same "did main add a new X that interacts with my new keys?" check to other registries
+     (asset catalogs, schema entities, feature flags).
+   Only then spawn `create-pr` to push and open the PR against main (skip if one already
    exists). A stale-base PR shows `mergeState: DIRTY` with no checks — that means re-integrate `main`.
 6. **Wait for CI** — spawn `wait-for-ci` agent with the PR number from step 5
    - STATUS: FAIL → fix the failure (spawn `implement-story` on the responsible story with CI failure as context), push, then repeat from step 6. NOTE: CI runs against a **clean** store/build, so it catches failures a stale local simulator masks (e.g. SwiftData container-init aborts) — reproduce those locally with `xcrun simctl erase` before assuming a fix works.

@@ -1,0 +1,16 @@
+feat(build): App Store compliance flags, category, version & launch screen
+
+Add the App-Store-required Info.plist/build settings to the Hanahuac
+target's settings.base in project.yml (Info.plist generated via
+GENERATE_INFOPLIST_FILE):
+
+- INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO (skip export-compliance prompt)
+- INFOPLIST_KEY_LSApplicationCategoryType = public.app-category.education
+- INFOPLIST_KEY_UILaunchScreen_Generation = YES (full-screen, no letterboxing)
+- MARKETING_VERSION = 1.0, CURRENT_PROJECT_VERSION = 1
+
+Regenerate Hanahuac.xcodeproj via xcodegen. Verified the keys land in
+the built Mac Catalyst app's Info.plist under free/ad-hoc signing; no
+usage-description strings or capabilities were added.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>

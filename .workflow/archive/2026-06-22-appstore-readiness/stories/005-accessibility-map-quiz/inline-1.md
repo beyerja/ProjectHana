@@ -1,0 +1,1 @@
+Non-blocking nit: `.accessibilityAddTraits(.isButton)` here is redundant — `MapFeaturePinView` is always wrapped in a SwiftUI `Button` at both annotation call sites (`MapQuizView`/`MapLearningQuizView`), so VoiceOver already exposes the button trait. Harmless, but it can be dropped to avoid implying the pin view is independently actionable. Not a merge blocker.
