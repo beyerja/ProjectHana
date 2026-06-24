@@ -50,6 +50,17 @@
                ReferencedContainer = "container:Hanahuac.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AFBC9CE5C5EC04E74ACC1357"
+               BuildableName = "HanahuacUITests.xctest"
+               BlueprintName = "HanahuacUITests"
+               ReferencedContainer = "container:Hanahuac.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <CommandLineArguments>
       </CommandLineArguments>
