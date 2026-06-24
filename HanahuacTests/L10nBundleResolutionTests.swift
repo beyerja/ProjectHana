@@ -320,4 +320,94 @@ final class L10nBundleResolutionTests: XCTestCase {
     func testBasqueBundleCandidatesRouteThroughSpainSpanish() {
         XCTAssertEqual(L10n.bundleCandidates(for: .eu), ["eu", "es-ES", "en"])
     }
+
+    // MARK: - Yucatec Maya fallback chain (yua → es-MX → en)
+
+    /// The UI key Yucatec Maya deliberately leaves untranslated, present in es-MX. The Yucatec Maya
+    /// `.lproj` (yua.lproj/Localizable.strings) intentionally OMITS this key so resolution must route
+    /// through the es-MX pack — which translates it — before reaching English. Unlike ca/eu (which
+    /// route through es-ES), yua routes through *Mexican* Spanish. Changing the omitted key here means
+    /// updating yua.lproj to match.
+    private static let yucatecGapKey = "settings.sync.toggle"
+
+    /// A provider that serves the real shipped yua / es-MX `.lproj` bundles (read from their on-disk
+    /// asset packs) for those locales, and the bundled base bundle for everyone else. This drives
+    /// `L10n.string` through the actual yua → es-MX → en chain so the Yucatec Maya gap resolves to the
+    /// es-MX value before English.
+    private struct YucatecChainProvider: LanguagePackProvider {
+        let yuaBundle: Bundle
+        let esMXBundle: Bundle
+
+        func stringBundle(for locale: AppLocale) -> Bundle {
+            switch locale {
+            case .yua:
+                yuaBundle
+            case .esMX:
+                esMXBundle
+            default:
+                L10n.bundle(for: locale)
+            }
+        }
+
+        func geoNameData(for _: AppLocale) -> GeoNamePackData? {
+            nil
+        }
+
+        func state(for _: AppLocale) -> LanguagePackState {
+            .available
+        }
+    }
+
+    /// Content guard: the Yucatec Maya pack omits the gap key while the es-MX pack translates it, so the
+    /// chain has a real intermediate Spanish value to resolve to (not English).
+    func testYucatecPack_omitsGapKey_whileMexicanSpanishTranslatesIt() throws {
+        let yua = try ODRTestSupport.lprojBundle(for: .yua)
+        let esMX = L10n.bundle(for: .esMX)
+        let sentinel = "__missing__"
+        XCTAssertEqual(
+            yua.localizedString(forKey: Self.yucatecGapKey, value: sentinel, table: nil),
+            sentinel,
+            "Yucatec Maya must deliberately omit \(Self.yucatecGapKey) to exercise the es-MX fallback"
+        )
+        XCTAssertNotEqual(
+            esMX.localizedString(forKey: Self.yucatecGapKey, value: sentinel, table: nil),
+            sentinel,
+            "es-MX must translate \(Self.yucatecGapKey) so yua falls back to it before English"
+        )
+    }
+
+    /// The deliberately-untranslated Yucatec Maya key resolves to the es-MX value, NOT English, proving
+    /// the chain routes through Mexican Spanish before the English safety net.
+    ///
+    /// Deterministic: the yua bundle deliberately OMITS the gap key (mirroring yua.lproj) and the es-MX
+    /// bundle defines it, so `L10n.string(_:locale: .yua)` must walk yua → es-MX and return the Spanish
+    /// value before reaching the English base. This does not depend on the ODR asset pack being mounted.
+    func testYucatecGapKey_resolvesToMexicanSpanishBeforeEnglish() throws {
+        let spanishValue = "Sincronización con iCloud (es-MX)"
+        let provider = try YucatecChainProvider(
+            yuaBundle: makeStringsBundle(code: "yua", pairs: ["home.categories": "Nu'ukulil"]),
+            esMXBundle: makeStringsBundle(code: "es-MX", pairs: [Self.yucatecGapKey: spanishValue])
+        )
+        LanguagePackProviderHolder.active = provider
+
+        let yua = L10n.string(Self.yucatecGapKey, locale: .yua)
+        let en = L10n.string(Self.yucatecGapKey, locale: .en)
+
+        XCTAssertEqual(yua, spanishValue, "Untranslated Yucatec Maya key must serve the es-MX value")
+        XCTAssertNotEqual(yua, en, "Must not fall through to English while the es-MX value exists")
+        XCTAssertNotEqual(yua, Self.yucatecGapKey, "Must never surface the raw key")
+    }
+
+    /// A key Yucatec Maya DOES translate is served from the yua pack itself, not the fallback.
+    func testYucatecTranslatedKey_servedFromYucatecPack() throws {
+        let yua = try ODRTestSupport.lprojBundle(for: .yua)
+        XCTAssertEqual(yua.localizedString(forKey: "home.categories", value: nil, table: nil), "Nu'ukulil")
+        XCTAssertEqual(yua.localizedString(forKey: "settings.language", value: nil, table: nil), "T'àan")
+    }
+
+    /// The candidate chain for Yucatec Maya routes yua → es-MX → en (the fallback contract this story
+    /// adds).
+    func testYucatecBundleCandidatesRouteThroughMexicanSpanish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .yua), ["yua", "es-MX", "en"])
+    }
 }
