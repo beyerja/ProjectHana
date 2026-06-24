@@ -11,6 +11,7 @@ struct Sea: Codable, Identifiable, Hashable {
     let nameEu: String?
     let nameYua: String?
     let nameIt: String?
+    let namePl: String?
     let nameKo: String?
     let nameNah: String?
     let lat: Double
@@ -29,6 +30,7 @@ struct Sea: Codable, Identifiable, Hashable {
         nameEu: String? = nil,
         nameYua: String? = nil,
         nameIt: String? = nil,
+        namePl: String? = nil,
         nameKo: String? = nil,
         nameNah: String? = nil,
         lat: Double,
@@ -44,6 +46,7 @@ struct Sea: Codable, Identifiable, Hashable {
         self.nameEu = nameEu
         self.nameYua = nameYua
         self.nameIt = nameIt
+        self.namePl = namePl
         self.nameKo = nameKo
         self.nameNah = nameNah
         self.lat = lat
