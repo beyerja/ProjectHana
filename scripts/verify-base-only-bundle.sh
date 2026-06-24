@@ -7,7 +7,7 @@
 #     base-only launch path the runtime relies on (BundledLanguagePackProvider + the fr/de/ko/nah
 #     fallback chain to es-MX/en, with es-ES routing es-ES -> es-MX -> en).
 #   - The non-base languages are declared as On-Demand Resources in the generated project
-#     (knownAssetTags lang-fr/de/es-ES/ko/nah), i.e. not unconditionally part of the always-bundled
+#     (knownAssetTags lang-fr/de/es-ES/it/ko/nah), i.e. not unconditionally part of the always-bundled
 #     resource contract.
 #
 # Platform note (informational, NOT a failure):
@@ -45,7 +45,7 @@ for base in en es-MX; do
 done
 
 echo "== non-base languages declared as On-Demand Resources in the project =="
-for code in fr de es-ES ko nah; do
+for code in fr de es-ES it ko nah; do
     grep -q "\"lang-${code}\"" "${PBXPROJ}" \
         || fail "lang-${code} is not declared as an on-demand asset tag in the project"
     echo "  ok: lang-${code} declared on-demand"
@@ -53,7 +53,7 @@ done
 
 echo "== platform note: on-demand resources in this build's main bundle (informational) =="
 embedded=0
-for code in fr de es-ES ko nah; do
+for code in fr de es-ES it ko nah; do
     if [[ -d "${RES}/${code}.lproj" || -f "${RES}/${code}-geo.json" ]]; then
         embedded=1
     fi

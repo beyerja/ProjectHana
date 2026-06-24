@@ -6,8 +6,8 @@ import XCTest
 final class LanguageCatalogTests: XCTestCase {
     // MARK: - Catalog shape
 
-    func testCatalogContainsExactlyTenLanguages() {
-        XCTAssertEqual(LanguageCatalog.all.count, 10)
+    func testCatalogContainsExactlyElevenLanguages() {
+        XCTAssertEqual(LanguageCatalog.all.count, 11)
     }
 
     /// Catalog ordering must match `AppLocale.allCases` so the picker order is preserved.
@@ -84,6 +84,7 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ca).displayName, "Català")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .eu).displayName, "Euskara")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .yua).displayName, "Màaya t'àan")
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .it).displayName, "Italiano")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ko).displayName, "한국어")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .nah).displayName, "Nāhuatl")
     }
@@ -101,6 +102,16 @@ final class LanguageCatalogTests: XCTestCase {
     func testFallbackChainForFullyTranslatedLanguagesGoStraightToEnglish() {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .fr).fallbackChain, [.fr, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .de).fallbackChain, [.de, .en])
+    }
+
+    /// Italian is a COMPLETE-content language: it routes straight to English as a never-hit safety
+    /// net, NOT through es-MX/es-ES like the best-effort languages.
+    func testFallbackChainForItalianGoesStraightToEnglish() {
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .it).fallbackChain, [.it, .en])
+        XCTAssertFalse(
+            AppLocale.it.fallsBackThroughSpanish,
+            "it is COMPLETE content and must not route through Spanish"
+        )
     }
 
     func testFallbackChainForPartialLanguagesRouteThroughSpanish() {
@@ -139,7 +150,7 @@ final class LanguageCatalogTests: XCTestCase {
     }
 
     func testDownloadablePackLanguages() {
-        for locale in [AppLocale.fr, .de, .esES, .ca, .eu, .yua, .ko, .nah] {
+        for locale in [AppLocale.fr, .de, .esES, .ca, .eu, .yua, .it, .ko, .nah] {
             XCTAssertEqual(
                 LanguageCatalog.descriptor(for: locale).availability,
                 .downloadablePack,
@@ -166,6 +177,7 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(AppLocale.ca.odrTags, ["lang-ca"])
         XCTAssertEqual(AppLocale.eu.odrTags, ["lang-eu"])
         XCTAssertEqual(AppLocale.yua.odrTags, ["lang-yua"])
+        XCTAssertEqual(AppLocale.it.odrTags, ["lang-it"])
         XCTAssertEqual(AppLocale.ko.odrTags, ["lang-ko"])
         XCTAssertEqual(AppLocale.nah.odrTags, ["lang-nah"])
     }
