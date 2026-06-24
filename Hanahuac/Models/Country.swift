@@ -11,6 +11,7 @@ struct Country: Codable, Identifiable, Hashable {
     let nameEu: String?
     let nameYua: String?
     let nameIt: String?
+    let namePl: String?
     let nameKo: String?
     let nameNah: String?
     let capital: String
@@ -22,6 +23,7 @@ struct Country: Codable, Identifiable, Hashable {
     let capitalEu: String?
     let capitalYua: String?
     let capitalIt: String?
+    let capitalPl: String?
     let capitalKo: String?
     let capitalNah: String?
     let continent: String
@@ -42,6 +44,7 @@ struct Country: Codable, Identifiable, Hashable {
         nameEu: String? = nil,
         nameYua: String? = nil,
         nameIt: String? = nil,
+        namePl: String? = nil,
         nameKo: String? = nil,
         nameNah: String? = nil,
         capital: String,
@@ -53,6 +56,7 @@ struct Country: Codable, Identifiable, Hashable {
         capitalEu: String? = nil,
         capitalYua: String? = nil,
         capitalIt: String? = nil,
+        capitalPl: String? = nil,
         capitalKo: String? = nil,
         capitalNah: String? = nil,
         continent: String,
@@ -69,6 +73,7 @@ struct Country: Codable, Identifiable, Hashable {
         self.nameEu = nameEu
         self.nameYua = nameYua
         self.nameIt = nameIt
+        self.namePl = namePl
         self.nameKo = nameKo
         self.nameNah = nameNah
         self.capital = capital
@@ -80,6 +85,7 @@ struct Country: Codable, Identifiable, Hashable {
         self.capitalEu = capitalEu
         self.capitalYua = capitalYua
         self.capitalIt = capitalIt
+        self.capitalPl = capitalPl
         self.capitalKo = capitalKo
         self.capitalNah = capitalNah
         self.continent = continent

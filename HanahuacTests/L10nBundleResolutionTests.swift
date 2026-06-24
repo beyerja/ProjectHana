@@ -427,4 +427,21 @@ final class L10nBundleResolutionTests: XCTestCase {
         XCTAssertEqual(it.localizedString(forKey: "home.categories", value: nil, table: nil), "Categorie")
         XCTAssertEqual(it.localizedString(forKey: "settings.language", value: nil, table: nil), "Lingua")
     }
+
+    // MARK: - Polish (COMPLETE content; pl → en)
+
+    /// Polish is a COMPLETE-content language: its candidate chain goes straight to en, with NO Spanish
+    /// hop. Because Polish leaves no intentional gaps there is no gap-key fallback test; en is only an
+    /// ultimate, never-hit safety net.
+    func testPolishBundleCandidatesGoStraightToEnglish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .pl), ["pl", "en"])
+    }
+
+    /// A representative Polish key is served from the pl pack itself (not a fallback), proving the
+    /// pack carries real translated content.
+    func testPolishTranslatedKey_servedFromPolishPack() throws {
+        let pl = try ODRTestSupport.lprojBundle(for: .pl)
+        XCTAssertEqual(pl.localizedString(forKey: "home.categories", value: nil, table: nil), "Kategorie")
+        XCTAssertEqual(pl.localizedString(forKey: "settings.language", value: nil, table: nil), "Język")
+    }
 }

@@ -87,6 +87,17 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-MX")), .esMX)
     }
 
+    /// Polish auto-detects its own device locale via the catalog code-lookup path (code `pl` ==
+    /// rawValue), without perturbing the es-* → es-MX mapping.
+    func testMatchingPolishDoesNotPerturbSpanish() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "pl")), .pl)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "pl-PL")), .pl)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "pl_PL")), .pl)
+        // es-* mapping is unperturbed by adding Polish.
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-MX")), .esMX)
+    }
+
     func testMatchingKorean() {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "ko")), .ko)
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "ko-KR")), .ko)
@@ -118,12 +129,13 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.eu.id, "eu")
         XCTAssertEqual(AppLocale.yua.id, "yua")
         XCTAssertEqual(AppLocale.it.id, "it")
+        XCTAssertEqual(AppLocale.pl.id, "pl")
         XCTAssertEqual(AppLocale.ko.id, "ko")
         XCTAssertEqual(AppLocale.nah.id, "nah")
     }
 
     func testAllCasesCount() {
-        XCTAssertEqual(AppLocale.allCases.count, 11)
+        XCTAssertEqual(AppLocale.allCases.count, 12)
     }
 
     /// es-ES is enumerated in the picker with its native display name "Español (España)" and sits
@@ -185,6 +197,23 @@ final class AppLocaleTests: XCTestCase {
     /// Spanish hop.
     func testBundleCandidatesForItalianGoStraightToEnglish() {
         XCTAssertEqual(L10n.bundleCandidates(for: .it), ["it", "en"])
+    }
+
+    /// Polish is enumerated in the picker with its native display name "Polski" and sits immediately
+    /// after it, matching the catalog order.
+    func testPolishEnumeratedWithNativeDisplayName() throws {
+        XCTAssertTrue(AppLocale.allCases.contains(.pl))
+        XCTAssertEqual(AppLocale.pl.displayName, "Polski")
+        let codes = AppLocale.allCases.map(\.rawValue)
+        let itIndex = try XCTUnwrap(codes.firstIndex(of: "it"))
+        let plIndex = try XCTUnwrap(codes.firstIndex(of: "pl"))
+        XCTAssertEqual(plIndex, itIndex + 1, "pl must immediately follow it")
+    }
+
+    /// Polish is COMPLETE content, so its UI-string candidate chain goes straight to English with no
+    /// Spanish hop.
+    func testBundleCandidatesForPolishGoStraightToEnglish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .pl), ["pl", "en"])
     }
 
     /// The picker is driven by `allCases`, so the two new languages must be enumerated with their

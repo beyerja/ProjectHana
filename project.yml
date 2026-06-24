@@ -40,6 +40,7 @@ targets:
           - "Resources/eu-geo.json"
           - "Resources/yua-geo.json"
           - "Resources/it-geo.json"
+          - "Resources/pl-geo.json"
           - "Resources/ko-geo.json"
           - "Resources/nah-geo.json"
           - "fr.lproj"
@@ -49,13 +50,14 @@ targets:
           - "eu.lproj"
           - "yua.lproj"
           - "it.lproj"
+          - "pl.lproj"
           - "ko.lproj"
           - "nah.lproj"
       # Apple privacy manifest — always bundled (no resourceTags), copied into the app bundle's
       # Copy-Resources phase so the App Store toolchain finds PrivacyInfo.xcprivacy at the bundle root.
       - path: Hanahuac/PrivacyInfo.xcprivacy
         buildPhase: resources
-      # Non-base languages (fr, de, es-ES, ca, eu, yua, it, ko, nah) are delivered as On-Demand
+      # Non-base languages (fr, de, es-ES, ca, eu, yua, it, pl, ko, nah) are delivered as On-Demand
       # Resources.
       # Each
       # language's
@@ -118,6 +120,13 @@ targets:
       - path: Hanahuac/Resources/it-geo.json
         buildPhase: resources
         resourceTags: [lang-it]
+      - path: Hanahuac/pl.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-pl]
+      - path: Hanahuac/Resources/pl-geo.json
+        buildPhase: resources
+        resourceTags: [lang-pl]
       - path: Hanahuac/ko.lproj
         type: folder
         buildPhase: resources

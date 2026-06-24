@@ -6,8 +6,8 @@ import XCTest
 final class LanguageCatalogTests: XCTestCase {
     // MARK: - Catalog shape
 
-    func testCatalogContainsExactlyElevenLanguages() {
-        XCTAssertEqual(LanguageCatalog.all.count, 11)
+    func testCatalogContainsExactlyTwelveLanguages() {
+        XCTAssertEqual(LanguageCatalog.all.count, 12)
     }
 
     /// Catalog ordering must match `AppLocale.allCases` so the picker order is preserved.
@@ -85,6 +85,7 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .eu).displayName, "Euskara")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .yua).displayName, "Màaya t'àan")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .it).displayName, "Italiano")
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .pl).displayName, "Polski")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ko).displayName, "한국어")
         XCTAssertEqual(LanguageCatalog.descriptor(for: .nah).displayName, "Nāhuatl")
     }
@@ -111,6 +112,16 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertFalse(
             AppLocale.it.fallsBackThroughSpanish,
             "it is COMPLETE content and must not route through Spanish"
+        )
+    }
+
+    /// Polish is a COMPLETE-content language: it routes straight to English as a never-hit safety
+    /// net, NOT through es-MX/es-ES like the best-effort languages.
+    func testFallbackChainForPolishGoesStraightToEnglish() {
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .pl).fallbackChain, [.pl, .en])
+        XCTAssertFalse(
+            AppLocale.pl.fallsBackThroughSpanish,
+            "pl is COMPLETE content and must not route through Spanish"
         )
     }
 
@@ -150,7 +161,7 @@ final class LanguageCatalogTests: XCTestCase {
     }
 
     func testDownloadablePackLanguages() {
-        for locale in [AppLocale.fr, .de, .esES, .ca, .eu, .yua, .it, .ko, .nah] {
+        for locale in [AppLocale.fr, .de, .esES, .ca, .eu, .yua, .it, .pl, .ko, .nah] {
             XCTAssertEqual(
                 LanguageCatalog.descriptor(for: locale).availability,
                 .downloadablePack,
@@ -178,6 +189,7 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(AppLocale.eu.odrTags, ["lang-eu"])
         XCTAssertEqual(AppLocale.yua.odrTags, ["lang-yua"])
         XCTAssertEqual(AppLocale.it.odrTags, ["lang-it"])
+        XCTAssertEqual(AppLocale.pl.odrTags, ["lang-pl"])
         XCTAssertEqual(AppLocale.ko.odrTags, ["lang-ko"])
         XCTAssertEqual(AppLocale.nah.odrTags, ["lang-nah"])
     }

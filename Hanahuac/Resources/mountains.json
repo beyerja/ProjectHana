@@ -14,7 +14,8 @@
     "lon": 84.0,
     "highestPeak": "Mount Everest",
     "elevationMetres": 8849,
-    "name_it": "Himalaya"
+    "name_it": "Himalaya",
+    "name_pl": "Himalaje"
   },
   {
     "id": "andes",
@@ -27,6 +28,7 @@
     "name_eu": "Andeak",
     "name_yua": "Andes",
     "name_it": "Ande",
+    "name_pl": "Andy",
     "name_ko": "안데스산맥",
     "name_nah": "Andes Tepētl",
     "continent": "South America",
@@ -46,6 +48,7 @@
     "name_eu": "Harkaitz Mendiak",
     "name_yua": "Puksó'ob Rocosas",
     "name_it": "Montagne Rocciose",
+    "name_pl": "Góry Skaliste",
     "name_ko": "로키산맥",
     "continent": "North America",
     "lat": 45.0,
@@ -68,7 +71,8 @@
     "lon": 10.0,
     "highestPeak": "Mont Blanc",
     "elevationMetres": 4808,
-    "name_it": "Alpi"
+    "name_it": "Alpi",
+    "name_pl": "Alpy"
   },
   {
     "id": "great-dividing-range",
@@ -84,7 +88,8 @@
     "lon": 150.0,
     "highestPeak": "Mount Kosciuszko",
     "elevationMetres": 2228,
-    "name_it": "Grande Catena Divisoria"
+    "name_it": "Grande Catena Divisoria",
+    "name_pl": "Wielkie Góry Wododziałowe"
   },
   {
     "id": "kunlun",
@@ -100,7 +105,8 @@
     "lon": 86.0,
     "highestPeak": "Kongur Tagh",
     "elevationMetres": 7649,
-    "name_it": "Monti Kunlun"
+    "name_it": "Monti Kunlun",
+    "name_pl": "Kunlun"
   },
   {
     "id": "tian-shan",
@@ -116,7 +122,8 @@
     "lon": 80.0,
     "highestPeak": "Jengish Chokusu",
     "elevationMetres": 7439,
-    "name_it": "Tian Shan"
+    "name_it": "Tian Shan",
+    "name_pl": "Tienszan"
   },
   {
     "id": "altai",
@@ -132,7 +139,8 @@
     "lon": 87.0,
     "highestPeak": "Khuiten Peak",
     "elevationMetres": 4374,
-    "name_it": "Monti Altaj"
+    "name_it": "Monti Altaj",
+    "name_pl": "Ałtaj"
   },
   {
     "id": "caucasus",
@@ -149,7 +157,8 @@
     "lon": 44.0,
     "highestPeak": "Mount Elbrus",
     "elevationMetres": 5642,
-    "name_it": "Caucaso"
+    "name_it": "Caucaso",
+    "name_pl": "Kaukaz"
   },
   {
     "id": "pyrenees",
@@ -166,7 +175,8 @@
     "lon": 1.0,
     "highestPeak": "Aneto",
     "elevationMetres": 3404,
-    "name_it": "Pirenei"
+    "name_it": "Pirenei",
+    "name_pl": "Pireneje"
   },
   {
     "id": "carpathians",
@@ -183,7 +193,8 @@
     "lon": 22.0,
     "highestPeak": "Gerlachovský štít",
     "elevationMetres": 2655,
-    "name_it": "Carpazi"
+    "name_it": "Carpazi",
+    "name_pl": "Karpaty"
   },
   {
     "id": "appalachians",
@@ -196,6 +207,7 @@
     "name_eu": "Apalatxeak",
     "name_yua": "Apalaches",
     "name_it": "Monti Appalachi",
+    "name_pl": "Appalachy",
     "name_ko": "애팔래치아산맥",
     "continent": "North America",
     "lat": 38.0,
@@ -218,7 +230,8 @@
     "lon": -3.0,
     "highestPeak": "Toubkal",
     "elevationMetres": 4167,
-    "name_it": "Atlante"
+    "name_it": "Atlante",
+    "name_pl": "Atlas"
   },
   {
     "id": "drakensberg",
@@ -234,7 +247,8 @@
     "lon": 29.5,
     "highestPeak": "Thabana Ntlenyana",
     "elevationMetres": 3482,
-    "name_it": "Drakensberg"
+    "name_it": "Drakensberg",
+    "name_pl": "Góry Smocze"
   },
   {
     "id": "ethiopian-highlands",
@@ -250,7 +264,8 @@
     "lon": 38.0,
     "highestPeak": "Ras Dejen",
     "elevationMetres": 4550,
-    "name_it": "Altopiano Etiopico"
+    "name_it": "Altopiano Etiopico",
+    "name_pl": "Wyżyna Abisyńska"
   },
   {
     "id": "scandinavian-mountains",
@@ -267,7 +282,8 @@
     "lon": 14.0,
     "highestPeak": "Galdhøpiggen",
     "elevationMetres": 2469,
-    "name_it": "Alpi Scandinave"
+    "name_it": "Alpi Scandinave",
+    "name_pl": "Góry Skandynawskie"
   },
   {
     "id": "hindu-kush",
@@ -284,7 +300,8 @@
     "lon": 71.0,
     "highestPeak": "Tirich Mir",
     "elevationMetres": 7708,
-    "name_it": "Hindu Kush"
+    "name_it": "Hindu Kush",
+    "name_pl": "Hindukusz"
   },
   {
     "id": "karakoram",
@@ -301,7 +318,8 @@
     "lon": 76.5,
     "highestPeak": "K2",
     "elevationMetres": 8611,
-    "name_it": "Karakorum"
+    "name_it": "Karakorum",
+    "name_pl": "Karakorum"
   },
   {
     "id": "pamir",
@@ -317,7 +335,8 @@
     "lon": 73.0,
     "highestPeak": "Ibn Sina Peak",
     "elevationMetres": 7134,
-    "name_it": "Pamir"
+    "name_it": "Pamir",
+    "name_pl": "Pamir"
   },
   {
     "id": "sierra-nevada-us",
@@ -330,6 +349,7 @@
     "name_eu": "Sierra Nevada",
     "name_yua": "Sierra Nevada",
     "name_it": "Sierra Nevada",
+    "name_pl": "Sierra Nevada",
     "name_ko": "시에라네바다산맥",
     "continent": "North America",
     "lat": 37.0,
@@ -351,7 +371,8 @@
     "lon": 170.5,
     "highestPeak": "Aoraki/Mount Cook",
     "elevationMetres": 3724,
-    "name_it": "Alpi Meridionali"
+    "name_it": "Alpi Meridionali",
+    "name_pl": "Alpy Południowe"
   },
   {
     "id": "zagros",
@@ -368,7 +389,8 @@
     "lon": 48.0,
     "highestPeak": "Zard-Kuh",
     "elevationMetres": 4548,
-    "name_it": "Monti Zagros"
+    "name_it": "Monti Zagros",
+    "name_pl": "Zagros"
   },
   {
     "id": "eastern-rift-highlands",
@@ -384,6 +406,7 @@
     "lon": 37.0,
     "highestPeak": "Mount Kilimanjaro",
     "elevationMetres": 5895,
-    "name_it": "Altopiani della Rift Valley orientale"
+    "name_it": "Altopiani della Rift Valley orientale",
+    "name_pl": "Wyżyny Wielkiego Rowu Wschodnioafrykańskiego"
   }
 ]

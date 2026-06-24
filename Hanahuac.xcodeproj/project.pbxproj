@@ -91,6 +91,7 @@
 		89BAB351841F9FF51443F22D /* QuizPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEF2AEB96E37A3798632C4A8 /* QuizPlaceholderView.swift */; };
 		8BD76201C8B44BDBE5A83E8B /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C79D6B37134580FEAE9AD70 /* Country.swift */; };
 		8D0E371BF5449F8DC3E68A81 /* LearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A6378C2D06D307933A42E1 /* LearningTests.swift */; };
+		8DB08E6A36CAC6B4C88680B7 /* pl-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 882D6AE712297361946D1828 /* pl-geo.json */; settings = {ASSET_TAGS = ("lang-pl", ); }; };
 		8EC28E9B3B3424D6437ACFB1 /* BundledLanguagePackProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73A960F9B70EF0C0E0F8FB98 /* BundledLanguagePackProviderTests.swift */; };
 		8F98A26714D0217280C040A3 /* LanguageProgressSummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DF1997D1D5E7FDF0F9BAEC /* LanguageProgressSummary.swift */; };
 		8FF3959B891ECBCF499BCEE3 /* CardStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */; };
@@ -104,6 +105,7 @@
 		9A89BF6774EB44FC0EEA5D6E /* SyncStatusPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45793BEFAE16929E78F73B0A /* SyncStatusPresentationTests.swift */; };
 		9E799E4670DC8E021D1C97B9 /* MapQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE603D47A5DB8ED986C7F0 /* MapQuizSession.swift */; };
 		9F0CD581EDE922EAF670F9A8 /* MapLearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */; };
+		A475008BE35A94E1172D9B90 /* pl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 0E3A3AD118016349A7F1B544 /* pl.lproj */; settings = {ASSET_TAGS = ("lang-pl", ); }; };
 		A54C07542CE64CEBBD19E8C5 /* SyncStatusPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C111D9D119AAE2A508D7CA8 /* SyncStatusPresentation.swift */; };
 		A55A7B8A499DADAD6B91228F /* LanguageCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E9A0245D99D63AB926FF88 /* LanguageCatalog.swift */; };
 		A8993F9B6F5EE4D9BF4EB35F /* LanguagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7DF698B124B767490E9361E /* LanguagePickerView.swift */; };
@@ -182,6 +184,7 @@
 		0A0366476E524E78AE0F9CED /* ResourceRequesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRequesting.swift; sourceTree = "<group>"; };
 		0B0CB3D27BCC4041F5D39D95 /* GeoNamePackDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamePackDataTests.swift; sourceTree = "<group>"; };
 		0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerQuizModeMigratorTests.swift; sourceTree = "<group>"; };
+		0E3A3AD118016349A7F1B544 /* pl.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = pl.lproj; path = Hanahuac/pl.lproj; sourceTree = SOURCE_ROOT; };
 		0E44BA3720313476886D4F08 /* it-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "it-geo.json"; sourceTree = "<group>"; };
 		108E300896C44A17DFF98AED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
@@ -257,6 +260,7 @@
 		84BAC6DFF2E1635009C2DFF9 /* river-paths.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "river-paths.json"; sourceTree = "<group>"; };
 		84C61DE695089044C5369288 /* mountain-borders.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "mountain-borders.json"; sourceTree = "<group>"; };
 		879A10791B45594CB569EDAA /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		882D6AE712297361946D1828 /* pl-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "pl-geo.json"; sourceTree = "<group>"; };
 		8CFB005463FA4BC0CD7858BA /* PerLanguageProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerLanguageProgressTests.swift; sourceTree = "<group>"; };
 		8DB32874B4CD59E7A7B15526 /* ReviewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCard.swift; sourceTree = "<group>"; };
 		914F7F50B73E40FC2B62296E /* de.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = de.lproj; path = Hanahuac/de.lproj; sourceTree = SOURCE_ROOT; };
@@ -432,6 +436,7 @@
 				84C61DE695089044C5369288 /* mountain-borders.json */,
 				FDBB60735040472DC32CCCC4 /* mountains.json */,
 				092EDB83127EC04669B7E3A1 /* nah-geo.json */,
+				882D6AE712297361946D1828 /* pl-geo.json */,
 				84BAC6DFF2E1635009C2DFF9 /* river-paths.json */,
 				F11FD6C85244DEBF7904B118 /* rivers.json */,
 				B8BC8FDD71EB406D6A8DF545 /* sea-borders.json */,
@@ -584,6 +589,7 @@
 				7ADE4B399AC14E2CEF23B541 /* ko.lproj */,
 				59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */,
 				C7079D6DD469A5CC6D2878CC /* nah.lproj */,
+				0E3A3AD118016349A7F1B544 /* pl.lproj */,
 				09C983AE0A9C597DCF6A0311 /* PrivacyInfo.xcprivacy */,
 				02EDCEF7B89BAFA774D2290F /* Theme.swift */,
 				C1E3ECFE4BCCD433B25C93D4 /* yua.lproj */,
@@ -704,6 +710,7 @@
 					"lang-it",
 					"lang-ko",
 					"lang-nah",
+					"lang-pl",
 					"lang-yua",
 				);
 			};
@@ -756,6 +763,8 @@
 				746B09167C861A24BC5F5CB7 /* mountains.json in Resources */,
 				6387817434BAC4C1016817F7 /* nah-geo.json in Resources */,
 				7BC0431855EB513F66FF9F6F /* nah.lproj in Resources */,
+				8DB08E6A36CAC6B4C88680B7 /* pl-geo.json in Resources */,
+				A475008BE35A94E1172D9B90 /* pl.lproj in Resources */,
 				4FEB22C1D153658BE015CB42 /* river-paths.json in Resources */,
 				F27547F2B084E91E0D7BE4E1 /* rivers.json in Resources */,
 				5B59B89F003E80B24BAA470D /* sea-borders.json in Resources */,

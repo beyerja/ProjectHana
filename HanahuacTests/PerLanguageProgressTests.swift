@@ -136,6 +136,13 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.it, .en)
     }
 
+    /// Story 007: Polish keeps a progress track fully isolated from its English fallback target; they
+    /// are distinct language codes, so the same factID/day coexists across the two and Polish progress
+    /// never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForPolish() {
+        assertProgressIsolated(.pl, .en)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {
