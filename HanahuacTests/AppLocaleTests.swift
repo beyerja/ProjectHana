@@ -59,6 +59,20 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-ES")), .esMX)
     }
 
+    /// Yucatec Maya auto-detects its own device locale via the catalog code-lookup path (code `yua` ==
+    /// rawValue), without perturbing the es-* → es-MX mapping. Regression guard required by the story:
+    /// a `yua` device locale selects Yucatec Maya while every es-* device locale still defaults to
+    /// Mexican Spanish.
+    func testMatchingYucatecMayaDoesNotPerturbSpanish() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "yua")), .yua)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "yua-MX")), .yua)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "yua_MX")), .yua)
+        // es-* mapping is unperturbed by adding Yucatec Maya.
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-ES")), .esMX)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-MX")), .esMX)
+    }
+
     func testMatchingKorean() {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "ko")), .ko)
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "ko-KR")), .ko)
@@ -88,12 +102,13 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.esES.id, "es-ES")
         XCTAssertEqual(AppLocale.ca.id, "ca")
         XCTAssertEqual(AppLocale.eu.id, "eu")
+        XCTAssertEqual(AppLocale.yua.id, "yua")
         XCTAssertEqual(AppLocale.ko.id, "ko")
         XCTAssertEqual(AppLocale.nah.id, "nah")
     }
 
     func testAllCasesCount() {
-        XCTAssertEqual(AppLocale.allCases.count, 9)
+        XCTAssertEqual(AppLocale.allCases.count, 10)
     }
 
     /// es-ES is enumerated in the picker with its native display name "Español (España)" and sits
@@ -127,6 +142,17 @@ final class AppLocaleTests: XCTestCase {
         let caIndex = try XCTUnwrap(codes.firstIndex(of: "ca"))
         let euIndex = try XCTUnwrap(codes.firstIndex(of: "eu"))
         XCTAssertEqual(euIndex, caIndex + 1, "eu must immediately follow ca")
+    }
+
+    /// Yucatec Maya is enumerated in the picker with its native display name "Màaya t'àan" (graves and
+    /// glottal apostrophe preserved exactly) and sits immediately after eu, matching the catalog order.
+    func testYucatecMayaEnumeratedWithNativeDisplayName() throws {
+        XCTAssertTrue(AppLocale.allCases.contains(.yua))
+        XCTAssertEqual(AppLocale.yua.displayName, "Màaya t'àan")
+        let codes = AppLocale.allCases.map(\.rawValue)
+        let euIndex = try XCTUnwrap(codes.firstIndex(of: "eu"))
+        let yuaIndex = try XCTUnwrap(codes.firstIndex(of: "yua"))
+        XCTAssertEqual(yuaIndex, euIndex + 1, "yua must immediately follow eu")
     }
 
     /// The picker is driven by `allCases`, so the two new languages must be enumerated with their
@@ -185,6 +211,17 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertFalse(
             AppLocale.eu.fallsBackThroughSpanish,
             "eu routes through es-ES, not the es-MX that fallsBackThroughSpanish tracks"
+        )
+    }
+
+    /// Yucatec Maya (best-effort content) resolves UI strings through its own pack, then *Mexican*
+    /// Spanish (es-MX, NOT es-ES), then English — so unlike ca/eu it DOES route through the es-MX that
+    /// `fallsBackThroughSpanish` tracks.
+    func testBundleCandidatesForYucatecMayaGoThroughMexicanSpanishThenEnglish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .yua), ["yua", "es-MX", "en"])
+        XCTAssertTrue(
+            AppLocale.yua.fallsBackThroughSpanish,
+            "yua routes through es-MX, the route fallsBackThroughSpanish tracks"
         )
     }
 

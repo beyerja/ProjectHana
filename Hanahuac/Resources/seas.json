@@ -8,6 +8,7 @@
     "name_es_es": "Océano Pacífico",
     "name_ca": "Oceà Pacífic",
     "name_eu": "Ozeano Barea",
+    "name_yua": "K'áak'náab Pasífiko",
     "name_ko": "태평양",
     "name_nah": "Pacífico Hueyātl",
     "lat": 0.0,
@@ -22,6 +23,7 @@
     "name_es_es": "Océano Atlántico",
     "name_ca": "Oceà Atlàntic",
     "name_eu": "Ozeano Atlantikoa",
+    "name_yua": "K'áak'náab Atlántiko",
     "name_ko": "대서양",
     "lat": 0.0,
     "lon": -30.0
@@ -87,6 +89,7 @@
     "name_es_es": "Mar Caribe",
     "name_ca": "Mar Carib",
     "name_eu": "Karibe itsasoa",
+    "name_yua": "K'áak'náab Karibe",
     "name_ko": "카리브해",
     "name_nah": "Caribe Hueyātl",
     "lat": 15.0,
@@ -127,6 +130,7 @@
     "name_es_es": "Golfo de México",
     "name_ca": "Golf de Mèxic",
     "name_eu": "Mexikoko Golkoa",
+    "name_yua": "U Móol K'áak'náabil Mejiko",
     "name_ko": "멕시코만",
     "lat": 25.0,
     "lon": -90.0

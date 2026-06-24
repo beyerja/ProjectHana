@@ -122,6 +122,13 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.eu, .esES)
     }
 
+    /// Story 005: Yucatec Maya keeps a progress track fully isolated from its Spanish fallback target
+    /// (es-MX, NOT es-ES); they are distinct language codes, so the same factID/day coexists across the
+    /// two and yua progress never bleeds into the Mexican Spanish track it falls back through.
+    func testProgressIsolationForYucatecMaya() {
+        assertProgressIsolated(.yua, .esMX)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {

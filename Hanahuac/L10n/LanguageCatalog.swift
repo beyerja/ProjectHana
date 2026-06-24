@@ -8,7 +8,7 @@ import Foundation
 /// feasible, a matter of adding a ``LanguageDescriptor`` entry here.
 enum LanguageCatalog {
     /// All language descriptors, ordered to match ``AppLocale/allCases`` (en, fr, de, es-MX, es-ES,
-    /// ca, eu, ko, nah). The display names and fallback chains encode exactly the behavior of the
+    /// ca, eu, yua, ko, nah). The display names and fallback chains encode exactly the behavior of the
     /// former per-case `switch` statements in `AppLocale`.
     static let all: [LanguageDescriptor] = [
         LanguageDescriptor(
@@ -51,6 +51,15 @@ enum LanguageCatalog {
             code: AppLocale.eu.rawValue,
             displayName: "Euskara",
             fallbackChain: [.eu, .esES, .en],
+            availability: .downloadablePack
+        ),
+        // Yucatec Maya is a best-effort, fallback-permitted language: genuine gaps in its UI/geo
+        // content fall back through Mexican Spanish (es-MX) before English. It routes through es-MX
+        // (matching `fallsBackThroughSpanish`), not es-ES.
+        LanguageDescriptor(
+            code: AppLocale.yua.rawValue,
+            displayName: "Màaya t'àan",
+            fallbackChain: [.yua, .esMX, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
