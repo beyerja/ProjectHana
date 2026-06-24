@@ -1,0 +1,137 @@
+import XCTest
+
+/// The single generic, data-driven UI driver. It launches the Hanahuac app, ALWAYS emits an
+/// initial dump + screenshot (step 000), then executes each action from the loaded script in order,
+/// emitting a `NNN-step.png` + `NNN-step.json` artifact pair after EVERY step.
+///
+/// Element targeting is by accessibility LABEL first, falling back to `identifier` when one is
+/// supplied — so the driver works before story 002 introduces explicit accessibility identifiers.
+/// An empty or missing script is not an error: the app still launches and the initial artifacts are
+/// produced.
+final class UIDriverTests: XCTestCase {
+    /// How long to wait for a targeted element to appear before acting on it.
+    private let elementTimeout: TimeInterval = 10
+
+    override func setUp() {
+        super.setUp()
+        continueAfterFailure = false
+    }
+
+    /// Drive the app from the configured action script (or just produce the initial artifacts).
+    func testRunUIScript() {
+        let app = XCUIApplication()
+        app.launch()
+
+        let recorder = UIWalkthroughRecorder()
+        var stepIndex = 0
+
+        // Step 000: always capture the initial state before doing anything.
+        record(app: app, recorder: recorder, index: stepIndex)
+        stepIndex += 1
+
+        let steps = UIActionScriptLoader.load()
+        for step in steps {
+            perform(step, in: app)
+            record(app: app, recorder: recorder, index: stepIndex)
+            stepIndex += 1
+        }
+    }
+
+    /// Capture and persist the artifact pair for the current step.
+    private func record(app: XCUIApplication, recorder: UIWalkthroughRecorder, index: Int) {
+        let screenshot = XCUIScreen.main.screenshot()
+        recorder.record(index: index, app: app, screenshot: screenshot)
+    }
+
+    /// Execute one action against the app. Unresolvable targets are skipped (logged) rather than
+    /// failing the test, so artifact collection continues across the whole script.
+    private func perform(_ step: UIActionStep, in app: XCUIApplication) {
+        switch step.action {
+        case .tap:
+            tap(step, in: app)
+        case .typeText:
+            typeText(step, in: app)
+        case .mapTap:
+            mapTap(step, in: app)
+        case .swipe, .scroll:
+            swipe(step, in: app)
+        case .wait:
+            wait(step)
+        case .dumpTree, .screenshot:
+            // Both are realized by the artifact emission that follows every step; no extra action.
+            break
+        }
+    }
+
+    /// Tap the element resolved by label/identifier, if any.
+    private func tap(_ step: UIActionStep, in app: XCUIApplication) {
+        guard let element = resolveElement(step, in: app) else {
+            return
+        }
+        if element.waitForExistence(timeout: elementTimeout) {
+            element.tap()
+        }
+    }
+
+    /// Type into the resolved element (falling back to the app's first text field).
+    private func typeText(_ step: UIActionStep, in app: XCUIApplication) {
+        guard let text = step.text else {
+            return
+        }
+        let element = resolveElement(step, in: app) ?? app.textFields.firstMatch
+        if element.waitForExistence(timeout: elementTimeout) {
+            element.tap()
+            element.typeText(text)
+        }
+    }
+
+    /// Tap a normalized (0...1) coordinate within the app frame — used for map interactions where
+    /// there is no addressable accessibility element.
+    private func mapTap(_ step: UIActionStep, in app: XCUIApplication) {
+        let normX = step.x ?? 0.5
+        let normY = step.y ?? 0.5
+        let coordinate = app.coordinate(
+            withNormalizedOffset: CGVector(dx: normX, dy: normY)
+        )
+        coordinate.tap()
+    }
+
+    /// Swipe/scroll the resolved element (or the whole app) in the requested direction.
+    private func swipe(_ step: UIActionStep, in app: XCUIApplication) {
+        let element = resolveElement(step, in: app) ?? app
+        switch step.direction ?? .up {
+        case .up:
+            element.swipeUp()
+        case .down:
+            element.swipeDown()
+        case .left:
+            element.swipeLeft()
+        case .right:
+            element.swipeRight()
+        }
+    }
+
+    /// Sleep for the requested number of seconds.
+    private func wait(_ step: UIActionStep) {
+        let seconds = step.seconds ?? 0
+        if seconds > 0 {
+            Thread.sleep(forTimeInterval: seconds)
+        }
+    }
+
+    /// Resolve a target element by accessibility label first, then identifier. Returns `nil` when
+    /// the step specifies no target (e.g. `mapTap`, `wait`).
+    private func resolveElement(_ step: UIActionStep, in app: XCUIApplication) -> XCUIElement? {
+        if let label = step.label, !label.isEmpty {
+            return app.descendants(matching: .any)
+                .matching(NSPredicate(format: "label == %@", label))
+                .firstMatch
+        }
+        if let identifier = step.identifier, !identifier.isEmpty {
+            return app.descendants(matching: .any)
+                .matching(identifier: identifier)
+                .firstMatch
+        }
+        return nil
+    }
+}
