@@ -113,6 +113,7 @@
 		AEC45EB17BDE7F455C1CB7AE /* GeographyDataLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26B665E21544429420E8 /* GeographyDataLoaderTests.swift */; };
 		B0632565DFC723E523F01B3F /* MapFeatureRendering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F40EAE285B31D3FD21213A /* MapFeatureRendering.swift */; };
 		B144EBDC8C5F79A95B883FB5 /* AppLocaleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C96CAC8649DD9B837C7678 /* AppLocaleTests.swift */; };
+		B323DE15C6A7FD8386BB4F4C /* it.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 00CFDAEBF02277DDE8489F2B /* it.lproj */; settings = {ASSET_TAGS = ("lang-it", ); }; };
 		B9F99F753E98BB7121C19491 /* PerLanguageProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFB005463FA4BC0CD7858BA /* PerLanguageProgressTests.swift */; };
 		BA9F86D25D36EC9DB6C4AB1A /* StatsChartsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EDD77E9938F36A3D49A28DB /* StatsChartsSection.swift */; };
 		BB99B4010E585B0F52DA6C66 /* GeoNamePackDataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0CB3D27BCC4041F5D39D95 /* GeoNamePackDataTests.swift */; };
@@ -156,6 +157,7 @@
 		F5FC0DE759E57E9892B08EE5 /* MapQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE10D9C12442D7186628F76 /* MapQuizView.swift */; };
 		F6BD6C2593294C58CA94A3C2 /* QuizModeDimensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C449FCC798C1C634D548006 /* QuizModeDimensionTests.swift */; };
 		F85BD5459DFBA29F33879E88 /* CapitalQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */; };
+		F8EFCA2D9C90D34BEDBA55F9 /* it-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 0E44BA3720313476886D4F08 /* it-geo.json */; settings = {ASSET_TAGS = ("lang-it", ); }; };
 		FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */; };
 		FD15DC32B3786C1FDFCFD9D0 /* LanguagePickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E121E5EFCFF7540FBBF8ED76 /* LanguagePickerViewModelTests.swift */; };
 		FE56A7EE206BE3573E5980B7 /* LanguagePickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC9CA1C0AAF0A663E0C337CA /* LanguagePickerViewModel.swift */; };
@@ -172,6 +174,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00CFDAEBF02277DDE8489F2B /* it.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = it.lproj; path = Hanahuac/it.lproj; sourceTree = SOURCE_ROOT; };
 		02EDCEF7B89BAFA774D2290F /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		03855B642B11712EBF8D668F /* GeoNamePackLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamePackLoader.swift; sourceTree = "<group>"; };
 		092EDB83127EC04669B7E3A1 /* nah-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "nah-geo.json"; sourceTree = "<group>"; };
@@ -179,6 +182,7 @@
 		0A0366476E524E78AE0F9CED /* ResourceRequesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRequesting.swift; sourceTree = "<group>"; };
 		0B0CB3D27BCC4041F5D39D95 /* GeoNamePackDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamePackDataTests.swift; sourceTree = "<group>"; };
 		0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerQuizModeMigratorTests.swift; sourceTree = "<group>"; };
+		0E44BA3720313476886D4F08 /* it-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "it-geo.json"; sourceTree = "<group>"; };
 		108E300896C44A17DFF98AED /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		11DC59524527356C61A7E89A /* MultipleChoiceQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceQuizView.swift; sourceTree = "<group>"; };
 		132EB6CB2BB0B527A3C57527 /* StatsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsTests.swift; sourceTree = "<group>"; };
@@ -423,6 +427,7 @@
 				844AD7737C3B1AF2ADD13652 /* es-ES-geo.json */,
 				216F1F4D78EFF82D3CE73D9A /* eu-geo.json */,
 				15181AFEEE68CF6893526623 /* fr-geo.json */,
+				0E44BA3720313476886D4F08 /* it-geo.json */,
 				77724605CACC6F9A9E197D32 /* ko-geo.json */,
 				84C61DE695089044C5369288 /* mountain-borders.json */,
 				FDBB60735040472DC32CCCC4 /* mountains.json */,
@@ -575,6 +580,7 @@
 				B99505496919172243B0FC44 /* eu.lproj */,
 				302E69CA8F8A5505BFDE51D8 /* fr.lproj */,
 				2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */,
+				00CFDAEBF02277DDE8489F2B /* it.lproj */,
 				7ADE4B399AC14E2CEF23B541 /* ko.lproj */,
 				59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */,
 				C7079D6DD469A5CC6D2878CC /* nah.lproj */,
@@ -695,6 +701,7 @@
 					"lang-es-ES",
 					"lang-eu",
 					"lang-fr",
+					"lang-it",
 					"lang-ko",
 					"lang-nah",
 					"lang-yua",
@@ -741,6 +748,8 @@
 				81967D796EFCDD9468097BC5 /* eu.lproj in Resources */,
 				309035D2F69D964EACAD368A /* fr-geo.json in Resources */,
 				5C9AE701A623D168FD104C73 /* fr.lproj in Resources */,
+				F8EFCA2D9C90D34BEDBA55F9 /* it-geo.json in Resources */,
+				B323DE15C6A7FD8386BB4F4C /* it.lproj in Resources */,
 				EF399C6CE4645047AE6EF6CF /* ko-geo.json in Resources */,
 				6BA44FFECDF2C8813A7C674C /* ko.lproj in Resources */,
 				4486112118500A5A7BDB8E5F /* mountain-borders.json in Resources */,

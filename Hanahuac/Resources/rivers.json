@@ -9,6 +9,7 @@
     "name_ca": "Nil",
     "name_eu": "Nilo",
     "name_yua": "Nilo",
+    "name_it": "Nilo",
     "name_ko": "나일강",
     "continent": "Africa",
     "sourceLat": 4.0,
@@ -26,6 +27,7 @@
     "name_ca": "Amazones",
     "name_eu": "Amazonas",
     "name_yua": "Amasonas",
+    "name_it": "Rio delle Amazzoni",
     "name_ko": "아마존강",
     "name_nah": "Amazonas Ātōyātl",
     "continent": "South America",
@@ -48,7 +50,8 @@
     "sourceLat": 32.7,
     "sourceLon": 90.8,
     "mouthLat": 31.4,
-    "mouthLon": 121.7
+    "mouthLon": 121.7,
+    "name_it": "Fiume Azzurro"
   },
   {
     "id": "mississippi",
@@ -60,6 +63,7 @@
     "name_ca": "Mississipí",
     "name_eu": "Mississippi",
     "name_yua": "Misisipi",
+    "name_it": "Mississippi",
     "name_ko": "미시시피강",
     "name_nah": "Mississippi Ātōyātl",
     "continent": "North America",
@@ -81,7 +85,8 @@
     "sourceLat": 50.5,
     "sourceLon": 92.0,
     "mouthLat": 71.8,
-    "mouthLon": 82.5
+    "mouthLon": 82.5,
+    "name_it": "Enisej"
   },
   {
     "id": "yellow-river",
@@ -97,7 +102,8 @@
     "sourceLat": 35.1,
     "sourceLon": 95.9,
     "mouthLat": 37.8,
-    "mouthLon": 119.1
+    "mouthLon": 119.1,
+    "name_it": "Fiume Giallo"
   },
   {
     "id": "ob",
@@ -112,7 +118,8 @@
     "sourceLat": 49.5,
     "sourceLon": 87.0,
     "mouthLat": 66.6,
-    "mouthLon": 69.2
+    "mouthLon": 69.2,
+    "name_it": "Ob'"
   },
   {
     "id": "congo",
@@ -128,7 +135,8 @@
     "sourceLat": -11.4,
     "sourceLon": 29.7,
     "mouthLat": -6.1,
-    "mouthLon": 12.4
+    "mouthLon": 12.4,
+    "name_it": "Congo"
   },
   {
     "id": "lena",
@@ -143,7 +151,8 @@
     "sourceLat": 53.4,
     "sourceLon": 108.1,
     "mouthLat": 72.4,
-    "mouthLon": 126.7
+    "mouthLon": 126.7,
+    "name_it": "Lena"
   },
   {
     "id": "niger",
@@ -159,7 +168,8 @@
     "sourceLat": 9.2,
     "sourceLon": -13.0,
     "mouthLat": 4.5,
-    "mouthLon": 6.5
+    "mouthLon": 6.5,
+    "name_it": "Niger"
   },
   {
     "id": "mekong",
@@ -175,7 +185,8 @@
     "sourceLat": 33.4,
     "sourceLon": 94.8,
     "mouthLat": 9.7,
-    "mouthLon": 106.3
+    "mouthLon": 106.3,
+    "name_it": "Mekong"
   },
   {
     "id": "missouri",
@@ -190,7 +201,8 @@
     "sourceLat": 44.6,
     "sourceLon": -110.3,
     "mouthLat": 38.8,
-    "mouthLon": -90.1
+    "mouthLon": -90.1,
+    "name_it": "Missouri"
   },
   {
     "id": "volga",
@@ -206,7 +218,8 @@
     "sourceLat": 57.3,
     "sourceLon": 32.5,
     "mouthLat": 45.7,
-    "mouthLon": 47.9
+    "mouthLon": 47.9,
+    "name_it": "Volga"
   },
   {
     "id": "zambezi",
@@ -221,7 +234,8 @@
     "sourceLat": -11.4,
     "sourceLon": 24.3,
     "mouthLat": -18.9,
-    "mouthLon": 36.0
+    "mouthLon": 36.0,
+    "name_it": "Zambesi"
   },
   {
     "id": "ganges",
@@ -237,7 +251,8 @@
     "sourceLat": 30.9,
     "sourceLon": 79.1,
     "mouthLat": 22.5,
-    "mouthLon": 90.5
+    "mouthLon": 90.5,
+    "name_it": "Gange"
   },
   {
     "id": "indus",
@@ -253,7 +268,8 @@
     "sourceLat": 32.5,
     "sourceLon": 80.3,
     "mouthLat": 23.5,
-    "mouthLon": 68.2
+    "mouthLon": 68.2,
+    "name_it": "Indo"
   },
   {
     "id": "murray",
@@ -268,7 +284,8 @@
     "sourceLat": -37.4,
     "sourceLon": 148.4,
     "mouthLat": -35.6,
-    "mouthLon": 139.3
+    "mouthLon": 139.3,
+    "name_it": "Murray"
   },
   {
     "id": "euphrates",
@@ -284,7 +301,8 @@
     "sourceLat": 38.7,
     "sourceLon": 38.8,
     "mouthLat": 30.0,
-    "mouthLon": 47.8
+    "mouthLon": 47.8,
+    "name_it": "Eufrate"
   },
   {
     "id": "tigris",
@@ -300,7 +318,8 @@
     "sourceLat": 38.6,
     "sourceLon": 39.8,
     "mouthLat": 30.0,
-    "mouthLon": 47.8
+    "mouthLon": 47.8,
+    "name_it": "Tigri"
   },
   {
     "id": "rhine",
@@ -316,7 +335,8 @@
     "sourceLat": 46.8,
     "sourceLon": 9.1,
     "mouthLat": 51.9,
-    "mouthLon": 4.5
+    "mouthLon": 4.5,
+    "name_it": "Reno"
   },
   {
     "id": "danube",
@@ -332,7 +352,8 @@
     "sourceLat": 47.9,
     "sourceLon": 8.2,
     "mouthLat": 45.2,
-    "mouthLon": 29.7
+    "mouthLon": 29.7,
+    "name_it": "Danubio"
   },
   {
     "id": "colorado",
@@ -344,6 +365,7 @@
     "name_ca": "Colorado",
     "name_eu": "Colorado",
     "name_yua": "Kolorado",
+    "name_it": "Colorado",
     "name_ko": "콜로라도강",
     "continent": "North America",
     "sourceLat": 40.5,
@@ -364,7 +386,8 @@
     "sourceLat": 50.1,
     "sourceLon": -115.6,
     "mouthLat": 46.2,
-    "mouthLon": -124.1
+    "mouthLon": -124.1,
+    "name_it": "Columbia"
   },
   {
     "id": "irrawaddy",
@@ -379,7 +402,8 @@
     "sourceLat": 26.0,
     "sourceLon": 98.0,
     "mouthLat": 15.5,
-    "mouthLon": 95.1
+    "mouthLon": 95.1,
+    "name_it": "Irrawaddy"
   },
   {
     "id": "orange",
@@ -394,7 +418,8 @@
     "sourceLat": -29.4,
     "sourceLon": 28.5,
     "mouthLat": -28.6,
-    "mouthLon": 16.5
+    "mouthLon": 16.5,
+    "name_it": "Orange"
   },
   {
     "id": "parana",
@@ -406,6 +431,7 @@
     "name_ca": "Paranà",
     "name_eu": "Parana",
     "name_yua": "Parana",
+    "name_it": "Paraná",
     "name_ko": "파라나강",
     "continent": "South America",
     "sourceLat": -14.3,
@@ -427,7 +453,8 @@
     "sourceLat": 49.7,
     "sourceLon": 117.0,
     "mouthLat": 53.1,
-    "mouthLon": 141.0
+    "mouthLon": 141.0,
+    "name_it": "Amur"
   },
   {
     "id": "dnieper",
@@ -443,7 +470,8 @@
     "sourceLat": 55.9,
     "sourceLon": 33.9,
     "mouthLat": 46.5,
-    "mouthLon": 32.5
+    "mouthLon": 32.5,
+    "name_it": "Dnepr"
   },
   {
     "id": "senegal-river",
@@ -459,7 +487,8 @@
     "sourceLat": 13.5,
     "sourceLon": -11.5,
     "mouthLat": 15.9,
-    "mouthLon": -16.5
+    "mouthLon": -16.5,
+    "name_it": "Senegal"
   },
   {
     "id": "orinoco",
@@ -471,6 +500,7 @@
     "name_ca": "Orinoco",
     "name_eu": "Orinoco",
     "name_yua": "Orinoko",
+    "name_it": "Orinoco",
     "name_ko": "오리노코강",
     "continent": "South America",
     "sourceLat": 7.8,
@@ -492,7 +522,8 @@
     "sourceLat": -20.7,
     "sourceLon": -45.1,
     "mouthLat": -10.5,
-    "mouthLon": -36.5
+    "mouthLon": -36.5,
+    "name_it": "São Francisco"
   },
   {
     "id": "tocantins",
@@ -507,6 +538,7 @@
     "sourceLat": -15.6,
     "sourceLon": -49.3,
     "mouthLat": -1.5,
-    "mouthLon": -48.5
+    "mouthLon": -48.5,
+    "name_it": "Tocantins"
   }
 ]

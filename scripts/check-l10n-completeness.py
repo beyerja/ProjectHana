@@ -5,7 +5,7 @@ Parses every ``Hanahuac/<code>.lproj/Localizable.strings`` and enforces:
 
   (a) The canonical key set is the UNION of all keys found across every locale.
   (b) Every BASE / always-bundled locale (en, es-MX) and every fully-translated downloadable
-      locale (de, fr, es-ES, ko) must contain the FULL canonical key set. Any missing key fails the
+      locale (de, fr, es-ES, it, ko) must contain the FULL canonical key set. Any missing key fails the
       check, listing the offending locale + keys.
   (c) ``nah`` is allowed to be a PARTIAL subset: the established nah -> es-MX -> en fallback
       convention (see Hanahuac/L10n/L10n.swift bundleCandidates) serves any missing nah key from
@@ -32,9 +32,10 @@ from pathlib import Path
 # Base / always-bundled locales: must be 100% complete.
 BASE_LOCALES = ("en", "es-MX")
 # Fully-translated downloadable locales: must be 100% complete.
-# es-ES (Castilian) ships a complete UI string set (its feature contract asserts no missing keys),
-# so it is held to the full canonical set like de/fr/ko — NOT treated as a fallback-partial locale.
-FULL_LOCALES = ("de", "fr", "es-ES", "ko")
+# es-ES (Castilian) and it (Italian) ship a complete UI string set (their feature contracts assert no
+# missing keys), so each is held to the full canonical set like de/fr/ko — NOT treated as a
+# fallback-partial locale.
+FULL_LOCALES = ("de", "fr", "es-ES", "it", "ko")
 # Partial-by-design locale: allowed to be a subset (nah -> es-MX -> en fallback convention).
 PARTIAL_LOCALES = ("nah",)
 
@@ -81,6 +82,14 @@ IDENTICAL_VALUE_ALLOWLIST: set[tuple[str, str]] = {
     ("es-ES", "settings.section.general"),
     ("es-ES", "settings.section.icloud"),
     ("es-ES", "settings.sync.status.error"),
+    # it (Italian) shared strings: the continent proper nouns "Africa"/"Asia"/"Oceania" are spelled
+    # identically in Italian, "iCloud" is an Apple brand, and "%d / 3" is a pure format string — all
+    # legitimately identical to English, not untranslated stubs.
+    ("it", "continent.africa"),
+    ("it", "continent.asia"),
+    ("it", "continent.oceania"),
+    ("it", "settings.section.icloud"),
+    ("it", "learn_map.streak"),
 }
 
 

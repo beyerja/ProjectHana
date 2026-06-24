@@ -410,4 +410,21 @@ final class L10nBundleResolutionTests: XCTestCase {
     func testYucatecBundleCandidatesRouteThroughMexicanSpanish() {
         XCTAssertEqual(L10n.bundleCandidates(for: .yua), ["yua", "es-MX", "en"])
     }
+
+    // MARK: - Italian (COMPLETE content; it → en)
+
+    /// Italian is a COMPLETE-content language: its candidate chain goes straight to en, with NO Spanish
+    /// hop. Because Italian leaves no intentional gaps there is no gap-key fallback test; en is only an
+    /// ultimate, never-hit safety net.
+    func testItalianBundleCandidatesGoStraightToEnglish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .it), ["it", "en"])
+    }
+
+    /// A representative Italian key is served from the it pack itself (not a fallback), proving the
+    /// pack carries real translated content.
+    func testItalianTranslatedKey_servedFromItalianPack() throws {
+        let it = try ODRTestSupport.lprojBundle(for: .it)
+        XCTAssertEqual(it.localizedString(forKey: "home.categories", value: nil, table: nil), "Categorie")
+        XCTAssertEqual(it.localizedString(forKey: "settings.language", value: nil, table: nil), "Lingua")
+    }
 }
