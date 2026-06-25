@@ -5,7 +5,7 @@
 #
 # Checks (all fail the script non-zero):
 #   1. The generated Xcode project declares exactly the expected `lang-<code>` asset tags
-#      (lang-fr, lang-de, lang-es-ES, lang-ca, lang-eu, lang-yua, lang-it, lang-pl, lang-nl, lang-ko, lang-nah) — the contract from
+#      (lang-fr, lang-de, lang-es-ES, lang-ca, lang-eu, lang-yua, lang-it, lang-pl, lang-nl, lang-sr, lang-ko, lang-nah) — the contract from
 #      LanguageDescriptor.odrTags — and
 #      assigns each non-base `.lproj` + its `<code>-geo.json` to the matching tag.
 #   2. The base languages (en, es-MX) carry NO asset tag (always bundled).
@@ -23,7 +23,7 @@ RESOURCES="${ROOT}/Hanahuac/Resources"
 
 # The ODR tag contract: downloadable language code -> tag. Base languages (en, es-MX) are absent on
 # purpose — they must NOT be tagged.
-LANG_CODES=(fr de es-ES ca eu yua it pl nl ko nah)
+LANG_CODES=(fr de es-ES ca eu yua it pl nl sr ko nah)
 
 fail() {
     echo "FAIL: $*" >&2

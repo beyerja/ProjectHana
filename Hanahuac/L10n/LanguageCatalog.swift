@@ -8,7 +8,7 @@ import Foundation
 /// feasible, a matter of adding a ``LanguageDescriptor`` entry here.
 enum LanguageCatalog {
     /// All language descriptors, ordered to match ``AppLocale/allCases`` (en, fr, de, es-MX, es-ES,
-    /// ca, eu, yua, it, pl, nl, ko, nah). The display names and fallback chains encode exactly the
+    /// ca, eu, yua, it, pl, nl, sr, ko, nah). The display names and fallback chains encode exactly the
     /// behavior of the former per-case `switch` statements in `AppLocale`.
     static let all: [LanguageDescriptor] = [
         LanguageDescriptor(
@@ -87,6 +87,21 @@ enum LanguageCatalog {
             code: AppLocale.nl.rawValue,
             displayName: "Nederlands",
             fallbackChain: [.nl, .en],
+            availability: .downloadablePack
+        ),
+        // Serbian is a COMPLETE-content language: its UI strings and geo names are fully translated,
+        // so its fallback chain routes straight to English as an ultimate, never-hit safety net
+        // (NOT through es-MX/es-ES like the best-effort languages).
+        //
+        // Script decision — Cyrillic ("Српски"): Serbian is officially digraphic, but Cyrillic is the
+        // constitutionally designated official script of Serbian (Article 10 of the Constitution of
+        // Serbia). Authoritative geographic names (country/capital/river/mountain/sea exonyms) are
+        // best served by the official script, so all `sr` content — display name and geo data — is
+        // authored in Cyrillic rather than Latin transliteration (feature spec §5).
+        LanguageDescriptor(
+            code: AppLocale.sr.rawValue,
+            displayName: "Српски",
+            fallbackChain: [.sr, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(

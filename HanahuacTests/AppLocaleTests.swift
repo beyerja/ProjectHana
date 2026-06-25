@@ -110,6 +110,18 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-MX")), .esMX)
     }
 
+    /// Serbian (Cyrillic) auto-detects its own device locale via the catalog code-lookup path
+    /// (code `sr` == rawValue), without perturbing the es-* → es-MX mapping.
+    func testMatchingSerbianDoesNotPerturbSpanish() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "sr")), .sr)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "sr-RS")), .sr)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "sr_RS")), .sr)
+        // es-* mapping is unperturbed by adding Serbian.
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-419")), .esMX)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es-MX")), .esMX)
+    }
+
     func testMatchingKorean() {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "ko")), .ko)
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "ko-KR")), .ko)
@@ -143,12 +155,13 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.it.id, "it")
         XCTAssertEqual(AppLocale.pl.id, "pl")
         XCTAssertEqual(AppLocale.nl.id, "nl")
+        XCTAssertEqual(AppLocale.sr.id, "sr")
         XCTAssertEqual(AppLocale.ko.id, "ko")
         XCTAssertEqual(AppLocale.nah.id, "nah")
     }
 
     func testAllCasesCount() {
-        XCTAssertEqual(AppLocale.allCases.count, 13)
+        XCTAssertEqual(AppLocale.allCases.count, 14)
     }
 
     /// es-ES is enumerated in the picker with its native display name "Español (España)" and sits
@@ -237,15 +250,32 @@ final class AppLocaleTests: XCTestCase {
         let codes = AppLocale.allCases.map(\.rawValue)
         let plIndex = try XCTUnwrap(codes.firstIndex(of: "pl"))
         let nlIndex = try XCTUnwrap(codes.firstIndex(of: "nl"))
-        let koIndex = try XCTUnwrap(codes.firstIndex(of: "ko"))
         XCTAssertEqual(nlIndex, plIndex + 1, "nl must immediately follow pl")
-        XCTAssertEqual(koIndex, nlIndex + 1, "nl must immediately precede ko")
     }
 
     /// Dutch is COMPLETE content, so its UI-string candidate chain goes straight to English with no
     /// Spanish hop.
     func testBundleCandidatesForDutchGoStraightToEnglish() {
         XCTAssertEqual(L10n.bundleCandidates(for: .nl), ["nl", "en"])
+    }
+
+    /// Serbian (Cyrillic) is enumerated in the picker with its native display name "Српски" and sits
+    /// immediately after nl and immediately before ko, matching the catalog order.
+    func testSerbianEnumeratedWithNativeDisplayName() throws {
+        XCTAssertTrue(AppLocale.allCases.contains(.sr))
+        XCTAssertEqual(AppLocale.sr.displayName, "Српски")
+        let codes = AppLocale.allCases.map(\.rawValue)
+        let nlIndex = try XCTUnwrap(codes.firstIndex(of: "nl"))
+        let srIndex = try XCTUnwrap(codes.firstIndex(of: "sr"))
+        let koIndex = try XCTUnwrap(codes.firstIndex(of: "ko"))
+        XCTAssertEqual(srIndex, nlIndex + 1, "sr must immediately follow nl")
+        XCTAssertEqual(koIndex, srIndex + 1, "sr must immediately precede ko")
+    }
+
+    /// Serbian is COMPLETE content, so its UI-string candidate chain goes straight to English with no
+    /// Spanish hop.
+    func testBundleCandidatesForSerbianGoStraightToEnglish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .sr), ["sr", "en"])
     }
 
     /// The picker is driven by `allCases`, so the two new languages must be enumerated with their
