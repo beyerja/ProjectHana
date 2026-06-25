@@ -59,10 +59,10 @@ You always also post the human-readable comments — both allowed even on your o
 - **Inline, line-level comments** on the diff, posted by `/code-review --comment` (as the plain `gh` user).
 - A single **issue-level summary comment** carrying a stable marker (see below).
 
-The **formal GitHub review state** (`APPROVE` / `REQUEST_CHANGES`) under the `Hanahuac-Bot` identity is
-**NOT** submitted here — the orchestrator spawns the `code-owner-review` agent after an APPROVED verdict to
-review independently and submit the formal state. (On `CHANGES_REQUESTED`, the orchestrator loops back to
-the implementer and never reaches the submission step.)
+The **formal merge gate** — the required `code-owner-review` status check posted by the GitHub App — is
+**NOT** set here. The orchestrator spawns the `code-owner-review` agent after an APPROVED verdict to review
+independently and post that check. (On `CHANGES_REQUESTED`, the orchestrator loops back to the implementer
+and never reaches the gate-check step.)
 
 ## Steps
 
