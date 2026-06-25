@@ -21,6 +21,7 @@ struct SettingsView: View {
                             .foregroundStyle(.tertiary)
                     }
                 }
+                .accessibilityIdentifier("settings.language")
             }
 
             Section {
@@ -30,6 +31,7 @@ struct SettingsView: View {
                 )) {
                     Text(L10n["settings.sync.toggle"])
                 }
+                .accessibilityIdentifier("settings.syncToggle")
                 .disabled(!SyncStatusPresentation.isToggleEnabled(for: sync.status))
 
                 HStack {

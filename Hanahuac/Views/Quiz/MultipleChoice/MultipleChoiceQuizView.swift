@@ -92,7 +92,7 @@ struct MultipleChoiceQuizView: View {
 
     private func optionButtons(session: MultipleChoiceSession) -> some View {
         VStack(spacing: 12) {
-            ForEach(session.current?.options ?? []) { option in
+            ForEach(Array((session.current?.options ?? []).enumerated()), id: \.element.id) { index, option in
                 Button {
                     guard !isAdvancing else { return }
                     session.select(optionID: option.id)
@@ -109,6 +109,7 @@ struct MultipleChoiceQuizView: View {
                         .foregroundStyle(buttonForeground(for: option, in: session))
                 }
                 .disabled(session.answerState != .unanswered || isAdvancing)
+                .accessibilityIdentifier("quiz.answer.\(index)")
                 .accessibilityLabel(option.label)
                 .accessibilityValue(optionStateValue(for: option, in: session))
                 .accessibilityAddTraits(isSelected(option, in: session) ? .isSelected : [])

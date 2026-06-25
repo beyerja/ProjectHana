@@ -215,6 +215,7 @@ struct CapitalQuizView: View {
                     .submitLabel(.done)
                     .autocorrectionDisabled()
                     .neverAutocapitalize()
+                    .accessibilityIdentifier("quiz.input")
                     .accessibilityLabel(L10n["a11y.answer_field.label"])
                     .accessibilityHint(L10n["a11y.answer_field.hint"])
                 Button(L10n["capital_quiz.check"]) { onCheck(inputText) }
@@ -227,6 +228,7 @@ struct CapitalQuizView: View {
                     )
                     .foregroundStyle(.white)
                     .disabled(inputText.isEmpty)
+                    .accessibilityIdentifier("quiz.submit")
                     .accessibilityHint(L10n["a11y.check.hint"])
             }
             .onAppear { fieldFocused = true }
