@@ -38,29 +38,31 @@ The driver always emits step `000` (the post-launch initial state), then a `NNN-
 | 010  | `scroll` direction `down`                    | Quiz — scroll/swipe gesture on the quiz view.                   |
 | 011  | `wait` 1s                                    | Quiz — settle.                                                  |
 | 012  | `tap` label `Salir` (Exit)                   | **Home** — label-targeted tap dismisses the quiz back to Home.  |
-| 013  | `wait` 2s                                    | **Settings** — opens after the settings tap registers.          |
-| 014  | `wait` 2s                                    | **Settings** — "Ajustes": General / Idioma + iCloud sync.       |
-| 015  | `screenshot`                                 | **Settings** — explicit final screenshot marker.                |
-| 016  | (final artifact for step 015)                | **Settings**.                                                   |
+| 013  | `wait` 2s                                    | **Home** — settle before the settings tap (byte-identical to 000). |
+| 014  | `tap` identifier `home.settings`             | **Settings** — "Ajustes": General / Idioma + iCloud sync.       |
+| 015  | `wait` 2s                                    | **Settings** — settle after navigation.                         |
+| 016  | `screenshot`                                 | **Settings** — explicit final screenshot marker.                |
 
-> Step 013 is the artifact captured immediately after the `tap` identifier `home.settings` step;
-> the Settings screen is fully visible by step 014/015.
+> Artifact `NNN-step.png` reflects the state **after** the NNN-th scripted action (artifact `000` is the
+> post-launch initial state). The `tap` identifier `home.settings` is the 14th action, so its effect
+> first appears in artifact `014-step.png`; artifact `013-step.png` still shows Home (it is
+> byte-identical to `000-step.png`). The Settings screen remains visible through `015`/`016`.
 
 ## Supported actions exercised (collectively, across the run)
 
 | Action               | Step(s)        |
 | -------------------- | -------------- |
-| `tap` by identifier  | 003, 006, 013  |
+| `tap` by identifier  | 003, 006, 014  |
 | `tap` by label       | 012 ("Salir")  |
 | `typeText`           | 008            |
 | `mapTap` (normalized)| 009            |
 | `swipe` / `scroll`   | 010            |
-| `wait`               | 004, 007, 011, 013, 014 |
+| `wait`               | 004, 007, 011, 013, 015 |
 | `dumpTree`           | 001, 005       |
-| `screenshot`         | 002, 015       |
+| `screenshot`         | 002, 016       |
 
 ## Key distinct screens (open the PNGs to verify)
 
-- `000-step.png`, `002-step.png`, `012-step.png` — **Home**.
+- `000-step.png`, `002-step.png`, `012-step.png`, `013-step.png` — **Home** (`013` is byte-identical to `000`).
 - `003-step.png`, `006-step.png` — **Multiple Choice quiz** (006 shows the answer feedback).
-- `013-step.png`, `015-step.png` — **Settings**.
+- `014-step.png`, `015-step.png`, `016-step.png` — **Settings**.
