@@ -7,20 +7,26 @@ Manage all state under `.workflow/`. Create the directory on first run. Append e
 
 ## Step 0 — Worktree setup (automatic isolation; no manual user action)
 
-So multiple feature workflows can run in parallel without colliding, each run gets its own git
-worktree. Do this before any other step:
+So multiple feature workflows can run in parallel without colliding, **every** run gets its own git
+worktree — including runs that edit the workflow tooling itself. There is no in-place / "meta run"
+exception: a worktree never surprises the user by silently running in the primary checkout. Do this
+before any other step:
 
 1. Derive a feature slug from the feature request (lowercase, hyphenated, e.g.
    `worktree-parallel-workflows`). This single slug is the shared id for the worktree, the branch
    namespace (`story/<slug>/…`, `chore/<slug>/…`), build isolation (`HANA_FEATURE_SLUG` → `just`'s
    `wt`), and telemetry tagging — never re-derive it ad hoc elsewhere.
-2. **Guard / opt-out.** Skip worktree creation and run in the current checkout when the user
-   explicitly says so, or when the run *modifies the workflow tooling itself* (the agents in
-   `.claude/agents/`, `justfile`, `.gitignore`, `scripts/`, `.workflow/README.md`) — those changes
-   must land in the primary checkout because the worktree would carry stale committed copies. In that
-   case still export `HANA_FEATURE_SLUG` and use a feature branch, but do not create a worktree.
-   Record the choice (worktree vs. in-place) in `.workflow/log.md`.
-3. Otherwise create a worktree under the **stable worktrees parent** on a fresh feature branch and run
+2. **Tooling edits go live only on merge — this is normal, not a reason to run in-place.** A run that
+   edits the workflow tooling (the agents in `.claude/agents/`, `justfile`, `.gitignore`, `scripts/`,
+   `.workflow/README.md`) still uses a worktree like every other run. The worktree's committed copies
+   of those files are not what executes mid-run: the CLI loads agents — and you run `just`/`scripts` —
+   from the **invocation cwd / primary checkout**, so the edited copies in the worktree simply take
+   effect **when the branch merges to `main`**. That on-merge cutover is the ordinary property of
+   *any* worktree run (feature code lands on merge too); it is not a unique argument for editing tooling
+   in place, and the old in-place carve-out (which nearly collided two parallel features) has been
+   removed. *(This very orchestrator file is workflow tooling: the edit removing that carve-out itself
+   takes effect only on merge — there is no mid-run cutover of the orchestrator, by design.)*
+3. Create a worktree under the **stable worktrees parent** on a fresh feature branch and run
    all subsequent steps from inside it. All parallel worktrees live under one parent dir
    (`../ProjectHana-worktrees/<slug>`) — never as scattered `../ProjectHana-<slug>` siblings — so a
    single `permissions.additionalDirectories` grant pre-authorizes every current and future worktree
@@ -49,7 +55,7 @@ worktree. Do this before any other step:
    (see `scripts/agent-log.sh`), so cross-run aggregation keeps working. (When REUSING a pre-existing
    worktree, still run `direnv allow` once in it before the first `just` call for the same reason.)
 
-Then run the following steps in order (from the worktree, if one was created), spawning a dedicated
+Then run the following steps in order (from the worktree), spawning a dedicated
 sub-agent for each:
 
 1. **Clarify** — spawn `clarify-feature` agent. **Skip it** only when the request already supplies
@@ -94,8 +100,9 @@ sub-agent for each:
     `evaluate-workflow` step applied, via a `chore/<slug>/…` branch + PR (squash-merge once CI is
     green). Then verify `git status --porcelain .workflow` is clean — nothing in `.workflow/` (outside
     the gitignored telemetry sink) may be left as an uncommitted delta.
-11. **Worktree teardown** — only if Step 0 created a worktree. After the closing-artifact PR is merged,
-    return to the primary checkout and remove this run's worktree and branch so nothing is left behind:
+11. **Worktree teardown** — Step 0 always creates a worktree, so always tear it down. After the
+    closing-artifact PR is merged, return to the primary checkout and remove this run's worktree and
+    branch so nothing is left behind:
     ```sh
     git -C <primary-checkout> worktree remove "../ProjectHana-worktrees/$slug"
     git -C <primary-checkout> worktree prune
@@ -103,8 +110,7 @@ sub-agent for each:
     ```
     The shared `../ProjectHana-worktrees` parent dir stays in place (and stays authorized) for future
     runs — only the per-slug subdir is removed. The primary checkout must never be left detached or
-    dirty by this. If a worktree was NOT created (in-place/meta run), skip teardown and just confirm
-    the working tree is clean.
+    dirty by this.
 
 At each step, note the outcome in `.workflow/log.md`. If a step sends the workflow back, record the reason.
 

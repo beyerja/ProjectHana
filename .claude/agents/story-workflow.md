@@ -30,8 +30,8 @@ merge a story PR.
    **3 rounds**.
 
    a. **Deep review + verdict** — spawn the `independent-review` agent (fresh, cold). It runs the deep
-      `/code-review` pass, posts inline comments + a summary, and emits STATUS. It does **NOT** submit the
-      formal bot review (invoking the `/code-review` skill ends its turn before it could).
+      `/code-review` pass, posts inline comments + a summary, and emits STATUS. It does **NOT** set the
+      formal gate check (invoking the `/code-review` skill ends its turn before it could).
       - STATUS: CHANGES_REQUESTED → spawn an `implement-story` agent (a **separate spawn, never a reviewer**)
         to address **every** inline comment, **reply to each review thread acknowledging the fix** (a reply
         alone does NOT resolve the thread on GitHub), run the project checks (`just lint`, `just test`), and
@@ -41,13 +41,14 @@ merge a story PR.
       distinct from BOTH the implementer and the `independent-review` agent). It re-verifies the diff a
       second time **without** the `/code-review` skill (so its turn completes), reaches its **own** verdict,
       runs the **CI self-heal** (re-trigger if the head has no required checks), and — through the bot
-      wrapper `scripts/gh-review-bot.sh` — submits the formal `Hanahuac-Bot` review state (with read-back
-      proof) and resolves addressed bot-authored threads via `resolveReviewThread`. When the bot token is
-      absent (wrapper exits non-zero), the formal state + thread resolution are SKIPPED and the loop
-      proceeds on STATUS alone.
+      wrapper `scripts/gh-review-bot.sh` — posts the required **`code-owner-review` status check**
+      (conclusion success/failure) on the PR head that gates merge, with app-id read-back proof. When the
+      bot credentials are absent (wrapper exits non-zero), the gate check is SKIPPED and the loop proceeds
+      on STATUS alone.
       - STATUS: CHANGES_REQUESTED → spawn an `implement-story` agent to address it and push, then go back to
         **5a** (re-spawn `independent-review`). Counts as one round.
-      - STATUS: APPROVED (and, when the bot token is present, the bot `APPROVE` posted) → continue to step 6.
+      - STATUS: APPROVED (and, when the bot credentials are present, the `code-owner-review` check posted as
+        success) → continue to step 6.
 
    After **3 rounds** without both reviewers reaching APPROVED, **STOP looping and ESCALATE to the user**
    (do not loop further); leave the PR open. (There is no human-review gate: the workflow never pauses for

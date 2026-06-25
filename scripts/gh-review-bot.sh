@@ -115,6 +115,23 @@ main() {
         fail_closed "no installation ID in the Keychain (account '${ACCT_INSTALLATION_ID}')."
     fi
 
+    # macOS `security … -w` returns any value that contains newlines (such as a multi-line PEM) as a
+    # contiguous hex string, NOT raw text — so a correctly-stored App private key comes back
+    # hex-encoded regardless of whether it was stored via the CLI or the Keychain Access GUI. If the
+    # value isn't already PEM-armored, treat it as that hex encoding and decode it back to the real
+    # PEM. A value that already arrives in PEM form is passed through untouched. Done in-process; no
+    # secret is echoed (xtrace stays off).
+    if [[ "${private_key}" != *"-----BEGIN"* ]]; then
+        local private_key_hex
+        private_key_hex="$(printf '%s' "${private_key}" | tr -d '[:space:]')"
+        if [[ "${private_key_hex}" =~ ^[0-9A-Fa-f]+$ ]]; then
+            private_key="$(printf '%s' "${private_key_hex}" | xxd -r -p)"
+        fi
+        if [[ "${private_key}" != *"-----BEGIN"* ]]; then
+            fail_closed "the stored App private key is neither PEM nor hex-encoded PEM (account '${ACCT_PRIVATE_KEY}')."
+        fi
+    fi
+
     # --- Step 2: build the RS256 JWT. ------------------------------------------------------------
     local jwt
     if ! jwt="$(build_jwt "${app_id}" "${private_key}")" || [[ -z "${jwt}" ]]; then
