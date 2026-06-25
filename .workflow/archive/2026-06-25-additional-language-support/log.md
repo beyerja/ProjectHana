@@ -101,3 +101,20 @@ Improvements: break-tasks (enum-case fan-out check — AppLocale needs all 4 geo
 2026-06-25 independent-review: APPROVED — closing PR #174 is docs/workflow-only (3 agent edits + pure archive relocation); all factual claims verified against codebase (4 geo models, 5 GeoModel+PackData switches, capital only on Country, grep pattern matches), edits internally consistent, no app/source touched, CI green. One non-blocking wording nit only.
 
 2026-06-25T11:23:53Z code-owner-review: APPROVED (verdict) — but FORMAL state SKIPPED: bot Keychain item hana-review-bot absent (wrapper fail-closed), so Hanahuac-Bot APPROVED could NOT be submitted; no formal review present on PR #174; code-owner merge gate NOT satisfied. COMMENT fallback as PR-opener was denied by auto-mode classifier; verdict recorded via stable summary comment instead.
+
+## Step 10 — BLOCKED on bot credentials (genuine human-decision blocker)
+- Committed all closing artifacts (archive move + 3 evaluate agent edits + both review-record artifacts) to chore/additional-language-support/closing-artifacts; pushed; opened PR #174; CI all green (Build & Test, Lint, gitleaks, detect-changes). `.workflow` working tree clean.
+- ROOT CAUSE of the merge block: PR #168 ("wrapper mints short-lived App installation token", merged 0994752 during this session) changed scripts/gh-review-bot.sh from a classic-PAT mechanism to GitHub-App token minting requiring THREE Keychain items under service `hana-review-bot` accounts: `private-key`, `app-id`, `installation-id`. All three are ABSENT in this environment (verified: `security find-generic-password -s hana-review-bot -a private-key` fails). Only a legacy default-account item exists (used by story #170's review at 10:46, BEFORE I integrated #168 into the worktree at Step 5).
+- Because the worktree now carries the new App-based wrapper, the bot cannot mint a token, so the formal Hanahuac-Bot code-owner APPROVED review for #174 cannot be submitted. The main ruleset (id 17373423) + repo-wide CODEOWNERS (@Hanahuac-Bot) require that review, so #174 is MERGEABLE+BLOCKED.
+- Cannot self-resolve: provisioning Keychain credentials is a human action; self-approving as PR author (beyerja) would violate the obligatory independent-review gate.
+- Step 11 worktree teardown DEFERRED — the closing PR is unmerged, so the worktree + branches are intentionally left in place.
+
+### Human action required to finish (Steps 10–11)
+1. Provision the GitHub App bot credentials into the macOS Keychain per docs/bot-credentials.md: service `hana-review-bot`, accounts `private-key`, `app-id`, `installation-id`.
+2. Re-run code-owner-review for PR #174 (or `scripts/gh-review-bot.sh gh pr review 174 --approve`) so Hanahuac-Bot's formal APPROVED lands.
+3. Squash-merge PR #174.
+4. Worktree teardown from the PRIMARY checkout:
+   `git -C <primary> worktree remove ../ProjectHana-worktrees/additional-language-support`
+   `git -C <primary> worktree prune`
+   `git -C <primary> branch -D feat/additional-language-support 2>/dev/null || true`
+   (Also delete the merged story/chore branches as desired.)
