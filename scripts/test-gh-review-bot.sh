@@ -28,6 +28,7 @@ FAKE_INSTALLATION_ID="987654"
 #         absent-appid   -> app-id item missing.
 #         absent-install -> installation-id item missing.
 #         token-empty    -> token exchange returns JSON with no usable .token.
+#         sign-fail      -> openssl `dgst -sign` fails (exit non-zero, no signature emitted).
 make_stub_path() {
     local mode="$1" dir
     dir="$(mktemp -d "${TMPROOT}/stubXXXXXX")"
@@ -65,12 +66,23 @@ EOF
 set -euo pipefail
 case "\${1:-}" in
     base64)
-        # Pass through to the system base64 so b64url() behaves; -A means no line wrapping.
-        exec /usr/bin/base64 "\${@:2}";;
+        # Pass through to the system base64 so b64url() behaves. Real openssl supports \`-A\`
+        # (single-line, no wrapping), but macOS /usr/bin/base64 rejects it; drop \`-A\` before
+        # delegating (the inputs here are short, so output is single-line regardless).
+        args=()
+        for a in "\${@:2}"; do
+            [[ "\${a}" == "-A" ]] && continue
+            args+=("\${a}")
+        done
+        exec /usr/bin/base64 "\${args[@]+\${args[@]}}";;
     dgst)
         # Signing path: record invocation, consume stdin, emit a fixed fake signature.
         echo "openssl-dgst-sign" >> "${dir}/openssl.calls"
         cat > /dev/null
+        if [[ "${mode}" == "sign-fail" ]]; then
+            # Simulate an openssl signing failure: emit nothing and exit non-zero.
+            exit 1
+        fi
         printf '%s' "${FAKE_SIG}";;
     *)
         exit 1;;
@@ -164,6 +176,36 @@ test_absent_items() {
 
 test_token_exchange_fails() {
     assert_fail_closed token-empty "token exchange returns no .token"
+}
+
+# --- openssl signing failure must fail closed via the signing-error branch ------------------------
+# Regression: a failed command-substitution assignment does not abort under `set -e`, so without the
+# explicit empty-signature guard build_jwt would return 0 with a trailing-dot JWT and the signing-error
+# branch would be unreachable. Here the openssl `dgst -sign` stub exits non-zero and emits nothing.
+test_signing_failure() {
+    local dir out rc
+    dir="$(make_stub_path sign-fail)"
+    set +e
+    out="$(PATH="${dir}:${PATH}" "${WRAPPER}" gh api user 2>&1)"
+    rc=$?
+    set -e
+
+    if [[ ${rc} -ne 0 ]]; then
+        ok "signing failure -> non-zero exit (${rc})"
+    else
+        ko "signing failure should exit non-zero, got 0"
+    fi
+    # The diagnostic must point at the JWT/signing failure (not a misleading downstream message).
+    if grep -qiE 'signing|JWT' <<< "${out}"; then
+        ok "signing failure -> message mentions signing/JWT"
+    else
+        ko "signing failure message missing signing/JWT: ${out}"
+    fi
+    if [[ ! -e "${dir}/gh.args" ]]; then
+        ok "signing failure -> target command NOT run"
+    else
+        ko "signing failure should not run the target command"
+    fi
 }
 
 # --- (b) no secret leak: no fake key / signature / install token in stdout/stderr or any file ------
@@ -300,6 +342,7 @@ echo "== test-gh-review-bot.sh =="
 test_no_args
 test_absent_items
 test_token_exchange_fails
+test_signing_failure
 test_no_leak
 test_passthrough
 test_token_exchange_path

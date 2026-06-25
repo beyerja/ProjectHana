@@ -70,9 +70,18 @@ build_jwt() {
 
     # Sign with the private key supplied via process substitution (never a CLI arg, never a temp file
     # holding the key on disk). The signing input is fed on stdin.
+    #
+    # NOTE: a failed command-substitution ASSIGNMENT does not abort under `set -e`, so an openssl
+    # signing failure here would otherwise leave `signature` empty and let build_jwt return 0 with a
+    # trailing-dot JWT — making the caller's "openssl signing error" branch unreachable. Guard
+    # explicitly: if the signature is empty (signing produced nothing), return non-zero so the caller's
+    # failure handler fires. Secrets stay in-process; nothing is echoed.
     signature="$(printf '%s' "${signing_input}" \
         | openssl dgst -sha256 -sign <(printf '%s' "${private_key}") \
         | b64url)"
+    if [[ -z "${signature}" ]]; then
+        return 1
+    fi
 
     printf '%s.%s' "${signing_input}" "${signature}"
 }
