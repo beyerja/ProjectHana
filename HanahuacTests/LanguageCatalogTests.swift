@@ -6,7 +6,7 @@ import XCTest
 final class LanguageCatalogTests: XCTestCase {
     // MARK: - Catalog shape
 
-    func testCatalogContainsExactlyThirteenLanguages() {
+    func testCatalogContainsExactlyFourteenLanguages() {
         XCTAssertEqual(LanguageCatalog.all.count, 14)
     }
 
