@@ -19,12 +19,12 @@ Parses every ``Hanahuac/<code>.lproj/Localizable.strings`` and enforces:
           INFORMATIONAL, never a failure.
         - ``SCAFFOLDED`` (ja, zh-Hans, hi, ar, bn, pt-BR, ur): content-pending placeholder locales
           landed by story 002. Their ``.lproj`` exists on disk but is intentionally near-empty until
-          their content story (003–010) fills the translations. Coverage is reported INFORMATIONAL,
+          their content story (003-010) fills the translations. Coverage is reported INFORMATIONAL,
           never a failure — the runtime ``[<self>, .en]`` fallback chain (en supplies every key) keeps
           these resolving cleanly while their UI strings are pending.
   (c) Story-002 scaffolded locales (ja, zh-Hans, hi, ar, bn, pt-BR, ur) are ``SCAFFOLDED`` (NOT yet
       ``FULL``): they ship placeholder ``.lproj`` so the bundle resolves, and the static gate does NOT
-      enforce the full canonical key set on them. Each content story 003–010 flips EXACTLY its own
+      enforce the full canonical key set on them. Each content story 003-010 flips EXACTLY its own
       locale from ``SCAFFOLDED`` to ``FULL`` when it fills the real translations.
   (d) Untranslated values are detected: a non-base locale value byte-identical to the en value for
       the same key is reported as a WARNING (so a copy-paste-but-forgot-to-translate slips no
@@ -50,7 +50,7 @@ BASE = "base"  # always-bundled (en, es-MX) — must contain the FULL canonical 
 FULL = "full"  # fully-translated canonical locale — must contain the FULL canonical key set.
 PARTIAL = "partial"  # fallback-permitted by design — coverage is informational, never a failure.
 # content-pending placeholder locale (story 002) — coverage is informational, never a failure, until
-# its content story (003–010) flips it to FULL. Distinct from PARTIAL: PARTIAL is fallback-permitted
+# its content story (003-010) flips it to FULL. Distinct from PARTIAL: PARTIAL is fallback-permitted
 # *by design forever*; SCAFFOLDED is a temporary state that becomes FULL when translations land.
 SCAFFOLDED = "scaffolded"
 
@@ -61,7 +61,7 @@ SCAFFOLDED = "scaffolded"
 #
 # The 7 story-002 locales (ja, zh-Hans, hi, ar, bn, pt-BR, ur) are SCAFFOLDED: story 002 lands their
 # placeholder `.lproj` so the bundle resolves, but the gate must NOT enforce the full canonical key
-# set on those placeholders. Each content story 003–010 flips EXACTLY its own locale from SCAFFOLDED
+# set on those placeholders. Each content story 003-010 flips EXACTLY its own locale from SCAFFOLDED
 # to FULL when it fills the real translations (and seeds its IDENTICAL_VALUE_ALLOWLIST entries).
 ROLE_MAP: dict[str, str] = {
     # Base / always-bundled — 100% complete.
@@ -86,7 +86,7 @@ ROLE_MAP: dict[str, str] = {
     "ca": PARTIAL,
     "eu": PARTIAL,
     # --- Story-002 scaffolded locales: placeholder `.lproj` on disk, content pending. ---
-    # Reported informationally only; each content story 003–010 flips EXACTLY its own locale to FULL
+    # Reported informationally only; each content story 003-010 flips EXACTLY its own locale to FULL
     # when it fills translations:
     #   ja -> 003, zh-Hans -> 004, hi -> 005, bn -> 006, pt-BR -> 007, ar -> 009, ur -> 010.
     "ja": SCAFFOLDED,

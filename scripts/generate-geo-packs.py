@@ -51,8 +51,25 @@ PACK_VERSION = 1
 # emit an empty `"entries": {}` because the bundled source geo JSON has no name/capital column for
 # them yet; their content story (003-010) adds the column and the pack fills automatically.
 PACK_LANGUAGES = [
-    "fr", "de", "es-ES", "ca", "eu", "yua", "it", "pl", "nl", "sr", "ko", "nah",
-    "ja", "zh-Hans", "hi", "ar", "bn", "pt-BR", "ur",
+    "fr",
+    "de",
+    "es-ES",
+    "ca",
+    "eu",
+    "yua",
+    "it",
+    "pl",
+    "nl",
+    "sr",
+    "ko",
+    "nah",
+    "ja",
+    "zh-Hans",
+    "hi",
+    "ar",
+    "bn",
+    "pt-BR",
+    "ur",
 ]
 
 # Map an AppLocale code to the JSON field suffix used in the bundled source data.
