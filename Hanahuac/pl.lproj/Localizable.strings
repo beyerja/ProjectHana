@@ -157,6 +157,11 @@
 "quiz.prompt.capital_of" = "Jaka jest stolica państwa %@?";
 "quiz.prompt.continent_of" = "Na którym kontynencie leży %@?";
 "quiz.prompt.country_of_capital" = "Które państwo ma stolicę %@?";
+"quiz.prompt.sea_location" = "Który akwen znajduje się w pobliżu %@?";
+"quiz.region.north" = "Pn";
+"quiz.region.south" = "Pd";
+"quiz.region.east" = "W";
+"quiz.region.west" = "Z";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Ucz się nowych kart";

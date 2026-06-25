@@ -161,6 +161,11 @@
 "quiz.prompt.capital_of" = "%@의 수도는 무엇인가요?";
 "quiz.prompt.continent_of" = "%@은(는) 어느 대륙에 있나요?";
 "quiz.prompt.country_of_capital" = "%@를 수도로 하는 국가는 어디인가요?";
+"quiz.prompt.sea_location" = "%@ 근처에 있는 수역은 무엇인가요?";
+"quiz.region.north" = "북";
+"quiz.region.south" = "남";
+"quiz.region.east" = "동";
+"quiz.region.west" = "서";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "새 카드 학습";

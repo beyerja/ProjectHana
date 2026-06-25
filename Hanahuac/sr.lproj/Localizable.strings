@@ -157,6 +157,11 @@
 "quiz.prompt.capital_of" = "Који је главни град државе %@?";
 "quiz.prompt.continent_of" = "На ком континенту се налази %@?";
 "quiz.prompt.country_of_capital" = "Која држава има %@ као главни град?";
+"quiz.prompt.sea_location" = "Која водена површина се налази близу %@?";
+"quiz.region.north" = "С";
+"quiz.region.south" = "Ј";
+"quiz.region.east" = "И";
+"quiz.region.west" = "З";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Учење нових картица";
