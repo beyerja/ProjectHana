@@ -5,7 +5,8 @@
 #
 # Checks (all fail the script non-zero):
 #   1. The generated Xcode project declares exactly the expected `lang-<code>` asset tags
-#      (lang-fr, lang-de, lang-es-ES, lang-ca, lang-eu, lang-yua, lang-it, lang-pl, lang-nl, lang-sr, lang-ko, lang-nah) — the contract from
+#      (lang-fr, lang-de, lang-es-ES, lang-ca, lang-eu, lang-yua, lang-it, lang-pl, lang-nl, lang-sr, lang-ko, lang-nah,
+#       lang-ja, lang-zh-Hans, lang-hi, lang-ar, lang-bn, lang-pt-BR, lang-ur) — the contract from
 #      LanguageDescriptor.odrTags — and
 #      assigns each non-base `.lproj` + its `<code>-geo.json` to the matching tag.
 #   2. The base languages (en, es-MX) carry NO asset tag (always bundled).
@@ -23,7 +24,14 @@ RESOURCES="${ROOT}/Hanahuac/Resources"
 
 # The ODR tag contract: downloadable language code -> tag. Base languages (en, es-MX) are absent on
 # purpose — they must NOT be tagged.
-LANG_CODES=(fr de es-ES ca eu yua it pl nl sr ko nah)
+LANG_CODES=(fr de es-ES ca eu yua it pl nl sr ko nah ja zh-Hans hi ar bn pt-BR ur)
+
+# Content-pending languages (story 002): their `<code>-geo.json` is intentionally empty (`{}`) because
+# the bundled source geo JSON has no name/capital column for them yet. The step-4 non-empty-entries
+# assertion is relaxed for these (an empty dict is permitted) until their content story (003-010) adds
+# the source column and fills the pack — at which point that story restores the strict non-empty check
+# per locale (remove the code from this list).
+CONTENT_PENDING_CODES=(ja zh-Hans hi ar bn pt-BR ur)
 
 fail() {
     echo "FAIL: $*" >&2
@@ -83,17 +91,28 @@ echo "== 4/5: geo packs are well-formed and up to date =="
 for code in "${LANG_CODES[@]}"; do
     pack="${RESOURCES}/${code}-geo.json"
     [[ -f "${pack}" ]] || fail "missing geo pack ${pack} (run 'just geo-packs')"
-    python3 - "${pack}" "${code}" <<'PY' || fail "geo pack failed schema validation"
+    # Content-pending locales (story 002) are allowed an empty `entries` object; all others must be
+    # non-empty. Pass the flag to the validator so the relaxation is scoped to exactly those locales.
+    allow_empty=0
+    for pending in "${CONTENT_PENDING_CODES[@]}"; do
+        [[ "${pending}" == "${code}" ]] && allow_empty=1
+    done
+    python3 - "${pack}" "${code}" "${allow_empty}" <<'PY' || fail "geo pack failed schema validation"
 import json
 import sys
 
-path, code = sys.argv[1], sys.argv[2]
+path, code, allow_empty = sys.argv[1], sys.argv[2], sys.argv[3] == "1"
 with open(path, encoding="utf-8") as handle:
     pack = json.load(handle)
 assert pack.get("version") == 1, f"{path}: unexpected version {pack.get('version')}"
 assert pack.get("code") == code, f"{path}: code mismatch {pack.get('code')!r}"
 entries = pack.get("entries")
-assert isinstance(entries, dict) and entries, f"{path}: entries must be a non-empty object"
+assert isinstance(entries, dict), f"{path}: entries must be an object"
+# Content-pending locales are permitted an empty entries object (scaffolding); every other locale
+# must carry at least one entry. Content stories (003-010) remove their code from CONTENT_PENDING_CODES
+# in this script to restore the strict non-empty check once the pack is filled.
+if not allow_empty:
+    assert entries, f"{path}: entries must be a non-empty object"
 for geo_id, entry in entries.items():
     assert geo_id, f"{path}: empty geo id"
     name = entry.get("name")
