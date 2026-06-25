@@ -16,14 +16,22 @@ WRAPPER="${SCRIPT_DIR}/gh-review-bot.sh"
 source "${SCRIPT_DIR}/test-lib.sh"
 
 # Clearly-fake secret markers, generated at runtime (never committed, never real credentials).
-FAKE_KEY="stub-private-key-$$-$RANDOM"
+# The wrapper only checks for the `-----BEGIN` PEM armor (real signing is stubbed), so a single-line
+# armored marker is a sufficient stand-in for a private key. macOS `security … -w` returns a value
+# containing newlines (a real multi-line PEM) as a CONTIGUOUS HEX string, so by default the security
+# stub emits the HEX form (mirroring production) and the wrapper must hex-decode it before signing.
+FAKE_KEY_PEM="-----BEGIN PRIVATE KEY----- stub-key-$$-$RANDOM -----END PRIVATE KEY-----"
+FAKE_KEY_HEX="$(printf '%s' "${FAKE_KEY_PEM}" | xxd -p | tr -d '\n')"
+FAKE_KEY_GARBAGE="stub-not-a-key-$$-$RANDOM"   # neither PEM nor hex -> wrapper must fail closed
 FAKE_SIG="stub-signature-$$-$RANDOM"
 FAKE_INSTALL_TOKEN="stub-install-token-$$-$RANDOM"
 FAKE_APP_ID="123456"
 FAKE_INSTALLATION_ID="987654"
 
 # Build a PATH directory holding stubs.
-#   mode: present       -> all three Keychain items resolve.
+#   mode: present       -> all three items resolve; private-key returned HEX-encoded (macOS default).
+#         raw-pem        -> private-key returned as a raw PEM (already armored; decode is skipped).
+#         garbage-key    -> private-key is neither PEM nor hex -> wrapper must fail closed.
 #         absent-key     -> private-key item missing.
 #         absent-appid   -> app-id item missing.
 #         absent-install -> installation-id item missing.
@@ -47,7 +55,10 @@ done
 case "\${acct}" in
     private-key)
         [[ "${mode}" == "absent-key" ]] && exit 44
-        printf '%s\n' "${FAKE_KEY}";;
+        [[ "${mode}" == "raw-pem" ]] && { printf '%s\n' "${FAKE_KEY_PEM}"; exit 0; }
+        [[ "${mode}" == "garbage-key" ]] && { printf '%s\n' "${FAKE_KEY_GARBAGE}"; exit 0; }
+        # Default (incl. \`present\`): emulate macOS returning a multi-line key as a hex string.
+        printf '%s\n' "${FAKE_KEY_HEX}";;
     app-id)
         [[ "${mode}" == "absent-appid" ]] && exit 44
         printf '%s\n' "${FAKE_APP_ID}";;
@@ -217,8 +228,8 @@ test_no_leak() {
     set -e
 
     local marker leaked=""
-    for marker in "${FAKE_KEY}" "${FAKE_SIG}" "${FAKE_INSTALL_TOKEN}"; do
-        if grep -qF "${marker}" <<< "${out}"; then
+    for marker in "${FAKE_KEY_PEM}" "${FAKE_KEY_HEX}" "${FAKE_SIG}" "${FAKE_INSTALL_TOKEN}"; do
+        if grep -qF -- "${marker}" <<< "${out}"; then
             leaked="${marker}"
         fi
     done
@@ -232,8 +243,8 @@ test_no_leak() {
     # child handoff record gh.tokenval, which by design holds the minted token in the CHILD).
     local f leakfile=""
     while IFS= read -r f; do
-        for marker in "${FAKE_KEY}" "${FAKE_SIG}"; do
-            if grep -qF "${marker}" "${f}" 2>/dev/null; then
+        for marker in "${FAKE_KEY_PEM}" "${FAKE_KEY_HEX}" "${FAKE_SIG}"; do
+            if grep -qF -- "${marker}" "${f}" 2>/dev/null; then
                 leakfile="${f}"
             fi
         done
@@ -313,6 +324,49 @@ test_token_exchange_path() {
     fi
 }
 
+# --- (f) hex-encoded key (the macOS `security -w` default) is decoded; raw PEM passes through -------
+# The `present` happy-path above already exercises the HEX form (the stub returns FAKE_KEY_HEX), so a
+# clean exit there proves the decode path works. This adds the raw-PEM passthrough branch: a value that
+# is already armored must be used as-is (no decode), still reaching the target command.
+test_raw_pem_passthrough() {
+    local dir rc
+    dir="$(make_stub_path raw-pem)"
+    set +e
+    PATH="${dir}:${PATH}" "${WRAPPER}" gh api user >/dev/null 2>&1
+    rc=$?
+    set -e
+    if [[ ${rc} -eq 0 && -e "${dir}/gh.args" ]]; then
+        ok "raw PEM key -> passthrough; wrapper reached the target command"
+    else
+        ko "raw PEM key -> wrapper did not reach target (rc=${rc})"
+    fi
+}
+
+# --- (g) a key that is neither PEM nor hex must fail closed (no signing, target NOT run) -----------
+test_garbage_key_fail_closed() {
+    local dir out rc
+    dir="$(make_stub_path garbage-key)"
+    set +e
+    out="$(PATH="${dir}:${PATH}" "${WRAPPER}" gh api user 2>&1)"
+    rc=$?
+    set -e
+    if [[ ${rc} -ne 0 ]]; then
+        ok "garbage key -> non-zero exit (${rc})"
+    else
+        ko "garbage key should exit non-zero, got 0"
+    fi
+    if grep -qiE 'PEM|hex' <<< "${out}"; then
+        ok "garbage key -> message names the PEM/hex expectation"
+    else
+        ko "garbage key message missing PEM/hex hint: ${out}"
+    fi
+    if [[ ! -e "${dir}/gh.args" ]]; then
+        ok "garbage key -> target command NOT run"
+    else
+        ko "garbage key should not run the target command"
+    fi
+}
+
 # --- (e) xtrace is NEVER enabled (static source guard) --------------------------------------------
 test_no_xtrace() {
     # Match only actual statements (a `set`/`BASH_XTRACEFD` at the start of a line, after optional
@@ -346,6 +400,8 @@ test_signing_failure
 test_no_leak
 test_passthrough
 test_token_exchange_path
+test_raw_pem_passthrough
+test_garbage_key_fail_closed
 test_no_xtrace
 
 echo
