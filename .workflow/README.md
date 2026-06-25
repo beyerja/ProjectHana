@@ -114,8 +114,9 @@ Tell Claude: "Start the feature workflow for <feature description>" — it will 
 
 Multiple feature workflows can run **concurrently**, each in its own git worktree, with no manual git
 commands from you. On startup the orchestrator (`feature-orchestrator`, Step 0) derives a **feature
-slug** and — unless the run modifies the workflow tooling itself, see below — creates a worktree under
-a single **stable parent directory** on a fresh `feat/<slug>` branch:
+slug** and creates a worktree under a single **stable parent directory** on a fresh `feat/<slug>`
+branch — **every** run uses a worktree, including runs that edit the workflow tooling itself (there is
+no in-place exception; see "Tooling-editing runs" below):
 
 ```
 mkdir -p ../ProjectHana-worktrees
@@ -181,7 +182,11 @@ own per-slug worktree (`../ProjectHana-worktrees/<slug>`) and prunes its branch,
 checkout clean. The shared `../ProjectHana-worktrees/` parent stays in place (and stays authorized) for
 future runs.
 
-**Meta / tooling runs (opt-out):** a run that edits the workflow tooling itself (`.claude/agents/`,
-`justfile`, `.gitignore`, `scripts/`, this README) runs **in the primary checkout** on a `feat/<slug>`
-branch without a worktree — a worktree would carry stale committed copies of the very files being
-changed. The slug, branch namespacing, build isolation, and telemetry tagging still apply.
+**Tooling-editing runs (still use a worktree):** a run that edits the workflow tooling itself
+(`.claude/agents/`, `justfile`, `.gitignore`, `scripts/`, this README) uses a worktree like every
+other run — there is **no in-place / "meta run" opt-out** (it was removed because it surprised users
+and nearly collided two parallel features). The edited copies in the worktree are not what executes
+mid-run: the CLI loads agents — and you run `just`/`scripts` — from the **invocation cwd / primary
+checkout**, so the tooling edits simply take effect **when the branch merges to `main`**. That
+on-merge cutover is the ordinary property of any worktree run (feature code lands on merge too), not a
+reason to edit tooling in place.
