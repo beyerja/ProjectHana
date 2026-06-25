@@ -444,4 +444,21 @@ final class L10nBundleResolutionTests: XCTestCase {
         XCTAssertEqual(pl.localizedString(forKey: "home.categories", value: nil, table: nil), "Kategorie")
         XCTAssertEqual(pl.localizedString(forKey: "settings.language", value: nil, table: nil), "Język")
     }
+
+    // MARK: - Dutch (COMPLETE content; nl → en)
+
+    /// Dutch is a COMPLETE-content language: its candidate chain goes straight to en, with NO Spanish
+    /// hop. Because Dutch leaves no intentional gaps there is no gap-key fallback test; en is only an
+    /// ultimate, never-hit safety net.
+    func testDutchBundleCandidatesGoStraightToEnglish() {
+        XCTAssertEqual(L10n.bundleCandidates(for: .nl), ["nl", "en"])
+    }
+
+    /// A representative Dutch key is served from the nl pack itself (not a fallback), proving the
+    /// pack carries real translated content.
+    func testDutchTranslatedKey_servedFromDutchPack() throws {
+        let nl = try ODRTestSupport.lprojBundle(for: .nl)
+        XCTAssertEqual(nl.localizedString(forKey: "home.categories", value: nil, table: nil), "Categorieën")
+        XCTAssertEqual(nl.localizedString(forKey: "settings.language", value: nil, table: nil), "Taal")
+    }
 }

@@ -8,8 +8,8 @@ import Foundation
 /// feasible, a matter of adding a ``LanguageDescriptor`` entry here.
 enum LanguageCatalog {
     /// All language descriptors, ordered to match ``AppLocale/allCases`` (en, fr, de, es-MX, es-ES,
-    /// ca, eu, yua, it, pl, ko, nah). The display names and fallback chains encode exactly the behavior
-    /// of the former per-case `switch` statements in `AppLocale`.
+    /// ca, eu, yua, it, pl, nl, ko, nah). The display names and fallback chains encode exactly the
+    /// behavior of the former per-case `switch` statements in `AppLocale`.
     static let all: [LanguageDescriptor] = [
         LanguageDescriptor(
             code: AppLocale.en.rawValue,
@@ -78,6 +78,15 @@ enum LanguageCatalog {
             code: AppLocale.pl.rawValue,
             displayName: "Polski",
             fallbackChain: [.pl, .en],
+            availability: .downloadablePack
+        ),
+        // Dutch is a COMPLETE-content language: its UI strings and geo names are fully translated,
+        // so its fallback chain routes straight to English as an ultimate, never-hit safety net
+        // (NOT through es-MX/es-ES like the best-effort languages).
+        LanguageDescriptor(
+            code: AppLocale.nl.rawValue,
+            displayName: "Nederlands",
+            fallbackChain: [.nl, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(

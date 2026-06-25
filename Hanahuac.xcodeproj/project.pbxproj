@@ -61,6 +61,7 @@
 		5C3F3A38388D7D8C23D5E66F /* MapQuizRegionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */; };
 		5C75B63032CD69613BBABEFF /* yua-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = D66DC1D79E2B967ADB876768 /* yua-geo.json */; settings = {ASSET_TAGS = ("lang-yua", ); }; };
 		5C9AE701A623D168FD104C73 /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 302E69CA8F8A5505BFDE51D8 /* fr.lproj */; settings = {ASSET_TAGS = ("lang-fr", ); }; };
+		5D68A40F290CA49C23A5D43D /* nl-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = EAC2C1F8F506BA7669BC186C /* nl-geo.json */; settings = {ASSET_TAGS = ("lang-nl", ); }; };
 		6387817434BAC4C1016817F7 /* nah-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 092EDB83127EC04669B7E3A1 /* nah-geo.json */; settings = {ASSET_TAGS = ("lang-nah", ); }; };
 		64BA046A2AA02BABA9422B62 /* MultipleChoiceSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F092FAD49DC2860FC69F0E8 /* MultipleChoiceSession.swift */; };
 		65821E378B8AF18D360C8A2E /* HomeQuizModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DEBADCA4691A5AC9A317ACF /* HomeQuizModeTests.swift */; };
@@ -75,6 +76,7 @@
 		708666E64532C95080761670 /* Sea.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */; };
 		714D2A18568B15E855DEB64E /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C067B5B526D874D731E4EE9D /* StatsView.swift */; };
 		72ED0A7CCCF8C8494C925B24 /* ODRLanguagePackProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 945BC210890EA4D526DC5C8D /* ODRLanguagePackProvider.swift */; };
+		7322BB5A8E310883002D49A3 /* nl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = EA2B692C805763334A4C0289 /* nl.lproj */; settings = {ASSET_TAGS = ("lang-nl", ); }; };
 		746B09167C861A24BC5F5CB7 /* mountains.json in Resources */ = {isa = PBXBuildFile; fileRef = FDBB60735040472DC32CCCC4 /* mountains.json */; };
 		75E15D7D9D486359CC92A741 /* ResourceRequesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0366476E524E78AE0F9CED /* ResourceRequesting.swift */; };
 		79BEDF36CA641A0AB2262AA5 /* HanahuacLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2512100D917D9763B4ABB694 /* HanahuacLogo.swift */; };
@@ -316,7 +318,9 @@
 		E80BDADBA767E65049B728FE /* ProgressPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressPlaceholderView.swift; sourceTree = "<group>"; };
 		E99FAC06BE37F9329DF0FC70 /* MapFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureTests.swift; sourceTree = "<group>"; };
 		E9D3C61F4B563A0F99E5CB2C /* MapFeatureCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureCatalog.swift; sourceTree = "<group>"; };
+		EA2B692C805763334A4C0289 /* nl.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = nl.lproj; path = Hanahuac/nl.lproj; sourceTree = SOURCE_ROOT; };
 		EA7BDA4E63D9735CE9DAEC09 /* Sea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sea.swift; sourceTree = "<group>"; };
+		EAC2C1F8F506BA7669BC186C /* nl-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "nl-geo.json"; sourceTree = "<group>"; };
 		EAFCAD670B510A8E79864C5F /* SM2Scheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SM2Scheduler.swift; sourceTree = "<group>"; };
 		EBAB8A20E0ACEDE001222E47 /* QuizModeID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModeID.swift; sourceTree = "<group>"; };
 		EBD9CF8B696F621CED8AA455 /* QuizAccessibilityStringsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizAccessibilityStringsTests.swift; sourceTree = "<group>"; };
@@ -436,6 +440,7 @@
 				84C61DE695089044C5369288 /* mountain-borders.json */,
 				FDBB60735040472DC32CCCC4 /* mountains.json */,
 				092EDB83127EC04669B7E3A1 /* nah-geo.json */,
+				EAC2C1F8F506BA7669BC186C /* nl-geo.json */,
 				882D6AE712297361946D1828 /* pl-geo.json */,
 				84BAC6DFF2E1635009C2DFF9 /* river-paths.json */,
 				F11FD6C85244DEBF7904B118 /* rivers.json */,
@@ -589,6 +594,7 @@
 				7ADE4B399AC14E2CEF23B541 /* ko.lproj */,
 				59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */,
 				C7079D6DD469A5CC6D2878CC /* nah.lproj */,
+				EA2B692C805763334A4C0289 /* nl.lproj */,
 				0E3A3AD118016349A7F1B544 /* pl.lproj */,
 				09C983AE0A9C597DCF6A0311 /* PrivacyInfo.xcprivacy */,
 				02EDCEF7B89BAFA774D2290F /* Theme.swift */,
@@ -710,6 +716,7 @@
 					"lang-it",
 					"lang-ko",
 					"lang-nah",
+					"lang-nl",
 					"lang-pl",
 					"lang-yua",
 				);
@@ -763,6 +770,8 @@
 				746B09167C861A24BC5F5CB7 /* mountains.json in Resources */,
 				6387817434BAC4C1016817F7 /* nah-geo.json in Resources */,
 				7BC0431855EB513F66FF9F6F /* nah.lproj in Resources */,
+				5D68A40F290CA49C23A5D43D /* nl-geo.json in Resources */,
+				7322BB5A8E310883002D49A3 /* nl.lproj in Resources */,
 				8DB08E6A36CAC6B4C88680B7 /* pl-geo.json in Resources */,
 				A475008BE35A94E1172D9B90 /* pl.lproj in Resources */,
 				4FEB22C1D153658BE015CB42 /* river-paths.json in Resources */,
