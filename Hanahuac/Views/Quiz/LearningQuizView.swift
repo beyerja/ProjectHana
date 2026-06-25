@@ -97,7 +97,7 @@ struct LearningQuizView: View {
 
     private func optionButtons(question: MCQQuestion) -> some View {
         VStack(spacing: 12) {
-            ForEach(question.options) { option in
+            ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
                 Button {
                     guard !isAdvancing else { return }
                     handleAnswer(option: option, question: question)
@@ -110,6 +110,7 @@ struct LearningQuizView: View {
                         .foregroundStyle(buttonForeground(for: option))
                 }
                 .disabled(answerState != .unanswered || isAdvancing)
+                .accessibilityIdentifier("quiz.answer.\(index)")
                 .accessibilityLabel(option.label)
                 .accessibilityValue(optionStateValue(for: option))
                 .accessibilityAddTraits(isSelected(option) ? .isSelected : [])

@@ -231,3 +231,18 @@ screenshot-sim path:
         exit 1
     fi
     echo "Screenshot saved to {{path}}"
+
+# Drive the app with the data-driven XCUITest UI driver and collect per-step screenshot + element-dump
+# artifacts under `.workflow/ui-walkthrough/<run>/`. Builds + runs ONLY
+# HanahuacUITests/UIDriverTests/testRunUIScript against the booted `{{sim}}` (per-worktree DerivedData).
+#
+#   `script` — action-script JSON path (repo-relative or absolute);
+#              defaults to the committed `.workflow/ui-walkthrough/scripts/smoke.json`.
+#   `run`    — run directory name; defaults to "" so the recorder picks a UTC timestamp.
+#
+# Each run is a compiled `xcodebuild test` cycle (~tens of seconds), NOT a live frame-by-frame session:
+# write a script, run once, then read the emitted `NNN-step.png` + `NNN-step.json` pairs. The
+# JSON schema + supported actions are documented in `.workflow/ui-walkthrough/README.md`. The glue
+# (run-dir resolution, env-var plumbing, artifact-dir echo) lives in `scripts/ui-walkthrough.sh`.
+ui-walkthrough script=".workflow/ui-walkthrough/scripts/smoke.json" run="":
+    bash scripts/ui-walkthrough.sh '{{script}}' '{{run}}' '{{sim}}' '{{sim_dd}}'

@@ -55,3 +55,14 @@ Podfile.lock
 # Keep the durable record and docs tracked:
 !.workflow/archive/
 !.workflow/README.md
+
+# UI-walkthrough driver: ignore per-run artifact dirs (screenshots + element dumps),
+# but keep the committed action scripts and the authoring README tracked.
+.workflow/ui-walkthrough/*
+!.workflow/ui-walkthrough/scripts/
+!.workflow/ui-walkthrough/scripts/**
+!.workflow/ui-walkthrough/README.md
+# Canonical demonstrated-walkthrough evidence (story 004): committed as a verifiable artifact
+# trail (per-step screenshots + element dumps + index). Other run dirs stay ignored.
+!.workflow/ui-walkthrough/demo/
+!.workflow/ui-walkthrough/demo/**

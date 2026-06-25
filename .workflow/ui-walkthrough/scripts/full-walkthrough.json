@@ -1,0 +1,18 @@
+[
+  { "action": "dumpTree" },
+  { "action": "screenshot" },
+  { "action": "tap", "identifier": "home.mode.multipleChoice" },
+  { "action": "wait", "seconds": 2 },
+  { "action": "dumpTree" },
+  { "action": "tap", "identifier": "quiz.answer.0" },
+  { "action": "wait", "seconds": 1 },
+  { "action": "typeText", "identifier": "quiz.input", "text": "Nairobi" },
+  { "action": "mapTap", "x": 0.5, "y": 0.45 },
+  { "action": "scroll", "direction": "down" },
+  { "action": "wait", "seconds": 1 },
+  { "action": "tap", "label": "Salir" },
+  { "action": "wait", "seconds": 2 },
+  { "action": "tap", "identifier": "home.settings" },
+  { "action": "wait", "seconds": 2 },
+  { "action": "screenshot" }
+]

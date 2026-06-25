@@ -25,6 +25,7 @@
 		1DD61A0CD8F0D218FA414C4A /* GeoNamePackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 512EE74D66608C53AAFD54A6 /* GeoNamePackData.swift */; };
 		2180297825B2EE4291F570E2 /* PreviewStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A0BDD7AD08FB4D44215D35 /* PreviewStore.swift */; };
 		24ED5005ECE65AA9F7BB2B9E /* seas.json in Resources */ = {isa = PBXBuildFile; fileRef = 1BE902F9973E13AC591CEBF4 /* seas.json */; };
+		26D3E004C84823644A56BDD6 /* UIActionScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12B11DFB0A9DA02FFBFFF47 /* UIActionScript.swift */; };
 		2A8E707ECE564E2350919D5E /* de-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 24E53794689E4224827FAB8E /* de-geo.json */; settings = {ASSET_TAGS = ("lang-de", ); }; };
 		2AE1D2E426F022C999D475F9 /* HanahuacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A7CC44BC5D044CEE82E12F3 /* HanahuacTests.swift */; };
 		2C070983399A1915D3A6BCEB /* L10nBundleResolutionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0CCAA2F2AF702B15300352 /* L10nBundleResolutionTests.swift */; };
@@ -127,6 +128,7 @@
 		BEE55C74826C50C921997462 /* StreakTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758AF9EF8095AC6033447A90 /* StreakTracker.swift */; };
 		C0E8A2ABC7152BE7FB0CB828 /* ODRTestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FA80020984CB25CE478927 /* ODRTestSupport.swift */; };
 		C4122950CD6BB3AB16953E8D /* ODRLanguagePackProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34CD58A296F65D617C07337 /* ODRLanguagePackProviderTests.swift */; };
+		C52C9F88EF40CB239DC8BA51 /* UIWalkthroughRecorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69E2769BB6A28E5C190D1139 /* UIWalkthroughRecorder.swift */; };
 		C68CFF1817E61FD869159D72 /* LocalizedQuizPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C092259C29945C5CE6C89A2 /* LocalizedQuizPromptTests.swift */; };
 		C6C390DA85F5759C498E9345 /* StatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132EB6CB2BB0B527A3C57527 /* StatsTests.swift */; };
 		C6DC0F0BF19452DB23A0E48E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9716AF7F0E3C9128332682BD /* ViewExtensions.swift */; };
@@ -156,6 +158,7 @@
 		EE9B4BE47B6C3B6B6EF6845F /* ca.lproj in Resources */ = {isa = PBXBuildFile; fileRef = C6AD4E60A0C8F84B62F231C0 /* ca.lproj */; settings = {ASSET_TAGS = ("lang-ca", ); }; };
 		EF399C6CE4645047AE6EF6CF /* ko-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 77724605CACC6F9A9E197D32 /* ko-geo.json */; settings = {ASSET_TAGS = ("lang-ko", ); }; };
 		F026FA55B3908340BB301534 /* LanguageCatalogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601D195FA5082ACE0F09162E /* LanguageCatalogTests.swift */; };
+		F24E3B04A397BDE7FD44389E /* UIDriverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA1F341F0932D6326FB10E0 /* UIDriverTests.swift */; };
 		F27547F2B084E91E0D7BE4E1 /* rivers.json in Resources */ = {isa = PBXBuildFile; fileRef = F11FD6C85244DEBF7904B118 /* rivers.json */; };
 		F31CE3CE128F36466070D13C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2EADA5AE08E3AB2FDD015B /* SettingsView.swift */; };
 		F3E4BC54608032C208888F95 /* CountryBorderLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412DC824A749D0667C05943 /* CountryBorderLoader.swift */; };
@@ -171,6 +174,13 @@
 
 /* Begin PBXContainerItemProxy section */
 		3E4834B4B983971B3274E655 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A4FCCB285781971ABB70E95B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9D8A85CDAEC6C117A3F2428D;
+			remoteInfo = Hanahuac;
+		};
+		B8AFAB9D1DF1FDFE5E233C0B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A4FCCB285781971ABB70E95B /* Project object */;
 			proxyType = 1;
@@ -231,6 +241,7 @@
 		48A009B1EC5C53A5776FF842 /* ProgressBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBackup.swift; sourceTree = "<group>"; };
 		4A5A6DEB6D0E9CC064F749A7 /* sr-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sr-geo.json"; sourceTree = "<group>"; };
 		4A9B4E84299EBAF69A5F57C4 /* KeyValueStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStore.swift; sourceTree = "<group>"; };
+		4AA1F341F0932D6326FB10E0 /* UIDriverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDriverTests.swift; sourceTree = "<group>"; };
 		4E3A6C56976B4F809760D23B /* ProgressMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressMigrator.swift; sourceTree = "<group>"; };
 		4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapitalQuizView.swift; sourceTree = "<group>"; };
 		512EE74D66608C53AAFD54A6 /* GeoNamePackData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamePackData.swift; sourceTree = "<group>"; };
@@ -239,9 +250,11 @@
 		5C449FCC798C1C634D548006 /* QuizModeDimensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizModeDimensionTests.swift; sourceTree = "<group>"; };
 		5F092FAD49DC2860FC69F0E8 /* MultipleChoiceSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceSession.swift; sourceTree = "<group>"; };
 		601D195FA5082ACE0F09162E /* LanguageCatalogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCatalogTests.swift; sourceTree = "<group>"; };
+		629FD5B1C22D73FC1D8039CC /* HanahuacUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = HanahuacUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		648BDEC0124956A7329F1B6A /* LanguageDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageDescriptor.swift; sourceTree = "<group>"; };
 		67F40EAE285B31D3FD21213A /* MapFeatureRendering.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapFeatureRendering.swift; sourceTree = "<group>"; };
 		6982228C573F8D06E79CC88D /* MapQuizRegionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapQuizRegionHelper.swift; sourceTree = "<group>"; };
+		69E2769BB6A28E5C190D1139 /* UIWalkthroughRecorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWalkthroughRecorder.swift; sourceTree = "<group>"; };
 		6B33F57D3ABE2A906E747101 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		6C092259C29945C5CE6C89A2 /* LocalizedQuizPromptTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedQuizPromptTests.swift; sourceTree = "<group>"; };
 		6C10211BD753EDB43C322A97 /* BorderLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderLoader.swift; sourceTree = "<group>"; };
@@ -333,6 +346,7 @@
 		EF0CCAA2F2AF702B15300352 /* L10nBundleResolutionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10nBundleResolutionTests.swift; sourceTree = "<group>"; };
 		F0DCF2D94E310309B851816E /* MountainRange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainRange.swift; sourceTree = "<group>"; };
 		F11FD6C85244DEBF7904B118 /* rivers.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = rivers.json; sourceTree = "<group>"; };
+		F12B11DFB0A9DA02FFBFFF47 /* UIActionScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIActionScript.swift; sourceTree = "<group>"; };
 		F23549200C6AE39660BAD9F6 /* LanguageCompletenessSupportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCompletenessSupportTests.swift; sourceTree = "<group>"; };
 		F2A9ED59834EB421065830ED /* LearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningQuizView.swift; sourceTree = "<group>"; };
 		F515D771C91F31DA44F1CFBF /* MappableFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MappableFeature.swift; sourceTree = "<group>"; };
@@ -470,6 +484,7 @@
 			children = (
 				C7E2B565AEAAD1F772460F00 /* Hanahuac.app */,
 				41380920DBE818A192AD116A /* HanahuacTests.xctest */,
+				629FD5B1C22D73FC1D8039CC /* HanahuacUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -657,11 +672,22 @@
 			path = Sync;
 			sourceTree = "<group>";
 		};
+		C81CF86666BD1392BFDC567E /* HanahuacUITests */ = {
+			isa = PBXGroup;
+			children = (
+				F12B11DFB0A9DA02FFBFFF47 /* UIActionScript.swift */,
+				4AA1F341F0932D6326FB10E0 /* UIDriverTests.swift */,
+				69E2769BB6A28E5C190D1139 /* UIWalkthroughRecorder.swift */,
+			);
+			path = HanahuacUITests;
+			sourceTree = "<group>";
+		};
 		FC85180E538FE13CB2C2E1C4 = {
 			isa = PBXGroup;
 			children = (
 				AD0F2B4580824DC77DDF6185 /* Hanahuac */,
 				09DFEA148296A9DBE8F59372 /* HanahuacTests */,
+				C81CF86666BD1392BFDC567E /* HanahuacUITests */,
 				51A884E61CB86E3B2324D636 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -705,6 +731,24 @@
 			productReference = 41380920DBE818A192AD116A /* HanahuacTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		AFBC9CE5C5EC04E74ACC1357 /* HanahuacUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E8BCEC8A67DAB7DA2D7200A2 /* Build configuration list for PBXNativeTarget "HanahuacUITests" */;
+			buildPhases = (
+				F47E95E8DE47B9A2F4D443C1 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				45E5C702F2825517A77EC8C2 /* PBXTargetDependency */,
+			);
+			name = HanahuacUITests;
+			packageProductDependencies = (
+			);
+			productName = HanahuacUITests;
+			productReference = 629FD5B1C22D73FC1D8039CC /* HanahuacUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -713,6 +757,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					AFBC9CE5C5EC04E74ACC1357 = {
+						TestTargetID = 9D8A85CDAEC6C117A3F2428D;
+					};
+				};
 				knownAssetTags = (
 					"lang-ca",
 					"lang-de",
@@ -745,6 +794,7 @@
 			targets = (
 				9D8A85CDAEC6C117A3F2428D /* Hanahuac */,
 				AD1C92BBBEFBDEC1088CDC68 /* HanahuacTests */,
+				AFBC9CE5C5EC04E74ACC1357 /* HanahuacUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -934,9 +984,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F47E95E8DE47B9A2F4D443C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				26D3E004C84823644A56BDD6 /* UIActionScript.swift in Sources */,
+				F24E3B04A397BDE7FD44389E /* UIDriverTests.swift in Sources */,
+				C52C9F88EF40CB239DC8BA51 /* UIWalkthroughRecorder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		45E5C702F2825517A77EC8C2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9D8A85CDAEC6C117A3F2428D /* Hanahuac */;
+			targetProxy = B8AFAB9D1DF1FDFE5E233C0B /* PBXContainerItemProxy */;
+		};
 		7FB4E6E629CE8E0B2F2781A1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9D8A85CDAEC6C117A3F2428D /* Hanahuac */;
@@ -980,6 +1045,27 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.10;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4DE440AC7EC171BE67850A64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hanahuac.app.uitests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Hanahuac;
 			};
 			name = Debug;
 		};
@@ -1086,6 +1172,27 @@
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.10;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9DE04C4AEA72921FF199133E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hanahuac.app.uitests;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_VERSION = 5.10;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Hanahuac;
 			};
 			name = Release;
 		};
@@ -1202,6 +1309,15 @@
 			buildConfigurations = (
 				944256DB2ED912505D12C5FC /* Debug */,
 				DC13DAAA34FCC369D6E00E93 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E8BCEC8A67DAB7DA2D7200A2 /* Build configuration list for PBXNativeTarget "HanahuacUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DE440AC7EC171BE67850A64 /* Debug */,
+				9DE04C4AEA72921FF199133E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

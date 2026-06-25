@@ -195,6 +195,22 @@ targets:
     dependencies:
       - target: Hanahuac
 
+  HanahuacUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: HanahuacUITests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.hanahuac.app.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        SUPPORTS_MACCATALYST: YES
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        SWIFT_VERSION: "5.10"
+    dependencies:
+      - target: Hanahuac
+
 schemes:
   Hanahuac:
     build:
@@ -206,6 +222,7 @@ schemes:
       config: Debug
       targets:
         - HanahuacTests
+        - HanahuacUITests
     profile:
       config: Release
     analyze:
