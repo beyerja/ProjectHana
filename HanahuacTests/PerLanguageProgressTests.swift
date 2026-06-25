@@ -116,6 +116,47 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.ca, .esES)
     }
 
+    /// Story 004: Basque keeps a progress track fully isolated from its Spanish fallback target
+    /// (es-ES); they are distinct language codes, so the same factID/day coexists across the two.
+    func testProgressIsolationForBasque() {
+        assertProgressIsolated(.eu, .esES)
+    }
+
+    /// Story 005: Yucatec Maya keeps a progress track fully isolated from its Spanish fallback target
+    /// (es-MX, NOT es-ES); they are distinct language codes, so the same factID/day coexists across the
+    /// two and yua progress never bleeds into the Mexican Spanish track it falls back through.
+    func testProgressIsolationForYucatecMaya() {
+        assertProgressIsolated(.yua, .esMX)
+    }
+
+    /// Story 006: Italian keeps a progress track fully isolated from its English fallback target; they
+    /// are distinct language codes, so the same factID/day coexists across the two and Italian progress
+    /// never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForItalian() {
+        assertProgressIsolated(.it, .en)
+    }
+
+    /// Story 007: Polish keeps a progress track fully isolated from its English fallback target; they
+    /// are distinct language codes, so the same factID/day coexists across the two and Polish progress
+    /// never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForPolish() {
+        assertProgressIsolated(.pl, .en)
+    }
+
+    /// Story 008: Dutch keeps a progress track fully isolated from its English fallback target; they
+    /// are distinct language codes, so the same factID/day coexists across the two and Dutch progress
+    /// never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForDutch() {
+        assertProgressIsolated(.nl, .en)
+    }
+
+    /// Story 009: Serbian (Cyrillic) keeps a progress track fully isolated from its English fallback
+    /// target; they are distinct language codes, so the same factID/day coexists across the two and
+    /// Serbian progress never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForSerbian() {
+        assertProgressIsolated(.sr, .en)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {

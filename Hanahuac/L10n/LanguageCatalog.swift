@@ -8,8 +8,8 @@ import Foundation
 /// feasible, a matter of adding a ``LanguageDescriptor`` entry here.
 enum LanguageCatalog {
     /// All language descriptors, ordered to match ``AppLocale/allCases`` (en, fr, de, es-MX, es-ES,
-    /// ca, ko, nah). The display names and fallback chains encode exactly the behavior of the former
-    /// per-case `switch` statements in `AppLocale`.
+    /// ca, eu, yua, it, pl, nl, sr, ko, nah). The display names and fallback chains encode exactly the
+    /// behavior of the former per-case `switch` statements in `AppLocale`.
     static let all: [LanguageDescriptor] = [
         LanguageDescriptor(
             code: AppLocale.en.rawValue,
@@ -45,6 +45,63 @@ enum LanguageCatalog {
             code: AppLocale.ca.rawValue,
             displayName: "Català",
             fallbackChain: [.ca, .esES, .en],
+            availability: .downloadablePack
+        ),
+        LanguageDescriptor(
+            code: AppLocale.eu.rawValue,
+            displayName: "Euskara",
+            fallbackChain: [.eu, .esES, .en],
+            availability: .downloadablePack
+        ),
+        // Yucatec Maya is a best-effort, fallback-permitted language: genuine gaps in its UI/geo
+        // content fall back through Mexican Spanish (es-MX) before English. It routes through es-MX
+        // (matching `fallsBackThroughSpanish`), not es-ES.
+        LanguageDescriptor(
+            code: AppLocale.yua.rawValue,
+            displayName: "Màaya t'àan",
+            fallbackChain: [.yua, .esMX, .en],
+            availability: .downloadablePack
+        ),
+        // Italian is a COMPLETE-content language: its UI strings and geo names are fully translated,
+        // so its fallback chain routes straight to English as an ultimate, never-hit safety net
+        // (NOT through es-MX/es-ES like the best-effort languages).
+        LanguageDescriptor(
+            code: AppLocale.it.rawValue,
+            displayName: "Italiano",
+            fallbackChain: [.it, .en],
+            availability: .downloadablePack
+        ),
+        // Polish is a COMPLETE-content language: its UI strings and geo names are fully translated,
+        // so its fallback chain routes straight to English as an ultimate, never-hit safety net
+        // (NOT through es-MX/es-ES like the best-effort languages).
+        LanguageDescriptor(
+            code: AppLocale.pl.rawValue,
+            displayName: "Polski",
+            fallbackChain: [.pl, .en],
+            availability: .downloadablePack
+        ),
+        // Dutch is a COMPLETE-content language: its UI strings and geo names are fully translated,
+        // so its fallback chain routes straight to English as an ultimate, never-hit safety net
+        // (NOT through es-MX/es-ES like the best-effort languages).
+        LanguageDescriptor(
+            code: AppLocale.nl.rawValue,
+            displayName: "Nederlands",
+            fallbackChain: [.nl, .en],
+            availability: .downloadablePack
+        ),
+        // Serbian is a COMPLETE-content language: its UI strings and geo names are fully translated,
+        // so its fallback chain routes straight to English as an ultimate, never-hit safety net
+        // (NOT through es-MX/es-ES like the best-effort languages).
+        //
+        // Script decision — Cyrillic ("Српски"): Serbian is officially digraphic, but Cyrillic is the
+        // constitutionally designated official script of Serbian (Article 10 of the Constitution of
+        // Serbia). Authoritative geographic names (country/capital/river/mountain/sea exonyms) are
+        // best served by the official script, so all `sr` content — display name and geo data — is
+        // authored in Cyrillic rather than Latin transliteration (feature spec §5).
+        LanguageDescriptor(
+            code: AppLocale.sr.rawValue,
+            displayName: "Српски",
+            fallbackChain: [.sr, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(

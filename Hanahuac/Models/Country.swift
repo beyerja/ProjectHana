@@ -8,6 +8,12 @@ struct Country: Codable, Identifiable, Hashable {
     let nameEs: String?
     let nameEsEs: String?
     let nameCa: String?
+    let nameEu: String?
+    let nameYua: String?
+    let nameIt: String?
+    let namePl: String?
+    let nameNl: String?
+    let nameSr: String?
     let nameKo: String?
     let nameNah: String?
     let capital: String
@@ -16,6 +22,12 @@ struct Country: Codable, Identifiable, Hashable {
     let capitalEs: String?
     let capitalEsEs: String?
     let capitalCa: String?
+    let capitalEu: String?
+    let capitalYua: String?
+    let capitalIt: String?
+    let capitalPl: String?
+    let capitalNl: String?
+    let capitalSr: String?
     let capitalKo: String?
     let capitalNah: String?
     let continent: String
@@ -33,6 +45,12 @@ struct Country: Codable, Identifiable, Hashable {
         nameEs: String?,
         nameEsEs: String? = nil,
         nameCa: String? = nil,
+        nameEu: String? = nil,
+        nameYua: String? = nil,
+        nameIt: String? = nil,
+        namePl: String? = nil,
+        nameNl: String? = nil,
+        nameSr: String? = nil,
         nameKo: String? = nil,
         nameNah: String? = nil,
         capital: String,
@@ -41,6 +59,12 @@ struct Country: Codable, Identifiable, Hashable {
         capitalEs: String?,
         capitalEsEs: String? = nil,
         capitalCa: String? = nil,
+        capitalEu: String? = nil,
+        capitalYua: String? = nil,
+        capitalIt: String? = nil,
+        capitalPl: String? = nil,
+        capitalNl: String? = nil,
+        capitalSr: String? = nil,
         capitalKo: String? = nil,
         capitalNah: String? = nil,
         continent: String,
@@ -54,6 +78,12 @@ struct Country: Codable, Identifiable, Hashable {
         self.nameEs = nameEs
         self.nameEsEs = nameEsEs
         self.nameCa = nameCa
+        self.nameEu = nameEu
+        self.nameYua = nameYua
+        self.nameIt = nameIt
+        self.namePl = namePl
+        self.nameNl = nameNl
+        self.nameSr = nameSr
         self.nameKo = nameKo
         self.nameNah = nameNah
         self.capital = capital
@@ -62,6 +92,12 @@ struct Country: Codable, Identifiable, Hashable {
         self.capitalEs = capitalEs
         self.capitalEsEs = capitalEsEs
         self.capitalCa = capitalCa
+        self.capitalEu = capitalEu
+        self.capitalYua = capitalYua
+        self.capitalIt = capitalIt
+        self.capitalPl = capitalPl
+        self.capitalNl = capitalNl
+        self.capitalSr = capitalSr
         self.capitalKo = capitalKo
         self.capitalNah = capitalNah
         self.continent = continent

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Generate per-language geo-name ODR pack JSON from the bundled geo source data.
 
-For each downloadable (non-base) language — fr, de, es-ES, ca, ko, nah — this emits a
+For each downloadable (non-base) language — fr, de, es-ES, ca, eu, yua, it, pl, nl, sr, ko, nah — this emits a
 ``Hanahuac/Resources/<code>-geo.json`` file in the ``GeoNamePackData`` schema
 (see ``Hanahuac/L10n/Packs/GeoNamePackData.swift``):
 
@@ -45,10 +45,23 @@ PACK_VERSION = 1
 
 # Downloadable (non-base) languages that get an ODR geo pack. es-MX is a bundled base
 # language and en is the resolver fallback, so neither gets a generated pack.
-PACK_LANGUAGES = ["fr", "de", "es-ES", "ca", "ko", "nah"]
+PACK_LANGUAGES = ["fr", "de", "es-ES", "ca", "eu", "yua", "it", "pl", "nl", "sr", "ko", "nah"]
 
 # Map an AppLocale code to the JSON field suffix used in the bundled source data.
-SUFFIX_BY_CODE = {"fr": "fr", "de": "de", "es-ES": "es_es", "ca": "ca", "ko": "ko", "nah": "nah"}
+SUFFIX_BY_CODE = {
+    "fr": "fr",
+    "de": "de",
+    "es-ES": "es_es",
+    "ca": "ca",
+    "eu": "eu",
+    "yua": "yua",
+    "it": "it",
+    "pl": "pl",
+    "nl": "nl",
+    "sr": "sr",
+    "ko": "ko",
+    "nah": "nah",
+}
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RESOURCES = REPO_ROOT / "Hanahuac" / "Resources"

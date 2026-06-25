@@ -1,0 +1,171 @@
+/* Basque (Euskara) */
+
+/* HomeView */
+"home.tagline" = "Mundu bat, proba bana aldiko";
+"home.categories" = "Kategoriak";
+"home.category.countries" = "Herrialdeak";
+"home.category.rivers" = "Ibaiak";
+"home.category.mountains" = "Mendiak";
+"home.category.seas" = "Itsasoak";
+"home.view_progress" = "Ikusi aurrerapena";
+"home.tile.new" = "Berria";
+"home.tile.pending" = "Egiteke";
+"home.tile.all_done" = "Dena eginda";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Mapako proba";
+"quiz.mode.map_tap.desc" = "Sakatu mapan herrialde zuzena";
+"quiz.mode.type_capital.title" = "Idatzi hiriburua";
+"quiz.mode.type_capital.desc" = "«Zein da X(r)en hiriburua?»";
+"quiz.mode.name_feature.title" = "Izendatu lekua";
+"quiz.mode.name_feature.desc" = "Idatzi mapan markatutako lekuaren izena";
+"quiz.mode.multiple_choice.title" = "Aukera anitzekoa";
+"quiz.mode.multiple_choice.desc" = "Aukeratu hiriburua 4 aukeren artean";
+"quiz.cards_due.singular" = "txartel egiteke";
+"quiz.cards_due.plural" = "txartel egiteke";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Ezarpenak";
+"settings.section.general" = "Orokorra";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "Hizkuntza";
+"settings.language.picker_title" = "Aplikazioaren hizkuntza";
+"settings.language.downloading" = "Deskargatzen…";
+"settings.language.download_failed" = "Deskargak huts egin du";
+"settings.language.retry" = "Saiatu berriro";
+"settings.language.available" = "Eskuragarri";
+
+/* iCloud sync */
+/* NOTE: "settings.sync.toggle" is deliberately omitted from Basque to exercise the
+   fallback chain eu → es-ES → en (see L10nBundleResolutionTests). It resolves to the
+   es-ES value ("Sincronización con iCloud") before reaching English. */
+"settings.sync.status_label" = "Egoera";
+"settings.sync.status.off" = "Desaktibatuta";
+"settings.sync.status.unavailable" = "Ez dago erabilgarri";
+"settings.sync.status.on" = "Aktibatuta";
+"settings.sync.status.syncing" = "Sinkronizatzen…";
+"settings.sync.status.idle" = "Eguneratuta";
+"settings.sync.status.error" = "Errorea";
+"settings.sync.unavailable_note" = "iCloud sinkronizazioa ez dago erabilgarri. Hasi saioa iCloud-en eta erabili sinkronizazioa gaituta duen bertsio bat.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Aurrerapena laster";
+"progress.placeholder_desc" = "Zure ikasketa-estatistikak hemen agertuko dira.";
+"progress.title" = "Aurrerapena";
+
+/* StatsView */
+"stats.title" = "Aurrerapena";
+"stats.cards_reviewed" = "Berrikusitako txartelak";
+"stats.due_today" = "Gaur egiteke";
+"stats.day_streak" = "Eguneko bolada";
+"stats.by_category" = "Kategoriaka";
+"stats.showing_language" = "Erakusten:";
+"stats.by_language" = "Hizkuntzaka";
+"stats.category_header" = "Kategoria";
+"stats.mastery_tiers" = "Menderatze-mailak";
+"stats.tier.not_started" = "Hasi gabe";
+"stats.tier.reps_1_2" = "1–2 errep.";
+"stats.tier.reps_3_4" = "3–4 errep.";
+"stats.tier.mastered" = "Errep. ≥ 5, EF ≥ 2,0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Joerak denboran zehar";
+"stats.charts.range.7d" = "7 egun";
+"stats.charts.range.30d" = "30 egun";
+"stats.charts.range.all" = "Beti";
+"stats.charts.category.all" = "Guztiak";
+"stats.charts.mastery_growth" = "Menderatze-hazkundea";
+"stats.charts.reviews_completed" = "Egindako berrikuspenak";
+"stats.charts.cards_graduated" = "Graduatutako txartelak";
+"stats.charts.streak_history" = "Bolada";
+"stats.charts.series.review" = "Berrikuspena";
+"stats.charts.series.mastered" = "Menderatuak";
+"stats.charts.empty" = "Jarraitu ikasten zure aurrerapen-joerak hemen ikusteko.";
+
+/* LearningQuizView */
+"learn.title" = "Ikasi";
+"learn.results" = "Emaitzak";
+"learn.exit" = "Irten";
+"learn.done" = "Eginda";
+"learn.no_cards_title" = "Ez dago txartelik ikasteko";
+"learn.no_cards_desc" = "Txartel guztiak zure berrikuspen-egutegian daude jada.";
+"learn.graduated_count" = "%d / %d graduatuta";
+"learn.active_count" = "%d aktibo";
+"learn.complete_title" = "Ikasketa amaituta!";
+"learn.complete_desc" = "Txartel guztiak zure berrikuspen-egutegian gehitu dira.";
+"learn.cards_graduated" = "Graduatutako txartelak";
+
+/* MapQuizView */
+"map_quiz.title" = "Mapako proba";
+"map_quiz.exit" = "Irten";
+"map_quiz.tap_on_map" = "Sakatu mapan";
+"map_quiz.nothing_due_title" = "Ezer egiteke";
+"map_quiz.nothing_due_desc" = "Une honetan ez dago txartelik egiteke. Itzuli geroago!";
+"map_quiz.feedback.correct" = "Zuzena!";
+"map_quiz.feedback.incorrect_prefix" = "Okerra: hau zen";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Emaitzak";
+"quiz_summary.session_complete" = "Saioa amaituta!";
+"quiz_summary.cards_reviewed" = "Berrikusitako txartelak";
+"quiz_summary.correct" = "Zuzenak";
+"quiz_summary.next_review" = "Hurrengo berrikuspena";
+"quiz_summary.done" = "Eginda";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Ezer egiteke";
+"mcq_quiz.nothing_due_desc" = "Une honetan ez dago txartelik egiteke.";
+"mcq_quiz.exit" = "Irten";
+"mcq_quiz.correct_count" = "%d zuzen";
+"mcq_quiz.nav.country" = "Herrialdeen proba";
+"mcq_quiz.nav.river" = "Ibaien proba";
+"mcq_quiz.nav.mountain" = "Mendien proba";
+"mcq_quiz.nav.sea" = "Itsasoen proba";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Ezer egiteke";
+"capital_quiz.nothing_due_desc" = "Une honetan ez dago txartelik egiteke.";
+"capital_quiz.exit" = "Irten";
+"capital_quiz.check" = "Egiaztatu";
+"capital_quiz.next" = "Hurrengoa →";
+"capital_quiz.placeholder" = "Idatzi zure erantzuna…";
+"capital_quiz.feedback.correct" = "Zuzena! ✓";
+"capital_quiz.feedback.wrong_prefix" = "Erantzuna hau da:";
+"capital_quiz.nav.capital" = "Hiriburuen proba";
+"capital_quiz.nav.country" = "Herrialdeen proba";
+"capital_quiz.correct_count" = "%d zuzen";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Izendatu leku hau";
+"name_feature.nav" = "Izendatu lekua";
+"name_feature.nothing_due_title" = "Ezer egiteke";
+"name_feature.nothing_due_desc" = "Une honetan ez dago txartelik egiteke.";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Proba laster";
+"quiz_placeholder.desc" = "%@ proba hurrengo eguneratzean egongo da eskuragarri.";
+"quiz_placeholder.all_categories" = "Kategoria guztiak";
+
+/* Continent labels */
+"continent.africa" = "Afrika";
+"continent.asia" = "Asia";
+"continent.europe" = "Europa";
+"continent.north_america" = "Ipar Amerika";
+"continent.oceania" = "Ozeania";
+"continent.south_america" = "Hego Amerika";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "Zein da %@(r)en hiriburua?";
+"quiz.prompt.continent_of" = "Zein kontinentetan dago %@?";
+"quiz.prompt.country_of_capital" = "Zein herrialdek du %@ hiriburu?";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "Ikasi txartel berriak";
+"learn.mode_picker.map.title" = "Mapako proba";
+"learn.mode_picker.map.desc" = "Sakatu mapan herrialde zuzena";
+"learn.mode_picker.mcq.title" = "Aukera anitzekoa";
+"learn.mode_picker.mcq.desc" = "Aukeratu erantzuna 4 aukeren artean";
+
+/* Map learning quiz */
+"learn_map.title" = "Mapan ikasten";
+"learn_map.streak" = "%d / 3";

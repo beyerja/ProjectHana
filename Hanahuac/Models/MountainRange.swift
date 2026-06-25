@@ -8,6 +8,12 @@ struct MountainRange: Codable, Identifiable, Hashable {
     let nameEs: String?
     let nameEsEs: String?
     let nameCa: String?
+    let nameEu: String?
+    let nameYua: String?
+    let nameIt: String?
+    let namePl: String?
+    let nameNl: String?
+    let nameSr: String?
     let nameKo: String?
     let nameNah: String?
     let continent: String
@@ -26,6 +32,12 @@ struct MountainRange: Codable, Identifiable, Hashable {
         nameEs: String?,
         nameEsEs: String? = nil,
         nameCa: String? = nil,
+        nameEu: String? = nil,
+        nameYua: String? = nil,
+        nameIt: String? = nil,
+        namePl: String? = nil,
+        nameNl: String? = nil,
+        nameSr: String? = nil,
         nameKo: String? = nil,
         nameNah: String? = nil,
         continent: String,
@@ -41,6 +53,12 @@ struct MountainRange: Codable, Identifiable, Hashable {
         self.nameEs = nameEs
         self.nameEsEs = nameEsEs
         self.nameCa = nameCa
+        self.nameEu = nameEu
+        self.nameYua = nameYua
+        self.nameIt = nameIt
+        self.namePl = namePl
+        self.nameNl = nameNl
+        self.nameSr = nameSr
         self.nameKo = nameKo
         self.nameNah = nameNah
         self.continent = continent

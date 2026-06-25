@@ -37,7 +37,7 @@ final class BundledLanguagePackProviderTests: XCTestCase {
     /// The provider exposes validated pack data for the translation languages, built from the
     /// bundled JSON; English has no pack (it is the resolver's base fallback).
     func testGeoNameData_translationLanguages_havePacks() {
-        for locale in [AppLocale.fr, .de, .esMX, .esES, .ca, .ko, .nah] {
+        for locale in [AppLocale.fr, .de, .esMX, .esES, .ca, .eu, .ko, .nah] {
             let pack = provider.geoNameData(for: locale)
             XCTAssertNotNil(pack, "expected a pack for \(locale.rawValue)")
             XCTAssertEqual(pack?.code, locale.rawValue)
@@ -58,7 +58,7 @@ final class BundledLanguagePackProviderTests: XCTestCase {
     /// All bundled packs pass schema validation, proving the bundled path exercises the same loader
     /// that ODR/CDN packs will.
     func testGeoNameData_allBundledPacksAreValid() throws {
-        for locale in [AppLocale.fr, .de, .esMX, .esES, .ca, .ko, .nah] {
+        for locale in [AppLocale.fr, .de, .esMX, .esES, .ca, .eu, .ko, .nah] {
             let pack = try XCTUnwrap(provider.geoNameData(for: locale))
             XCTAssertNoThrow(try GeoNamePackLoader.validate(pack), "\(locale.rawValue) pack invalid")
         }
