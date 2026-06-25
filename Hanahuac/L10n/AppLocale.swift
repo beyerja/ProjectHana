@@ -11,6 +11,7 @@ enum AppLocale: String, CaseIterable, Identifiable {
     case yua
     case it
     case pl
+    case nl
     case ko
     case nah
 
@@ -68,10 +69,11 @@ enum AppLocale: String, CaseIterable, Identifiable {
     /// 1. Any `es-*` locale maps to `.esMX`.
     /// 2. The Nahuatl macrolanguage code plus its common ISO 639-3 individual codes map to `.nah`.
     /// 3. Match by language code against the catalog (`en`, `fr`, `de`, `ca`, `eu`, `yua`, `it`, `pl`,
-    ///    `ko`); a `ca` device locale auto-selects Catalan, an `eu` device locale auto-selects Basque, a
-    ///    `yua` device locale auto-selects Yucatec Maya, an `it` device locale auto-selects Italian, and
-    ///    a `pl` device locale auto-selects Polish via this code lookup (code == rawValue), without
-    ///    perturbing the es-* → es-MX mapping above.
+    ///    `nl`, `ko`); a `ca` device locale auto-selects Catalan, an `eu` device locale auto-selects
+    ///    Basque, a `yua` device locale auto-selects Yucatec Maya, an `it` device locale auto-selects
+    ///    Italian, a `pl` device locale auto-selects Polish, and an `nl` device locale auto-selects
+    ///    Dutch via this code lookup (code == rawValue), without perturbing the es-* → es-MX mapping
+    ///    above.
     /// 4. Fall back to `.en` for unrecognized locales.
     static func matching(_ locale: Locale) -> AppLocale {
         let language: String = if #available(iOS 16, macOS 13, *) {
