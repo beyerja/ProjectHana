@@ -1,0 +1,21 @@
+## Tasks
+
+Naming scheme (documented once in task 001, referenced everywhere):
+`home.mode.<modeRaw>`, `home.settings`, `home.progress`, `quiz.answer.<n>`,
+`quiz.input`, `quiz.submit`, `map.tapCountry`, `settings.<x>`. `<modeRaw>` uses
+HomeQuizMode.quizModeRawValue (mapQuiz | multipleChoice | typeCapital | nameFeature).
+All changes are ADDITIVE `.accessibilityIdentifier(...)` modifiers only — no change to
+visible behavior, layout, labels, or any user-facing string.
+
+- [x] 001: Add the naming-scheme reference doc — append an "Accessibility identifiers" section to a discoverable docs location (the story dir's existing spec/log is sufficient; if the project keeps a docs/ or README convention, add it there) listing the full identifier vocabulary above so story 003/004 action scripts can reference stable ids. Doc only, no code.
+- [x] 002: HomeView mode rows — in `Hanahuac/Views/Home/HomeView.swift`, add `.accessibilityIdentifier("home.mode.\(mode.quizModeRawValue)")` to the per-mode `Button` returned by `quizModeButton(mode:category:)`. Note the same mode can appear under multiple categories; identifier is intentionally per-mode (driver navigates by mode). Verify ids resolve for all categories.
+- [x] 003: HomeView Settings entry — in `Hanahuac/Views/Home/HomeView.swift`, add `.accessibilityIdentifier("home.settings")` to the toolbar `NavigationLink` (gearshape) that pushes `SettingsView`.
+- [x] 004: HomeView Progress entry — in `Hanahuac/Views/Home/HomeView.swift`, add `.accessibilityIdentifier("home.progress")` to the `progressLink` NavigationLink so the driver can reach the stats surface used in the walkthrough.
+- [x] 005: Multiple-choice answer options — in `Hanahuac/Views/Quiz/MultipleChoice/MultipleChoiceQuizView.swift`, in `optionButtons(session:)`, add `.accessibilityIdentifier("quiz.answer.\(index)")` to each option `Button` using the ForEach offset (switch to `ForEach(Array(... .enumerated()), id: ...)` or index the options array) so options are addressable by stable position.
+- [x] 006: Learning (new-card MCQ) answer options — in `Hanahuac/Views/Quiz/LearningQuizView.swift`, in `optionButtons(question:)`, add the same `.accessibilityIdentifier("quiz.answer.\(index)")` per option `Button`, mirroring task 005 so the new-card MCQ flow is driveable too.
+- [x] 007: Text-quiz input + submit (Type the Capital) — in `Hanahuac/Views/Quiz/TextQuiz/CapitalQuizView.swift`, in the `.unanswered` branch of `answerSection(...)`, add `.accessibilityIdentifier("quiz.input")` to the `TextField` and `.accessibilityIdentifier("quiz.submit")` to the Check `Button`.
+- [x] 008: Text-quiz input + submit (Name That Place) — in `Hanahuac/Views/Quiz/TextQuiz/NameFeatureQuizView.swift`, in the `.unanswered` branch of `answerSection(...)`, add `.accessibilityIdentifier("quiz.input")` to the `TextField` and `.accessibilityIdentifier("quiz.submit")` to the Check `Button`, mirroring task 007.
+- [x] 009: Tap-a-country map (pending pile) — in `Hanahuac/Views/Quiz/MapQuiz/MapQuizView.swift`, add `.accessibilityIdentifier("map.tapCountry")` to the `Map` in `quizBody(session:)` so the driver can resolve the map element for a normalized `mapTap`. (Pin annotations are SwiftUI buttons inside the Map; the id is on the map container per the driver's mapTap contract.)
+- [x] 010: Tap-a-country map (new-card learning) — in `Hanahuac/Views/Quiz/MapQuiz/MapLearningQuizView.swift`, add `.accessibilityIdentifier("map.tapCountry")` to the `Map` in `quizBody(session:)`, mirroring task 009. (Do NOT add it to the reference map in `NameFeatureQuizView.featureMap`, which is `.disabled(true)` and non-interactive.)
+- [x] 011: Settings controls the walkthrough touches — in `Hanahuac/Views/Settings/SettingsView.swift`, add `.accessibilityIdentifier("settings.language")` to the Language `NavigationLink` and `.accessibilityIdentifier("settings.syncToggle")` to the iCloud Sync `Toggle`.
+- [x] 012: Verify additive-only — run the project unit tests + lint (`just test`, `just lint` or the project's equivalents, exported HANA_FEATURE_SLUG="agent-ui-driver") and confirm no behavior/copy/layout regression. Grep that every identifier follows the documented scheme and that no view-facing string changed.
