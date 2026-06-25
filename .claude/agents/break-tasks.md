@@ -19,6 +19,8 @@ Break the story into atomic, independently implementable tasks — each task is 
 
 If the story modifies an existing `@Model` type (SwiftData), insert a task immediately after the model-definition task: audit all existing tests that construct `<ModelName>` and update them for new required fields or changed defaults.
 
+**Enum-case fan-out check**: if the story adds a `case` to an enum that has *exhaustive switches* or *per-case parallel fields* (the canonical one is `AppLocale` — a new locale needs a matching `nameXx`/`capitalXx` on **all four** geo models `Country`/`River`/`MountainRange`/`Sea`, a new arm in **every** exhaustive switch incl. `GeoModel+PackData.swift`, plus catalog/`project.yml`/pack wiring), then grep for *all* sites up front and make the model-field additions and the switch-arm additions **one task each, grouped so the set is added together** — not a single "update Country" task. A partial update (e.g. only `Country` got `nameXx`, the other three models and the switches did not) is a "switch must be exhaustive" compile failure, and it is exactly what an interrupted mid-story WIP leaves behind. Enumerating the full site list in tasks.md makes each unit self-consistent and surfaces the missing arms before they reach a build.
+
 Initialise `<story-dir>/log.md` with a header line if it does not already exist:
 ```
 # Log — <story-title>

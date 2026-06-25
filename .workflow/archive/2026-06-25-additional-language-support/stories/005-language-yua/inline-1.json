@@ -1,0 +1,7 @@
+{
+  "body": "Non-blocking (nit, pre-existing pattern): the downloadable-language set is hand-maintained in three places that must stay in lockstep — `packLanguages` here (`[.fr, .de, .esMX, .esES, .ca, .eu, .yua, .ko, .nah]`), `PACK_LANGUAGES` in `scripts/generate-geo-packs.py`, and `LANG_CODES` in `scripts/verify-odr-packs.sh`. Adding `yua` required editing all three by hand. The codebase already prefers deriving such sets from `LanguageCatalog` (see `AppLocale.fallsBackThroughSpanish` / `odrTags`, documented as catalog-backed rather than hand-maintained). Deriving this list (e.g. from `availability == .downloadablePack` plus `.esMX`) would remove the drift risk for future languages. Not blocking this PR: `just geo-packs-check` and `just verify-odr-packs` both pass and would catch an actual mismatch in CI, and this change correctly follows the existing ca/eu precedent.",
+  "commit_id": "77d9df0e53c60a1f55f695a5ed9b968f78a0fec3",
+  "path": "Hanahuac/L10n/Packs/BundledLanguagePackProvider.swift",
+  "line": 47,
+  "side": "RIGHT"
+}
