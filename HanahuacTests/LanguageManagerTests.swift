@@ -112,11 +112,11 @@ final class LanguageManagerTests: XCTestCase {
     }
 
     func testSavedUserDefaults_unknownRawValue_resolvesToNil() {
-        UserDefaults.standard.set("ja", forKey: key)
+        UserDefaults.standard.set("xx", forKey: key)
         let restored = AppLocale(rawValue: UserDefaults.standard.string(forKey: key) ?? "")
         XCTAssertNil(
             restored,
-            "Unknown raw value 'ja' must not resolve to any AppLocale (returns nil)"
+            "Unknown raw value 'xx' must not resolve to any AppLocale (returns nil)"
         )
     }
 

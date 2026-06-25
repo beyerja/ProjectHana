@@ -134,11 +134,74 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.matching(Locale(identifier: "nch")), .nah)
     }
 
-    /// Unrecognized locales fall back to .en (acceptance criteria).
+    /// Japanese auto-detects its own device locale via the catalog code-lookup path (code `ja` ==
+    /// rawValue), without perturbing the es-* → es-MX mapping.
+    func testMatchingJapanese() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ja")), .ja)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ja-JP")), .ja)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ja_JP")), .ja)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+    }
+
+    /// Any Chinese variant (generic `zh`, `zh-Hans`, `zh-Hant`, `zh-CN`) resolves to Simplified
+    /// Chinese, mirroring the es-* → es-MX collapse, without perturbing the es-* mapping.
+    func testMatchingChineseVariants() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "zh")), .zhHans)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "zh-Hans")), .zhHans)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "zh-Hant")), .zhHans)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "zh-CN")), .zhHans)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "zh_TW")), .zhHans)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+    }
+
+    /// Hindi auto-detects its own device locale via the catalog code-lookup path (code `hi` ==
+    /// rawValue), without perturbing the es-* → es-MX mapping.
+    func testMatchingHindi() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "hi")), .hi)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "hi-IN")), .hi)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+    }
+
+    /// Arabic auto-detects its own device locale via the catalog code-lookup path (code `ar` ==
+    /// rawValue), without perturbing the es-* → es-MX mapping.
+    func testMatchingArabic() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ar")), .ar)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ar-EG")), .ar)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ar_SA")), .ar)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+    }
+
+    /// Bengali auto-detects its own device locale via the catalog code-lookup path (code `bn` ==
+    /// rawValue), without perturbing the es-* → es-MX mapping.
+    func testMatchingBengali() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "bn")), .bn)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "bn-BD")), .bn)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+    }
+
+    /// Any Portuguese variant (generic `pt`, `pt-BR`, `pt-PT`) resolves to Brazilian Portuguese,
+    /// mirroring the es-* → es-MX collapse, without perturbing the es-* mapping.
+    func testMatchingPortugueseVariants() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "pt")), .ptBR)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "pt-BR")), .ptBR)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "pt-PT")), .ptBR)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "pt_PT")), .ptBR)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+    }
+
+    /// Urdu auto-detects its own device locale via the catalog code-lookup path (code `ur` ==
+    /// rawValue), without perturbing the es-* → es-MX mapping.
+    func testMatchingUrdu() {
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ur")), .ur)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ur-PK")), .ur)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "es_ES")), .esMX)
+    }
+
+    /// Genuinely-unmapped locales fall back to .en (acceptance criteria).
     func testMatchingUnrecognizedLocale() {
-        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ja")), .en)
-        XCTAssertEqual(AppLocale.matching(Locale(identifier: "zh-Hans")), .en)
-        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ar")), .en)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "xx")), .en)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "zz-ZZ")), .en)
+        XCTAssertEqual(AppLocale.matching(Locale(identifier: "ru")), .en)
     }
 
     // MARK: - AppLocale properties
@@ -158,10 +221,40 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.sr.id, "sr")
         XCTAssertEqual(AppLocale.ko.id, "ko")
         XCTAssertEqual(AppLocale.nah.id, "nah")
+        XCTAssertEqual(AppLocale.ja.id, "ja")
+        XCTAssertEqual(AppLocale.zhHans.id, "zh-Hans")
+        XCTAssertEqual(AppLocale.hi.id, "hi")
+        XCTAssertEqual(AppLocale.ar.id, "ar")
+        XCTAssertEqual(AppLocale.bn.id, "bn")
+        XCTAssertEqual(AppLocale.ptBR.id, "pt-BR")
+        XCTAssertEqual(AppLocale.ur.id, "ur")
     }
 
     func testAllCasesCount() {
-        XCTAssertEqual(AppLocale.allCases.count, 14)
+        XCTAssertEqual(AppLocale.allCases.count, 21)
+    }
+
+    /// The 7 content-pending languages are enumerated in the picker with their native-script display
+    /// names and their candidate chain goes straight to English (COMPLETE-content by contract).
+    func testContentPendingLanguagesEnumeratedWithNativeDisplayNames() {
+        XCTAssertEqual(AppLocale.ja.displayName, "日本語")
+        XCTAssertEqual(AppLocale.zhHans.displayName, "简体中文")
+        XCTAssertEqual(AppLocale.hi.displayName, "हिन्दी")
+        XCTAssertEqual(AppLocale.ar.displayName, "العربية")
+        XCTAssertEqual(AppLocale.bn.displayName, "বাংলা")
+        XCTAssertEqual(AppLocale.ptBR.displayName, "Português (Brasil)")
+        XCTAssertEqual(AppLocale.ur.displayName, "اردو")
+        for locale in [AppLocale.ja, .zhHans, .hi, .ar, .bn, .ptBR, .ur] {
+            XCTAssertEqual(
+                L10n.bundleCandidates(for: locale),
+                [locale.rawValue, "en"],
+                "\(locale.rawValue) is COMPLETE content → straight to English"
+            )
+            XCTAssertFalse(
+                locale.fallsBackThroughSpanish,
+                "\(locale.rawValue) must not route through Spanish"
+            )
+        }
     }
 
     /// es-ES is enumerated in the picker with its native display name "Español (España)" and sits
