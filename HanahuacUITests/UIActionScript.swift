@@ -75,11 +75,15 @@ enum UIActionScriptLoader {
     }
 
     /// Resolve the raw JSON bytes from the environment, or `nil` when nothing usable is configured.
+    ///
+    /// Prefers reading the file at `HANA_UI_SCRIPT_PATH`, but falls back to the inline
+    /// `HANA_UI_SCRIPT` payload when the path is unset OR the file cannot be read. The sandboxed
+    /// XCUITest runner cannot always read an arbitrary host filesystem path even though it can write
+    /// the artifact tree, so the inline fallback keeps the path-based recipe working: the helper
+    /// exports both, and whichever the runner can actually access wins.
     private static func rawJSONData(from environment: [String: String]) -> Data? {
-        if let path = trimmedValue(environment[scriptPathEnvKey]) {
-            guard let contents = try? Data(contentsOf: URL(fileURLWithPath: path)) else {
-                return nil
-            }
+        if let path = trimmedValue(environment[scriptPathEnvKey]),
+           let contents = try? Data(contentsOf: URL(fileURLWithPath: path)) {
             return blankToNil(contents)
         }
         if let inline = trimmedValue(environment[inlineScriptEnvKey]) {

@@ -1,0 +1,854 @@
+[
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "Hanahuac",
+    "type" : "XCUIElementType(rawValue: 2)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 4)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 54,
+      "width" : 402,
+      "x" : 0,
+      "y" : 62
+    },
+    "identifier" : "Ajustes",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 21)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 44,
+      "width" : 44,
+      "x" : 16,
+      "y" : 62
+    },
+    "identifier" : "BackButton",
+    "label" : "Back",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.66666666666667,
+      "width" : 59.66666666666666,
+      "x" : 171,
+      "y" : 73.66666666666666
+    },
+    "identifier" : "",
+    "label" : "Ajustes",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 32)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 1858,
+      "width" : 434,
+      "x" : -16,
+      "y" : -1632
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.33333333333334,
+      "width" : 370,
+      "x" : 16,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 75)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.33333333333334,
+      "width" : 370,
+      "x" : 16,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.33333333333334,
+      "width" : 370,
+      "x" : 16,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.33333333333334,
+      "width" : 370,
+      "x" : 16,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "General",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 156.33333333333334
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 75)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 156.33333333333334
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 156.33333333333334
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 156.33333333333334
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 156.33333333333334
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 156.33333333333334
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 156.33333333333334
+    },
+    "identifier" : "settings.language",
+    "label" : "Idioma",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.333333333333314,
+      "width" : 51,
+      "x" : 32,
+      "y" : 172.16666666666669
+    },
+    "identifier" : "",
+    "label" : "Idioma",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 11.666666984558105,
+      "width" : 6.6666669845581055,
+      "x" : 340.66666666666663,
+      "y" : 176.66666666666669
+    },
+    "identifier" : "chevron.right",
+    "label" : "Forward",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 12,
+      "width" : 7,
+      "x" : 360.6666666666667,
+      "y" : 176.33333333333334
+    },
+    "identifier" : "chevron.forward",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 1954,
+      "width" : 434,
+      "x" : -16,
+      "y" : 226
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 226
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 75)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 226
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 226
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 226
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 226
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 40.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 226
+    },
+    "identifier" : "",
+    "label" : "iCloud",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 266.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 75)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 266.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 266.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 266.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 266.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 266.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 266.33333333333337
+    },
+    "identifier" : "settings.syncToggle",
+    "label" : "Sincronización con iCloud",
+    "type" : "XCUIElementType(rawValue: 40)",
+    "value" : "0"
+  },
+  {
+    "frame" : {
+      "height" : 20.33333333333337,
+      "width" : 196.66666666666666,
+      "x" : 32,
+      "y" : 282.1666666666667
+    },
+    "identifier" : "",
+    "label" : "Sincronización con iCloud",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 63,
+      "x" : 309,
+      "y" : 278.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 40)",
+    "value" : "0"
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 318.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 75)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 318.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 318.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 318.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 318.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52,
+      "width" : 370,
+      "x" : 16,
+      "y" : 318.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.33333333333337,
+      "width" : 52.66666666666666,
+      "x" : 32,
+      "y" : 334.1666666666667
+    },
+    "identifier" : "",
+    "label" : "Estado",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.33333333333337,
+      "width" : 104.66666666666669,
+      "x" : 265.3333333333333,
+      "y" : 334.1666666666667
+    },
+    "identifier" : "",
+    "label" : "No disponible",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 1,
+      "width" : 338,
+      "x" : 32,
+      "y" : 317.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 61.666666666666686,
+      "width" : 370,
+      "x" : 16,
+      "y" : 370.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 75)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 61.666666666666686,
+      "width" : 370,
+      "x" : 16,
+      "y" : 370.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 61.666666666666686,
+      "width" : 370,
+      "x" : 16,
+      "y" : 370.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 61.666666666666686,
+      "width" : 370,
+      "x" : 16,
+      "y" : 370.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 61.666666666666686,
+      "width" : 370,
+      "x" : 16,
+      "y" : 370.33333333333337
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 61.666666666666686,
+      "width" : 370,
+      "x" : 16,
+      "y" : 370.33333333333337
+    },
+    "identifier" : "",
+    "label" : "La sincronización con iCloud no está disponible. Inicia sesión en iCloud y usa una versión con la sincronización habilitada.",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 696,
+      "width" : 30,
+      "x" : 369,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "Vertical scroll bar, 1 page",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 %"
+  },
+  {
+    "frame" : {
+      "height" : 288,
+      "width" : 3,
+      "x" : 396,
+      "y" : 527
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 696,
+      "width" : 30,
+      "x" : 369,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "Vertical scroll bar, 1 page",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 %"
+  },
+  {
+    "frame" : {
+      "height" : 288,
+      "width" : 3,
+      "x" : 396,
+      "y" : 527
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  }
+]

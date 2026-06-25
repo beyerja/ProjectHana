@@ -62,3 +62,7 @@ Podfile.lock
 !.workflow/ui-walkthrough/scripts/
 !.workflow/ui-walkthrough/scripts/**
 !.workflow/ui-walkthrough/README.md
+# Canonical demonstrated-walkthrough evidence (story 004): committed as a verifiable artifact
+# trail (per-step screenshots + element dumps + index). Other run dirs stay ignored.
+!.workflow/ui-walkthrough/demo/
+!.workflow/ui-walkthrough/demo/**
