@@ -1,77 +1,106 @@
-# Bot credentials — Hanahuac-Bot identity
-
-> **Migration in progress — GitHub App supersedes the classic PAT.** The two new sections at the end
-> of this doc — [GitHub App provisioning (human prerequisites)](#github-app-provisioning-human-prerequisites)
-> and [AC-1 verification procedure](#ac-1-verification-procedure-run-once-the-app-is-provisioned) —
-> describe the new **GitHub App** review identity that replaces the classic-PAT mechanism documented
-> below. The classic-PAT prerequisites, wrapper notes, and rotation guidance that follow are retained
-> as-is until the broader credential-doc rewrite (story 004) removes the now-moot classic-PAT /
-> collaborator-invite steps and re-bases rotation on the App private key. Read the App sections as the
-> source of truth for provisioning; treat the classic-PAT sections below as the still-active mechanism
-> only until the cutover (AC-5) lands.
+# Bot credentials — Hanahuac-Bot identity (GitHub App)
 
 The `Hanahuac-Bot` identity lets an agent act on GitHub (review PRs, comment) as a distinct,
-least-privilege account rather than as a human maintainer. Its token lives **only** in the macOS
-Keychain and is never read, printed, or committed.
+least-privilege actor rather than as a human maintainer. The identity is a **GitHub App**: at runtime
+the wrapper mints a **short-lived installation token** (auto-expiring, ~1h) from the App's credentials,
+so the only long-lived secret at rest is the App **private key**.
 
-**Agents NEVER see the token.** It is read **only** by the wrapper `scripts/gh-review-bot.sh` (story
-001), which looks the token up in the Keychain (service `hana-review-bot`), injects it into a child
-process's environment, and execs the underlying `gh`/`curl` command. The wrapper never prints, logs,
-or writes the token (xtrace stays off), and agents only ever invoke the wrapper — they do not read the
-Keychain or set `GH_TOKEN` themselves. The three prerequisites below are likewise **human-performed
-out-of-band**: no agent mints the PAT, grants collaborator access, or stores the secret.
+All secrets live **only** in the macOS Keychain (service `hana-review-bot`) and are never read, printed,
+or committed. They are read **only** by the wrapper `scripts/gh-review-bot.sh`, which looks them up in
+the Keychain, mints the installation token, injects it into a child process's environment, and execs the
+underlying `gh`/`curl` command. The wrapper never prints, logs, or writes any secret (xtrace stays off),
+and agents only ever invoke the wrapper — they do not read the Keychain or set `GH_TOKEN` themselves.
 
-## Human prerequisites (one-time, three steps)
+**Agents NEVER see the secrets.** The provisioning steps below are likewise **human-performed
+out-of-band**: no agent creates the App, generates the private key, installs the App, or stores anything
+in the Keychain.
 
-These three steps require a human and are intentionally **not** automatable by an agent — an agent
-**never sees the token**. All three are performed out-of-band by a maintainer:
+## Contents
 
-1. **Mint the bot's classic PAT.** Sign in as the `Hanahuac-Bot` GitHub account and create a
-   **classic** personal access token (Settings → Developer settings → **Tokens (classic)**) with the
-   single scope:
+- [GitHub App provisioning (human prerequisites)](#github-app-provisioning-human-prerequisites)
+- [Using the wrapper](#using-the-wrapper)
+- [Secret-scanning pre-commit hook](#secret-scanning-pre-commit-hook)
+- [Private key rotation](#private-key-rotation)
+- [AC-1 verification procedure](#ac-1-verification-procedure-run-once-the-app-is-provisioned)
 
-   - **`public_repo`** — write access to this *public* repo's PRs, reviews, and comments. (Use the
-     broader **`repo`** scope only if `ProjectHana` is ever made private.)
+## GitHub App provisioning (human prerequisites)
 
-   Copy the token once — GitHub shows it only at creation time.
+> **HANDOFF — human-performed, out-of-band.** Every step below is done by a maintainer at the
+> keyboard; **no agent performs them and no agent ever sees the resulting secrets** (App private key,
+> App ID, installation ID, or any minted installation token).
 
-   > **Why classic, not fine-grained.** `ProjectHana` is a *public* repo owned by the personal
-   > account `beyerja`, and `Hanahuac-Bot` is an outside collaborator. A fine-grained PAT from the
-   > bot authenticates and can *read*, but every write (e.g. submitting a formal PR review) returns
-   > `403 Resource not accessible by personal access token` even with Pull requests: Read/Write set —
-   > fine-grained PATs do not grant write to a *different personal account's* repo via outside
-   > collaboration. A classic PAT does. (If the repo ever moves into a GitHub organization, a
-   > fine-grained PAT or a GitHub App becomes the better least-privilege option.)
+Provision the App once, in order:
 
-2. **Add `Hanahuac-Bot` as a repository collaborator with Write access, and accept the invite.** As a
-   repo admin, invite the `Hanahuac-Bot` account as a collaborator with the **Write** role (Settings →
-   Collaborators). Then sign in as `Hanahuac-Bot` and **accept the invitation**. Without this, the bot
-   cannot be a code owner or submit a formal review state on the repo's PRs.
+1. **Create a GitHub App owned by the personal account `beyerja`.**
+   GitHub → Settings → Developer settings → **GitHub Apps** → **New GitHub App**. Owner = `beyerja`
+   (a personal account is fine; no organization required). A descriptive name such as `Hanahuac Bot`
+   is recommended — GitHub derives the bot login from it (expected form `hanahuac-bot[bot]`; the
+   actual login is confirmed empirically in the [AC-1 procedure](#ac-1-verification-procedure-run-once-the-app-is-provisioned)).
+   A homepage URL is required by the form but irrelevant here; the repo URL works. The App does not
+   need a webhook — uncheck **Active** under *Webhook*.
 
-3. **Store the token in the macOS Keychain** under service `hana-review-bot`. Run the command below
-   and paste the token at the (hidden) `-w` prompt — do **not** pass the token on the command line
-   (it would land in your shell history):
+2. **Set the minimal permissions.** Under *Repository permissions*:
+
+   - **Pull requests: Read & Write** — required to submit a formal `--approve` review.
+   - **Contents: Read-only** and **Metadata: Read-only** — the minimal repo permission needed to read
+     the PR / resolve the repo. (Metadata is mandatory and auto-selected.)
+
+   Grant nothing else. No organization or account permissions are needed.
+
+3. **Generate a private key (`.pem`).** On the App's settings page → *Private keys* → **Generate a
+   private key**. The browser downloads a `<app-name>.YYYY-MM-DD.private-key.pem`. This file is the
+   one long-lived secret at rest; keep it off any shared/synced location until it is in the Keychain
+   (step 5), then delete the downloaded file.
+
+4. **Install the App on `beyerja/ProjectHana`.** App settings → *Install App* → install on the
+   `beyerja` account and scope it to **Only select repositories → `ProjectHana`**. After installing,
+   note the **installation ID** — it is the numeric segment in the install settings URL
+   (`https://github.com/settings/installations/<installation_id>`). You also need the **App ID**,
+   shown at the top of the App's settings page (a separate number from the installation ID).
+
+5. **Store the private key + App ID + installation ID in the macOS Keychain** under service
+   `hana-review-bot`. The three items are distinguished by **account** (`-a`) — these exact account
+   names are what the wrapper (`scripts/gh-review-bot.sh`) reads, so they must match verbatim:
+   `private-key`, `app-id`, `installation-id`. Use the interactive hidden-prompt `-w` form so **no
+   secret ever appears on the command line or in shell history** — run each command, then paste the
+   value at the (hidden) prompt:
 
    ```sh
-   security add-generic-password -a "$USER" -s hana-review-bot -U -w
+   # Private key — paste the full PEM (including the BEGIN/END lines) at the hidden prompt:
+   security add-generic-password -s hana-review-bot -a private-key -U -w
+
+   # App ID — paste the numeric App ID at the hidden prompt:
+   security add-generic-password -s hana-review-bot -a app-id -U -w
+
+   # Installation ID — paste the numeric installation ID at the hidden prompt:
+   security add-generic-password -s hana-review-bot -a installation-id -U -w
    ```
 
-   - `-s hana-review-bot` is the Keychain **service** name the wrapper looks up. It must match exactly.
-   - `-a "$USER"` is the account label (your macOS login name; used for your own reference).
-   - `-U` upserts: it updates the item in place if it already exists, so the same command also serves
-     rotation (below).
-   - `-w` with no value makes `security` prompt for the secret interactively, keeping it out of history.
+   - `-s hana-review-bot` is the Keychain **service** the wrapper looks up — it must match exactly.
+   - `-a private-key` / `-a app-id` / `-a installation-id` are the **account** names the wrapper reads
+     (`security find-generic-password -s hana-review-bot -a <account>`); the three items coexist under
+     the one service because their accounts differ. Use these strings verbatim.
+   - `-U` upserts (updates in place if present), so the same commands also serve key rotation.
+   - `-w` with no value makes `security` prompt for the secret **interactively**, keeping it out of
+     shell history.
 
-After the three prerequisites are done, **activate the secret-scanning pre-commit hook** in your clone
-(git hooks are not version-controlled):
+   After all three are stored, **delete the downloaded `.pem`** — the Keychain now holds the only copy
+   you need.
+
+After provisioning, **activate the secret-scanning pre-commit hook** in your clone (git hooks are not
+version-controlled):
 
 ```sh
 just install-hooks
 ```
 
+Then run the [AC-1 verification procedure](#ac-1-verification-procedure-run-once-the-app-is-provisioned)
+below to empirically confirm the App can clear the 1-approval gate **before** any live ruleset change.
+
 ## Using the wrapper
 
-Prefix any bot GitHub command with the wrapper. It injects `GH_TOKEN` into the child process only:
+Prefix any bot GitHub command with the wrapper. It mints a short-lived installation token from the
+Keychain-stored App credentials and injects it as `GH_TOKEN` into the child process only:
 
 ```sh
 scripts/gh-review-bot.sh gh api user
@@ -80,10 +109,15 @@ scripts/gh-review-bot.sh gh -R beyerja/ProjectHana pr review 123 --approve --bod
 
 Behavior:
 
-- Reads the token from Keychain service `hana-review-bot` and execs your command with `GH_TOKEN` set.
-- **Never** prints, logs, or writes the token (xtrace is never enabled).
-- If the Keychain item is **absent**, it exits non-zero with an actionable message and does **not**
-  run the underlying command — so it is safe on a machine that has never had the token installed.
+- Reads the three App items (`-a private-key`, `-a app-id`, `-a installation-id`) from Keychain service
+  `hana-review-bot`, builds an RS256-signed JWT from the private key + App ID, exchanges it for a
+  **short-lived installation token**, and execs your command with `GH_TOKEN` set. It does **not** read
+  a static `GH_TOKEN`/PAT.
+- **Never** prints, logs, or writes any secret (the private key, JWT, or installation token); xtrace is
+  never enabled.
+- **Fails closed if ANY of the three Keychain items is absent/empty** — it exits non-zero with an
+  actionable message and does **not** run the underlying command, so it is safe on a machine that has
+  never had the credentials installed.
 - Passes all arguments through unchanged.
 
 ## Secret-scanning pre-commit hook
@@ -100,95 +134,31 @@ Run the token-free tests for both the wrapper and the hook at any time:
 just test-bot-scripts
 ```
 
-## Token rotation
+## Private key rotation
 
-Rotate the token periodically and immediately if you suspect exposure. **No repo, working-tree, or
-code change is required** — the wrapper always reads the current Keychain value, so rotation is purely
-a Keychain + GitHub operation:
+The App **private key** is the only long-lived secret to rotate; runtime installation tokens
+self-expire (~1h), so there is no token to revoke. **No repo, working-tree, or code change is
+required** — the wrapper always reads the current Keychain value, so rotation is purely a Keychain +
+GitHub operation:
 
-1. **Mint a new** classic PAT as `Hanahuac-Bot` with the **same scope** as the original
-   (`public_repo`, or `repo` if the repo is ever private). Copy it once.
+1. **Generate a new private key** on the App's settings page → *Private keys* → **Generate a private
+   key**. A new `.pem` downloads.
 2. **Update the Keychain item in place** with the `-U` upsert form (identical to the store command —
-   `-U` updates the existing item):
+   `-U` updates the existing `-a private-key` item). Paste the new PEM at the hidden prompt:
 
    ```sh
-   security add-generic-password -a "$USER" -s hana-review-bot -U -w
+   security add-generic-password -s hana-review-bot -a private-key -U -w
    ```
 
-   Paste the new token at the hidden prompt.
-3. **Revoke the old PAT** on GitHub so only the new token is valid.
+3. **Delete the old private key** on the App's settings page (and the freshly downloaded `.pem` on
+   disk) so only the new key is valid.
 
-Then verify with a read-only call (the wrapper now reads the new token from the Keychain):
+The App ID and installation ID are stable and do not change on key rotation. Then verify with a
+read-only call (the wrapper now mints tokens from the new key):
 
 ```sh
 scripts/gh-review-bot.sh gh api user
 ```
-
-## GitHub App provisioning (human prerequisites)
-
-> **HANDOFF — human-performed, out-of-band.** Every step below is done by a maintainer at the
-> keyboard; **no agent performs them and no agent ever sees the resulting secrets** (App private key,
-> App ID, installation ID, or any minted installation token). This section supersedes the classic-PAT
-> prerequisites above: the new bot review identity is a **GitHub App** whose short-lived (~1h,
-> auto-expiring) installation tokens replace the long-lived classic PAT. The broader cleanup of this
-> doc (removing the now-moot classic-PAT + collaborator-invite steps, re-basing rotation on the App
-> private key) is **story 004's** responsibility — not done here.
-
-Provision the App once, in order:
-
-1. **Create a GitHub App owned by the personal account `beyerja`.**
-   GitHub → Settings → Developer settings → **GitHub Apps** → **New GitHub App**. Owner = `beyerja`
-   (a personal account is fine; no organization required). A descriptive name such as `Hanahuac Bot`
-   is recommended — GitHub derives the bot login from it (expected form `hanahuac-bot[bot]`; the
-   actual login is confirmed empirically in the [AC-1 procedure](#ac-1-verification-procedure-run-once-the-app-is-provisioned)).
-   A homepage URL is required by the form but irrelevant here; the repo URL works. The App does not
-   need a webhook — uncheck **Active** under *Webhook*.
-
-2. **Set the minimal permissions.** Under *Repository permissions*:
-
-   - **Pull requests: Read & Write** — required to submit a formal `--approve` review.
-   - **Contents: Read-only** and/or **Metadata: Read-only** — the minimal repo permission needed to
-     read the PR / resolve the repo. (Metadata is mandatory and auto-selected.)
-
-   Grant nothing else. No organization or account permissions are needed.
-
-3. **Generate a private key (`.pem`).** On the App's settings page → *Private keys* → **Generate a
-   private key**. The browser downloads a `<app-name>.YYYY-MM-DD.private-key.pem`. This file is the
-   one long-lived secret at rest; keep it off any shared/synced location until it is in the Keychain
-   (step 5), then delete the downloaded file.
-
-4. **Install the App on `beyerja/ProjectHana`.** App settings → *Install App* → install on the
-   `beyerja` account and scope it to **Only select repositories → `ProjectHana`**. After installing,
-   note the **installation ID** — it is the numeric segment in the install settings URL
-   (`https://github.com/settings/installations/<installation_id>`).
-
-5. **Store the private key + App ID + installation ID in the macOS Keychain** under service
-   `hana-review-bot`. Use the interactive hidden-prompt `-w` form so **no secret ever appears on the
-   command line or in shell history**. The wrapper (`scripts/gh-review-bot.sh`) reads these to mint a
-   short-lived installation token at runtime; see [Using the wrapper](#using-the-wrapper) for the
-   read-side mechanics (do not re-derive them here).
-
-   ```sh
-   # Private key — paste the full PEM (including the BEGIN/END lines) at the hidden prompt:
-   security add-generic-password -a "$USER" -s hana-review-bot -l hana-review-bot-app-private-key -U -w
-
-   # App ID — paste the numeric App ID at the hidden prompt:
-   security add-generic-password -a "$USER" -s hana-review-bot -l hana-review-bot-app-id -U -w
-
-   # Installation ID — paste the numeric installation ID at the hidden prompt:
-   security add-generic-password -a "$USER" -s hana-review-bot -l hana-review-bot-installation-id -U -w
-   ```
-
-   - `-s hana-review-bot` is the Keychain **service** the wrapper looks up — it must match exactly.
-   - `-l …` is a per-item **label** so the three items coexist under the one service; keep the labels
-     the wrapper expects (the exact label strings are defined alongside the wrapper in story 002, AC-2).
-   - `-a "$USER"` is the account label (your macOS login name, for your own reference).
-   - `-U` upserts (updates in place if present), so the same commands also serve key rotation.
-   - `-w` with no value makes `security` prompt for the secret **interactively**, keeping it out of
-     shell history. After all three are stored, delete the downloaded `.pem`.
-
-After provisioning, run the [AC-1 verification procedure](#ac-1-verification-procedure-run-once-the-app-is-provisioned)
-below to empirically confirm the App can clear the 1-approval gate **before** any live ruleset change.
 
 ## AC-1 verification procedure (run once the App is provisioned)
 
