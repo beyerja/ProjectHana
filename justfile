@@ -101,10 +101,14 @@ ci branch:
 lint: lint-swift lint-py lint-sh lint-nix lint-yaml l10n-check
     @echo "lint: all linters passed."
 
-# Static localization-completeness gate: every BASE (en, es-MX) and fully-translated downloadable
-# (de, fr, es-ES, ko) locale must contain the full canonical key set; nah is allowed to be partial
-# (it resolves missing keys via nah -> es-MX -> en fallback). Stdlib-only python; exits non-zero on
-# any missing required key. Folded into `just lint` so CI enforces completeness.
+# Static localization-completeness gate. Data-driven: the locales checked are discovered from the
+# Hanahuac/<code>.lproj dirs on disk, and each is assigned an enforcement role in the script's
+# ROLE_MAP. Every on-disk .lproj MUST have a declared role or the check FAILS (a new .lproj can never
+# be silently skipped). BASE (en, es-MX) and FULL (de, fr, es-ES, it, pl, nl, sr, ko — plus the
+# pre-declared future locales ja, zh-Hans, hi, ar, bn, pt-BR, ur once their .lproj lands) must
+# contain the full canonical key set; PARTIAL fallback-permitted locales (nah, yua, ca, eu) may be a
+# subset (gaps resolve via each locale's fallback chain). Stdlib-only python; exits non-zero on any
+# missing required key or an unclassified on-disk locale. Folded into `just lint` so CI enforces it.
 l10n-check:
     python3 scripts/check-l10n-completeness.py
 
