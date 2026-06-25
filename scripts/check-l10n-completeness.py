@@ -4,12 +4,23 @@
 Parses every ``Hanahuac/<code>.lproj/Localizable.strings`` and enforces:
 
   (a) The canonical key set is the UNION of all keys found across every locale.
-  (b) Every BASE / always-bundled locale (en, es-MX) and every fully-translated downloadable
-      locale (de, fr, es-ES, it, pl, nl, sr, ko) must contain the FULL canonical key set. Any missing key
-      fails the check, listing the offending locale + keys.
-  (c) ``nah`` is allowed to be a PARTIAL subset: the established nah -> es-MX -> en fallback
-      convention (see Hanahuac/L10n/L10n.swift bundleCandidates) serves any missing nah key from
-      Mexican Spanish, then English. nah coverage is reported as INFORMATIONAL, never a failure.
+  (b) Every locale is assigned an explicit ENFORCEMENT ROLE in ``ROLE_MAP`` (the single source of
+      truth, keyed by locale code). The enforced locale set is DATA-DRIVEN: it is *discovered* from
+      the ``Hanahuac/<code>.lproj`` dirs that actually exist on disk, so a newly-added ``.lproj`` can
+      never be silently skipped. Every on-disk locale MUST have a declared role; an unclassified
+      on-disk locale fails the check (catch a new ``.lproj`` that nobody assigned a role).
+        - ``BASE`` (en, es-MX): always-bundled, must contain the FULL canonical key set.
+        - ``FULL`` (de, fr, es-ES, it, pl, nl, sr, ko and the future 7): fully-translated canonical
+          locales, must contain the FULL canonical key set. Any missing key fails, listing the
+          offending locale + keys.
+        - ``PARTIAL`` (nah, yua, ca, eu): fallback-permitted by design — genuine gaps resolve via the
+          locale's fallback chain (e.g. nah/yua -> es-MX -> en; ca/eu -> es-ES -> en; see
+          Hanahuac/L10n/LanguageCatalog.swift fallbackChain). Their coverage is reported as
+          INFORMATIONAL, never a failure.
+  (c) Future locales (ja, zh-Hans, hi, ar, bn, pt-BR, ur) are PRE-DECLARED ``FULL`` in ``ROLE_MAP``
+      but enforced ONLY once their ``.lproj`` exists on disk: a declared-but-absent locale is skipped
+      silently (it is owned by its language story 002+); a declared locale whose ``.lproj`` exists is
+      held to the full canonical key set.
   (d) Untranslated values are detected: a non-base locale value byte-identical to the en value for
       the same key is reported as a WARNING (so a copy-paste-but-forgot-to-translate slips no
       further), with an allowlist for legitimately-identical strings (brand names, ISO/shared
@@ -29,18 +40,52 @@ import sys
 from pathlib import Path
 
 # --- Locale roles ----------------------------------------------------------------------------
-# Base / always-bundled locales: must be 100% complete.
-BASE_LOCALES = ("en", "es-MX")
-# Fully-translated downloadable locales: must be 100% complete.
-# es-ES (Castilian), it (Italian), pl (Polish), nl (Dutch), and sr (Serbian, Cyrillic) ship a
-# complete UI string set (their feature contracts assert no missing keys), so each is held to the
-# full canonical set like de/fr/ko — NOT treated as a fallback-partial locale.
-FULL_LOCALES = ("de", "fr", "es-ES", "it", "pl", "nl", "sr", "ko")
-# Partial-by-design locale: allowed to be a subset (nah -> es-MX -> en fallback convention).
-PARTIAL_LOCALES = ("nah",)
+# Enforcement roles. A locale's role determines how its key set is checked.
+BASE = "base"  # always-bundled (en, es-MX) — must contain the FULL canonical key set.
+FULL = "full"  # fully-translated canonical locale — must contain the FULL canonical key set.
+PARTIAL = "partial"  # fallback-permitted by design — coverage is informational, never a failure.
 
-REQUIRED_LOCALES = BASE_LOCALES + FULL_LOCALES
-ALL_LOCALES = BASE_LOCALES + FULL_LOCALES + PARTIAL_LOCALES
+# Single source of truth for every locale's enforcement role, keyed by locale code. The set of
+# locales actually CHECKED is discovered from the on-disk `.lproj` dirs (see discover_locales); this
+# map only assigns each one a role. Every on-disk locale MUST appear here or the check fails, so a
+# new `.lproj` can never be added without being given an explicit enforcement role.
+#
+# The 7 future locales (ja, zh-Hans, hi, ar, bn, pt-BR, ur) are pre-declared FULL here but are only
+# enforced once their `.lproj` exists on disk (a declared-but-absent locale is skipped silently —
+# it is owned by its respective language story 002+). When their story adds the `.lproj`, they are
+# automatically held to the full canonical key set with no further change to this gate.
+ROLE_MAP: dict[str, str] = {
+    # Base / always-bundled — 100% complete.
+    "en": BASE,
+    "es-MX": BASE,
+    # Fully-translated canonical locales — 100% complete. es-ES (Castilian), it (Italian),
+    # pl (Polish), nl (Dutch), and sr (Serbian, Cyrillic) ship a complete UI string set (their
+    # feature contracts assert no missing keys), held to the full canonical set like de/fr/ko.
+    "de": FULL,
+    "fr": FULL,
+    "es-ES": FULL,
+    "it": FULL,
+    "pl": FULL,
+    "nl": FULL,
+    "sr": FULL,
+    "ko": FULL,
+    # Partial / fallback-permitted by design — genuine gaps resolve via the locale's fallback chain
+    # (LanguageCatalog.fallbackChain): nah/yua -> es-MX -> en; ca/eu -> es-ES -> en. Coverage is
+    # reported informationally only, never a failure.
+    "nah": PARTIAL,
+    "yua": PARTIAL,
+    "ca": PARTIAL,
+    "eu": PARTIAL,
+    # --- Future locales: pre-declared FULL, enforced only once their `.lproj` lands on disk. ---
+    # Each is activated by its respective language story (002+); until then it is skipped silently.
+    "ja": FULL,
+    "zh-Hans": FULL,
+    "hi": FULL,
+    "ar": FULL,
+    "bn": FULL,
+    "pt-BR": FULL,
+    "ur": FULL,
+}
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LPROJ_DIR = REPO_ROOT / "Hanahuac"
@@ -132,10 +177,25 @@ def parse_strings(path: Path) -> dict[str, str]:
     return result
 
 
-def load_all() -> dict[str, dict[str, str]]:
-    """Load every locale's parsed strings, keyed by locale code."""
+def discover_locales() -> list[str]:
+    """Discover the locale codes to check from the `Hanahuac/<code>.lproj` dirs on disk.
+
+    Each `<code>.lproj` that contains a `Localizable.strings` file is a locale to enforce. The set is
+    DATA-DRIVEN (read from the filesystem) rather than hardcoded, so a newly-added `.lproj` is picked
+    up automatically and cannot be silently skipped. Returns the codes sorted for deterministic
+    output.
+    """
+    codes: list[str] = []
+    for lproj in LPROJ_DIR.glob("*.lproj"):
+        if (lproj / "Localizable.strings").exists():
+            codes.append(lproj.name[: -len(".lproj")])
+    return sorted(codes)
+
+
+def load_all(codes: list[str]) -> dict[str, dict[str, str]]:
+    """Load each discovered locale's parsed strings, keyed by locale code."""
     tables: dict[str, dict[str, str]] = {}
-    for code in ALL_LOCALES:
+    for code in codes:
         path = LPROJ_DIR / f"{code}.lproj" / "Localizable.strings"
         if not path.exists():
             print(f"FAIL: missing strings file for locale '{code}': {path}", file=sys.stderr)
@@ -145,43 +205,73 @@ def load_all() -> dict[str, dict[str, str]]:
 
 
 def main() -> int:
-    tables = load_all()
+    # Discover the locales actually present on disk and confirm each has a declared role. An on-disk
+    # `.lproj` with no entry in ROLE_MAP fails: every locale must be explicitly classified so a new
+    # `.lproj` can never be added without being assigned an enforcement role.
+    on_disk = discover_locales()
+    unclassified = [code for code in on_disk if code not in ROLE_MAP]
+    if unclassified:
+        print(
+            "FAIL: on-disk locale(s) with no declared role in ROLE_MAP: " + ", ".join(unclassified),
+            file=sys.stderr,
+        )
+        print(
+            "  Add each to ROLE_MAP in scripts/check-l10n-completeness.py with role "
+            "base/full/partial.",
+            file=sys.stderr,
+        )
+        return 1
 
-    # (a) Canonical key set = union of all keys across every locale.
+    tables = load_all(on_disk)
+
+    base_locales = [code for code in on_disk if ROLE_MAP[code] == BASE]
+    full_locales = [code for code in on_disk if ROLE_MAP[code] == FULL]
+    partial_locales = [code for code in on_disk if ROLE_MAP[code] == PARTIAL]
+    required_locales = base_locales + full_locales
+
+    declared_absent = sorted(
+        code for code, role in ROLE_MAP.items() if role == FULL and code not in tables
+    )
+
+    # (a) Canonical key set = union of all keys across every on-disk locale.
     canonical: set[str] = set()
     for table in tables.values():
         canonical |= set(table.keys())
 
-    print(
-        f"== l10n completeness: {len(canonical)} canonical keys across {len(ALL_LOCALES)} locales =="
-    )
-    for code in ALL_LOCALES:
+    print(f"== l10n completeness: {len(canonical)} canonical keys across {len(on_disk)} locales ==")
+    for code in on_disk:
         count = len(tables[code])
-        print(f"  {code:>6}: {count} keys")
+        print(f"  {code:>7}: {count} keys [{ROLE_MAP[code]}]")
+    if declared_absent:
+        print(
+            "== info: future FULL locale(s) declared but not yet on disk (enforced once their "
+            ".lproj lands): " + ", ".join(declared_absent) + " =="
+        )
 
     failures: list[str] = []
 
-    # (b) Required locales must contain the full canonical key set.
-    for code in REQUIRED_LOCALES:
+    # (b) Base + full locales must contain the full canonical key set.
+    for code in required_locales:
         missing = sorted(canonical - set(tables[code].keys()))
         if missing:
             failures.append(
                 f"locale '{code}' is missing {len(missing)} required key(s): " + ", ".join(missing)
             )
 
-    # (c) nah is allowed to be partial — report coverage informationally only.
-    for code in PARTIAL_LOCALES:
+    # (c) Partial-by-design locales (nah, yua, ca, eu) — report coverage informationally only; their
+    # genuine gaps resolve via the locale's fallback chain (LanguageCatalog.fallbackChain).
+    for code in partial_locales:
         present = len(set(tables[code].keys()) & canonical)
         pct = (present / len(canonical) * 100) if canonical else 0.0
         print(
             f"== info: partial locale '{code}' covers {present}/{len(canonical)} keys "
-            f"({pct:.0f}%); the rest resolve via {code} -> es-MX -> en fallback (by design) =="
+            f"({pct:.0f}%); the rest resolve via the {code} fallback chain (by design) =="
         )
 
     # (d) Untranslated-value warnings: non-base value byte-identical to en for the same key.
     en = tables["en"]
     warnings: list[str] = []
-    for code in FULL_LOCALES:
+    for code in full_locales:
         table = tables[code]
         for key, value in sorted(table.items()):
             if key not in en:

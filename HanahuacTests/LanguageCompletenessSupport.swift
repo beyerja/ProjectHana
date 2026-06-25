@@ -9,10 +9,42 @@ import XCTest
 /// name/capital for that locale. Each per-language story (002–009) only ADDS a call/case — it never
 /// restructures this file — so the stories never conflict on the same test bodies.
 ///
-/// The helpers degrade exactly like ``ODRTestSupport``: when a downloadable pack's `.lproj` bundle is
-/// unreachable in the test environment they return the empty set rather than failing, so content
-/// assertions that depend on a mounted pack skip cleanly instead of producing false negatives.
+/// ## Two enforcement paths — lenient vs strict
+/// Each completeness query comes in two flavors, so a caller picks the right enforcement bar:
+///
+/// - **Lenient** (``missingUIKeys(for:)`` / ``geoCoverageGaps(for:)``): degrades exactly like
+///   ``ODRTestSupport`` — when a downloadable pack's `.lproj`/geo data is unreachable in the test
+///   environment it returns the empty set / an empty report rather than failing, so a test that only
+///   needs a *well-formed* answer (and legitimately tolerates an unmounted pack) skips cleanly instead
+///   of producing a false negative. This is the right path for the generic well-formedness tests.
+///
+/// - **Strict** (``missingUIKeysStrict(for:)`` / ``geoCoverageGapsStrict(for:)``): distinguishes
+///   "pack unreachable" from "no gaps". When a pack that is EXPECTED to be present (a downloadable,
+///   non-base locale) cannot be resolved, the strict variant THROWS
+///   (``CompletenessError/packUnreachable``) instead of silently returning the empty set, so a real
+///   completeness gap — or a missing pack — fails CI rather than passing. The per-language
+///   completeness assertions use this path; that is what gives the "no fallbacks" bar teeth.
 enum LanguageCompletenessSupport {
+    /// A strict-path failure: a pack expected to be present could not be resolved, so the strict
+    /// completeness query cannot vouch for the locale and refuses to degrade to "no gaps".
+    enum CompletenessError: Error, CustomStringConvertible, Equatable {
+        /// The locale's UI-string `.lproj` bundle was expected but could not be resolved.
+        case stringBundleUnreachable(locale: String)
+        /// The locale's geo-name pack was expected (downloadable, non-base) but resolved to `nil`.
+        case geoPackUnreachable(locale: String)
+
+        var description: String {
+            switch self {
+            case let .stringBundleUnreachable(locale):
+                "expected UI-string .lproj for '\(locale)' is unreachable "
+                    + "(strict path refuses to degrade to the empty set)"
+            case let .geoPackUnreachable(locale):
+                "expected geo-name pack for '\(locale)' is unreachable / nil "
+                    + "(strict path refuses to degrade to no-gaps)"
+            }
+        }
+    }
+
     /// A structured completeness report for one locale.
     struct CompletenessReport: Equatable {
         /// UI string keys present in the base `en.lproj` but absent from this locale's `.lproj`.
@@ -53,6 +85,31 @@ enum LanguageCompletenessSupport {
         return baseKeys.subtracting(localeKeys)
     }
 
+    /// STRICT variant of ``missingUIKeys(for:)``: the set of UI string keys present in `baseLocale`'s
+    /// `.lproj` but missing from `locale`'s, but THROWS ``CompletenessError/stringBundleUnreachable``
+    /// when an EXPECTED locale's `.lproj` cannot be resolved instead of returning the empty set.
+    ///
+    /// The base locale (compared against itself) still returns the empty set. For any other locale the
+    /// base bundle and the locale bundle must both resolve — an unreachable expected pack is a failure
+    /// signal, not "no missing keys", so a genuine completeness gap (or a missing pack) fails CI.
+    static func missingUIKeysStrict(
+        for locale: AppLocale,
+        baseLocale: AppLocale = .en
+    ) throws -> Set<String> {
+        guard locale != baseLocale else {
+            return []
+        }
+        guard let baseBundle = stringBundle(for: baseLocale) else {
+            throw CompletenessError.stringBundleUnreachable(locale: baseLocale.rawValue)
+        }
+        guard let localeBundle = stringBundle(for: locale) else {
+            throw CompletenessError.stringBundleUnreachable(locale: locale.rawValue)
+        }
+        let baseKeys = localizableKeys(in: baseBundle)
+        let localeKeys = localizableKeys(in: localeBundle)
+        return baseKeys.subtracting(localeKeys)
+    }
+
     // MARK: - Geo coverage completeness
 
     /// The geo-coverage gaps for `locale` relative to the bundled source geo.
@@ -68,6 +125,38 @@ enum LanguageCompletenessSupport {
             return .empty
         }
         let pack = LanguagePackProviderHolder.active.geoNameData(for: locale)
+        return coverageReport(for: locale, pack: pack, geo: geo)
+    }
+
+    /// STRICT variant of ``geoCoverageGaps(for:)``: the geo-coverage gaps for `locale`, but THROWS
+    /// ``CompletenessError/geoPackUnreachable`` when an EXPECTED pack (a downloadable, non-base
+    /// locale) resolves to `nil` instead of silently reporting the whole geo set as gaps.
+    ///
+    /// Under the default ``BundledLanguagePackProvider`` a downloadable locale always yields a
+    /// non-nil pack, so the strict path proceeds with the real gaps; only a genuinely missing pack
+    /// (or a stub that returns `nil`) throws. The ``AppLocale/isBundledBaseLanguage`` early-return is
+    /// preserved — a base locale has no separate pack, so its report is empty.
+    static func geoCoverageGapsStrict(
+        for locale: AppLocale,
+        geo: GeographyData = GeographyDataLoader.load()
+    ) throws -> CompletenessReport {
+        guard !locale.isBundledBaseLanguage else {
+            return .empty
+        }
+        guard let pack = LanguagePackProviderHolder.active.geoNameData(for: locale) else {
+            throw CompletenessError.geoPackUnreachable(locale: locale.rawValue)
+        }
+        return coverageReport(for: locale, pack: pack, geo: geo)
+    }
+
+    /// Compute the geo-coverage gaps for `locale` against `pack` (which may be `nil` on the lenient
+    /// path). Shared by ``geoCoverageGaps(for:)`` and ``geoCoverageGapsStrict(for:)`` so the gap math
+    /// lives in one place.
+    private static func coverageReport(
+        for _: AppLocale,
+        pack: GeoNamePackData?,
+        geo: GeographyData
+    ) -> CompletenessReport {
         var missingName: Set<String> = []
         var missingCapital: Set<String> = []
 
@@ -99,9 +188,10 @@ enum LanguageCompletenessSupport {
 
     // MARK: - Internal
 
-    /// Resolve the `.lproj` `Bundle` for `locale`: the in-app bundle for bundled-base locales, the
-    /// on-disk ODR asset pack for downloadable locales. Returns `nil` when a downloadable pack is not
-    /// reachable in this environment.
+    /// Resolve the `.lproj` `Bundle` for `locale` on the LENIENT path: the in-app bundle for
+    /// bundled-base locales, the on-disk ODR asset pack for downloadable locales. Returns `nil` when a
+    /// downloadable pack is not reachable in this environment (so the lenient caller degrades to the
+    /// empty set). Behavior unchanged from before the strict path existed.
     private static func stringBundle(for locale: AppLocale) -> Bundle? {
         if locale.isBundledBaseLanguage {
             return L10n.bundle(for: locale)

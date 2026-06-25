@@ -31,20 +31,30 @@ final class LanguageCompletenessSupportTests: XCTestCase {
 
     // MARK: - es-ES (Story 002) completeness
 
-    /// es-ES ships a COMPLETE UI string set: zero keys missing relative to the English base. When the
-    /// ODR `.lproj` pack is not mounted in this environment the helper degrades to the empty set, so
-    /// either way there must be no missing keys.
-    func testSpainSpanishHasNoMissingUIKeys() {
+    /// es-ES ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses the
+    /// STRICT path: rather than silently returning the empty set when the es-ES `.lproj` is not
+    /// mounted, the strict helper THROWS ``CompletenessError/stringBundleUnreachable``. We translate
+    /// that distinct "pack unreachable" signal into an `XCTSkip` (matching every other ODR content
+    /// test in this suite — the simulator unit-test host has no asset-pack server), so the test never
+    /// degrades to a false pass. When the pack IS mounted, a genuine missing key FAILS the assertion.
+    func testSpainSpanishHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .esES)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("es-ES UI strings not reachable in this environment: \(error)")
+        }
         XCTAssertTrue(
-            LanguageCompletenessSupport.missingUIKeys(for: .esES).isEmpty,
+            missing.isEmpty,
             "es-ES must define every English UI key (no missing keys)"
         )
     }
 
     /// es-ES ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a Castilian
-    /// name, so the bundled provider's pack reports no gaps for .esES.
-    func testSpainSpanishHasFullGeoCoverage() {
-        let report = LanguageCompletenessSupport.geoCoverageGaps(for: .esES)
+    /// name, so the bundled provider's pack reports no gaps for .esES. Uses the STRICT path, so a
+    /// missing/nil es-ES pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testSpainSpanishHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .esES)
         XCTAssertTrue(
             report.geoEntitiesMissingName.isEmpty,
             "es-ES is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
@@ -72,5 +82,70 @@ final class LanguageCompletenessSupportTests: XCTestCase {
             report.countriesMissingCapital.isSubset(of: countryIDs),
             "missing-capital ids must be a subset of the bundled country ids"
         )
+    }
+
+    // MARK: - Strict-path teeth (AC#2): a real gap FAILS rather than degrading to pass
+
+    /// Restore the active provider after any test that swaps it, so a swapped stub never leaks into
+    /// another test (the holder is process-wide).
+    private var savedProvider: LanguagePackProvider?
+
+    override func tearDown() {
+        if let savedProvider {
+            LanguagePackProviderHolder.active = savedProvider
+            self.savedProvider = nil
+        }
+        super.tearDown()
+    }
+
+    /// Proves the STRICT geo path has teeth: with a stub provider that returns `nil` geo data for an
+    /// enforced (downloadable, non-base) locale, ``geoCoverageGapsStrict(for:)`` must THROW
+    /// ``LanguageCompletenessSupport/CompletenessError/geoPackUnreachable`` rather than degrading to a
+    /// pass. This is the synthetic gap that AC#2 requires the gate to catch.
+    func testStrictGeoPathThrowsOnSyntheticMissingPack() {
+        savedProvider = LanguagePackProviderHolder.active
+        LanguagePackProviderHolder.active = NilPackStubProvider()
+
+        XCTAssertThrowsError(
+            try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .esES),
+            "strict geo path must fail when an enforced locale's pack is unreachable"
+        ) { error in
+            XCTAssertEqual(
+                error as? LanguageCompletenessSupport.CompletenessError,
+                .geoPackUnreachable(locale: AppLocale.esES.rawValue)
+            )
+        }
+    }
+
+    /// The LENIENT geo path must NOT be perturbed by the same nil-pack stub: it degrades to reporting
+    /// the whole geo set as gaps without throwing, confirming the strict/lenient split is intact.
+    func testLenientGeoPathDoesNotThrowOnSyntheticMissingPack() {
+        savedProvider = LanguagePackProviderHolder.active
+        LanguagePackProviderHolder.active = NilPackStubProvider()
+
+        // No throw, and a base locale still short-circuits to the empty report.
+        XCTAssertEqual(LanguageCompletenessSupport.geoCoverageGaps(for: .esMX), .empty)
+        let report = LanguageCompletenessSupport.geoCoverageGaps(for: .esES)
+        XCTAssertFalse(
+            report.geoEntitiesMissingName.isEmpty,
+            "lenient path with a nil-pack provider should report gaps, not crash or throw"
+        )
+    }
+}
+
+/// A test double that resolves NO geo pack for any locale (and routes string lookups to the main
+/// bundle), used to prove the strict completeness path FAILS on a synthetic gap. Restored in
+/// `tearDown` by the swapping test.
+private struct NilPackStubProvider: LanguagePackProvider {
+    func stringBundle(for _: AppLocale) -> Bundle {
+        .main
+    }
+
+    func geoNameData(for _: AppLocale) -> GeoNamePackData? {
+        nil
+    }
+
+    func state(for _: AppLocale) -> LanguagePackState {
+        .notDownloaded
     }
 }
