@@ -30,6 +30,7 @@ struct HomeView: View {
                         Image(systemName: "gearshape.fill")
                             .foregroundStyle(Theme.Palette.textSecondary)
                     }
+                    .accessibilityIdentifier("home.settings")
                 }
             }
             .navigationDestination(for: QuizRoute.self) { route in
@@ -99,6 +100,7 @@ struct HomeView: View {
         }
         .buttonStyle(PressableCardButtonStyle())
         .disabled(!isEnabled)
+        .accessibilityIdentifier("home.mode.\(mode.quizModeRawValue)")
     }
 
     private func navigateTo(mode: HomeQuizMode, category: CardCategory, newCount: Int, pendingCount: Int) {
@@ -228,6 +230,7 @@ struct HomeView: View {
                 .shadow(color: Theme.Palette.accent.opacity(0.35), radius: 10, x: 0, y: 5)
         }
         .buttonStyle(PressableCardButtonStyle())
+        .accessibilityIdentifier("home.progress")
     }
 }
 

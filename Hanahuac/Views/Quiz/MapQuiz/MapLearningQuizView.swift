@@ -74,6 +74,7 @@ struct MapLearningQuizView: View {
             }
             .mapStyle(.imagery(elevation: .flat))
             .ignoresSafeArea(edges: .horizontal)
+            .accessibilityIdentifier("map.tapCountry")
             .simultaneousGesture(
                 MagnificationGesture()
                     .onChanged { _ in isPinching = true }
