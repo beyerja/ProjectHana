@@ -73,6 +73,13 @@ export TEST_RUNNER_HANA_UI_SCRIPT_PATH="${SCRIPT_PATH}"
 export TEST_RUNNER_HANA_REPO_ROOT="${ROOT}"
 export TEST_RUNNER_HANA_UI_RUN="${RUN_NAME}"
 
+# Also pass the script inline. The sandboxed UI-test runner can write the artifact tree but cannot
+# always READ an arbitrary host filesystem path, so the path read of HANA_UI_SCRIPT_PATH can silently
+# yield zero steps. The loader prefers the path and falls back to this inline payload, so the recipe
+# drives the full script regardless of the runner's host-path read access.
+TEST_RUNNER_HANA_UI_SCRIPT="$(cat "${SCRIPT_PATH}")"
+export TEST_RUNNER_HANA_UI_SCRIPT
+
 xcodebuild test \
     -project "${ROOT}/Hanahuac.xcodeproj" \
     -scheme Hanahuac \
