@@ -1,13 +1,14 @@
 ---
 name: code-owner-review
-description: Independently re-verify an already-reviewed PR's diff (WITHOUT the /code-review skill, so the turn completes) and submit the formal code-owner review as Hanahuac-Bot through the wrapper, with read-back proof. Spawned by story-workflow AFTER independent-review emits APPROVED.
+description: Independently re-verify an already-reviewed PR's diff (WITHOUT the /code-review skill, so the turn completes) and submit the formal approval that clears the plain required_approving_review_count of 1 gate, as the App bot hanahuac-bot[bot] through the wrapper, with read-back proof. Spawned by story-workflow AFTER independent-review emits APPROVED.
 ---
 
 Requires: story directory path (and, via `<story-dir>/pr.md`, the PR number).
 
 This is the **second eye and the submitter**. The `independent-review` agent runs the deep `/code-review`
 pass and emits a verdict, but invoking the `/code-review` skill ends that agent's turn before it can post
-a formal review — so a **separate** agent submits the code owner's formal state. To do that legitimately
+a formal review — so a **separate** agent submits the formal approval that clears the plain
+`required_approving_review_count: 1` gate. To do that legitimately
 (never rubber-stamp), **you form your own independent verdict first**, then submit it. You MUST NOT invoke
 the `/code-review` skill yourself (it would end your turn before you submit) — review the diff directly.
 
@@ -15,6 +16,23 @@ the `/code-review` skill yourself (it would end your turn before you submit) —
 ```
 just log start code-owner-review "<story-id>" || true
 ```
+
+## Bot identity — single source of truth
+
+The formal review is submitted by a **GitHub App bot account**, whose expected login is:
+
+> **`hanahuac-bot[bot]`**  ⚠️ **PENDING AC-1 empirical confirmation**
+
+This is the **one** place the bot login is defined. The reviews read-back assertion and the
+`resolveReviewThread` author filter below both reference **this single value** — do not hardcode the
+login separately anywhere else.
+
+> ⚠️ **The login `hanahuac-bot[bot]` is the EXPECTED form, NOT yet empirically confirmed.** The GitHub
+> App has **not** been provisioned and its real bot login has **not** been observed. App bot logins take
+> the `<app-slug>[bot]` shape, so `hanahuac-bot[bot]` is the anticipated value — but the true login can
+> only be confirmed once story 001 (AC-1) provisions the App and captures the actual login from a live
+> reviews read-back. **Until AC-1 confirms it, treat this value as provisional**: if AC-1 has recorded a
+> different real login by the time you run, use the confirmed value and correct it here.
 
 ## Independence (the 4-eye principle) — non-negotiable
 
@@ -83,11 +101,12 @@ and the PR unmergeable (or merging untested):
 
 ## Submit the formal review as the bot (through the wrapper)
 
-Submit the FORMAL GitHub review state matching **your** verdict, under the **`Hanahuac-Bot`** identity. The
-plain `gh` user running this agent is the same account that opened the PR, and GitHub blocks self-approval
-for that account — so the formal state is submitted as a **different account, the bot, through the wrapper
-`scripts/gh-review-bot.sh`** (story 001). Because the bot is a distinct account, GitHub does NOT block its
-`--approve` / `--request-changes`.
+Submit the FORMAL GitHub review state matching **your** verdict, as the App bot **`hanahuac-bot[bot]`** (the
+single login from the "Bot identity" section above). An `--approve` from the bot clears the branch's plain
+`required_approving_review_count: 1` gate. The plain `gh` user running this agent is the same account that
+opened the PR, and GitHub blocks self-approval for that account — so the formal state is submitted as a
+**different account, the App bot, through the wrapper `scripts/gh-review-bot.sh`** (story 001). Because the
+bot is a distinct account, GitHub does NOT block its `--approve` / `--request-changes`.
 
 - **APPROVED** →
   ```sh
@@ -111,7 +130,8 @@ and confirm the bot's state is present:**
 scripts/gh-review-bot.sh gh api repos/<owner/repo>/pulls/<number>/reviews --jq '.[] | {user:.user.login, state:.state}'
 ```
 
-Confirm an entry `{user: Hanahuac-Bot, state: APPROVED}` (or `CHANGES_REQUESTED`) exists, then branch:
+Confirm an entry `{user: hanahuac-bot[bot], state: APPROVED}` (or `CHANGES_REQUESTED`) exists — the
+`user` must be the App bot login from the "Bot identity" section above — then branch:
 - **Present** → the formal gate is satisfied; proceed.
 - **Absent because the wrapper exited non-zero (Keychain item absent)** → expected token-absent case: use
   the COMMENT fallback (below) and record formal state SKIPPED.
@@ -133,9 +153,10 @@ GraphQL mutation, performed by the **bot** (the review author) through the wrapp
      -f query='query($owner:String!,$repo:String!,$number:Int!){ repository(owner:$owner,name:$repo){ pullRequest(number:$number){ reviewThreads(first:100){ pageInfo{ hasNextPage endCursor } nodes{ id isResolved comments(first:50){ nodes{ author{ login } body } } } } } } }' \
      -F owner=<owner> -F repo=<repo> -F number=<number>
    ```
-   Keep only nodes where `isResolved` is `false`, the **first** comment's `author.login` is `Hanahuac-Bot`,
-   **and** the thread carries an acknowledging reply from the implementer (a later comment by the PR-opener,
-   NOT `Hanahuac-Bot`, on the current round). Leave any thread without that implementer reply unresolved.
+   Keep only nodes where `isResolved` is `false`, the **first** comment's `author.login` is
+   `hanahuac-bot[bot]` (the App bot login from the "Bot identity" section above), **and** the thread
+   carries an acknowledging reply from the implementer (a later comment by the PR-opener, NOT
+   `hanahuac-bot[bot]`, on the current round). Leave any thread without that implementer reply unresolved.
 2. Resolve each addressed thread:
    ```sh
    scripts/gh-review-bot.sh gh api graphql \
