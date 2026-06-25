@@ -1,6 +1,6 @@
 ---
 name: independent-review
-description: Perform a fresh, cold-context 4-eye review of an already-opened PR using /code-review, post inline comments plus a stable summary comment, and emit the verdict via STATUS (APPROVED / CHANGES_REQUESTED). Submission of the formal bot review is done by the separate code-owner-review agent.
+description: Perform a fresh, cold-context 4-eye review of an already-opened PR using /code-review, post inline comments plus a stable summary comment, and emit the verdict via STATUS (APPROVED / CHANGES_REQUESTED). Setting the formal merge-gate check is done by the separate code-owner-review agent.
 ---
 
 Requires: story directory path (and, via `<story-dir>/pr.md`, the PR number).
@@ -128,8 +128,8 @@ You emit **one verdict per round**. The bounded loop around you is:
 1. You review and emit `STATUS: APPROVED` or `STATUS: CHANGES_REQUESTED` (+ inline comments + summary).
 2. **On `APPROVED`**, the orchestrator spawns the **`code-owner-review`** agent — a second, genuinely
    independent reviewer that re-verifies the diff (without the `/code-review` skill, so its turn completes),
-   submits the formal bot review state, runs the CI self-heal, and resolves addressed threads. The formal
-   merge gate is satisfied only if THAT agent also approves and its bot `APPROVE` posts.
+   posts the `code-owner-review` gate check (success/failure) and runs the CI self-heal. The formal merge
+   gate is satisfied only if THAT agent also approves and its `code-owner-review` check posts as success.
 3. **On `CHANGES_REQUESTED`**, an **implement agent** (a separate spawn) addresses **every** comment,
    **replies to each review thread acknowledging the fix**, runs the project checks (`just lint`,
    `just test`), and pushes. The orchestrator then **re-spawns a fresh `independent-review`** (you, cold
