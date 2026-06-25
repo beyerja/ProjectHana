@@ -12,6 +12,7 @@
     "name_it": "Oceano Pacifico",
     "name_pl": "Ocean Spokojny",
     "name_nl": "Grote Oceaan",
+    "name_sr": "Тихи океан",
     "name_ko": "태평양",
     "name_nah": "Pacífico Hueyātl",
     "lat": 0.0,
@@ -30,6 +31,7 @@
     "name_it": "Oceano Atlantico",
     "name_pl": "Ocean Atlantycki",
     "name_nl": "Atlantische Oceaan",
+    "name_sr": "Атлантски океан",
     "name_ko": "대서양",
     "lat": 0.0,
     "lon": -30.0
@@ -48,7 +50,8 @@
     "lon": 80.0,
     "name_it": "Oceano Indiano",
     "name_pl": "Ocean Indyjski",
-    "name_nl": "Indische Oceaan"
+    "name_nl": "Indische Oceaan",
+    "name_sr": "Индијски океан"
   },
   {
     "id": "southern",
@@ -64,7 +67,8 @@
     "lon": 0.0,
     "name_it": "Oceano Antartico",
     "name_pl": "Ocean Południowy",
-    "name_nl": "Zuidelijke Oceaan"
+    "name_nl": "Zuidelijke Oceaan",
+    "name_sr": "Јужни океан"
   },
   {
     "id": "arctic",
@@ -80,7 +84,8 @@
     "lon": 0.0,
     "name_it": "Oceano Artico",
     "name_pl": "Ocean Arktyczny",
-    "name_nl": "Noordelijke IJszee"
+    "name_nl": "Noordelijke IJszee",
+    "name_sr": "Северни ледени океан"
   },
   {
     "id": "mediterranean",
@@ -96,7 +101,8 @@
     "lon": 18.0,
     "name_it": "Mar Mediterraneo",
     "name_pl": "Morze Śródziemne",
-    "name_nl": "Middellandse Zee"
+    "name_nl": "Middellandse Zee",
+    "name_sr": "Средоземно море"
   },
   {
     "id": "caribbean",
@@ -111,6 +117,7 @@
     "name_it": "Mar dei Caraibi",
     "name_pl": "Morze Karaibskie",
     "name_nl": "Caribische Zee",
+    "name_sr": "Карипско море",
     "name_ko": "카리브해",
     "name_nah": "Caribe Hueyātl",
     "lat": 15.0,
@@ -130,7 +137,8 @@
     "lon": 114.0,
     "name_it": "Mar Cinese Meridionale",
     "name_pl": "Morze Południowochińskie",
-    "name_nl": "Zuid-Chinese Zee"
+    "name_nl": "Zuid-Chinese Zee",
+    "name_sr": "Јужнокинеско море"
   },
   {
     "id": "bering",
@@ -146,7 +154,8 @@
     "lon": -175.0,
     "name_it": "Mare di Bering",
     "name_pl": "Morze Beringa",
-    "name_nl": "Beringzee"
+    "name_nl": "Beringzee",
+    "name_sr": "Берингово море"
   },
   {
     "id": "gulf-of-mexico",
@@ -161,6 +170,7 @@
     "name_it": "Golfo del Messico",
     "name_pl": "Zatoka Meksykańska",
     "name_nl": "Golf van Mexico",
+    "name_sr": "Мексички залив",
     "name_ko": "멕시코만",
     "lat": 25.0,
     "lon": -90.0
@@ -179,7 +189,8 @@
     "lon": 4.0,
     "name_it": "Mare del Nord",
     "name_pl": "Morze Północne",
-    "name_nl": "Noordzee"
+    "name_nl": "Noordzee",
+    "name_sr": "Северно море"
   },
   {
     "id": "red-sea",
@@ -195,7 +206,8 @@
     "lon": 37.5,
     "name_it": "Mar Rosso",
     "name_pl": "Morze Czerwone",
-    "name_nl": "Rode Zee"
+    "name_nl": "Rode Zee",
+    "name_sr": "Црвено море"
   },
   {
     "id": "black-sea",
@@ -211,7 +223,8 @@
     "lon": 34.0,
     "name_it": "Mar Nero",
     "name_pl": "Morze Czarne",
-    "name_nl": "Zwarte Zee"
+    "name_nl": "Zwarte Zee",
+    "name_sr": "Црно море"
   },
   {
     "id": "caspian-sea",
@@ -227,7 +240,8 @@
     "lon": 51.0,
     "name_it": "Mar Caspio",
     "name_pl": "Morze Kaspijskie",
-    "name_nl": "Kaspische Zee"
+    "name_nl": "Kaspische Zee",
+    "name_sr": "Каспијско језеро"
   },
   {
     "id": "persian-gulf",
@@ -243,7 +257,8 @@
     "lon": 52.0,
     "name_it": "Golfo Persico",
     "name_pl": "Zatoka Perska",
-    "name_nl": "Perzische Golf"
+    "name_nl": "Perzische Golf",
+    "name_sr": "Персијски залив"
   },
   {
     "id": "east-china",
@@ -259,7 +274,8 @@
     "lon": 124.0,
     "name_it": "Mar Cinese Orientale",
     "name_pl": "Morze Wschodniochińskie",
-    "name_nl": "Oost-Chinese Zee"
+    "name_nl": "Oost-Chinese Zee",
+    "name_sr": "Источнокинеско море"
   },
   {
     "id": "bay-of-bengal",
@@ -275,7 +291,8 @@
     "lon": 88.0,
     "name_it": "Golfo del Bengala",
     "name_pl": "Zatoka Bengalska",
-    "name_nl": "Golf van Bengalen"
+    "name_nl": "Golf van Bengalen",
+    "name_sr": "Бенгалски залив"
   },
   {
     "id": "arabian-sea",
@@ -291,7 +308,8 @@
     "lon": 65.0,
     "name_it": "Mar Arabico",
     "name_pl": "Morze Arabskie",
-    "name_nl": "Arabische Zee"
+    "name_nl": "Arabische Zee",
+    "name_sr": "Арабијско море"
   },
   {
     "id": "coral-sea",
@@ -306,7 +324,8 @@
     "lon": 153.0,
     "name_it": "Mar dei Coralli",
     "name_pl": "Morze Koralowe",
-    "name_nl": "Koraalzee"
+    "name_nl": "Koraalzee",
+    "name_sr": "Коралско море"
   },
   {
     "id": "tasman-sea",
@@ -321,6 +340,7 @@
     "lon": 160.0,
     "name_it": "Mar di Tasman",
     "name_pl": "Morze Tasmana",
-    "name_nl": "Tasmanzee"
+    "name_nl": "Tasmanzee",
+    "name_sr": "Тасманово море"
   }
 ]

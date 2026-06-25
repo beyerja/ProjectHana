@@ -150,6 +150,13 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.nl, .en)
     }
 
+    /// Story 009: Serbian (Cyrillic) keeps a progress track fully isolated from its English fallback
+    /// target; they are distinct language codes, so the same factID/day coexists across the two and
+    /// Serbian progress never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForSerbian() {
+        assertProgressIsolated(.sr, .en)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {

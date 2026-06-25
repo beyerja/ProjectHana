@@ -12,6 +12,7 @@
     "name_it": "Nilo",
     "name_pl": "Nil",
     "name_nl": "Nijl",
+    "name_sr": "Нил",
     "name_ko": "나일강",
     "continent": "Africa",
     "sourceLat": 4.0,
@@ -32,6 +33,7 @@
     "name_it": "Rio delle Amazzoni",
     "name_pl": "Amazonka",
     "name_nl": "Amazone",
+    "name_sr": "Амазон",
     "name_ko": "아마존강",
     "name_nah": "Amazonas Ātōyātl",
     "continent": "South America",
@@ -57,7 +59,8 @@
     "mouthLon": 121.7,
     "name_it": "Fiume Azzurro",
     "name_pl": "Jangcy",
-    "name_nl": "Jangtsekiang"
+    "name_nl": "Jangtsekiang",
+    "name_sr": "Јангце"
   },
   {
     "id": "mississippi",
@@ -72,6 +75,7 @@
     "name_it": "Mississippi",
     "name_pl": "Missisipi",
     "name_nl": "Mississippi",
+    "name_sr": "Мисисипи",
     "name_ko": "미시시피강",
     "name_nah": "Mississippi Ātōyātl",
     "continent": "North America",
@@ -96,7 +100,8 @@
     "mouthLon": 82.5,
     "name_it": "Enisej",
     "name_pl": "Jenisej",
-    "name_nl": "Jenisej"
+    "name_nl": "Jenisej",
+    "name_sr": "Јенисеј"
   },
   {
     "id": "yellow-river",
@@ -115,7 +120,8 @@
     "mouthLon": 119.1,
     "name_it": "Fiume Giallo",
     "name_pl": "Rzeka Żółta",
-    "name_nl": "Gele Rivier"
+    "name_nl": "Gele Rivier",
+    "name_sr": "Жута река"
   },
   {
     "id": "ob",
@@ -133,7 +139,8 @@
     "mouthLon": 69.2,
     "name_it": "Ob'",
     "name_pl": "Ob",
-    "name_nl": "Ob"
+    "name_nl": "Ob",
+    "name_sr": "Об"
   },
   {
     "id": "congo",
@@ -152,7 +159,8 @@
     "mouthLon": 12.4,
     "name_it": "Congo",
     "name_pl": "Kongo",
-    "name_nl": "Congo"
+    "name_nl": "Congo",
+    "name_sr": "Конго"
   },
   {
     "id": "lena",
@@ -170,7 +178,8 @@
     "mouthLon": 126.7,
     "name_it": "Lena",
     "name_pl": "Lena",
-    "name_nl": "Lena"
+    "name_nl": "Lena",
+    "name_sr": "Лена"
   },
   {
     "id": "niger",
@@ -189,7 +198,8 @@
     "mouthLon": 6.5,
     "name_it": "Niger",
     "name_pl": "Niger",
-    "name_nl": "Niger"
+    "name_nl": "Niger",
+    "name_sr": "Нигер"
   },
   {
     "id": "mekong",
@@ -208,7 +218,8 @@
     "mouthLon": 106.3,
     "name_it": "Mekong",
     "name_pl": "Mekong",
-    "name_nl": "Mekong"
+    "name_nl": "Mekong",
+    "name_sr": "Меконг"
   },
   {
     "id": "missouri",
@@ -226,7 +237,8 @@
     "mouthLon": -90.1,
     "name_it": "Missouri",
     "name_pl": "Missouri",
-    "name_nl": "Missouri"
+    "name_nl": "Missouri",
+    "name_sr": "Мисури"
   },
   {
     "id": "volga",
@@ -245,7 +257,8 @@
     "mouthLon": 47.9,
     "name_it": "Volga",
     "name_pl": "Wołga",
-    "name_nl": "Wolga"
+    "name_nl": "Wolga",
+    "name_sr": "Волга"
   },
   {
     "id": "zambezi",
@@ -263,7 +276,8 @@
     "mouthLon": 36.0,
     "name_it": "Zambesi",
     "name_pl": "Zambezi",
-    "name_nl": "Zambezi"
+    "name_nl": "Zambezi",
+    "name_sr": "Замбези"
   },
   {
     "id": "ganges",
@@ -282,7 +296,8 @@
     "mouthLon": 90.5,
     "name_it": "Gange",
     "name_pl": "Ganges",
-    "name_nl": "Ganges"
+    "name_nl": "Ganges",
+    "name_sr": "Ганг"
   },
   {
     "id": "indus",
@@ -301,7 +316,8 @@
     "mouthLon": 68.2,
     "name_it": "Indo",
     "name_pl": "Indus",
-    "name_nl": "Indus"
+    "name_nl": "Indus",
+    "name_sr": "Инд"
   },
   {
     "id": "murray",
@@ -319,7 +335,8 @@
     "mouthLon": 139.3,
     "name_it": "Murray",
     "name_pl": "Murray",
-    "name_nl": "Murray"
+    "name_nl": "Murray",
+    "name_sr": "Мари"
   },
   {
     "id": "euphrates",
@@ -338,7 +355,8 @@
     "mouthLon": 47.8,
     "name_it": "Eufrate",
     "name_pl": "Eufrat",
-    "name_nl": "Eufraat"
+    "name_nl": "Eufraat",
+    "name_sr": "Еуфрат"
   },
   {
     "id": "tigris",
@@ -357,7 +375,8 @@
     "mouthLon": 47.8,
     "name_it": "Tigri",
     "name_pl": "Tygrys",
-    "name_nl": "Tigris"
+    "name_nl": "Tigris",
+    "name_sr": "Тигар"
   },
   {
     "id": "rhine",
@@ -376,7 +395,8 @@
     "mouthLon": 4.5,
     "name_it": "Reno",
     "name_pl": "Ren",
-    "name_nl": "Rijn"
+    "name_nl": "Rijn",
+    "name_sr": "Рајна"
   },
   {
     "id": "danube",
@@ -395,7 +415,8 @@
     "mouthLon": 29.7,
     "name_it": "Danubio",
     "name_pl": "Dunaj",
-    "name_nl": "Donau"
+    "name_nl": "Donau",
+    "name_sr": "Дунав"
   },
   {
     "id": "colorado",
@@ -410,6 +431,7 @@
     "name_it": "Colorado",
     "name_pl": "Kolorado",
     "name_nl": "Colorado",
+    "name_sr": "Колорадо",
     "name_ko": "콜로라도강",
     "continent": "North America",
     "sourceLat": 40.5,
@@ -433,7 +455,8 @@
     "mouthLon": -124.1,
     "name_it": "Columbia",
     "name_pl": "Kolumbia",
-    "name_nl": "Columbia"
+    "name_nl": "Columbia",
+    "name_sr": "Колумбија"
   },
   {
     "id": "irrawaddy",
@@ -451,7 +474,8 @@
     "mouthLon": 95.1,
     "name_it": "Irrawaddy",
     "name_pl": "Irawadi",
-    "name_nl": "Irrawaddy"
+    "name_nl": "Irrawaddy",
+    "name_sr": "Иравади"
   },
   {
     "id": "orange",
@@ -469,7 +493,8 @@
     "mouthLon": 16.5,
     "name_it": "Orange",
     "name_pl": "Oranje",
-    "name_nl": "Oranjerivier"
+    "name_nl": "Oranjerivier",
+    "name_sr": "Оранж"
   },
   {
     "id": "parana",
@@ -484,6 +509,7 @@
     "name_it": "Paraná",
     "name_pl": "Parana",
     "name_nl": "Paraná",
+    "name_sr": "Парана",
     "name_ko": "파라나강",
     "continent": "South America",
     "sourceLat": -14.3,
@@ -508,7 +534,8 @@
     "mouthLon": 141.0,
     "name_it": "Amur",
     "name_pl": "Amur",
-    "name_nl": "Amoer"
+    "name_nl": "Amoer",
+    "name_sr": "Амур"
   },
   {
     "id": "dnieper",
@@ -527,7 +554,8 @@
     "mouthLon": 32.5,
     "name_it": "Dnepr",
     "name_pl": "Dniepr",
-    "name_nl": "Dnjepr"
+    "name_nl": "Dnjepr",
+    "name_sr": "Дњепар"
   },
   {
     "id": "senegal-river",
@@ -546,7 +574,8 @@
     "mouthLon": -16.5,
     "name_it": "Senegal",
     "name_pl": "Senegal",
-    "name_nl": "Senegal"
+    "name_nl": "Senegal",
+    "name_sr": "Сенегал"
   },
   {
     "id": "orinoco",
@@ -561,6 +590,7 @@
     "name_it": "Orinoco",
     "name_pl": "Orinoko",
     "name_nl": "Orinoco",
+    "name_sr": "Ориноко",
     "name_ko": "오리노코강",
     "continent": "South America",
     "sourceLat": 7.8,
@@ -585,7 +615,8 @@
     "mouthLon": -36.5,
     "name_it": "São Francisco",
     "name_pl": "São Francisco",
-    "name_nl": "São Francisco"
+    "name_nl": "São Francisco",
+    "name_sr": "Сан Франсиско"
   },
   {
     "id": "tocantins",
@@ -603,6 +634,7 @@
     "mouthLon": -48.5,
     "name_it": "Tocantins",
     "name_pl": "Tocantins",
-    "name_nl": "Tocantins"
+    "name_nl": "Tocantins",
+    "name_sr": "Токантинс"
   }
 ]

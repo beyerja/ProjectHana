@@ -45,7 +45,7 @@ for base in en es-MX; do
 done
 
 echo "== non-base languages declared as On-Demand Resources in the project =="
-for code in fr de es-ES it pl nl ko nah; do
+for code in fr de es-ES it pl nl sr ko nah; do
     grep -q "\"lang-${code}\"" "${PBXPROJ}" \
         || fail "lang-${code} is not declared as an on-demand asset tag in the project"
     echo "  ok: lang-${code} declared on-demand"
@@ -53,7 +53,7 @@ done
 
 echo "== platform note: on-demand resources in this build's main bundle (informational) =="
 embedded=0
-for code in fr de es-ES it pl nl ko nah; do
+for code in fr de es-ES it pl nl sr ko nah; do
     if [[ -d "${RES}/${code}.lproj" || -f "${RES}/${code}-geo.json" ]]; then
         embedded=1
     fi

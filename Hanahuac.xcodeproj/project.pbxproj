@@ -44,6 +44,7 @@
 		410A526F6517C786D9480588 /* ProgressStatsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F85289DD2C1AE0AE38568540 /* ProgressStatsStore.swift */; };
 		41C5CE10A2A9DAB859E21887 /* HanahuacApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF0D0A6AAE98294A95FF00D /* HanahuacApp.swift */; };
 		420F469B2440869A0BC557C3 /* SM2Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAFCAD670B510A8E79864C5F /* SM2Scheduler.swift */; };
+		443EBCE9AB06CF5190A67A89 /* sr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = A7BF201F0C21699B70EC8258 /* sr.lproj */; settings = {ASSET_TAGS = ("lang-sr", ); }; };
 		4486112118500A5A7BDB8E5F /* mountain-borders.json in Resources */ = {isa = PBXBuildFile; fileRef = 84C61DE695089044C5369288 /* mountain-borders.json */; };
 		45E20715A6F1DBF612284161 /* SyncFeatureFlag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F56156DD1B70D620044397E /* SyncFeatureFlag.swift */; };
 		49E3DC2EA9B65062D932545E /* NameFeatureQuizTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5666DA35DFB133E8E641545 /* NameFeatureQuizTests.swift */; };
@@ -149,6 +150,7 @@
 		EA74AB90BDAA414B58DDFBC2 /* GeoNameResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D6B4FCD3F9468D8FF0C7BA6 /* GeoNameResolver.swift */; };
 		EB2A8A989227BF8833037F02 /* MapFeatureCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D3C61F4B563A0F99E5CB2C /* MapFeatureCatalog.swift */; };
 		EB424397CCE4D8DE3BB12F68 /* es-ES.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 14A13B8C6A1F323E43C99D92 /* es-ES.lproj */; settings = {ASSET_TAGS = ("lang-es-ES", ); }; };
+		EBA372235527941C54C23DAB /* sr-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = 4A5A6DEB6D0E9CC064F749A7 /* sr-geo.json */; settings = {ASSET_TAGS = ("lang-sr", ); }; };
 		EBCE0FB9926D49EB4FE9CE13 /* HanahuacSchema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A8968B8A0523114451E506 /* HanahuacSchema.swift */; };
 		ED9937F2AC4E976EA91CB3C1 /* LearningQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2A9ED59834EB421065830ED /* LearningQuizView.swift */; };
 		EE9B4BE47B6C3B6B6EF6845F /* ca.lproj in Resources */ = {isa = PBXBuildFile; fileRef = C6AD4E60A0C8F84B62F231C0 /* ca.lproj */; settings = {ASSET_TAGS = ("lang-ca", ); }; };
@@ -227,6 +229,7 @@
 		45793BEFAE16929E78F73B0A /* SyncStatusPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncStatusPresentationTests.swift; sourceTree = "<group>"; };
 		46B3C69015B149060636051F /* MapLearningQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLearningQuizView.swift; sourceTree = "<group>"; };
 		48A009B1EC5C53A5776FF842 /* ProgressBackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBackup.swift; sourceTree = "<group>"; };
+		4A5A6DEB6D0E9CC064F749A7 /* sr-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "sr-geo.json"; sourceTree = "<group>"; };
 		4A9B4E84299EBAF69A5F57C4 /* KeyValueStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStore.swift; sourceTree = "<group>"; };
 		4E3A6C56976B4F809760D23B /* ProgressMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressMigrator.swift; sourceTree = "<group>"; };
 		4EF5B7CAFFFDBF518A3D9A7C /* CapitalQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapitalQuizView.swift; sourceTree = "<group>"; };
@@ -278,6 +281,7 @@
 		9F56156DD1B70D620044397E /* SyncFeatureFlag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncFeatureFlag.swift; sourceTree = "<group>"; };
 		A32E2FBF4E73928EF5BDC496 /* CardStoreProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreProvider.swift; sourceTree = "<group>"; };
 		A34CD58A296F65D617C07337 /* ODRLanguagePackProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ODRLanguagePackProviderTests.swift; sourceTree = "<group>"; };
+		A7BF201F0C21699B70EC8258 /* sr.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sr.lproj; path = Hanahuac/sr.lproj; sourceTree = SOURCE_ROOT; };
 		A8A920142B5EE81A611BBC5C /* ActiveSetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveSetStore.swift; sourceTree = "<group>"; };
 		ACA16D4EA745C68884282458 /* BundledLanguagePackProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledLanguagePackProvider.swift; sourceTree = "<group>"; };
 		B26FBB9A23018BE101B999C0 /* CardStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardStoreTests.swift; sourceTree = "<group>"; };
@@ -446,6 +450,7 @@
 				F11FD6C85244DEBF7904B118 /* rivers.json */,
 				B8BC8FDD71EB406D6A8DF545 /* sea-borders.json */,
 				1BE902F9973E13AC591CEBF4 /* seas.json */,
+				4A5A6DEB6D0E9CC064F749A7 /* sr-geo.json */,
 				D66DC1D79E2B967ADB876768 /* yua-geo.json */,
 			);
 			path = Resources;
@@ -597,6 +602,7 @@
 				EA2B692C805763334A4C0289 /* nl.lproj */,
 				0E3A3AD118016349A7F1B544 /* pl.lproj */,
 				09C983AE0A9C597DCF6A0311 /* PrivacyInfo.xcprivacy */,
+				A7BF201F0C21699B70EC8258 /* sr.lproj */,
 				02EDCEF7B89BAFA774D2290F /* Theme.swift */,
 				C1E3ECFE4BCCD433B25C93D4 /* yua.lproj */,
 				A6B3B0ECC243484FDB1A137F /* L10n */,
@@ -718,6 +724,7 @@
 					"lang-nah",
 					"lang-nl",
 					"lang-pl",
+					"lang-sr",
 					"lang-yua",
 				);
 			};
@@ -778,6 +785,8 @@
 				F27547F2B084E91E0D7BE4E1 /* rivers.json in Resources */,
 				5B59B89F003E80B24BAA470D /* sea-borders.json in Resources */,
 				24ED5005ECE65AA9F7BB2B9E /* seas.json in Resources */,
+				EBA372235527941C54C23DAB /* sr-geo.json in Resources */,
+				443EBCE9AB06CF5190A67A89 /* sr.lproj in Resources */,
 				5C75B63032CD69613BBABEFF /* yua-geo.json in Resources */,
 				15FD5B830608DA8C06C1C69E /* yua.lproj in Resources */,
 			);
