@@ -1,0 +1,9 @@
+# Log — Add Polish `pl` as a COMPLETE downloadable language
+
+2026-06-24 break-tasks: DONE, 17 tasks
+2026-06-24 implement-story: DONE — all 17 tasks (AppLocale/LanguageCatalog, geo models + PackData .pl arms, pl.lproj/Localizable.strings 156 keys, name_pl/capital_pl for all 197 countries + 32 rivers + 23 mountains + 20 seas via seed-pl-geo.py, pl-geo.json 272 entries, project.yml ODR wiring, completeness/odr/base-only scripts, tests catalog 11→12). Gate: lint/test/geo-packs-check/verify-odr-packs/verify-base-only/build-mac all green. 3 legitimately-identical pl strings (Oceania, iCloud, "%d / 3") allowlisted. Commit 32cf32a.
+2026-06-24 create-pr: DONE — https://github.com/beyerja/ProjectHana/pull/164
+2026-06-24 code-owner-review: APPROVED — independent second pass; l10n-check 156/156, geo-packs-check + verify-odr-packs PASS, Polish quality/exonyms confirmed, wiring complete, CI green on head 32cf32a. Formal Hanahuac-Bot APPROVED submitted via wrapper + read-back confirmed. No unresolved threads.
+2026-06-24 independent-review: APPROVED — 156/156 UI keys, full geo coverage (197/197 countries+capitals, all rivers/mountains/seas), correct Polish exonyms+diacritics, no leakage, wiring+tests+ODR all consistent; l10n-check/geo-packs-check/verify-odr-packs PASS.
+2026-06-24 merge-pr: DONE
+2026-06-24 verify-story: DONE — all 7 ACs verified against origin/main (squash-merge 85c717c). AC1 picker "Polski" (catalog + AppLocaleTests). AC2 fallback [pl,en] (LanguageCatalog/L10nBundleResolution tests + bundleCandidates). AC3 COMPLETE: l10n-check 156/156 keys, geo coverage 0 missing (197 countries name_pl+capital_pl, 32 rivers, 23 mountains, 20 seas). AC4 ODR: pl.lproj+pl-geo.json tagged lang-pl, verify-odr-packs PASS, verify-base-only PASS (pl on-demand, not bundled). AC5 progress isolation (.pl) test. AC6 catalog/allCases count=12. AC7 lint PASS, test SUCCEEDED, geo-packs-check PASS, verify-odr-packs PASS, Mac Catalyst + iOS Simulator builds SUCCEEDED.

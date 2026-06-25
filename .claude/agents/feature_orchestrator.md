@@ -61,7 +61,13 @@ sub-agent for each:
 4. **Story loop** — for each story in `.workflow/stories.md` where status ≠ done:
    - Spawn `story-workflow` agent with the story's directory path
    - If the story comes back FAILED, re-run it (pass prior failure context)
-5. **Create PR** — first **integrate the latest `main`** into the feature branch (`git fetch origin`
+5. **Create PR** — **first check whether a feature PR is even needed.** This repo's convention is that
+   each *story* PR targets `main` directly; no long-lived `feat/<slug>` base branch is used. If
+   `git ls-remote origin feat/<slug>` is empty and every story already squash-merged to `main`, then a
+   feature PR would be empty — skip PR creation, record *why* in `.workflow/log.md`, and proceed to the
+   cross-feature collision re-verification below (which still matters). Only when a real feature branch
+   carries unmerged commits do the integrate-and-open steps that follow apply:
+   first **integrate the latest `main`** into the feature branch (`git fetch origin`
    then `git merge origin/main`), because `main` may have advanced since the worktree was cut — long
    runs routinely see it move *several times* mid-flight. Resolve conflicts (regenerate
    `Hanahuac.xcodeproj` rather than hand-merging the pbxproj; integrate with — don't duplicate —

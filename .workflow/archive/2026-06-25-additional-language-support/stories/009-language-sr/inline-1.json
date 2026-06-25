@@ -1,0 +1,7 @@
+{
+  "body": "Non-blocking nit: the test method name still says \"Thirteen\" but now asserts `== 14`. The assertion is correct; only the name is stale. Consider renaming to `testCatalogContainsExactlyFourteenLanguages` so the name matches the count (it already drifted from the original 13).",
+  "commit_id": "5a8e3cb32a251a1153e6c6b1a2b198b619cd98a5",
+  "path": "HanahuacTests/LanguageCatalogTests.swift",
+  "line": 9,
+  "side": "RIGHT"
+}

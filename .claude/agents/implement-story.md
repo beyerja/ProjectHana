@@ -94,6 +94,15 @@ call site, add an **explicit memberwise `init` that defaults the new field(s)** 
 `nameKo: String? = nil`); `Codable` still decodes the new key via `decodeIfPresent`. Faster and
 lower-risk than touching dozens of call sites.
 
+**Adding an `AppLocale` case touches a fixed fan-out — update the whole set in one commit**
+A new locale is not done when `Country` compiles. It requires, every time: a `nameXx` (and
+`capitalXx` where present) on **all four** geo models — `Country`, `River`, `MountainRange`, `Sea`
+(not just `Country`) — and a new `case .xx` arm in **every** exhaustive switch over `AppLocale`,
+including the five in `GeoModel+PackData.swift`. Before committing, grep the full site set
+(`grep -rn "case .esES\|nameXx" Hanahuac/`) and confirm each model and each switch is updated; a
+partial set is a "switch must be exhaustive" build failure. Keep this fan-out within a single commit
+so an interrupted WIP still compiles rather than leaving three models and the switches behind.
+
 **Tests must not assert on ambient bundle/resource presence — drive through the seam**
 A test that asserts a resource is present in (or absent from) `Bundle.main` is environment-dependent and
 will pass locally but fail in clean CI. The Catalyst/sim dev build embeds tagged ODR resources in the
