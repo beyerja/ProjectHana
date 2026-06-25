@@ -30,8 +30,8 @@ merge a story PR.
    **3 rounds**.
 
    a. **Deep review + verdict** — spawn the `independent-review` agent (fresh, cold). It runs the deep
-      `/code-review` pass, posts inline comments + a summary, and emits STATUS. It does **NOT** submit the
-      formal bot review (invoking the `/code-review` skill ends its turn before it could).
+      `/code-review` pass, posts inline comments + a summary, and emits STATUS. It does **NOT** set the
+      formal gate check (invoking the `/code-review` skill ends its turn before it could).
       - STATUS: CHANGES_REQUESTED → spawn an `implement-story` agent (a **separate spawn, never a reviewer**)
         to address **every** inline comment, **reply to each review thread acknowledging the fix** (a reply
         alone does NOT resolve the thread on GitHub), run the project checks (`just lint`, `just test`), and
