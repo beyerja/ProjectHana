@@ -154,6 +154,12 @@ You **NEVER** print, read, echo, or write any bot secret. Every App-authenticate
 `hana-review-bot`) into the child process only (xtrace never on; no secret echoed/redirected/written;
 fail-closed on absent creds). Do not read the Keychain or set `GH_TOKEN` yourself.
 
+> **Expected: `403` on `/user` through the wrapper is NOT a credential failure.** An App *installation*
+> token cannot hit `/user` (it has no user identity), so a wrapper call that touches that endpoint 403s
+> even when the creds are healthy. Verify the wrapper works with a repo-scoped read instead — e.g.
+> `scripts/gh-review-bot.sh gh api repos/<owner/repo> --jq .full_name` — never `gh api user`. Don't
+> treat the `/user` 403 as "creds absent" and fall to the COMMENT path.
+
 ## Graceful degradation — wrapper absent (fail-closed) → COMMENT fallback
 
 When the Keychain creds are **absent**, the wrapper exits **non-zero** and does NOT run the underlying
@@ -163,10 +169,18 @@ command. Detect that and fall back to a comment plus STATUS:
 - Record in the summary comment and `<story-dir>/log.md` that the gate check was SKIPPED. The loop still
   functions on STATUS alone (a human/admin can merge via bypass, since `enforce_admins` is off).
 
-## Stable summary comment
+## Stable summary comment (BEST-EFFORT — the check is the gate, not the comment)
 
-Post/update a single comment carrying the **stable marker `<!-- code-owner-review -->`** (distinct from the
-`independent-review` marker so the two never clobber each other). Write the body to
+The required `code-owner-review` status check (posted above) is the **only** merge gate. This summary
+comment is a nicety on top of it. Auto-mode may **deny** the comment post (your authorized scope is the
+status check + the report); a denial here is **non-blocking and expected**, not a failure. If the post is
+denied, save the body to `<story-dir>/code-owner-review-comment.md`, note `summary comment denied by
+auto-mode scope (non-blocking — the check is the gate)` in `<story-dir>/log.md`, and proceed. Do **not**
+retry it, treat it as a gate failure, or let it change your STATUS.
+
+When the post is permitted: post/update a single comment carrying the **stable marker
+`<!-- code-owner-review -->`** (distinct from the `independent-review` marker so the two never clobber each
+other). Write the body to
 `<story-dir>/code-owner-review-comment.md` with the **Write** tool (the story dir is gitignored, so it never
 lingers as a stray). Find an existing marker comment by its `.databaseId` (NOT `.id` — the REST endpoint
 needs the numeric databaseId) and PATCH it in place, else create it:
@@ -191,8 +205,9 @@ fi
 5. **Post** the `code-owner-review` check (success/failure) on the head SHA through the wrapper, then
    **verify it posted** (read-back; `app_id` must be `4144849`). On a re-review round, post a fresh check on
    the new head SHA. On absent creds, use the COMMENT fallback and record SKIPPED.
-6. Post/update the stable `<!-- code-owner-review -->` summary comment with your verdict (and any
-   `GATE-CHECK-FAILED` / SKIPPED notes).
+6. **Best-effort** post/update the stable `<!-- code-owner-review -->` summary comment with your verdict
+   (and any `GATE-CHECK-FAILED` / SKIPPED notes). If auto-mode denies the comment, that is non-blocking —
+   save the body to the story dir, note it, and continue (the check is the gate).
 7. Append to `<story-dir>/log.md`: `<timestamp> code-owner-review: <APPROVED|CHANGES_REQUESTED> — <reason>`.
 8. Emit the matching STATUS line.
 

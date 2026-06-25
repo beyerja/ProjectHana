@@ -1,0 +1,28 @@
+feat(ui-driver): add just ui-walkthrough recipe, helper script & authoring docs
+
+Wrap the XCUITest UI driver (story 001) into an end-to-end `just` capability so the
+main session and workflow sub-agents can run it without raw xcodebuild invocations.
+
+- `just ui-walkthrough <script> [run]` — builds + runs ONLY
+  HanahuacUITests/UIDriverTests/testRunUIScript against the booted `{{sim}}` with
+  per-worktree DerivedData, delegating glue to scripts/ui-walkthrough.sh. Defaults to
+  the committed smoke.json; prints the artifact dir on success.
+- scripts/ui-walkthrough.sh — shellcheck-clean helper that resolves the repo root +
+  run name, plumbs the driver env-var contract, and echoes the artifact dir.
+- Close the story-001 wiring gap: env vars are forwarded to the sandboxed test runner
+  via the `TEST_RUNNER_` prefix (xcodebuild strips it). Without this the recorder fell
+  back to the app sandbox tmp dir and nothing reached the repo tree.
+- Canonical layout: action scripts at .workflow/ui-walkthrough/scripts/<name>.json,
+  run artifacts at .workflow/ui-walkthrough/<run>/NNN-step.png|json. Commit example
+  smoke.json (wait + dumpTree).
+- .workflow/ui-walkthrough/README.md documents the JSON schema, every action, the
+  env-var contract, artifact locations, the write -> run -> read loop, and the
+  "compiled xcodebuild test cycle ~tens of seconds, not live frame-by-frame" reality.
+- .gitignore: ignore per-run artifact dirs while keeping scripts/ + README.md tracked.
+- Tree hygiene: remove root debris verify-script.json + verify001.xctestplan and the
+  stray story-001 verify run-output dirs.
+
+Wiring proven on iPhone 17 / iOS 26.5: smoke run produced 000-step.png + 000-step.json
+(run output intentionally not committed).
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
