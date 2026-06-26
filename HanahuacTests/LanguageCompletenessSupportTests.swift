@@ -119,6 +119,43 @@ final class LanguageCompletenessSupportTests: XCTestCase {
         )
     }
 
+    // MARK: - zh-Hans (Story 004) completeness
+
+    /// Simplified Chinese ships a COMPLETE UI string set: zero keys missing relative to the English
+    /// base. Uses the STRICT path — when the zh-Hans `.lproj` is not mounted (the simulator unit-test
+    /// host has no asset-pack server), the strict helper THROWS
+    /// ``CompletenessError/stringBundleUnreachable``, which we translate into an `XCTSkip` so the test
+    /// never degrades to a false pass. When the pack IS mounted, a genuine missing key FAILS the
+    /// assertion.
+    func testSimplifiedChineseHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .zhHans)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("zh-Hans UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "zh-Hans must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Simplified Chinese ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a
+    /// Simplified Chinese name, so the bundled provider's pack reports no gaps for .zhHans. Uses the
+    /// STRICT path, so a missing/nil zh-Hans pack FAILS (throws) rather than reporting a degenerate
+    /// empty/whole-set report.
+    func testSimplifiedChineseHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .zhHans)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "zh-Hans is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "zh-Hans is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
     // MARK: - Strict-path teeth (AC#2): a real gap FAILS rather than degrading to pass
 
     /// Restore the active provider after any test that swaps it, so a swapped stub never leaks into

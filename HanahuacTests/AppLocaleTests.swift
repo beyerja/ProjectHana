@@ -234,17 +234,17 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.allCases.count, 21)
     }
 
-    /// The remaining 6 content-pending languages are enumerated in the picker with their native-script
+    /// The remaining 5 content-pending languages are enumerated in the picker with their native-script
     /// display names and their candidate chain goes straight to English (COMPLETE-content by contract).
-    /// `.ja` has shipped complete content (story 003) and is asserted separately below.
+    /// `.ja` (story 003) and `.zhHans` (story 004) have shipped complete content and are asserted
+    /// separately below.
     func testContentPendingLanguagesEnumeratedWithNativeDisplayNames() {
-        XCTAssertEqual(AppLocale.zhHans.displayName, "简体中文")
         XCTAssertEqual(AppLocale.hi.displayName, "हिन्दी")
         XCTAssertEqual(AppLocale.ar.displayName, "العربية")
         XCTAssertEqual(AppLocale.bn.displayName, "বাংলা")
         XCTAssertEqual(AppLocale.ptBR.displayName, "Português (Brasil)")
         XCTAssertEqual(AppLocale.ur.displayName, "اردو")
-        for locale in [AppLocale.zhHans, .hi, .ar, .bn, .ptBR, .ur] {
+        for locale in [AppLocale.hi, .ar, .bn, .ptBR, .ur] {
             XCTAssertEqual(
                 L10n.bundleCandidates(for: locale),
                 [locale.rawValue, "en"],
@@ -270,6 +270,22 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertFalse(
             AppLocale.ja.fallsBackThroughSpanish,
             "ja is COMPLETE content and must not route through Spanish"
+        )
+    }
+
+    /// Simplified Chinese has shipped COMPLETE content (story 004): it is enumerated in the picker
+    /// with its native display name "简体中文", its bundle-candidate chain goes straight to English
+    /// `[zh-Hans, en]` (en is a never-hit safety net), and it never routes through Spanish.
+    func testSimplifiedChineseEnumeratedAsCompleteContentLanguage() {
+        XCTAssertEqual(AppLocale.zhHans.displayName, "简体中文")
+        XCTAssertEqual(
+            L10n.bundleCandidates(for: .zhHans),
+            ["zh-Hans", "en"],
+            "zh-Hans is COMPLETE content → straight to English"
+        )
+        XCTAssertFalse(
+            AppLocale.zhHans.fallsBackThroughSpanish,
+            "zh-Hans is COMPLETE content and must not route through Spanish"
         )
     }
 

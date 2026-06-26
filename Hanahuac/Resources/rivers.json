@@ -2,6 +2,7 @@
   {
     "id": "nile",
     "name": "Nile",
+    "name_zh_hans": "尼罗河",
     "name_ja": "ナイル川",
     "name_fr": "Nil",
     "name_de": "Nil",
@@ -24,6 +25,7 @@
   {
     "id": "amazon",
     "name": "Amazon",
+    "name_zh_hans": "亚马逊河",
     "name_ja": "アマゾン川",
     "name_fr": "Amazone",
     "name_de": "Amazonas",
@@ -47,6 +49,7 @@
   {
     "id": "yangtze",
     "name": "Yangtze",
+    "name_zh_hans": "长江",
     "name_ja": "長江",
     "name_fr": "Yangtsé",
     "name_de": "Jangtse",
@@ -68,6 +71,7 @@
   {
     "id": "mississippi",
     "name": "Mississippi",
+    "name_zh_hans": "密西西比河",
     "name_ja": "ミシシッピ川",
     "name_fr": "Mississippi",
     "name_de": "Mississippi",
@@ -91,6 +95,7 @@
   {
     "id": "yenisei",
     "name": "Yenisei",
+    "name_zh_hans": "叶尼塞河",
     "name_ja": "エニセイ川",
     "name_fr": "Ienisseï",
     "name_de": "Jenissei",
@@ -111,6 +116,7 @@
   {
     "id": "yellow-river",
     "name": "Yellow River",
+    "name_zh_hans": "黄河",
     "name_ja": "黄河",
     "name_fr": "Fleuve Jaune",
     "name_de": "Gelber Fluss",
@@ -132,6 +138,7 @@
   {
     "id": "ob",
     "name": "Ob",
+    "name_zh_hans": "鄂毕河",
     "name_ja": "オビ川",
     "name_fr": "Ob",
     "name_de": "Ob",
@@ -152,6 +159,7 @@
   {
     "id": "congo",
     "name": "Congo",
+    "name_zh_hans": "刚果河",
     "name_ja": "コンゴ川",
     "name_fr": "Congo",
     "name_de": "Kongo",
@@ -173,6 +181,7 @@
   {
     "id": "lena",
     "name": "Lena",
+    "name_zh_hans": "勒拿河",
     "name_ja": "レナ川",
     "name_fr": "Léna",
     "name_de": "Lena",
@@ -193,6 +202,7 @@
   {
     "id": "niger",
     "name": "Niger",
+    "name_zh_hans": "尼日尔河",
     "name_ja": "ニジェール川",
     "name_fr": "Niger",
     "name_de": "Niger",
@@ -214,6 +224,7 @@
   {
     "id": "mekong",
     "name": "Mekong",
+    "name_zh_hans": "湄公河",
     "name_ja": "メコン川",
     "name_fr": "Mékong",
     "name_de": "Mekong",
@@ -235,6 +246,7 @@
   {
     "id": "missouri",
     "name": "Missouri",
+    "name_zh_hans": "密苏里河",
     "name_ja": "ミズーリ川",
     "name_fr": "Missouri",
     "name_de": "Missouri",
@@ -255,6 +267,7 @@
   {
     "id": "volga",
     "name": "Volga",
+    "name_zh_hans": "伏尔加河",
     "name_ja": "ヴォルガ川",
     "name_fr": "Volga",
     "name_de": "Wolga",
@@ -276,6 +289,7 @@
   {
     "id": "zambezi",
     "name": "Zambezi",
+    "name_zh_hans": "赞比西河",
     "name_ja": "ザンベジ川",
     "name_fr": "Zambèze",
     "name_de": "Sambesi",
@@ -296,6 +310,7 @@
   {
     "id": "ganges",
     "name": "Ganges",
+    "name_zh_hans": "恒河",
     "name_ja": "ガンジス川",
     "name_fr": "Gange",
     "name_de": "Ganges",
@@ -317,6 +332,7 @@
   {
     "id": "indus",
     "name": "Indus",
+    "name_zh_hans": "印度河",
     "name_ja": "インダス川",
     "name_fr": "Indus",
     "name_de": "Indus",
@@ -338,6 +354,7 @@
   {
     "id": "murray",
     "name": "Murray",
+    "name_zh_hans": "墨累河",
     "name_ja": "マレー川",
     "name_fr": "Murray",
     "name_de": "Murray",
@@ -358,6 +375,7 @@
   {
     "id": "euphrates",
     "name": "Euphrates",
+    "name_zh_hans": "幼发拉底河",
     "name_ja": "ユーフラテス川",
     "name_fr": "Euphrate",
     "name_de": "Euphrat",
@@ -379,6 +397,7 @@
   {
     "id": "tigris",
     "name": "Tigris",
+    "name_zh_hans": "底格里斯河",
     "name_ja": "ティグリス川",
     "name_fr": "Tigre",
     "name_de": "Tigris",
@@ -400,6 +419,7 @@
   {
     "id": "rhine",
     "name": "Rhine",
+    "name_zh_hans": "莱茵河",
     "name_ja": "ライン川",
     "name_fr": "Rhin",
     "name_de": "Rhein",
@@ -421,6 +441,7 @@
   {
     "id": "danube",
     "name": "Danube",
+    "name_zh_hans": "多瑙河",
     "name_ja": "ドナウ川",
     "name_fr": "Danube",
     "name_de": "Donau",
@@ -442,6 +463,7 @@
   {
     "id": "colorado",
     "name": "Colorado",
+    "name_zh_hans": "科罗拉多河",
     "name_ja": "コロラド川",
     "name_fr": "Colorado",
     "name_de": "Colorado",
@@ -464,6 +486,7 @@
   {
     "id": "columbia",
     "name": "Columbia",
+    "name_zh_hans": "哥伦比亚河",
     "name_ja": "コロンビア川",
     "name_fr": "Columbia",
     "name_de": "Columbia",
@@ -484,6 +507,7 @@
   {
     "id": "irrawaddy",
     "name": "Irrawaddy",
+    "name_zh_hans": "伊洛瓦底江",
     "name_ja": "イラワジ川",
     "name_fr": "Irrawaddy",
     "name_de": "Irrawaddy",
@@ -504,6 +528,7 @@
   {
     "id": "orange",
     "name": "Orange",
+    "name_zh_hans": "奥兰治河",
     "name_ja": "オレンジ川",
     "name_fr": "Orange",
     "name_de": "Oranje",
@@ -524,6 +549,7 @@
   {
     "id": "parana",
     "name": "Paraná",
+    "name_zh_hans": "巴拉那河",
     "name_ja": "パラナ川",
     "name_fr": "Paraná",
     "name_de": "Paraná",
@@ -546,6 +572,7 @@
   {
     "id": "amur",
     "name": "Amur",
+    "name_zh_hans": "黑龙江",
     "name_ja": "アムール川",
     "name_fr": "Amour",
     "name_de": "Amur",
@@ -567,6 +594,7 @@
   {
     "id": "dnieper",
     "name": "Dnieper",
+    "name_zh_hans": "第聂伯河",
     "name_ja": "ドニエプル川",
     "name_fr": "Dniepr",
     "name_de": "Dnjepr",
@@ -588,6 +616,7 @@
   {
     "id": "senegal-river",
     "name": "Senegal",
+    "name_zh_hans": "塞内加尔河",
     "name_ja": "セネガル川",
     "name_fr": "Sénégal",
     "name_de": "Senegal",
@@ -609,6 +638,7 @@
   {
     "id": "orinoco",
     "name": "Orinoco",
+    "name_zh_hans": "奥里诺科河",
     "name_ja": "オリノコ川",
     "name_fr": "Orénoque",
     "name_de": "Orinoco",
@@ -631,6 +661,7 @@
   {
     "id": "sao-francisco",
     "name": "São Francisco",
+    "name_zh_hans": "圣弗朗西斯科河",
     "name_ja": "サンフランシスコ川",
     "name_fr": "São Francisco",
     "name_de": "São Francisco",
@@ -652,6 +683,7 @@
   {
     "id": "tocantins",
     "name": "Tocantins",
+    "name_zh_hans": "托坎廷斯河",
     "name_ja": "トカンティンス川",
     "name_fr": "Tocantins",
     "name_de": "Tocantins",

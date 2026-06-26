@@ -164,6 +164,14 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.ja, .en)
     }
 
+    /// Story 004 (Simplified Chinese): Simplified Chinese keeps a progress track fully isolated from
+    /// its English fallback target; they are distinct language codes, so the same factID/day coexists
+    /// across the two and Simplified Chinese progress never bleeds into the English track it ultimately
+    /// falls back to.
+    func testProgressIsolationForSimplifiedChinese() {
+        assertProgressIsolated(.zhHans, .en)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {
