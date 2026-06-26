@@ -2,6 +2,7 @@
   {
     "id": "himalayas",
     "name": "Himalayas",
+    "name_ja": "ヒマラヤ山脈",
     "name_fr": "Himalaya",
     "name_de": "Himalaya",
     "name_es": "Himalaya",
@@ -22,6 +23,7 @@
   {
     "id": "andes",
     "name": "Andes",
+    "name_ja": "アンデス山脈",
     "name_fr": "Andes",
     "name_de": "Anden",
     "name_es": "Andes",
@@ -44,6 +46,7 @@
   {
     "id": "rockies",
     "name": "Rocky Mountains",
+    "name_ja": "ロッキー山脈",
     "name_fr": "Montagnes Rocheuses",
     "name_de": "Rocky Mountains",
     "name_es": "Montañas Rocosas",
@@ -65,6 +68,7 @@
   {
     "id": "alps",
     "name": "Alps",
+    "name_ja": "アルプス山脈",
     "name_fr": "Alpes",
     "name_de": "Alpen",
     "name_es": "Alpes",
@@ -85,6 +89,7 @@
   {
     "id": "great-dividing-range",
     "name": "Great Dividing Range",
+    "name_ja": "グレートディバイディング山脈",
     "name_fr": "Grande Chaîne de Partage",
     "name_de": "Große Wasserscheide",
     "name_es": "Gran Cordillera Divisoria",
@@ -104,6 +109,7 @@
   {
     "id": "kunlun",
     "name": "Kunlun Mountains",
+    "name_ja": "崑崙山脈",
     "name_fr": "Monts Kunlun",
     "name_de": "Kunlun-Gebirge",
     "name_es": "Montañas Kunlun",
@@ -123,6 +129,7 @@
   {
     "id": "tian-shan",
     "name": "Tian Shan",
+    "name_ja": "天山山脈",
     "name_fr": "Tian Shan",
     "name_de": "Tianshan",
     "name_es": "Tian Shan",
@@ -142,6 +149,7 @@
   {
     "id": "altai",
     "name": "Altai Mountains",
+    "name_ja": "アルタイ山脈",
     "name_fr": "Monts Altaï",
     "name_de": "Altai",
     "name_es": "Montañas Altái",
@@ -161,6 +169,7 @@
   {
     "id": "caucasus",
     "name": "Caucasus",
+    "name_ja": "カフカス山脈",
     "name_fr": "Caucase",
     "name_de": "Kaukasus",
     "name_es": "Cáucaso",
@@ -181,6 +190,7 @@
   {
     "id": "pyrenees",
     "name": "Pyrenees",
+    "name_ja": "ピレネー山脈",
     "name_fr": "Pyrénées",
     "name_de": "Pyrenäen",
     "name_es": "Pirineos",
@@ -201,6 +211,7 @@
   {
     "id": "carpathians",
     "name": "Carpathians",
+    "name_ja": "カルパティア山脈",
     "name_fr": "Carpates",
     "name_de": "Karpaten",
     "name_es": "Cárpatos",
@@ -221,6 +232,7 @@
   {
     "id": "appalachians",
     "name": "Appalachians",
+    "name_ja": "アパラチア山脈",
     "name_fr": "Appalaches",
     "name_de": "Appalachen",
     "name_es": "Apalaches",
@@ -242,6 +254,7 @@
   {
     "id": "atlas",
     "name": "Atlas Mountains",
+    "name_ja": "アトラス山脈",
     "name_fr": "Atlas",
     "name_de": "Atlasgebirge",
     "name_es": "Atlas",
@@ -262,6 +275,7 @@
   {
     "id": "drakensberg",
     "name": "Drakensberg",
+    "name_ja": "ドラケンスバーグ山脈",
     "name_fr": "Drakensberg",
     "name_de": "Drakensberge",
     "name_es": "Drakensberg",
@@ -281,6 +295,7 @@
   {
     "id": "ethiopian-highlands",
     "name": "Ethiopian Highlands",
+    "name_ja": "エチオピア高原",
     "name_fr": "Hauts Plateaux éthiopiens",
     "name_de": "Äthiopisches Hochland",
     "name_es": "Tierras Altas de Etiopía",
@@ -300,6 +315,7 @@
   {
     "id": "scandinavian-mountains",
     "name": "Scandinavian Mountains",
+    "name_ja": "スカンディナヴィア山脈",
     "name_fr": "Monts Scandinaves",
     "name_de": "Skandinavisches Gebirge",
     "name_es": "Montañas Escandinavas",
@@ -320,6 +336,7 @@
   {
     "id": "hindu-kush",
     "name": "Hindu Kush",
+    "name_ja": "ヒンドゥークシュ山脈",
     "name_fr": "Hindou Kouch",
     "name_de": "Hindukusch",
     "name_es": "Hindu Kush",
@@ -340,6 +357,7 @@
   {
     "id": "karakoram",
     "name": "Karakoram",
+    "name_ja": "カラコルム山脈",
     "name_fr": "Karakoram",
     "name_de": "Karakorum",
     "name_es": "Karakórum",
@@ -360,6 +378,7 @@
   {
     "id": "pamir",
     "name": "Pamir Mountains",
+    "name_ja": "パミール高原",
     "name_fr": "Pamir",
     "name_de": "Pamir",
     "name_es": "Pamir",
@@ -379,6 +398,7 @@
   {
     "id": "sierra-nevada-us",
     "name": "Sierra Nevada",
+    "name_ja": "シエラネバダ山脈",
     "name_fr": "Sierra Nevada",
     "name_de": "Sierra Nevada",
     "name_es": "Sierra Nevada",
@@ -400,6 +420,7 @@
   {
     "id": "southern-alps",
     "name": "Southern Alps",
+    "name_ja": "サザンアルプス",
     "name_fr": "Alpes du Sud",
     "name_de": "Südalpen",
     "name_es": "Alpes del Sur",
@@ -419,6 +440,7 @@
   {
     "id": "zagros",
     "name": "Zagros Mountains",
+    "name_ja": "ザグロス山脈",
     "name_fr": "Monts Zagros",
     "name_de": "Zagros-Gebirge",
     "name_es": "Montes Zagros",
@@ -439,6 +461,7 @@
   {
     "id": "eastern-rift-highlands",
     "name": "East African Rift Highlands",
+    "name_ja": "東アフリカ地溝帯高地",
     "name_fr": "Hauts Plateaux du Rift est-africain",
     "name_de": "Ostafrikanisches Rift-Hochland",
     "name_es": "Tierras Altas del Rift Africano Oriental",

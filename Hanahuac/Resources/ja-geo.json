@@ -1,5 +1,1019 @@
 {
   "version": 1,
   "code": "ja",
-  "entries": {}
+  "entries": {
+    "AD": {
+      "name": "アンドラ",
+      "capital": "アンドラ・ラ・ベリャ"
+    },
+    "AE": {
+      "name": "アラブ首長国連邦",
+      "capital": "アブダビ"
+    },
+    "AF": {
+      "name": "アフガニスタン",
+      "capital": "カブール"
+    },
+    "AG": {
+      "name": "アンティグア・バーブーダ",
+      "capital": "セントジョンズ"
+    },
+    "AL": {
+      "name": "アルバニア",
+      "capital": "ティラナ"
+    },
+    "AM": {
+      "name": "アルメニア",
+      "capital": "エレバン"
+    },
+    "AO": {
+      "name": "アンゴラ",
+      "capital": "ルアンダ"
+    },
+    "AR": {
+      "name": "アルゼンチン",
+      "capital": "ブエノスアイレス"
+    },
+    "AT": {
+      "name": "オーストリア",
+      "capital": "ウィーン"
+    },
+    "AU": {
+      "name": "オーストラリア",
+      "capital": "キャンベラ"
+    },
+    "AZ": {
+      "name": "アゼルバイジャン",
+      "capital": "バクー"
+    },
+    "BA": {
+      "name": "ボスニア・ヘルツェゴビナ",
+      "capital": "サラエボ"
+    },
+    "BB": {
+      "name": "バルバドス",
+      "capital": "ブリッジタウン"
+    },
+    "BD": {
+      "name": "バングラデシュ",
+      "capital": "ダッカ"
+    },
+    "BE": {
+      "name": "ベルギー",
+      "capital": "ブリュッセル"
+    },
+    "BF": {
+      "name": "ブルキナファソ",
+      "capital": "ワガドゥグー"
+    },
+    "BG": {
+      "name": "ブルガリア",
+      "capital": "ソフィア"
+    },
+    "BH": {
+      "name": "バーレーン",
+      "capital": "マナーマ"
+    },
+    "BI": {
+      "name": "ブルンジ",
+      "capital": "ギテガ"
+    },
+    "BJ": {
+      "name": "ベナン",
+      "capital": "ポルトノボ"
+    },
+    "BN": {
+      "name": "ブルネイ",
+      "capital": "バンダルスリブガワン"
+    },
+    "BO": {
+      "name": "ボリビア",
+      "capital": "スクレ"
+    },
+    "BR": {
+      "name": "ブラジル",
+      "capital": "ブラジリア"
+    },
+    "BS": {
+      "name": "バハマ",
+      "capital": "ナッソー"
+    },
+    "BT": {
+      "name": "ブータン",
+      "capital": "ティンプー"
+    },
+    "BW": {
+      "name": "ボツワナ",
+      "capital": "ハボローネ"
+    },
+    "BY": {
+      "name": "ベラルーシ",
+      "capital": "ミンスク"
+    },
+    "BZ": {
+      "name": "ベリーズ",
+      "capital": "ベルモパン"
+    },
+    "CA": {
+      "name": "カナダ",
+      "capital": "オタワ"
+    },
+    "CD": {
+      "name": "コンゴ民主共和国",
+      "capital": "キンシャサ"
+    },
+    "CF": {
+      "name": "中央アフリカ共和国",
+      "capital": "バンギ"
+    },
+    "CG": {
+      "name": "コンゴ共和国",
+      "capital": "ブラザビル"
+    },
+    "CH": {
+      "name": "スイス",
+      "capital": "ベルン"
+    },
+    "CI": {
+      "name": "コートジボワール",
+      "capital": "ヤムスクロ"
+    },
+    "CL": {
+      "name": "チリ",
+      "capital": "サンティアゴ"
+    },
+    "CM": {
+      "name": "カメルーン",
+      "capital": "ヤウンデ"
+    },
+    "CN": {
+      "name": "中国",
+      "capital": "北京"
+    },
+    "CO": {
+      "name": "コロンビア",
+      "capital": "ボゴタ"
+    },
+    "CR": {
+      "name": "コスタリカ",
+      "capital": "サンホセ"
+    },
+    "CU": {
+      "name": "キューバ",
+      "capital": "ハバナ"
+    },
+    "CV": {
+      "name": "カーボベルデ",
+      "capital": "プライア"
+    },
+    "CY": {
+      "name": "キプロス",
+      "capital": "ニコシア"
+    },
+    "CZ": {
+      "name": "チェコ",
+      "capital": "プラハ"
+    },
+    "DE": {
+      "name": "ドイツ",
+      "capital": "ベルリン"
+    },
+    "DJ": {
+      "name": "ジブチ",
+      "capital": "ジブチ市"
+    },
+    "DK": {
+      "name": "デンマーク",
+      "capital": "コペンハーゲン"
+    },
+    "DM": {
+      "name": "ドミニカ国",
+      "capital": "ロゾー"
+    },
+    "DO": {
+      "name": "ドミニカ共和国",
+      "capital": "サントドミンゴ"
+    },
+    "DZ": {
+      "name": "アルジェリア",
+      "capital": "アルジェ"
+    },
+    "EC": {
+      "name": "エクアドル",
+      "capital": "キト"
+    },
+    "EE": {
+      "name": "エストニア",
+      "capital": "タリン"
+    },
+    "EG": {
+      "name": "エジプト",
+      "capital": "カイロ"
+    },
+    "ER": {
+      "name": "エリトリア",
+      "capital": "アスマラ"
+    },
+    "ES": {
+      "name": "スペイン",
+      "capital": "マドリード"
+    },
+    "ET": {
+      "name": "エチオピア",
+      "capital": "アディスアベバ"
+    },
+    "FI": {
+      "name": "フィンランド",
+      "capital": "ヘルシンキ"
+    },
+    "FJ": {
+      "name": "フィジー",
+      "capital": "スバ"
+    },
+    "FM": {
+      "name": "ミクロネシア連邦",
+      "capital": "パリキール"
+    },
+    "FR": {
+      "name": "フランス",
+      "capital": "パリ"
+    },
+    "GA": {
+      "name": "ガボン",
+      "capital": "リーブルビル"
+    },
+    "GB": {
+      "name": "イギリス",
+      "capital": "ロンドン"
+    },
+    "GD": {
+      "name": "グレナダ",
+      "capital": "セントジョージズ"
+    },
+    "GE": {
+      "name": "ジョージア",
+      "capital": "トビリシ"
+    },
+    "GH": {
+      "name": "ガーナ",
+      "capital": "アクラ"
+    },
+    "GM": {
+      "name": "ガンビア",
+      "capital": "バンジュール"
+    },
+    "GN": {
+      "name": "ギニア",
+      "capital": "コナクリ"
+    },
+    "GQ": {
+      "name": "赤道ギニア",
+      "capital": "マラボ"
+    },
+    "GR": {
+      "name": "ギリシャ",
+      "capital": "アテネ"
+    },
+    "GT": {
+      "name": "グアテマラ",
+      "capital": "グアテマラシティ"
+    },
+    "GW": {
+      "name": "ギニアビサウ",
+      "capital": "ビサウ"
+    },
+    "GY": {
+      "name": "ガイアナ",
+      "capital": "ジョージタウン"
+    },
+    "HN": {
+      "name": "ホンジュラス",
+      "capital": "テグシガルパ"
+    },
+    "HR": {
+      "name": "クロアチア",
+      "capital": "ザグレブ"
+    },
+    "HT": {
+      "name": "ハイチ",
+      "capital": "ポルトープランス"
+    },
+    "HU": {
+      "name": "ハンガリー",
+      "capital": "ブダペスト"
+    },
+    "ID": {
+      "name": "インドネシア",
+      "capital": "ジャカルタ"
+    },
+    "IE": {
+      "name": "アイルランド",
+      "capital": "ダブリン"
+    },
+    "IL": {
+      "name": "イスラエル",
+      "capital": "エルサレム"
+    },
+    "IN": {
+      "name": "インド",
+      "capital": "ニューデリー"
+    },
+    "IQ": {
+      "name": "イラク",
+      "capital": "バグダッド"
+    },
+    "IR": {
+      "name": "イラン",
+      "capital": "テヘラン"
+    },
+    "IS": {
+      "name": "アイスランド",
+      "capital": "レイキャビク"
+    },
+    "IT": {
+      "name": "イタリア",
+      "capital": "ローマ"
+    },
+    "JM": {
+      "name": "ジャマイカ",
+      "capital": "キングストン"
+    },
+    "JO": {
+      "name": "ヨルダン",
+      "capital": "アンマン"
+    },
+    "JP": {
+      "name": "日本",
+      "capital": "東京"
+    },
+    "KE": {
+      "name": "ケニア",
+      "capital": "ナイロビ"
+    },
+    "KG": {
+      "name": "キルギス",
+      "capital": "ビシュケク"
+    },
+    "KH": {
+      "name": "カンボジア",
+      "capital": "プノンペン"
+    },
+    "KI": {
+      "name": "キリバス",
+      "capital": "サウスタラワ"
+    },
+    "KM": {
+      "name": "コモロ",
+      "capital": "モロニ"
+    },
+    "KN": {
+      "name": "セントクリストファー・ネイビス",
+      "capital": "バセテール"
+    },
+    "KP": {
+      "name": "北朝鮮",
+      "capital": "平壌"
+    },
+    "KR": {
+      "name": "韓国",
+      "capital": "ソウル"
+    },
+    "KW": {
+      "name": "クウェート",
+      "capital": "クウェート市"
+    },
+    "KZ": {
+      "name": "カザフスタン",
+      "capital": "アスタナ"
+    },
+    "LA": {
+      "name": "ラオス",
+      "capital": "ビエンチャン"
+    },
+    "LB": {
+      "name": "レバノン",
+      "capital": "ベイルート"
+    },
+    "LC": {
+      "name": "セントルシア",
+      "capital": "カストリーズ"
+    },
+    "LI": {
+      "name": "リヒテンシュタイン",
+      "capital": "ファドゥーツ"
+    },
+    "LK": {
+      "name": "スリランカ",
+      "capital": "スリジャヤワルダナプラコッテ"
+    },
+    "LR": {
+      "name": "リベリア",
+      "capital": "モンロビア"
+    },
+    "LS": {
+      "name": "レソト",
+      "capital": "マセル"
+    },
+    "LT": {
+      "name": "リトアニア",
+      "capital": "ビリニュス"
+    },
+    "LU": {
+      "name": "ルクセンブルク",
+      "capital": "ルクセンブルク市"
+    },
+    "LV": {
+      "name": "ラトビア",
+      "capital": "リガ"
+    },
+    "LY": {
+      "name": "リビア",
+      "capital": "トリポリ"
+    },
+    "MA": {
+      "name": "モロッコ",
+      "capital": "ラバト"
+    },
+    "MC": {
+      "name": "モナコ",
+      "capital": "モナコ"
+    },
+    "MD": {
+      "name": "モルドバ",
+      "capital": "キシナウ"
+    },
+    "ME": {
+      "name": "モンテネグロ",
+      "capital": "ポドゴリツァ"
+    },
+    "MG": {
+      "name": "マダガスカル",
+      "capital": "アンタナナリボ"
+    },
+    "MH": {
+      "name": "マーシャル諸島",
+      "capital": "マジュロ"
+    },
+    "MK": {
+      "name": "北マケドニア",
+      "capital": "スコピエ"
+    },
+    "ML": {
+      "name": "マリ",
+      "capital": "バマコ"
+    },
+    "MM": {
+      "name": "ミャンマー",
+      "capital": "ネピドー"
+    },
+    "MN": {
+      "name": "モンゴル",
+      "capital": "ウランバートル"
+    },
+    "MR": {
+      "name": "モーリタニア",
+      "capital": "ヌアクショット"
+    },
+    "MT": {
+      "name": "マルタ",
+      "capital": "バレッタ"
+    },
+    "MU": {
+      "name": "モーリシャス",
+      "capital": "ポートルイス"
+    },
+    "MV": {
+      "name": "モルディブ",
+      "capital": "マレ"
+    },
+    "MW": {
+      "name": "マラウイ",
+      "capital": "リロングウェ"
+    },
+    "MX": {
+      "name": "メキシコ",
+      "capital": "メキシコシティ"
+    },
+    "MY": {
+      "name": "マレーシア",
+      "capital": "クアラルンプール"
+    },
+    "MZ": {
+      "name": "モザンビーク",
+      "capital": "マプト"
+    },
+    "NA": {
+      "name": "ナミビア",
+      "capital": "ウィントフック"
+    },
+    "NE": {
+      "name": "ニジェール",
+      "capital": "ニアメ"
+    },
+    "NG": {
+      "name": "ナイジェリア",
+      "capital": "アブジャ"
+    },
+    "NI": {
+      "name": "ニカラグア",
+      "capital": "マナグア"
+    },
+    "NL": {
+      "name": "オランダ",
+      "capital": "アムステルダム"
+    },
+    "NO": {
+      "name": "ノルウェー",
+      "capital": "オスロ"
+    },
+    "NP": {
+      "name": "ネパール",
+      "capital": "カトマンズ"
+    },
+    "NR": {
+      "name": "ナウル",
+      "capital": "ヤレン"
+    },
+    "NZ": {
+      "name": "ニュージーランド",
+      "capital": "ウェリントン"
+    },
+    "OM": {
+      "name": "オマーン",
+      "capital": "マスカット"
+    },
+    "PA": {
+      "name": "パナマ",
+      "capital": "パナマシティ"
+    },
+    "PE": {
+      "name": "ペルー",
+      "capital": "リマ"
+    },
+    "PG": {
+      "name": "パプアニューギニア",
+      "capital": "ポートモレスビー"
+    },
+    "PH": {
+      "name": "フィリピン",
+      "capital": "マニラ"
+    },
+    "PK": {
+      "name": "パキスタン",
+      "capital": "イスラマバード"
+    },
+    "PL": {
+      "name": "ポーランド",
+      "capital": "ワルシャワ"
+    },
+    "PS": {
+      "name": "パレスチナ",
+      "capital": "ラマッラー"
+    },
+    "PT": {
+      "name": "ポルトガル",
+      "capital": "リスボン"
+    },
+    "PW": {
+      "name": "パラオ",
+      "capital": "ンゲルルムッド"
+    },
+    "PY": {
+      "name": "パラグアイ",
+      "capital": "アスンシオン"
+    },
+    "QA": {
+      "name": "カタール",
+      "capital": "ドーハ"
+    },
+    "RO": {
+      "name": "ルーマニア",
+      "capital": "ブカレスト"
+    },
+    "RS": {
+      "name": "セルビア",
+      "capital": "ベオグラード"
+    },
+    "RU": {
+      "name": "ロシア",
+      "capital": "モスクワ"
+    },
+    "RW": {
+      "name": "ルワンダ",
+      "capital": "キガリ"
+    },
+    "SA": {
+      "name": "サウジアラビア",
+      "capital": "リヤド"
+    },
+    "SB": {
+      "name": "ソロモン諸島",
+      "capital": "ホニアラ"
+    },
+    "SC": {
+      "name": "セーシェル",
+      "capital": "ビクトリア"
+    },
+    "SD": {
+      "name": "スーダン",
+      "capital": "ハルツーム"
+    },
+    "SE": {
+      "name": "スウェーデン",
+      "capital": "ストックホルム"
+    },
+    "SG": {
+      "name": "シンガポール",
+      "capital": "シンガポール"
+    },
+    "SI": {
+      "name": "スロベニア",
+      "capital": "リュブリャナ"
+    },
+    "SK": {
+      "name": "スロバキア",
+      "capital": "ブラチスラバ"
+    },
+    "SL": {
+      "name": "シエラレオネ",
+      "capital": "フリータウン"
+    },
+    "SM": {
+      "name": "サンマリノ",
+      "capital": "サンマリノ"
+    },
+    "SN": {
+      "name": "セネガル",
+      "capital": "ダカール"
+    },
+    "SO": {
+      "name": "ソマリア",
+      "capital": "モガディシュ"
+    },
+    "SR": {
+      "name": "スリナム",
+      "capital": "パラマリボ"
+    },
+    "SS": {
+      "name": "南スーダン",
+      "capital": "ジュバ"
+    },
+    "ST": {
+      "name": "サントメ・プリンシペ",
+      "capital": "サントメ"
+    },
+    "SV": {
+      "name": "エルサルバドル",
+      "capital": "サンサルバドル"
+    },
+    "SY": {
+      "name": "シリア",
+      "capital": "ダマスカス"
+    },
+    "SZ": {
+      "name": "エスワティニ",
+      "capital": "ムババーネ"
+    },
+    "TD": {
+      "name": "チャド",
+      "capital": "ンジャメナ"
+    },
+    "TG": {
+      "name": "トーゴ",
+      "capital": "ロメ"
+    },
+    "TH": {
+      "name": "タイ",
+      "capital": "バンコク"
+    },
+    "TJ": {
+      "name": "タジキスタン",
+      "capital": "ドゥシャンベ"
+    },
+    "TL": {
+      "name": "東ティモール",
+      "capital": "ディリ"
+    },
+    "TM": {
+      "name": "トルクメニスタン",
+      "capital": "アシガバート"
+    },
+    "TN": {
+      "name": "チュニジア",
+      "capital": "チュニス"
+    },
+    "TO": {
+      "name": "トンガ",
+      "capital": "ヌクアロファ"
+    },
+    "TR": {
+      "name": "トルコ",
+      "capital": "アンカラ"
+    },
+    "TT": {
+      "name": "トリニダード・トバゴ",
+      "capital": "ポートオブスペイン"
+    },
+    "TV": {
+      "name": "ツバル",
+      "capital": "フナフティ"
+    },
+    "TW": {
+      "name": "台湾",
+      "capital": "台北"
+    },
+    "TZ": {
+      "name": "タンザニア",
+      "capital": "ドドマ"
+    },
+    "UA": {
+      "name": "ウクライナ",
+      "capital": "キーウ"
+    },
+    "UG": {
+      "name": "ウガンダ",
+      "capital": "カンパラ"
+    },
+    "US": {
+      "name": "アメリカ合衆国",
+      "capital": "ワシントンD.C."
+    },
+    "UY": {
+      "name": "ウルグアイ",
+      "capital": "モンテビデオ"
+    },
+    "UZ": {
+      "name": "ウズベキスタン",
+      "capital": "タシケント"
+    },
+    "VA": {
+      "name": "バチカン市国",
+      "capital": "バチカン"
+    },
+    "VC": {
+      "name": "セントビンセント・グレナディーン",
+      "capital": "キングスタウン"
+    },
+    "VE": {
+      "name": "ベネズエラ",
+      "capital": "カラカス"
+    },
+    "VN": {
+      "name": "ベトナム",
+      "capital": "ハノイ"
+    },
+    "VU": {
+      "name": "バヌアツ",
+      "capital": "ポートビラ"
+    },
+    "WS": {
+      "name": "サモア",
+      "capital": "アピア"
+    },
+    "XK": {
+      "name": "コソボ",
+      "capital": "プリシュティナ"
+    },
+    "YE": {
+      "name": "イエメン",
+      "capital": "サナア"
+    },
+    "ZA": {
+      "name": "南アフリカ",
+      "capital": "プレトリア"
+    },
+    "ZM": {
+      "name": "ザンビア",
+      "capital": "ルサカ"
+    },
+    "ZW": {
+      "name": "ジンバブエ",
+      "capital": "ハラレ"
+    },
+    "alps": {
+      "name": "アルプス山脈"
+    },
+    "altai": {
+      "name": "アルタイ山脈"
+    },
+    "amazon": {
+      "name": "アマゾン川"
+    },
+    "amur": {
+      "name": "アムール川"
+    },
+    "andes": {
+      "name": "アンデス山脈"
+    },
+    "appalachians": {
+      "name": "アパラチア山脈"
+    },
+    "arabian-sea": {
+      "name": "アラビア海"
+    },
+    "arctic": {
+      "name": "北極海"
+    },
+    "atlantic": {
+      "name": "大西洋"
+    },
+    "atlas": {
+      "name": "アトラス山脈"
+    },
+    "bay-of-bengal": {
+      "name": "ベンガル湾"
+    },
+    "bering": {
+      "name": "ベーリング海"
+    },
+    "black-sea": {
+      "name": "黒海"
+    },
+    "caribbean": {
+      "name": "カリブ海"
+    },
+    "carpathians": {
+      "name": "カルパティア山脈"
+    },
+    "caspian-sea": {
+      "name": "カスピ海"
+    },
+    "caucasus": {
+      "name": "カフカス山脈"
+    },
+    "colorado": {
+      "name": "コロラド川"
+    },
+    "columbia": {
+      "name": "コロンビア川"
+    },
+    "congo": {
+      "name": "コンゴ川"
+    },
+    "coral-sea": {
+      "name": "サンゴ海"
+    },
+    "danube": {
+      "name": "ドナウ川"
+    },
+    "dnieper": {
+      "name": "ドニエプル川"
+    },
+    "drakensberg": {
+      "name": "ドラケンスバーグ山脈"
+    },
+    "east-china": {
+      "name": "東シナ海"
+    },
+    "eastern-rift-highlands": {
+      "name": "東アフリカ地溝帯高地"
+    },
+    "ethiopian-highlands": {
+      "name": "エチオピア高原"
+    },
+    "euphrates": {
+      "name": "ユーフラテス川"
+    },
+    "ganges": {
+      "name": "ガンジス川"
+    },
+    "great-dividing-range": {
+      "name": "グレートディバイディング山脈"
+    },
+    "gulf-of-mexico": {
+      "name": "メキシコ湾"
+    },
+    "himalayas": {
+      "name": "ヒマラヤ山脈"
+    },
+    "hindu-kush": {
+      "name": "ヒンドゥークシュ山脈"
+    },
+    "indian": {
+      "name": "インド洋"
+    },
+    "indus": {
+      "name": "インダス川"
+    },
+    "irrawaddy": {
+      "name": "イラワジ川"
+    },
+    "karakoram": {
+      "name": "カラコルム山脈"
+    },
+    "kunlun": {
+      "name": "崑崙山脈"
+    },
+    "lena": {
+      "name": "レナ川"
+    },
+    "mediterranean": {
+      "name": "地中海"
+    },
+    "mekong": {
+      "name": "メコン川"
+    },
+    "mississippi": {
+      "name": "ミシシッピ川"
+    },
+    "missouri": {
+      "name": "ミズーリ川"
+    },
+    "murray": {
+      "name": "マレー川"
+    },
+    "niger": {
+      "name": "ニジェール川"
+    },
+    "nile": {
+      "name": "ナイル川"
+    },
+    "north-sea": {
+      "name": "北海"
+    },
+    "ob": {
+      "name": "オビ川"
+    },
+    "orange": {
+      "name": "オレンジ川"
+    },
+    "orinoco": {
+      "name": "オリノコ川"
+    },
+    "pacific": {
+      "name": "太平洋"
+    },
+    "pamir": {
+      "name": "パミール高原"
+    },
+    "parana": {
+      "name": "パラナ川"
+    },
+    "persian-gulf": {
+      "name": "ペルシア湾"
+    },
+    "pyrenees": {
+      "name": "ピレネー山脈"
+    },
+    "red-sea": {
+      "name": "紅海"
+    },
+    "rhine": {
+      "name": "ライン川"
+    },
+    "rockies": {
+      "name": "ロッキー山脈"
+    },
+    "sao-francisco": {
+      "name": "サンフランシスコ川"
+    },
+    "scandinavian-mountains": {
+      "name": "スカンディナヴィア山脈"
+    },
+    "senegal-river": {
+      "name": "セネガル川"
+    },
+    "sierra-nevada-us": {
+      "name": "シエラネバダ山脈"
+    },
+    "south-china": {
+      "name": "南シナ海"
+    },
+    "southern": {
+      "name": "南極海"
+    },
+    "southern-alps": {
+      "name": "サザンアルプス"
+    },
+    "tasman-sea": {
+      "name": "タスマン海"
+    },
+    "tian-shan": {
+      "name": "天山山脈"
+    },
+    "tigris": {
+      "name": "ティグリス川"
+    },
+    "tocantins": {
+      "name": "トカンティンス川"
+    },
+    "volga": {
+      "name": "ヴォルガ川"
+    },
+    "yangtze": {
+      "name": "長江"
+    },
+    "yellow-river": {
+      "name": "黄河"
+    },
+    "yenisei": {
+      "name": "エニセイ川"
+    },
+    "zagros": {
+      "name": "ザグロス山脈"
+    },
+    "zambezi": {
+      "name": "ザンベジ川"
+    }
+  }
 }

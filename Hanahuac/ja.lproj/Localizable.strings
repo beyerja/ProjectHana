@@ -1,12 +1,201 @@
-/* Japanese (ja) — content-pending placeholder.
- *
- * Story 002 lands this scaffolded .lproj so the bundle resolves; real translations land in story 003,
- * which flips ja from SCAFFOLDED to FULL in scripts/check-l10n-completeness.py. Until then every UI
- * string resolves via the [ja, en] fallback chain (English supplies every key). This file is
- * intentionally empty of keys — do NOT copy English values here as placeholders.
- */
+/* Japanese (ja) */
 
-/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+/* HomeView */
+"home.tagline" = "ひとつの世界を、ひと問ずつ";
+"home.categories" = "カテゴリ";
+"home.category.countries" = "国";
+"home.category.rivers" = "川";
+"home.category.mountains" = "山脈";
+"home.category.seas" = "海";
+"home.view_progress" = "進捗を見る";
+"home.tile.new" = "新規";
+"home.tile.pending" = "未完了";
+"home.tile.all_done" = "すべて完了";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "地図タップクイズ";
+"quiz.mode.map_tap.desc" = "地図上で正しい国をタップ";
+"quiz.mode.type_capital.title" = "首都を入力";
+"quiz.mode.type_capital.desc" = "「Xの首都は？」";
+"quiz.mode.name_feature.title" = "場所を当てよう";
+"quiz.mode.name_feature.desc" = "地図上で示された場所の名前を入力";
+"quiz.mode.multiple_choice.title" = "選択式";
+"quiz.mode.multiple_choice.desc" = "4つの選択肢から首都を選ぶ";
+"quiz.cards_due.singular" = "枚の期限";
+"quiz.cards_due.plural" = "枚の期限";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "設定";
+"settings.section.general" = "一般";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "言語";
+"settings.language.picker_title" = "アプリの言語";
+"settings.language.downloading" = "ダウンロード中…";
+"settings.language.download_failed" = "ダウンロードに失敗しました";
+"settings.language.retry" = "再試行";
+"settings.language.available" = "利用可能";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud同期";
+"settings.sync.status_label" = "状態";
+"settings.sync.status.off" = "オフ";
+"settings.sync.status.unavailable" = "利用できません";
+"settings.sync.status.on" = "オン";
+"settings.sync.status.syncing" = "同期中…";
+"settings.sync.status.idle" = "最新の状態";
+"settings.sync.status.error" = "エラー";
+"settings.sync.unavailable_note" = "iCloud同期は利用できません。iCloudにサインインし、同期が有効なビルドを使用してください。";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "進捗機能は近日公開";
+"progress.placeholder_desc" = "学習の統計はここに表示されます。";
+"progress.title" = "進捗";
+
+/* StatsView */
+"stats.title" = "進捗";
+"stats.cards_reviewed" = "復習したカード";
+"stats.due_today" = "今日の期限";
+"stats.day_streak" = "連続日数";
+"stats.by_category" = "カテゴリ別";
+"stats.showing_language" = "表示中：";
+"stats.by_language" = "言語別";
+"stats.by_mode" = "クイズ種別ごと";
+"stats.category_header" = "カテゴリ";
+"stats.mastery_tiers" = "習熟度レベル";
+"stats.tier.not_started" = "未開始";
+"stats.tier.reps_1_2" = "復習1〜2回";
+"stats.tier.reps_3_4" = "復習3〜4回";
+"stats.tier.mastered" = "復習 ≥ 5回、EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "時系列の推移";
+"stats.charts.range.7d" = "7日間";
+"stats.charts.range.30d" = "30日間";
+"stats.charts.range.all" = "全期間";
+"stats.charts.category.all" = "すべて";
+"stats.charts.mastery_growth" = "習熟度の伸び";
+"stats.charts.reviews_completed" = "完了した復習";
+"stats.charts.cards_graduated" = "修了したカード";
+"stats.charts.streak_history" = "連続記録";
+"stats.charts.series.review" = "復習";
+"stats.charts.series.mastered" = "習得済み";
+"stats.charts.empty" = "学習を続けると、ここに進捗の推移が表示されます。";
+
+/* LearningQuizView */
+"learn.title" = "学習";
+"learn.results" = "結果";
+"learn.done" = "完了";
+"learn.no_cards_title" = "学習するカードがありません";
+"learn.no_cards_desc" = "すべてのカードはすでに復習スケジュールに含まれています。";
+"learn.graduated_count" = "%d / %d 修了";
+"learn.active_count" = "%d 件アクティブ";
+"learn.complete_title" = "学習が完了しました！";
+"learn.complete_desc" = "すべてのカードが復習スケジュールに追加されました。";
+"learn.cards_graduated" = "修了したカード";
+
+/* MapQuizView */
+"map_quiz.title" = "地図クイズ";
+"map_quiz.tap_on_map" = "地図をタップ";
+"map_quiz.nothing_due_title" = "期限のカードなし";
+"map_quiz.nothing_due_desc" = "今は期限のカードがありません。あとでまた来てください！";
+"map_quiz.feedback.correct" = "正解！";
+"map_quiz.feedback.incorrect_prefix" = "不正解 — 正解は";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "結果";
+"quiz_summary.session_complete" = "セッション完了！";
+"quiz_summary.cards_reviewed" = "復習したカード";
+"quiz_summary.correct" = "正解";
+"quiz_summary.next_review" = "次回の復習";
+"quiz_summary.done" = "完了";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "期限のカードなし";
+"mcq_quiz.nothing_due_desc" = "今は期限のカードがありません。";
+"mcq_quiz.correct_count" = "%d 問正解";
+"mcq_quiz.nav.country" = "国クイズ";
+"mcq_quiz.nav.river" = "川クイズ";
+"mcq_quiz.nav.mountain" = "山脈クイズ";
+"mcq_quiz.nav.sea" = "海クイズ";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "期限のカードなし";
+"capital_quiz.nothing_due_desc" = "今は期限のカードがありません。";
+"capital_quiz.check" = "確認";
+"capital_quiz.next" = "次へ →";
+"capital_quiz.placeholder" = "答えを入力…";
+"capital_quiz.feedback.correct" = "正解！ ✓";
+"capital_quiz.feedback.wrong_prefix" = "正解は：";
+"capital_quiz.nav.capital" = "首都クイズ";
+"capital_quiz.nav.country" = "国クイズ";
+"capital_quiz.correct_count" = "%d 問正解";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "この場所の名前は？";
+"name_feature.nav" = "場所を当てよう";
+"name_feature.nothing_due_title" = "期限のカードなし";
+"name_feature.nothing_due_desc" = "今は期限のカードがありません。";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "クイズは近日公開";
+"quiz_placeholder.desc" = "%@のクイズは次回のアップデートで利用可能になります。";
+"quiz_placeholder.all_categories" = "すべてのカテゴリ";
+
+/* Continent labels */
+"continent.africa" = "アフリカ";
+"continent.asia" = "アジア";
+"continent.europe" = "ヨーロッパ";
+"continent.north_america" = "北アメリカ";
+"continent.oceania" = "オセアニア";
+"continent.south_america" = "南アメリカ";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "%@の首都はどこですか？";
+"quiz.prompt.continent_of" = "%@はどの大陸にありますか？";
+"quiz.prompt.country_of_capital" = "%@を首都とする国はどこですか？";
+"quiz.prompt.sea_location" = "%@の近くにある水域はどれですか？";
+"quiz.region.north" = "北";
+"quiz.region.south" = "南";
+"quiz.region.east" = "東";
+"quiz.region.west" = "西";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "新しいカードを学習";
+"learn.mode_picker.map.title" = "地図クイズ";
+"learn.mode_picker.map.desc" = "地図上で正しい国をタップ";
+"learn.mode_picker.mcq.title" = "選択式";
+"learn.mode_picker.mcq.desc" = "4つの選択肢から答えを選ぶ";
+
+/* Map learning quiz */
+"learn_map.title" = "地図で学習";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "問題";
+"a11y.progress" = "問題 %d / %d";
+"a11y.score" = "%d 問正解";
+"a11y.graduated" = "%d / %d 修了";
+"a11y.active" = "%d 件アクティブ";
+"a11y.answer_field.label" = "回答";
+"a11y.answer_field.hint" = "答えを入力してから「確認」を実行してください。";
+"a11y.check.hint" = "答えを確認します。";
+"a11y.next.hint" = "次の問題に進みます。";
+"a11y.option.hint" = "ダブルタップでこの答えを選びます。";
+"a11y.state.selected" = "選択中";
+"a11y.state.correct" = "正解";
+"a11y.state.incorrect" = "不正解";
+"a11y.state.not_answered" = "未回答";
+"a11y.feedback.correct" = "正解";
+"a11y.feedback.incorrect" = "不正解";
+"a11y.summary.accuracy" = "正答率%dパーセント";
+"a11y.summary.result_icon" = "セッション結果";
+"a11y.done.hint" = "このクイズを閉じます。";
+"a11y.map.pin.hint" = "ダブルタップでこの場所を選びます。";
+"a11y.map.prompt.label" = "地図上で探す";
+"a11y.map.progress" = "場所 %d / %d";
+"a11y.map.streak" = "%d / 3 連続正解";
+
+/* Progress tier names + map back button (merged from main: #187 AC4/AC7, #185) */
 "stats.tier.name.new" = "新規";
 "stats.tier.name.learning" = "学習中";
 "stats.tier.name.review" = "復習";

@@ -234,17 +234,17 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.allCases.count, 21)
     }
 
-    /// The 7 content-pending languages are enumerated in the picker with their native-script display
-    /// names and their candidate chain goes straight to English (COMPLETE-content by contract).
+    /// The remaining 6 content-pending languages are enumerated in the picker with their native-script
+    /// display names and their candidate chain goes straight to English (COMPLETE-content by contract).
+    /// `.ja` has shipped complete content (story 003) and is asserted separately below.
     func testContentPendingLanguagesEnumeratedWithNativeDisplayNames() {
-        XCTAssertEqual(AppLocale.ja.displayName, "日本語")
         XCTAssertEqual(AppLocale.zhHans.displayName, "简体中文")
         XCTAssertEqual(AppLocale.hi.displayName, "हिन्दी")
         XCTAssertEqual(AppLocale.ar.displayName, "العربية")
         XCTAssertEqual(AppLocale.bn.displayName, "বাংলা")
         XCTAssertEqual(AppLocale.ptBR.displayName, "Português (Brasil)")
         XCTAssertEqual(AppLocale.ur.displayName, "اردو")
-        for locale in [AppLocale.ja, .zhHans, .hi, .ar, .bn, .ptBR, .ur] {
+        for locale in [AppLocale.zhHans, .hi, .ar, .bn, .ptBR, .ur] {
             XCTAssertEqual(
                 L10n.bundleCandidates(for: locale),
                 [locale.rawValue, "en"],
@@ -255,6 +255,22 @@ final class AppLocaleTests: XCTestCase {
                 "\(locale.rawValue) must not route through Spanish"
             )
         }
+    }
+
+    /// Japanese has shipped COMPLETE content (story 003): it is enumerated in the picker with its
+    /// native display name "日本語", its bundle-candidate chain goes straight to English `[ja, en]`
+    /// (en is a never-hit safety net), and it never routes through Spanish.
+    func testJapaneseEnumeratedAsCompleteContentLanguage() {
+        XCTAssertEqual(AppLocale.ja.displayName, "日本語")
+        XCTAssertEqual(
+            L10n.bundleCandidates(for: .ja),
+            ["ja", "en"],
+            "ja is COMPLETE content → straight to English"
+        )
+        XCTAssertFalse(
+            AppLocale.ja.fallsBackThroughSpanish,
+            "ja is COMPLETE content and must not route through Spanish"
+        )
     }
 
     /// es-ES is enumerated in the picker with its native display name "Español (España)" and sits
