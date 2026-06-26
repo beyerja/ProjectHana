@@ -5,3 +5,10 @@
  * Until then every UI string resolves via the [ur, en] fallback chain (English supplies every key).
  * This file is intentionally empty of keys — do NOT copy English values here as placeholders.
  */
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "نیا";
+"stats.tier.name.learning" = "سیکھ رہے";
+"stats.tier.name.review" = "نظرثانی";
+"stats.tier.name.mastered" = "مہارت";
+"a11y.back" = "واپس";

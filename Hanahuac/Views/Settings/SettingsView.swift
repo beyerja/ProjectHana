@@ -13,13 +13,7 @@ struct SettingsView: View {
                 NavigationLink {
                     LanguagePickerView()
                 } label: {
-                    HStack {
-                        Text(L10n["settings.language"])
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(.tertiary)
-                    }
+                    Text(L10n["settings.language"])
                 }
                 .accessibilityIdentifier("settings.language")
             }

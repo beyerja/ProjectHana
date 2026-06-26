@@ -28,6 +28,12 @@ struct MapLearningQuizView: View {
     /// (system back chevron / swipe-back). Prevents the dismiss-while-advancing crash (AC2).
     @State private var advanceTask: Task<Void, Never>?
 
+    /// True while the back chevron should be shown — i.e. everywhere except the completion screen,
+    /// which intentionally offers only a "Done" button.
+    private var showsBackButton: Bool {
+        session?.isFinished != true
+    }
+
     var body: some View {
         Group {
             if let session {
@@ -42,6 +48,22 @@ struct MapLearningQuizView: View {
         }
         .navigationTitle(L10n["learn_map.title"])
         .inlineNavigationTitle()
+        // Hide the system back button: over the satellite imagery its translucent glass backing
+        // renders as a blurry, doubled chevron. Replace it with a single crisp custom control.
+        .navigationBarBackButtonHidden()
+        .toolbar {
+            if showsBackButton {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                    }
+                    .accessibilityIdentifier("BackButton")
+                    .accessibilityLabel(L10n["a11y.back"])
+                }
+            }
+        }
         .onAppear { buildSession() }
         .onDisappear {
             // Cancel the in-flight advance so its post-sleep persist never runs against a torn-down

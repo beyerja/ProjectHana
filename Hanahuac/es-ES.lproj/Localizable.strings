@@ -196,3 +196,10 @@
 "a11y.state.selected" = "seleccionada";
 "a11y.summary.accuracy" = "%d por ciento de acierto";
 "a11y.summary.result_icon" = "Resultado de la sesión";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Nuevo";
+"stats.tier.name.learning" = "Aprendiendo";
+"stats.tier.name.review" = "Repaso";
+"stats.tier.name.mastered" = "Dominado";
+"a11y.back" = "Atrás";

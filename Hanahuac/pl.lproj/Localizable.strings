@@ -194,3 +194,10 @@
 "a11y.map.prompt.label" = "Znajdź na mapie";
 "a11y.map.progress" = "Miejsce %d z %d";
 "a11y.map.streak" = "%d z 3 poprawnych z rzędu";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Nowe";
+"stats.tier.name.learning" = "Nauka";
+"stats.tier.name.review" = "Powtórka";
+"stats.tier.name.mastered" = "Opanowane";
+"a11y.back" = "Wstecz";

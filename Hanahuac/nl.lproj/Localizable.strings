@@ -194,3 +194,10 @@
 "a11y.map.prompt.label" = "Vind op de kaart";
 "a11y.map.progress" = "Plaats %d van %d";
 "a11y.map.streak" = "%d van 3 juist op rij";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Nieuw";
+"stats.tier.name.learning" = "Leren";
+"stats.tier.name.review" = "Herhaling";
+"stats.tier.name.mastered" = "Beheerst";
+"a11y.back" = "Terug";

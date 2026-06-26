@@ -194,3 +194,10 @@
 "a11y.map.prompt.label" = "Пронађи на карти";
 "a11y.map.progress" = "Место %d од %d";
 "a11y.map.streak" = "%d од 3 тачно заредом";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Ново";
+"stats.tier.name.learning" = "Учење";
+"stats.tier.name.review" = "Преглед";
+"stats.tier.name.mastered" = "Савладано";
+"a11y.back" = "Назад";

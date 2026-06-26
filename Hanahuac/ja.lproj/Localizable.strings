@@ -84,7 +84,6 @@
 /* LearningQuizView */
 "learn.title" = "学習";
 "learn.results" = "結果";
-"learn.exit" = "終了";
 "learn.done" = "完了";
 "learn.no_cards_title" = "学習するカードがありません";
 "learn.no_cards_desc" = "すべてのカードはすでに復習スケジュールに含まれています。";
@@ -96,7 +95,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "地図クイズ";
-"map_quiz.exit" = "終了";
 "map_quiz.tap_on_map" = "地図をタップ";
 "map_quiz.nothing_due_title" = "期限のカードなし";
 "map_quiz.nothing_due_desc" = "今は期限のカードがありません。あとでまた来てください！";
@@ -114,7 +112,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "期限のカードなし";
 "mcq_quiz.nothing_due_desc" = "今は期限のカードがありません。";
-"mcq_quiz.exit" = "終了";
 "mcq_quiz.correct_count" = "%d 問正解";
 "mcq_quiz.nav.country" = "国クイズ";
 "mcq_quiz.nav.river" = "川クイズ";
@@ -124,7 +121,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "期限のカードなし";
 "capital_quiz.nothing_due_desc" = "今は期限のカードがありません。";
-"capital_quiz.exit" = "終了";
 "capital_quiz.check" = "確認";
 "capital_quiz.next" = "次へ →";
 "capital_quiz.placeholder" = "答えを入力…";
@@ -198,3 +194,10 @@
 "a11y.map.prompt.label" = "地図上で探す";
 "a11y.map.progress" = "場所 %d / %d";
 "a11y.map.streak" = "%d / 3 連続正解";
+
+/* Progress tier names + map back button (merged from main: #187 AC4/AC7, #185) */
+"stats.tier.name.new" = "新規";
+"stats.tier.name.learning" = "学習中";
+"stats.tier.name.review" = "復習";
+"stats.tier.name.mastered" = "習得済み";
+"a11y.back" = "戻る";
