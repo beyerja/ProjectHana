@@ -84,7 +84,6 @@
 /* LearningQuizView */
 "learn.title" = "Учење";
 "learn.results" = "Резултати";
-"learn.exit" = "Затвори";
 "learn.done" = "Готово";
 "learn.no_cards_title" = "Нема картица за учење";
 "learn.no_cards_desc" = "Све картице су већ у твом распореду понављања.";
@@ -96,7 +95,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Квиз на карти";
-"map_quiz.exit" = "Затвори";
 "map_quiz.tap_on_map" = "Додирни на карти";
 "map_quiz.nothing_due_title" = "Ништа за понављање";
 "map_quiz.nothing_due_desc" = "Тренутно нема картица за понављање. Врати се касније!";
@@ -114,7 +112,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Ништа за понављање";
 "mcq_quiz.nothing_due_desc" = "Тренутно нема картица за понављање.";
-"mcq_quiz.exit" = "Затвори";
 "mcq_quiz.correct_count" = "%d тачно";
 "mcq_quiz.nav.country" = "Квиз држава";
 "mcq_quiz.nav.river" = "Квиз река";
@@ -124,7 +121,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Ништа за понављање";
 "capital_quiz.nothing_due_desc" = "Тренутно нема картица за понављање.";
-"capital_quiz.exit" = "Затвори";
 "capital_quiz.check" = "Провери";
 "capital_quiz.next" = "Следеће →";
 "capital_quiz.placeholder" = "Укуцај свој одговор…";

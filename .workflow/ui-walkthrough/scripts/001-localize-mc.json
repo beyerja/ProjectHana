@@ -19,7 +19,7 @@
   { "action": "wait", "seconds": 2 },
   { "action": "dumpTree" },
   { "action": "screenshot" },
-  { "action": "tap", "label": "Salir" },
+  { "action": "tap", "identifier": "BackButton" },
   { "action": "wait", "seconds": 1 },
   { "action": "scroll", "direction": "down" },
   { "action": "wait", "seconds": 1 },

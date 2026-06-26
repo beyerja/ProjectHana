@@ -84,7 +84,6 @@
 /* LearningQuizView */
 "learn.title" = "Learn";
 "learn.results" = "Results";
-"learn.exit" = "Exit";
 "learn.done" = "Done";
 "learn.no_cards_title" = "No cards to learn";
 "learn.no_cards_desc" = "All cards are already in your review schedule.";
@@ -96,7 +95,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Map Quiz";
-"map_quiz.exit" = "Exit";
 "map_quiz.tap_on_map" = "Tap on the map";
 "map_quiz.nothing_due_title" = "Nothing Due";
 "map_quiz.nothing_due_desc" = "No cards are due right now. Come back later!";
@@ -114,7 +112,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Nothing Due";
 "mcq_quiz.nothing_due_desc" = "No cards are due right now.";
-"mcq_quiz.exit" = "Exit";
 "mcq_quiz.correct_count" = "%d correct";
 "mcq_quiz.nav.country" = "Country Quiz";
 "mcq_quiz.nav.river" = "Rivers Quiz";
@@ -124,7 +121,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Nothing Due";
 "capital_quiz.nothing_due_desc" = "No cards are due right now.";
-"capital_quiz.exit" = "Exit";
 "capital_quiz.check" = "Check";
 "capital_quiz.next" = "Next →";
 "capital_quiz.placeholder" = "Type your answer…";

@@ -10,7 +10,7 @@
   { "action": "mapTap", "x": 0.5, "y": 0.45 },
   { "action": "scroll", "direction": "down" },
   { "action": "wait", "seconds": 1 },
-  { "action": "tap", "label": "Salir" },
+  { "action": "tap", "identifier": "BackButton" },
   { "action": "wait", "seconds": 2 },
   { "action": "tap", "identifier": "home.settings" },
   { "action": "wait", "seconds": 2 },

@@ -86,7 +86,6 @@
 /* LearningQuizView */
 "learn.title" = "Kanik";
 "learn.results" = "Bix jóok'sajilo'ob";
-"learn.exit" = "Jóok'ol";
 "learn.done" = "Ts'o'ok";
 "learn.no_cards_title" = "Mina'an ju'uno'ob ka kaanak";
 "learn.no_cards_desc" = "Tuláakal le ju'uno'obo' ts'o'ok yaantal ta nu'ukbesaj ilbil.";
@@ -98,7 +97,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Túumben ich u mápail";
-"map_quiz.exit" = "Jóok'ol";
 "map_quiz.tap_on_map" = "Péekt ich le mápae'";
 "map_quiz.nothing_due_title" = "Mina'an ba'al pa'atik";
 "map_quiz.nothing_due_desc" = "Mina'an ju'uno'ob pa'atik bejla'e'. Suunak ka'atéen!";
@@ -116,7 +114,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Mina'an ba'al pa'atik";
 "mcq_quiz.nothing_due_desc" = "Mina'an ju'uno'ob pa'atik bejla'e'.";
-"mcq_quiz.exit" = "Jóok'ol";
 "mcq_quiz.correct_count" = "%d jach beyo'";
 "mcq_quiz.nav.country" = "Túumben lu'umo'ob";
 "mcq_quiz.nav.river" = "Túumben áaktuno'ob";
@@ -126,7 +123,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Mina'an ba'al pa'atik";
 "capital_quiz.nothing_due_desc" = "Mina'an ju'uno'ob pa'atik bejla'e'.";
-"capital_quiz.exit" = "Jóok'ol";
 "capital_quiz.check" = "Ila'aj";
 "capital_quiz.next" = "U yuláak' →";
 "capital_quiz.placeholder" = "Ts'íibt a núukil…";

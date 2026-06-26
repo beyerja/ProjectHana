@@ -24,6 +24,9 @@ struct MapLearningQuizView: View {
     @State private var position: MapCameraPosition = .automatic
     @State private var isAdvancing = false
     @State private var isPinching = false
+    /// Owned handle for the auto-advance Task so it can be cancelled when the view is torn down
+    /// (system back chevron / swipe-back). Prevents the dismiss-while-advancing crash (AC2).
+    @State private var advanceTask: Task<Void, Never>?
 
     var body: some View {
         Group {
@@ -39,12 +42,14 @@ struct MapLearningQuizView: View {
         }
         .navigationTitle(L10n["learn_map.title"])
         .inlineNavigationTitle()
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button(L10n["map_quiz.exit"]) { dismiss() }
-            }
-        }
         .onAppear { buildSession() }
+        .onDisappear {
+            // Cancel the in-flight advance so its post-sleep persist never runs against a torn-down
+            // environment when the user exits via the system back chevron (AC2).
+            advanceTask?.cancel()
+            advanceTask = nil
+            isAdvancing = false
+        }
     }
 
     // MARK: - Quiz body
@@ -98,18 +103,22 @@ struct MapLearningQuizView: View {
                 if case .correct = newState { return 1_500_000_000 }
                 return 2_000_000_000
             }()
-            Task {
-                try? await Task.sleep(nanoseconds: delay)
-                if case .correct = newState {
-                    session.recordCorrect()
-                } else {
-                    session.recordWrong()
+            advanceTask = Task {
+                let didRun = await QuizAdvanceScheduler.run(afterNanoseconds: delay) {
+                    if case .correct = newState {
+                        session.recordCorrect()
+                    } else {
+                        session.recordWrong()
+                    }
+                    cardStore.persistCardChanges()
                 }
-                cardStore.persistCardChanges()
-                if !session.isFinished {
-                    withAnimation { position = .region(session.mapRegion) }
+                // Only mutate map/advance state if the advance ran (i.e. the exit did not cancel us).
+                if didRun {
+                    if !session.isFinished {
+                        withAnimation { position = .region(session.mapRegion) }
+                    }
+                    isAdvancing = false
                 }
-                isAdvancing = false
             }
         }
         .onChange(of: session.currentIndex) { _, _ in

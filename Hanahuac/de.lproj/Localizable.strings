@@ -84,7 +84,6 @@
 /* LearningQuizView */
 "learn.title" = "Lernen";
 "learn.results" = "Ergebnisse";
-"learn.exit" = "Beenden";
 "learn.done" = "Fertig";
 "learn.no_cards_title" = "Keine Karten zu lernen";
 "learn.no_cards_desc" = "Alle Karten befinden sich bereits in Ihrem Wiederholungsplan.";
@@ -96,7 +95,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Karten-Quiz";
-"map_quiz.exit" = "Beenden";
 "map_quiz.tap_on_map" = "Auf die Karte tippen";
 "map_quiz.nothing_due_title" = "Nichts fällig";
 "map_quiz.nothing_due_desc" = "Im Moment sind keine Karten fällig. Kommen Sie später wieder!";
@@ -114,7 +112,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Nichts fällig";
 "mcq_quiz.nothing_due_desc" = "Im Moment sind keine Karten fällig.";
-"mcq_quiz.exit" = "Beenden";
 "mcq_quiz.correct_count" = "%d richtig";
 "mcq_quiz.nav.country" = "Länder-Quiz";
 "mcq_quiz.nav.river" = "Flüsse-Quiz";
@@ -124,7 +121,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Nichts fällig";
 "capital_quiz.nothing_due_desc" = "Im Moment sind keine Karten fällig.";
-"capital_quiz.exit" = "Beenden";
 "capital_quiz.check" = "Prüfen";
 "capital_quiz.next" = "Weiter →";
 "capital_quiz.placeholder" = "Antwort eingeben…";
