@@ -16,6 +16,7 @@ struct River: Codable, Identifiable, Hashable {
     let nameSr: String?
     let nameKo: String?
     let nameNah: String?
+    let nameJa: String?
     let continent: String
     let sourceLat: Double
     let sourceLon: Double
@@ -40,6 +41,7 @@ struct River: Codable, Identifiable, Hashable {
         nameSr: String? = nil,
         nameKo: String? = nil,
         nameNah: String? = nil,
+        nameJa: String? = nil,
         continent: String,
         sourceLat: Double,
         sourceLon: Double,
@@ -61,6 +63,7 @@ struct River: Codable, Identifiable, Hashable {
         self.nameSr = nameSr
         self.nameKo = nameKo
         self.nameNah = nameNah
+        self.nameJa = nameJa
         self.continent = continent
         self.sourceLat = sourceLat
         self.sourceLon = sourceLon
