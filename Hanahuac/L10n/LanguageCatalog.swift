@@ -8,8 +8,12 @@ import Foundation
 /// feasible, a matter of adding a ``LanguageDescriptor`` entry here.
 enum LanguageCatalog {
     /// All language descriptors, ordered to match ``AppLocale/allCases`` (en, fr, de, es-MX, es-ES,
-    /// ca, eu, yua, it, pl, nl, sr, ko, nah). The display names and fallback chains encode exactly the
-    /// behavior of the former per-case `switch` statements in `AppLocale`.
+    /// ca, eu, yua, it, pl, nl, sr, ko, nah, ja, zh-Hans, hi, ar, bn, pt-BR, ur). The display names and
+    /// fallback chains encode exactly the behavior of the former per-case `switch` statements in
+    /// `AppLocale`. The 7 trailing locales (ja…ur) are content-pending: their UI strings and geo packs
+    /// are placeholder/empty until their content story (003–010) fills them, but they are full
+    /// COMPLETE-content languages by contract, so each routes straight to English as the ultimate,
+    /// never-hit safety net.
     static let all: [LanguageDescriptor] = [
         LanguageDescriptor(
             code: AppLocale.en.rawValue,
@@ -114,6 +118,52 @@ enum LanguageCatalog {
             code: AppLocale.nah.rawValue,
             displayName: "Nāhuatl",
             fallbackChain: [.nah, .esMX, .en],
+            availability: .downloadablePack
+        ),
+        // The 7 content-pending languages below are COMPLETE-content by contract: each routes straight
+        // to English as an ultimate, never-hit safety net (NOT through es-MX/es-ES). Their UI strings
+        // and geo packs are placeholder/empty until their content story (003–010) fills them.
+        // odrTags are auto-derived from the rawValue (lang-<code>, e.g. lang-zh-Hans, lang-pt-BR).
+        LanguageDescriptor(
+            code: AppLocale.ja.rawValue,
+            displayName: "日本語",
+            fallbackChain: [.ja, .en],
+            availability: .downloadablePack
+        ),
+        LanguageDescriptor(
+            code: AppLocale.zhHans.rawValue,
+            displayName: "简体中文",
+            fallbackChain: [.zhHans, .en],
+            availability: .downloadablePack
+        ),
+        LanguageDescriptor(
+            code: AppLocale.hi.rawValue,
+            displayName: "हिन्दी",
+            fallbackChain: [.hi, .en],
+            availability: .downloadablePack
+        ),
+        LanguageDescriptor(
+            code: AppLocale.ar.rawValue,
+            displayName: "العربية",
+            fallbackChain: [.ar, .en],
+            availability: .downloadablePack
+        ),
+        LanguageDescriptor(
+            code: AppLocale.bn.rawValue,
+            displayName: "বাংলা",
+            fallbackChain: [.bn, .en],
+            availability: .downloadablePack
+        ),
+        LanguageDescriptor(
+            code: AppLocale.ptBR.rawValue,
+            displayName: "Português (Brasil)",
+            fallbackChain: [.ptBR, .en],
+            availability: .downloadablePack
+        ),
+        LanguageDescriptor(
+            code: AppLocale.ur.rawValue,
+            displayName: "اردو",
+            fallbackChain: [.ur, .en],
             availability: .downloadablePack
         )
     ]

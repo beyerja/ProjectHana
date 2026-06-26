@@ -1,0 +1,7 @@
+/* Simplified Chinese (zh-Hans) — content-pending placeholder.
+ *
+ * Story 002 lands this scaffolded .lproj so the bundle resolves; real translations land in story 004,
+ * which flips zh-Hans from SCAFFOLDED to FULL in scripts/check-l10n-completeness.py. Until then every
+ * UI string resolves via the [zh-Hans, en] fallback chain (English supplies every key). This file is
+ * intentionally empty of keys — do NOT copy English values here as placeholders.
+ */
