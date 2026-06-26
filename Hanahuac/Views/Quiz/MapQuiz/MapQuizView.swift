@@ -151,7 +151,10 @@ struct MapQuizView: View {
         }
         .padding(.vertical, 12)
         .padding(.horizontal, 20)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .background(
+            .regularMaterial,
+            in: RoundedRectangle(cornerRadius: Theme.Metrics.cardRadius, style: .continuous)
+        )
         .padding(.top, 8)
         .padding(.horizontal)
         .accessibilityElement(children: .ignore)
@@ -183,8 +186,10 @@ struct MapQuizView: View {
             .multilineTextAlignment(.center)
             .padding(.horizontal, 24)
             .padding(.vertical, 14)
-            .background(color, in: RoundedRectangle(cornerRadius: 14))
-            .padding(.bottom, 24)
+            .background(color, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            // Clear MapKit's auto-rendered "Apple Maps / Legal" attribution, which sits at the map's
+            // bottom-left edge: extra bottom inset keeps the feedback banner from overlapping it.
+            .padding(.bottom, 40)
             .padding(.horizontal)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(feedbackAccessibilityLabel(session: session))
