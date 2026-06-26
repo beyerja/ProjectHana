@@ -157,6 +157,11 @@
 "quiz.prompt.capital_of" = "Wat is de hoofdstad van %@?";
 "quiz.prompt.continent_of" = "Op welk continent ligt %@?";
 "quiz.prompt.country_of_capital" = "Welk land heeft %@ als hoofdstad?";
+"quiz.prompt.sea_location" = "Welk water bevindt zich nabij %@?";
+"quiz.region.north" = "N";
+"quiz.region.south" = "Z";
+"quiz.region.east" = "O";
+"quiz.region.west" = "W";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Nieuwe kaarten leren";

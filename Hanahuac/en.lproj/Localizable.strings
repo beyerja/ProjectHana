@@ -157,6 +157,11 @@
 "quiz.prompt.capital_of" = "What is the capital of %@?";
 "quiz.prompt.continent_of" = "On which continent is %@ located?";
 "quiz.prompt.country_of_capital" = "Which country has %@ as its capital?";
+"quiz.prompt.sea_location" = "Which body of water is located near %@?";
+"quiz.region.north" = "N";
+"quiz.region.south" = "S";
+"quiz.region.east" = "E";
+"quiz.region.west" = "W";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Learn New Cards";

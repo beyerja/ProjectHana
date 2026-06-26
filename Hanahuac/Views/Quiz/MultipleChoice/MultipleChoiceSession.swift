@@ -137,10 +137,11 @@ final class MultipleChoiceSession {
             guard distractors.count == 3 else { return nil }
             let options = ([MCQOption(label: sea.localizedName(for: locale), isCorrect: true)] +
                 distractors.map { MCQOption(label: $0.localizedName(for: locale), isCorrect: false) }).shuffled()
-            let region = approximateRegion(lat: sea.lat, lon: sea.lon)
+            let region = approximateRegion(lat: sea.lat, lon: sea.lon, locale: locale)
+            let promptTemplate = L10n.string("quiz.prompt.sea_location", locale: locale)
             return MCQQuestion(
                 card: card,
-                prompt: "Which body of water is located at approximately \(region)?",
+                prompt: String(format: promptTemplate, region),
                 options: options
             )
         }
@@ -148,9 +149,9 @@ final class MultipleChoiceSession {
 
     // MARK: – Private helpers
 
-    private static func approximateRegion(lat: Double, lon: Double) -> String {
-        let ns = lat >= 0 ? "N" : "S"
-        let ew = lon >= 0 ? "E" : "W"
+    private static func approximateRegion(lat: Double, lon: Double, locale: AppLocale) -> String {
+        let ns = L10n.string(lat >= 0 ? "quiz.region.north" : "quiz.region.south", locale: locale)
+        let ew = L10n.string(lon >= 0 ? "quiz.region.east" : "quiz.region.west", locale: locale)
         return "\(Int(abs(lat)))°\(ns), \(Int(abs(lon)))°\(ew)"
     }
 

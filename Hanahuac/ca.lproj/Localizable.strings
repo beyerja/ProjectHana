@@ -158,6 +158,11 @@
 "quiz.prompt.capital_of" = "Quina és la capital de %@?";
 "quiz.prompt.continent_of" = "En quin continent es troba %@?";
 "quiz.prompt.country_of_capital" = "Quin país té %@ com a capital?";
+"quiz.prompt.sea_location" = "Quina massa d'aigua es troba a prop de %@?";
+"quiz.region.north" = "N";
+"quiz.region.south" = "S";
+"quiz.region.east" = "E";
+"quiz.region.west" = "O";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Aprèn targetes noves";
