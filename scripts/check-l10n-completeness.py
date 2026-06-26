@@ -151,6 +151,27 @@ IDENTICAL_VALUE_ALLOWLIST: set[tuple[str, str]] = {
     # else can collide with the Latin-script English values.
     ("sr", "settings.section.icloud"),
     ("sr", "learn_map.streak"),
+    # Cardinal-direction abbreviations on the sea-location prompt: the single-letter compass labels
+    # N (north) and S (south) are the standard abbreviations in German, French, Castilian Spanish,
+    # Italian and Dutch — legitimately identical to English, not untranslated stubs. (East/West differ
+    # per language: de O/W, fr E/O, es-ES E/O, it E/O, nl O/W, so only N/S collide.) W (west) is also
+    # the standard Dutch abbreviation.
+    ("de", "quiz.region.north"),
+    ("de", "quiz.region.south"),
+    ("fr", "quiz.region.north"),
+    ("fr", "quiz.region.south"),
+    ("es-ES", "quiz.region.north"),
+    ("es-ES", "quiz.region.south"),
+    ("it", "quiz.region.north"),
+    ("it", "quiz.region.south"),
+    ("nl", "quiz.region.north"),
+    ("nl", "quiz.region.west"),
+    # W (Westen) is the standard German west abbreviation; E (Est/Este/Est) is the standard French,
+    # Castilian-Spanish and Italian east abbreviation — all identical to English, not stubs.
+    ("de", "quiz.region.west"),
+    ("fr", "quiz.region.east"),
+    ("es-ES", "quiz.region.east"),
+    ("it", "quiz.region.east"),
 }
 
 

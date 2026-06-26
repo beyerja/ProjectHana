@@ -159,6 +159,11 @@
 "quiz.prompt.capital_of" = "Ba'ax u noj kaajil %@?";
 "quiz.prompt.continent_of" = "Tu'ux kontinente yaan %@?";
 "quiz.prompt.country_of_capital" = "Ba'ax lu'um yaan %@ bey u noj kaajil?";
+"quiz.prompt.sea_location" = "Ba'ax ja' yaan naats' ti' %@?";
+"quiz.region.north" = "X";
+"quiz.region.south" = "N";
+"quiz.region.east" = "L";
+"quiz.region.west" = "C";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Kan túumben ju'uno'ob";

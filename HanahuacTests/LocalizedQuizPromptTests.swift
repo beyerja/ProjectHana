@@ -21,7 +21,7 @@ final class LocalizedQuizPromptTests: XCTestCase {
             countries: sampleCountries(),
             rivers: sampleRivers(),
             mountains: [],
-            seas: []
+            seas: sampleSeas()
         )
         LanguagePackProviderHolder.active = BundledLanguagePackProvider(geography: geography)
     }
@@ -238,6 +238,72 @@ final class LocalizedQuizPromptTests: XCTestCase {
         )
     }
 
+    // MARK: - seaIdentificationQuestions: prompt + options are localized
+
+    func testSeaQuestions_spanishLocale_promptIsSpanishWithNoEnglishTemplate() {
+        let card = makeCard(factID: "med", category: .sea)
+        let questions = MultipleChoiceSession.seaIdentificationQuestions(
+            cards: [card], seas: sampleSeas(), locale: .esMX
+        )
+        guard let q = questions.first else {
+            XCTFail("No questions generated")
+            return
+        }
+        XCTAssertTrue(
+            q.prompt.contains("masa de agua"),
+            "Spanish sea prompt should use the localized template, got: \(q.prompt)"
+        )
+        XCTAssertFalse(
+            q.prompt.contains("Which body of water"),
+            "Spanish sea prompt must not contain the English template fragment, got: \(q.prompt)"
+        )
+        let correct = q.options.first(where: \.isCorrect)
+        XCTAssertEqual(
+            correct?.label,
+            "Mar Mediterráneo",
+            "Spanish locale: correct sea option should be the Spanish name, got: \(correct?.label ?? "nil")"
+        )
+    }
+
+    /// The German sea-prompt template + cardinal-direction labels ship as an ODR pack (lang-de),
+    /// which the simulator unit-test host cannot mount into `Bundle.main`. So this validates the
+    /// shipped content directly from the asset pack (mirroring the continent-label test): the de pack
+    /// translates the sea-location prompt to a German string with no English fragment. (Through `L10n`
+    /// at runtime, an absent pack falls back to English — the base-only offline path.)
+    func testSeaQuestions_germanLocale_shippedPromptIsGerman() throws {
+        let de = try ODRTestSupport.lprojBundle(for: .de)
+        let template = de.localizedString(forKey: "quiz.prompt.sea_location", value: nil, table: nil)
+        XCTAssertTrue(
+            template.contains("Gewässer"),
+            "German pack should translate quiz.prompt.sea_location to a German string, got: \(template)"
+        )
+        XCTAssertFalse(
+            template.contains("Which body of water"),
+            "German sea-location template must not contain the English fragment, got: \(template)"
+        )
+        XCTAssertEqual(
+            de.localizedString(forKey: "quiz.region.east", value: nil, table: nil),
+            "O",
+            "German pack should translate quiz.region.east to 'O' (Osten)"
+        )
+    }
+
+    /// Regression guard: English locale keeps the English sea template (no locale param == .en).
+    func testSeaQuestions_englishLocale_promptIsEnglish() {
+        let card = makeCard(factID: "med", category: .sea)
+        let questions = MultipleChoiceSession.seaIdentificationQuestions(
+            cards: [card], seas: sampleSeas(), locale: .en
+        )
+        guard let q = questions.first else {
+            XCTFail("No questions generated")
+            return
+        }
+        XCTAssertTrue(
+            q.prompt.contains("Which body of water"),
+            "English sea prompt should use the English template, got: \(q.prompt)"
+        )
+    }
+
     // MARK: - Fixtures
 
     private func makeCard(factID: String, category: CardCategory = .country) -> ReviewCard {
@@ -317,6 +383,47 @@ final class LocalizedQuizPromptTests: XCTestCase {
                 continent: "Europe",
                 lat: 39,
                 lon: -8
+            )
+        ]
+    }
+
+    private func sampleSeas() -> [Sea] {
+        [
+            Sea(
+                id: "med",
+                name: "Mediterranean Sea",
+                nameFr: "Mer Méditerranée",
+                nameDe: "Mittelmeer",
+                nameEs: "Mar Mediterráneo",
+                lat: 35,
+                lon: 18
+            ),
+            Sea(
+                id: "baltic",
+                name: "Baltic Sea",
+                nameFr: "Mer Baltique",
+                nameDe: "Ostsee",
+                nameEs: "Mar Báltico",
+                lat: 58,
+                lon: 20
+            ),
+            Sea(
+                id: "black",
+                name: "Black Sea",
+                nameFr: "Mer Noire",
+                nameDe: "Schwarzes Meer",
+                nameEs: "Mar Negro",
+                lat: 43,
+                lon: 34
+            ),
+            Sea(
+                id: "north",
+                name: "North Sea",
+                nameFr: "Mer du Nord",
+                nameDe: "Nordsee",
+                nameEs: "Mar del Norte",
+                lat: 56,
+                lon: 3
             )
         ]
     }

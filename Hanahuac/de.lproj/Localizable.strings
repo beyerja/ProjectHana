@@ -157,6 +157,11 @@
 "quiz.prompt.capital_of" = "Was ist die Hauptstadt von %@?";
 "quiz.prompt.continent_of" = "Auf welchem Kontinent liegt %@?";
 "quiz.prompt.country_of_capital" = "Welches Land hat %@ als Hauptstadt?";
+"quiz.prompt.sea_location" = "Welches Gewässer liegt in der Nähe von %@?";
+"quiz.region.north" = "N";
+"quiz.region.south" = "S";
+"quiz.region.east" = "O";
+"quiz.region.west" = "W";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Neue Karten lernen";

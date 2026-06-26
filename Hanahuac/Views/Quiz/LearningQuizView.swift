@@ -265,26 +265,32 @@ struct LearningQuizView: View {
     // MARK: – Question factory
 
     private func makeQuestion(for card: ReviewCard) -> MCQQuestion? {
+        // Resolve the active app language so the new-card MC prompt + feature names localize the same
+        // way the review MC quiz does (MultipleChoiceQuizView.buildSession); without this the factory
+        // methods default to `.en` and the prompt leaks English even when the UI is e.g. Spanish.
+        let locale = LanguageManager.shared.current
         switch card.cardCategory {
         case .country:
-            MultipleChoiceSession.countryCapitalQuestions(
-                cards: [card], countries: geo.countries
+            return MultipleChoiceSession.countryCapitalQuestions(
+                cards: [card], countries: geo.countries, locale: locale
             ).first
         case .river:
-            MultipleChoiceSession.continentQuestions(
+            return MultipleChoiceSession.continentQuestions(
                 cards: [card], facts: geo.rivers,
                 factID: \.id, factName: \.name, factContinent: \.continent,
-                categoryLabel: "river"
+                categoryLabel: "river", locale: locale,
+                factLocalizedName: { $0.localizedName(for: $1) }
             ).first
         case .mountain:
-            MultipleChoiceSession.continentQuestions(
+            return MultipleChoiceSession.continentQuestions(
                 cards: [card], facts: geo.mountains,
                 factID: \.id, factName: \.name, factContinent: \.continent,
-                categoryLabel: "mountain range"
+                categoryLabel: "mountain range", locale: locale,
+                factLocalizedName: { $0.localizedName(for: $1) }
             ).first
         case .sea:
-            MultipleChoiceSession.seaIdentificationQuestions(
-                cards: [card], seas: geo.seas
+            return MultipleChoiceSession.seaIdentificationQuestions(
+                cards: [card], seas: geo.seas, locale: locale
             ).first
         }
     }
