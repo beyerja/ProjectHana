@@ -99,17 +99,17 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ur).displayName, "اردو")
     }
 
-    /// The remaining 6 content-pending languages are COMPLETE-content by contract: each routes
-    /// straight to English as an ultimate, never-hit safety net, NOT through es-MX/es-ES. `.ja` has
-    /// shipped complete content (story 003) and is asserted separately below.
+    /// The remaining 5 content-pending languages are COMPLETE-content by contract: each routes
+    /// straight to English as an ultimate, never-hit safety net, NOT through es-MX/es-ES. `.ja`
+    /// (story 003) and `.zhHans` (story 004) have shipped complete content and are asserted separately
+    /// below.
     func testFallbackChainForContentPendingLanguagesGoStraightToEnglish() {
-        XCTAssertEqual(LanguageCatalog.descriptor(for: .zhHans).fallbackChain, [.zhHans, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .hi).fallbackChain, [.hi, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ar).fallbackChain, [.ar, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .bn).fallbackChain, [.bn, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ptBR).fallbackChain, [.ptBR, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ur).fallbackChain, [.ur, .en])
-        for locale in [AppLocale.zhHans, .hi, .ar, .bn, .ptBR, .ur] {
+        for locale in [AppLocale.hi, .ar, .bn, .ptBR, .ur] {
             XCTAssertFalse(
                 locale.fallsBackThroughSpanish,
                 "\(locale.rawValue) is COMPLETE content and must not route through Spanish"
@@ -127,6 +127,19 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertFalse(
             AppLocale.ja.fallsBackThroughSpanish,
             "ja is COMPLETE content and must not route through Spanish"
+        )
+    }
+
+    /// Simplified Chinese has shipped COMPLETE content (story 004): it routes straight to English as a
+    /// never-hit safety net `[zh-Hans, en]`, NOT through es-MX/es-ES, and its catalog identity (display
+    /// name "简体中文", ODR tag "lang-zh-Hans") is unchanged.
+    func testFallbackChainForSimplifiedChineseGoesStraightToEnglish() {
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .zhHans).fallbackChain, [.zhHans, .en])
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .zhHans).displayName, "简体中文")
+        XCTAssertEqual(AppLocale.zhHans.odrTags, ["lang-zh-Hans"])
+        XCTAssertFalse(
+            AppLocale.zhHans.fallsBackThroughSpanish,
+            "zh-Hans is COMPLETE content and must not route through Spanish"
         )
     }
 
