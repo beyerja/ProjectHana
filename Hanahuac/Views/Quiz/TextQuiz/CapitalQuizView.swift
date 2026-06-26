@@ -37,9 +37,6 @@ struct CapitalQuizView: View {
         content
             .navigationTitle(L10n["capital_quiz.nav.capital"])
             .inlineNavigationTitle()
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button(L10n["capital_quiz.exit"]) { dismiss() } }
-            }
             .onAppear(perform: buildIfNeeded)
     }
 

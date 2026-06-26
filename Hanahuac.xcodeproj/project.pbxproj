@@ -17,6 +17,7 @@
 		0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */; };
 		108DFB8DC33A70A787D1FF24 /* GeoModel+PackData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13C971DDAF9ECCC063A87229 /* GeoModel+PackData.swift */; };
 		12FF05A3C0A7B0D9649FED58 /* L10nCompletenessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8960B99BAFCF760678DA076 /* L10nCompletenessTests.swift */; };
+		1356AC21C19037DAFC2C5138 /* QuizAdvanceScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD532BB71AF04C4D17E90A5 /* QuizAdvanceScheduler.swift */; };
 		15DEBBA2132BD4DB67D4AE7E /* ProgressBackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A009B1EC5C53A5776FF842 /* ProgressBackup.swift */; };
 		15FD5B830608DA8C06C1C69E /* yua.lproj in Resources */ = {isa = PBXBuildFile; fileRef = C1E3ECFE4BCCD433B25C93D4 /* yua.lproj */; settings = {ASSET_TAGS = ("lang-yua", ); }; };
 		16A319228D8757B6F595F322 /* LearningSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C30D9ED535AEDD850E02807 /* LearningSession.swift */; };
@@ -143,6 +144,7 @@
 		C68CFF1817E61FD869159D72 /* LocalizedQuizPromptTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C092259C29945C5CE6C89A2 /* LocalizedQuizPromptTests.swift */; };
 		C6C390DA85F5759C498E9345 /* StatsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 132EB6CB2BB0B527A3C57527 /* StatsTests.swift */; };
 		C6DC0F0BF19452DB23A0E48E /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9716AF7F0E3C9128332682BD /* ViewExtensions.swift */; };
+		C8F1F9821FA25BD20085E7FE /* QuizAdvanceSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763739052B657C289927C165 /* QuizAdvanceSchedulerTests.swift */; };
 		CA52ACD8483387D82F189F21 /* MappableFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F515D771C91F31DA44F1CFBF /* MappableFeature.swift */; };
 		CB1BC56B0D4FF4D335F98ADD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59E5AC1A3769ADF3F2138AE7 /* Localizable.strings */; };
 		CDC0C11EC4692BC78215E08F /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = C24D1F0D98466C85ACE2D994 /* countries.json */; };
@@ -210,6 +212,7 @@
 		092EDB83127EC04669B7E3A1 /* nah-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "nah-geo.json"; sourceTree = "<group>"; };
 		09C983AE0A9C597DCF6A0311 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		0A0366476E524E78AE0F9CED /* ResourceRequesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceRequesting.swift; sourceTree = "<group>"; };
+		0AD532BB71AF04C4D17E90A5 /* QuizAdvanceScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizAdvanceScheduler.swift; sourceTree = "<group>"; };
 		0B0CB3D27BCC4041F5D39D95 /* GeoNamePackDataTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoNamePackDataTests.swift; sourceTree = "<group>"; };
 		0B4BBEA8D4F6525D8A9CB60E /* PerQuizModeMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerQuizModeMigratorTests.swift; sourceTree = "<group>"; };
 		0E3A3AD118016349A7F1B544 /* pl.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = pl.lproj; path = Hanahuac/pl.lproj; sourceTree = SOURCE_ROOT; };
@@ -287,6 +290,7 @@
 		72D6DF935BA62491E7164B00 /* PerModeSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerModeSnapshotTests.swift; sourceTree = "<group>"; };
 		73A960F9B70EF0C0E0F8FB98 /* BundledLanguagePackProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundledLanguagePackProviderTests.swift; sourceTree = "<group>"; };
 		758AF9EF8095AC6033447A90 /* StreakTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakTracker.swift; sourceTree = "<group>"; };
+		763739052B657C289927C165 /* QuizAdvanceSchedulerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizAdvanceSchedulerTests.swift; sourceTree = "<group>"; };
 		7736C689BB999D2B1DAA1AC8 /* LanguageCompletenessSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageCompletenessSupport.swift; sourceTree = "<group>"; };
 		77724605CACC6F9A9E197D32 /* ko-geo.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "ko-geo.json"; sourceTree = "<group>"; };
 		78224CB10B7DA7818B0C15AD /* DailyProgressSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyProgressSnapshot.swift; sourceTree = "<group>"; };
@@ -440,6 +444,7 @@
 				538639353FB282B0D91BCB92 /* ProgressStatsStoreTests.swift */,
 				BD75F682720C991065C69C3A /* ProviderRoutedResolutionTests.swift */,
 				EBD9CF8B696F621CED8AA455 /* QuizAccessibilityStringsTests.swift */,
+				763739052B657C289927C165 /* QuizAdvanceSchedulerTests.swift */,
 				7BAF31CC53DFAF6AB1085947 /* QuizLogicTests.swift */,
 				5C449FCC798C1C634D548006 /* QuizModeDimensionTests.swift */,
 				BD138FE0CBCC53EF61B8B4B8 /* SM2SchedulerTests.swift */,
@@ -540,6 +545,7 @@
 			isa = PBXGroup;
 			children = (
 				F2A9ED59834EB421065830ED /* LearningQuizView.swift */,
+				0AD532BB71AF04C4D17E90A5 /* QuizAdvanceScheduler.swift */,
 				EEF2AEB96E37A3798632C4A8 /* QuizPlaceholderView.swift */,
 				B2D6418EB07DE5AA00414C4F /* MapQuiz */,
 				2E9B684694FE3C52422A83AE /* MultipleChoice */,
@@ -970,6 +976,7 @@
 				3B8A466A7ADF199D163A44FA /* ProgressMigrator.swift in Sources */,
 				92863289890323076E6CF28E /* ProgressPlaceholderView.swift in Sources */,
 				410A526F6517C786D9480588 /* ProgressStatsStore.swift in Sources */,
+				1356AC21C19037DAFC2C5138 /* QuizAdvanceScheduler.swift in Sources */,
 				07CE774FCB06D612C6E5C0DB /* QuizModeID.swift in Sources */,
 				89BAB351841F9FF51443F22D /* QuizPlaceholderView.swift in Sources */,
 				A8A94D2FDC44E49B9B0443FD /* QuizRoute.swift in Sources */,
@@ -1037,6 +1044,7 @@
 				0DBC79AE0C20617447495AD2 /* ProgressStatsStoreTests.swift in Sources */,
 				7A34F85C53C896F2C81A9BDC /* ProviderRoutedResolutionTests.swift in Sources */,
 				2E0B4A4421E593E427994A7B /* QuizAccessibilityStringsTests.swift in Sources */,
+				C8F1F9821FA25BD20085E7FE /* QuizAdvanceSchedulerTests.swift in Sources */,
 				FCED6C1D59D42AD420055BEF /* QuizLogicTests.swift in Sources */,
 				F6BD6C2593294C58CA94A3C2 /* QuizModeDimensionTests.swift in Sources */,
 				0B7AC94AD8B08510D753F86E /* SM2SchedulerTests.swift in Sources */,

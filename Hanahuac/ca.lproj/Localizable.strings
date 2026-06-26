@@ -85,7 +85,6 @@
 /* LearningQuizView */
 "learn.title" = "Aprèn";
 "learn.results" = "Resultats";
-"learn.exit" = "Surt";
 "learn.done" = "Fet";
 "learn.no_cards_title" = "No hi ha targetes per aprendre";
 "learn.no_cards_desc" = "Totes les targetes ja són al teu pla de repàs.";
@@ -97,7 +96,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Prova al mapa";
-"map_quiz.exit" = "Surt";
 "map_quiz.tap_on_map" = "Toca el mapa";
 "map_quiz.nothing_due_title" = "Res pendent";
 "map_quiz.nothing_due_desc" = "No hi ha targetes pendents ara mateix. Torna més tard!";
@@ -115,7 +113,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Res pendent";
 "mcq_quiz.nothing_due_desc" = "No hi ha targetes pendents ara mateix.";
-"mcq_quiz.exit" = "Surt";
 "mcq_quiz.correct_count" = "%d correctes";
 "mcq_quiz.nav.country" = "Prova de països";
 "mcq_quiz.nav.river" = "Prova de rius";
@@ -125,7 +122,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Res pendent";
 "capital_quiz.nothing_due_desc" = "No hi ha targetes pendents ara mateix.";
-"capital_quiz.exit" = "Surt";
 "capital_quiz.check" = "Comprova";
 "capital_quiz.next" = "Següent →";
 "capital_quiz.placeholder" = "Escriu la teva resposta…";

@@ -84,7 +84,6 @@
 /* LearningQuizView */
 "learn.title" = "Apprendre";
 "learn.results" = "Résultats";
-"learn.exit" = "Quitter";
 "learn.done" = "Terminé";
 "learn.no_cards_title" = "Aucune carte à apprendre";
 "learn.no_cards_desc" = "Toutes les cartes sont déjà dans votre planning de révision.";
@@ -96,7 +95,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Quiz Carte";
-"map_quiz.exit" = "Quitter";
 "map_quiz.tap_on_map" = "Appuyez sur la carte";
 "map_quiz.nothing_due_title" = "Rien à réviser";
 "map_quiz.nothing_due_desc" = "Aucune carte n'est due pour l'instant. Revenez plus tard !";
@@ -114,7 +112,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Rien à réviser";
 "mcq_quiz.nothing_due_desc" = "Aucune carte n'est due pour l'instant.";
-"mcq_quiz.exit" = "Quitter";
 "mcq_quiz.correct_count" = "%d correct";
 "mcq_quiz.nav.country" = "Quiz Pays";
 "mcq_quiz.nav.river" = "Quiz Fleuves";
@@ -124,7 +121,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Rien à réviser";
 "capital_quiz.nothing_due_desc" = "Aucune carte n'est due pour l'instant.";
-"capital_quiz.exit" = "Quitter";
 "capital_quiz.check" = "Vérifier";
 "capital_quiz.next" = "Suivant →";
 "capital_quiz.placeholder" = "Tapez votre réponse…";

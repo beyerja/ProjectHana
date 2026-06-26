@@ -84,7 +84,6 @@
 /* LearningQuizView */
 "learn.title" = "Nauka";
 "learn.results" = "Wyniki";
-"learn.exit" = "Wyjdź";
 "learn.done" = "Gotowe";
 "learn.no_cards_title" = "Brak kart do nauki";
 "learn.no_cards_desc" = "Wszystkie karty są już w Twoim harmonogramie powtórek.";
@@ -96,7 +95,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Quiz na mapie";
-"map_quiz.exit" = "Wyjdź";
 "map_quiz.tap_on_map" = "Dotknij mapy";
 "map_quiz.nothing_due_title" = "Nic do powtórki";
 "map_quiz.nothing_due_desc" = "Obecnie nie ma kart do powtórki. Wróć później!";
@@ -114,7 +112,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Nic do powtórki";
 "mcq_quiz.nothing_due_desc" = "Obecnie nie ma kart do powtórki.";
-"mcq_quiz.exit" = "Wyjdź";
 "mcq_quiz.correct_count" = "%d poprawnych";
 "mcq_quiz.nav.country" = "Quiz o państwach";
 "mcq_quiz.nav.river" = "Quiz o rzekach";
@@ -124,7 +121,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Nic do powtórki";
 "capital_quiz.nothing_due_desc" = "Obecnie nie ma kart do powtórki.";
-"capital_quiz.exit" = "Wyjdź";
 "capital_quiz.check" = "Sprawdź";
 "capital_quiz.next" = "Dalej →";
 "capital_quiz.placeholder" = "Wpisz swoją odpowiedź…";

@@ -84,7 +84,6 @@
 /* LearningQuizView */
 "learn.title" = "Leren";
 "learn.results" = "Resultaten";
-"learn.exit" = "Sluiten";
 "learn.done" = "Klaar";
 "learn.no_cards_title" = "Geen kaarten om te leren";
 "learn.no_cards_desc" = "Alle kaarten staan al in je herhalingsschema.";
@@ -96,7 +95,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Kaartquiz";
-"map_quiz.exit" = "Sluiten";
 "map_quiz.tap_on_map" = "Tik op de kaart";
 "map_quiz.nothing_due_title" = "Niets te doen";
 "map_quiz.nothing_due_desc" = "Er zijn op dit moment geen kaarten te herhalen. Kom later terug!";
@@ -114,7 +112,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Niets te doen";
 "mcq_quiz.nothing_due_desc" = "Er zijn op dit moment geen kaarten te herhalen.";
-"mcq_quiz.exit" = "Sluiten";
 "mcq_quiz.correct_count" = "%d juist";
 "mcq_quiz.nav.country" = "Landenquiz";
 "mcq_quiz.nav.river" = "Rivierenquiz";
@@ -124,7 +121,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Niets te doen";
 "capital_quiz.nothing_due_desc" = "Er zijn op dit moment geen kaarten te herhalen.";
-"capital_quiz.exit" = "Sluiten";
 "capital_quiz.check" = "Controleren";
 "capital_quiz.next" = "Volgende →";
 "capital_quiz.placeholder" = "Typ je antwoord…";

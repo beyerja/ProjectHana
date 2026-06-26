@@ -85,7 +85,6 @@
 /* LearningQuizView */
 "learn.title" = "Ikasi";
 "learn.results" = "Emaitzak";
-"learn.exit" = "Irten";
 "learn.done" = "Eginda";
 "learn.no_cards_title" = "Ez dago txartelik ikasteko";
 "learn.no_cards_desc" = "Txartel guztiak zure berrikuspen-egutegian daude jada.";
@@ -97,7 +96,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Mapako proba";
-"map_quiz.exit" = "Irten";
 "map_quiz.tap_on_map" = "Sakatu mapan";
 "map_quiz.nothing_due_title" = "Ezer egiteke";
 "map_quiz.nothing_due_desc" = "Une honetan ez dago txartelik egiteke. Itzuli geroago!";
@@ -115,7 +113,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Ezer egiteke";
 "mcq_quiz.nothing_due_desc" = "Une honetan ez dago txartelik egiteke.";
-"mcq_quiz.exit" = "Irten";
 "mcq_quiz.correct_count" = "%d zuzen";
 "mcq_quiz.nav.country" = "Herrialdeen proba";
 "mcq_quiz.nav.river" = "Ibaien proba";
@@ -125,7 +122,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Ezer egiteke";
 "capital_quiz.nothing_due_desc" = "Une honetan ez dago txartelik egiteke.";
-"capital_quiz.exit" = "Irten";
 "capital_quiz.check" = "Egiaztatu";
 "capital_quiz.next" = "Hurrengoa →";
 "capital_quiz.placeholder" = "Idatzi zure erantzuna…";
