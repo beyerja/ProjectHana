@@ -341,7 +341,10 @@ def process(filename: str, names: dict, has_capital: bool) -> None:
             obj = insert_after(obj, "capital", "capital_ja", entry[1])
         new_data.append(obj)
     path.write_text(json.dumps(new_data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"{filename}: wrote name_ja for {len(new_data)} entities" + (" + capital_ja" if has_capital else ""))
+    print(
+        f"{filename}: wrote name_ja for {len(new_data)} entities"
+        + (" + capital_ja" if has_capital else "")
+    )
 
 
 def main() -> None:

@@ -84,6 +84,41 @@ final class LanguageCompletenessSupportTests: XCTestCase {
         )
     }
 
+    // MARK: - ja (Story 003) completeness
+
+    /// Japanese ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses
+    /// the STRICT path — when the ja `.lproj` is not mounted (the simulator unit-test host has no
+    /// asset-pack server), the strict helper THROWS ``CompletenessError/stringBundleUnreachable``,
+    /// which we translate into an `XCTSkip` so the test never degrades to a false pass. When the pack
+    /// IS mounted, a genuine missing key FAILS the assertion.
+    func testJapaneseHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .ja)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("ja UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "ja must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Japanese ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a Japanese
+    /// name, so the bundled provider's pack reports no gaps for .ja. Uses the STRICT path, so a
+    /// missing/nil ja pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testJapaneseHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .ja)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "ja is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "ja is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
     // MARK: - Strict-path teeth (AC#2): a real gap FAILS rather than degrading to pass
 
     /// Restore the active provider after any test that swaps it, so a swapped stub never leaks into
