@@ -80,3 +80,10 @@
 "a11y.state.incorrect" = "ahmo cualli tēnānquiliztli";
 "a11y.feedback.correct" = "Cualli";
 "a11y.feedback.incorrect" = "Ahmo cualli";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Yancuic";
+"stats.tier.name.learning" = "Momachtia";
+"stats.tier.name.review" = "Tlachializtli";
+"stats.tier.name.mastered" = "Tlamachtilli";
+"a11y.back" = "Tlacuepa";

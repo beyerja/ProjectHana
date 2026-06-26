@@ -198,3 +198,10 @@
 "a11y.map.prompt.label" = "지도에서 찾기";
 "a11y.map.progress" = "%d개 중 %d번째 장소";
 "a11y.map.streak" = "연속 %d / 3개 정답";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "신규";
+"stats.tier.name.learning" = "학습 중";
+"stats.tier.name.review" = "복습";
+"stats.tier.name.mastered" = "완료";
+"a11y.back" = "뒤로";

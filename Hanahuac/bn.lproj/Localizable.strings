@@ -5,3 +5,10 @@
  * string resolves via the [bn, en] fallback chain (English supplies every key). This file is
  * intentionally empty of keys — do NOT copy English values here as placeholders.
  */
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "নতুন";
+"stats.tier.name.learning" = "শিখছে";
+"stats.tier.name.review" = "পর্যালোচনা";
+"stats.tier.name.mastered" = "আয়ত্ত";
+"a11y.back" = "ফিরে যান";
