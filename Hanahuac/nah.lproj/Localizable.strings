@@ -40,26 +40,22 @@
 /* LearningQuizView */
 "learn.title" = "Momachtia";
 "learn.results" = "Tlanēxtīltin";
-"learn.exit" = "Xiquīza";
 "learn.done" = "Tlamic";
 
 /* MapQuizView */
 "map_quiz.title" = "Tlatēmōliztli īpan tlahcuilōlmāpan";
-"map_quiz.exit" = "Xiquīza";
 "map_quiz.feedback.correct" = "¡Cualli!";
 
 /* QuizSummaryView */
 "quiz_summary.done" = "Tlamic";
 
 /* MultipleChoiceQuizView */
-"mcq_quiz.exit" = "Xiquīza";
 "mcq_quiz.nav.country" = "Tlatēmōliztli āltepētl";
 "mcq_quiz.nav.river" = "Tlatēmōliztli ātōyātl";
 "mcq_quiz.nav.mountain" = "Tlatēmōliztli tepētl";
 "mcq_quiz.nav.sea" = "Tlatēmōliztli hueyātl";
 
 /* CapitalQuizView */
-"capital_quiz.exit" = "Xiquīza";
 "capital_quiz.check" = "Xicchīhua";
 "capital_quiz.feedback.correct" = "¡Cualli! ✓";
 

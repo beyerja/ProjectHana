@@ -42,11 +42,6 @@ struct NameFeatureQuizView: View {
         content
             .navigationTitle(L10n["name_feature.nav"])
             .inlineNavigationTitle()
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(L10n["capital_quiz.exit"]) { dismiss() }
-                }
-            }
             .onAppear(perform: buildIfNeeded)
     }
 

@@ -13,6 +13,9 @@ struct LearningQuizView: View {
     @State private var currentQuestion: MCQQuestion?
     @State private var answerState: MCQAnswerState = .unanswered
     @State private var isAdvancing = false
+    /// Owned handle for the auto-advance Task so it can be cancelled when the view is torn down
+    /// (system back chevron / swipe-back). Prevents the dismiss-while-advancing crash (AC2).
+    @State private var advanceTask: Task<Void, Never>?
 
     /// Completion-icon point size that scales with Dynamic Type (relative to largeTitle).
     @ScaledMetric(relativeTo: .largeTitle) private var completionIconSize: CGFloat = 64
@@ -45,10 +48,14 @@ struct LearningQuizView: View {
         }
         .navigationTitle(L10n["learn.title"])
         .inlineNavigationTitle()
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button(L10n["learn.exit"]) { dismiss() } }
-        }
         .onAppear { refreshQuestion() }
+        .onDisappear {
+            // Cancel the in-flight advance so its post-sleep persist never runs against a torn-down
+            // environment when the user exits via the system back chevron (AC2).
+            advanceTask?.cancel()
+            advanceTask = nil
+            isAdvancing = false
+        }
     }
 
     // MARK: – Quiz body
@@ -167,17 +174,21 @@ struct LearningQuizView: View {
     private func scheduleAdvance(wasCorrect: Bool) {
         isAdvancing = true
         let delay: UInt64 = wasCorrect ? 1_000_000_000 : 2_000_000_000
-        Task {
-            try? await Task.sleep(nanoseconds: delay)
-            if wasCorrect {
-                session.recordCorrect()
-            } else {
-                session.recordWrong()
+        advanceTask = Task {
+            let didRun = await QuizAdvanceScheduler.run(afterNanoseconds: delay) {
+                if wasCorrect {
+                    session.recordCorrect()
+                } else {
+                    session.recordWrong()
+                }
+                cardStore.persistCardChanges()
             }
-            cardStore.persistCardChanges()
-            answerState = .unanswered
-            isAdvancing = false
-            refreshQuestion()
+            // Only mutate view state if the advance actually ran (i.e. the exit did not cancel us).
+            if didRun {
+                answerState = .unanswered
+                isAdvancing = false
+                refreshQuestion()
+            }
         }
     }
 
