@@ -5,3 +5,10 @@
  * string resolves via the [ja, en] fallback chain (English supplies every key). This file is
  * intentionally empty of keys — do NOT copy English values here as placeholders.
  */
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "新規";
+"stats.tier.name.learning" = "学習中";
+"stats.tier.name.review" = "復習";
+"stats.tier.name.mastered" = "習得済み";
+"a11y.back" = "戻る";

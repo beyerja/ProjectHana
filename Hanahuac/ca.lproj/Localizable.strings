@@ -170,3 +170,10 @@
 /* Map learning quiz */
 "learn_map.title" = "Aprenentatge al mapa";
 "learn_map.streak" = "%d / 3";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Nou";
+"stats.tier.name.learning" = "Aprenent";
+"stats.tier.name.review" = "Repàs";
+"stats.tier.name.mastered" = "Dominat";
+"a11y.back" = "Enrere";

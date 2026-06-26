@@ -170,3 +170,10 @@
 /* Map learning quiz */
 "learn_map.title" = "Mapan ikasten";
 "learn_map.streak" = "%d / 3";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Berria";
+"stats.tier.name.learning" = "Ikasten";
+"stats.tier.name.review" = "Berrikuspena";
+"stats.tier.name.mastered" = "Menderatua";
+"a11y.back" = "Atzera";

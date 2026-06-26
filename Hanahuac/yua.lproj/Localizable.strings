@@ -171,3 +171,10 @@
 /* Map learning quiz */
 "learn_map.title" = "Kanik ich u mápail";
 "learn_map.streak" = "%d / 3";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Túumben";
+"stats.tier.name.learning" = "Táan u kanik";
+"stats.tier.name.review" = "Ka'a ila'";
+"stats.tier.name.mastered" = "Ts'o'ok u kanik";
+"a11y.back" = "Suunajil";
