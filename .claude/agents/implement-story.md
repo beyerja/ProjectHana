@@ -173,6 +173,16 @@ spell out `HomeQuizMode.multipleChoice`.
 **iOS-only APIs**
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `Hanahuac/Views/ViewExtensions.swift` rather than direct calls.
 
+**XCUITest/UITest APIs can be platform-conditional — `just test` locally does NOT cover the CI target set**
+Local `just test`/`just ui-walkthrough` build the **iOS Simulator** test target; CI also builds the
+**Mac Catalyst** test target. Some XCUITest APIs exist on one and not the other — e.g.
+`XCUIElement.pinch(withScale:velocity:)` compiles for the Simulator but is **unavailable on Mac
+Catalyst**, so a green local run still breaks the CI build (a real detour this workflow). When adding a
+UITest gesture/API, guard the platform-specific call behind `#if targetEnvironment(macCatalyst)` with a
+non-no-op fallback (synthesize the gesture from `XCUICoordinate` press-drag so the contract still holds),
+and route both call sites through one helper. Confirm with a Catalyst `xcodebuild build-for-testing`
+before pushing — the simulator pass alone will not catch it.
+
 **Bundled Natural-Earth geo data (generate-*.py pattern)**
 When a story derives bundled geo data from Natural Earth (rivers, borders, etc.):
 - The framework Python may fail the NE download with `CERTIFICATE_VERIFY_FAILED`. Download the layer zip with `curl -sSL` into the script's cache dir (`$TMPDIR/ne-borders-cache`) and unzip it there; the script then finds the cached `.shp` and skips its own download.

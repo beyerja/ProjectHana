@@ -19,6 +19,9 @@ hand. Check and update:
 ```sh
 gh pr view <number> --json mergeStateStatus -q .mergeStateStatus
 # BEHIND  → gh pr update-branch <number>   (then re-wait for CI on the updated branch)
+#           ⚠ update-branch CHANGES the head SHA → the SHA-bound `code-owner-review` gate posted on the
+#             old head no longer counts. Re-spawn the code-owner-review agent to re-post the gate on the
+#             NEW head SHA (the diff is unchanged, but the check must land on the current head) before merging.
 # DIRTY   → real conflict: re-integrate origin/main into the branch and resolve (see create-pr / orchestrator step 5)
 # CLEAN/HAS_HOOKS/BLOCKED-by-nothing-else → proceed to merge
 ```

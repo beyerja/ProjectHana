@@ -1,0 +1,7 @@
+{
+  "body": "Non-blocking: the sim-unavailable fallback calls `just screenshot-sim .workflow/screenshots/<story-id>/verify-1.png`, but the old visual-verify steps that this block replaces did a `mkdir -p .workflow/screenshots/<story-id>` first. `screenshot-sim` runs `xcrun simctl io booted screenshot \"{{path}}\"` directly with no `mkdir -p`, and `.workflow/screenshots/` is gitignored (won't exist on a fresh checkout), so on a clean machine the fallback screenshot write fails with a missing-parent error. It exits non-zero with a clear message (no silent pass), and only the already-degraded fallback path is affected, so it doesn't touch the ACs — but consider noting that the parent dir must exist, or having the agent create it.",
+  "commit_id": "8705c07e2f6db6c1d79fce06959a889a804ffcfc",
+  "path": ".claude/agents/verify-story.md",
+  "line": 118,
+  "side": "RIGHT"
+}
