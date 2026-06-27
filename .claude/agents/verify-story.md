@@ -39,44 +39,91 @@ For each criterion: run tests if the story touches Swift source files, inspect i
 
 ## Visual Verification
 
-If `<story-dir>/spec.md` contains a `## Visual Verification` section, perform the following steps after the functional checks above. If no such section exists, skip this entire block (pure tooling stories do not need visual verification).
+**Trigger by changed files, not by an opt-in section.** If the story changed any file under
+`Hanahuac/Views/**` (user-visible UI), the **default** verification is a `just ui-walkthrough` driver
+run — *navigate* the app and inspect per-step screenshots AND accessibility dumps — regardless of
+whether `<story-dir>/spec.md` has a `## Visual Verification` section. A `## Visual Verification`
+section, when present, supplies the *expected behavior* to check against; its absence does not skip the
+walkthrough for a view-touching story. Skip this entire block only when the story touched no
+`Hanahuac/Views/**` files (pure tooling/config/data stories do not need visual verification).
 
-**Visual verification steps:**
+Confirm whether the story touched views:
+```sh
+git diff --name-only origin/main...HEAD -- 'Hanahuac/Views' | head
+```
+
+**Driver walkthrough steps (default for view-touching stories):**
 
 1. **Boot simulator** (no-op if already booted):
    ```sh
    just boot-sim
    ```
+   If the simulator cannot be booted (no simulator available in this environment), use the
+   **sim-unavailable fallback** below instead of failing the story.
 
-2. **Build and install the app** to the simulator:
+2. **Author a focused action script** for what this story changed. Write a JSON array to
+   `.workflow/ui-walkthrough/scripts/<story-id>.json` (use the **Write** tool) that *navigates* to and
+   exercises the changed screen(s) — `tap`/`scroll`/`mapTap`/`typeText`/`pinch` steps, with `wait`
+   between transitions. The action-script schema, targeting order, and the full action set (including
+   the story-001 `pinch` zoom action) are documented in `.workflow/ui-walkthrough/README.md` — read it
+   before authoring. A screenshot **and** accessibility dump are captured after *every* step, so cover
+   each state the story affects.
+
+3. **Run the driver** (each run is a compiled `xcodebuild test` cycle of ~tens of seconds, not a live
+   session):
    ```sh
-   just install-sim
+   just ui-walkthrough .workflow/ui-walkthrough/scripts/<story-id>.json <story-id>
    ```
+   The recipe prints the resolved artifact directory (`.workflow/ui-walkthrough/<story-id>/`).
 
-3. **Launch the app:**
-   ```sh
-   just launch-sim || {
-     BUNDLE=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' Hanahuac.xcodeproj/project.pbxproj | sed 's/.*= "//;s/";//')
-     xcrun simctl launch booted "$BUNDLE"
-   }
-   sleep 2
-   ```
+4. **Inspect EVERY per-step artifact** in the printed run dir — not one static screenshot:
+   - each `NNN-step.png` with Claude's vision against the expected behavior, and
+   - each `NNN-step.json` accessibility-element dump (type / label / identifier / value / frame).
+   Step `000` is the initial post-launch state; `NNN` ascend per script step.
 
-4. **Take a screenshot** and save it:
-   ```sh
-   mkdir -p .workflow/screenshots/<story-id>
-   just screenshot-sim .workflow/screenshots/<story-id>/verify-1.png
-   ```
+5. **Hunt for concrete bug classes** while inspecting the artifacts (see *Issue hunting* below) — do
+   not merely confirm the UI "matches the spec."
 
-5. **Inspect the screenshot** using Claude's vision against the expected behavior described in the `## Visual Verification` section of `<story-dir>/spec.md`.
+6. **If the walkthrough passes** (all steps render correctly, no issue-class hit): proceed to mark the
+   story done (see Outcomes below).
 
-6. **If visual check passes:** proceed to mark the story done (see Outcomes below).
-
-7. **If visual check fails:**
-   a. Log the failure in `<story-dir>/log.md`: `<timestamp> visual-verify: FAILED attempt 1 — <description of what was wrong>`
-   b. Attempt a targeted fix: diagnose the root cause from the screenshot, edit the relevant source file(s), rebuild (step 2), re-launch (step 3), take a new screenshot (save as `verify-2.png`), re-inspect.
+7. **If the walkthrough fails** (a step is wrong, or any *Issue hunting* class is detected):
+   a. Log the failure in `<story-dir>/log.md`: `<timestamp> visual-verify: FAILED attempt 1 — <which step/artifact and what was wrong>`
+   b. Attempt a targeted fix: diagnose the root cause from the screenshots/dumps, edit the relevant
+      source file(s), rebuild + re-run the driver (step 3, reuse the same script), re-inspect.
    c. If the second attempt passes: proceed to mark the story done.
-   d. If the second attempt also fails: log it in `<story-dir>/log.md`. Output STATUS: FAILED with visual failure details so the story loop can re-run implement-story with this context.
+   d. If the second attempt also fails: log it in `<story-dir>/log.md`. Output STATUS: FAILED with the
+      visual failure details so the story loop can re-run implement-story with this context.
+
+### Issue hunting — actively look for these bug classes
+
+Inspect the per-step artifacts for the following and **FAIL + loop back** (output STATUS: FAILED with
+the specifics so implement-story re-runs) the moment any is found — do not pass a story that merely
+"looks like the spec":
+
+- **Empty accessibility tree = crash / app gone.** If any `NNN-step.json` is empty or has no app
+  elements (only a bare window / nothing), the app crashed or never launched at that step. Hard fail.
+- **Untranslated text.** English / source-language strings showing while the UI locale is set to
+  another language (e.g. a Korean run still rendering English labels) — a missing-translation defect.
+- **Duplicated, missing, obscured, or overlapping controls.** Two of a control that should appear
+  once, a control the spec requires that is absent from the dump, a control hidden behind another, or
+  overlapping frames in the accessibility dump.
+
+### Sim-unavailable fallback
+
+If `just boot-sim` / `just install-sim` cannot run (no simulator in this environment), do **not** block
+the story loop. Fall back, in order of preference, to:
+- the prior behavior — `just install-sim` then `just launch-sim` (or `xcrun simctl launch booted <bundle-id>`)
+  and a single screenshot inspected with vision. `.workflow/screenshots/` is gitignored and
+  `screenshot-sim` does not create its parent dir, so create it first:
+  ```sh
+  mkdir -p .workflow/screenshots/<story-id>
+  just screenshot-sim .workflow/screenshots/<story-id>/verify-1.png
+  ```
+  or
+- inspecting the unit-tested presentation logic for the changed views and confirming it compiles into
+  the shipped bundle.
+Record which verification method was used in `<story-dir>/log.md`.
 
 ---
 
