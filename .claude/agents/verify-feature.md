@@ -91,8 +91,13 @@ attribution, matching the outcome format below) so the responsible story is retr
 ### Sim-unavailable fallback
 
 This toolset's driver needs a simulator. If `just boot-sim` / `just install-sim` cannot run, do **not**
-block the workflow. Fall back to launch + a single `just screenshot-sim
-.workflow/screenshots/feature-verify.png` inspected with vision; for any criterion that lives behind
+block the workflow. Fall back to launch + a single screenshot inspected with vision. `.workflow/screenshots/`
+is gitignored and `screenshot-sim` does not create its parent dir, so create it first:
+```sh
+mkdir -p .workflow/screenshots
+just screenshot-sim .workflow/screenshots/feature-verify.png
+```
+For any criterion that lives behind
 navigation you cannot drive, verify what you can (the app launches without crashing and the entry point
 renders) and treat the deeper screen as verified when its presentation logic is unit-tested AND it
 compiles into the shipped bundle. Record the verification method used.

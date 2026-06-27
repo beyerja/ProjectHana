@@ -114,7 +114,13 @@ the specifics so implement-story re-runs) the moment any is found — do not pas
 If `just boot-sim` / `just install-sim` cannot run (no simulator in this environment), do **not** block
 the story loop. Fall back, in order of preference, to:
 - the prior behavior — `just install-sim` then `just launch-sim` (or `xcrun simctl launch booted <bundle-id>`)
-  and a single `just screenshot-sim .workflow/screenshots/<story-id>/verify-1.png` inspected with vision; or
+  and a single screenshot inspected with vision. `.workflow/screenshots/` is gitignored and
+  `screenshot-sim` does not create its parent dir, so create it first:
+  ```sh
+  mkdir -p .workflow/screenshots/<story-id>
+  just screenshot-sim .workflow/screenshots/<story-id>/verify-1.png
+  ```
+  or
 - inspecting the unit-tested presentation logic for the changed views and confirming it compiles into
   the shipped bundle.
 Record which verification method was used in `<story-dir>/log.md`.
