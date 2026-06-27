@@ -117,11 +117,17 @@ final class UIDriverTests: XCTestCase {
     /// > 1 zooms in) — the step is skipped when it is absent. A label/identifier-targeted element is
     /// waited for; if it never appears the step is skipped (no crash, no failure) so artifact
     /// collection continues.
+    ///
+    /// `XCUIElement.pinch(withScale:velocity:)` requires the velocity sign to match the scale:
+    /// NEGATIVE for zoom out (`scale < 1`) and POSITIVE for zoom in (`scale > 1`); an invalid
+    /// scale/velocity pairing raises `NSInvalidArgumentException`. So when the caller omits
+    /// `velocity` we derive a correctly-signed default from the scale; an explicit `velocity` is
+    /// respected as-is.
     private func pinch(_ step: UIActionStep, in app: XCUIApplication) {
         guard let scale = step.scale else {
             return
         }
-        let velocity = step.velocity ?? 1
+        let velocity = step.velocity ?? (scale < 1 ? -1 : 1)
         if let element = resolveElement(step, in: app) {
             if element.waitForExistence(timeout: elementTimeout) {
                 element.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))

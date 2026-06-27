@@ -46,7 +46,8 @@ struct UIActionStep: Codable {
     let seconds: Double?
     /// Pinch scale factor for `pinch` (required for it): < 1 zooms out, > 1 zooms in.
     let scale: Double?
-    /// Pinch velocity for `pinch` (optional; defaults to 1 when absent).
+    /// Pinch velocity for `pinch` (optional). When absent the driver derives a correctly-signed
+    /// default from `scale`: negative for zoom out (`scale < 1`), positive for zoom in (`scale > 1`).
     let velocity: Double?
 }
 

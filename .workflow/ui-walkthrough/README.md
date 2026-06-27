@@ -49,7 +49,7 @@ malformed script is **not** an error — the app still launches and emits the in
 | `direction`  | `up` \| `down` \| `left` \| `right` | `swipe`, `scroll`    | Direction to swipe/scroll (defaults to `up`).                |
 | `seconds`    | number                            | `wait`                 | How long to sleep.                                            |
 | `scale`      | number (**required** for `pinch`) | `pinch`                | Pinch scale factor: `< 1` zooms **out**, `> 1` zooms **in**. |
-| `velocity`   | number                            | `pinch`                | Pinch velocity (optional; defaults to `1`).                   |
+| `velocity`   | number                            | `pinch`                | Pinch velocity (optional). Default is **scale-aware**: negative for zoom out (`scale < 1`), positive for zoom in (`scale > 1`). |
 
 > **Targeting order:** the driver resolves a target by accessibility **label first**, then falls back
 > to **identifier**. Unresolvable targets are skipped (not failed) so artifact collection continues.
@@ -71,8 +71,11 @@ malformed script is **not** an error — the app still launches and emits the in
 Because a screenshot **and** element dump are written after *every* step, `dumpTree`/`screenshot`
 exist as explicit, self-documenting no-op markers in a script.
 
-> **`pinch` (zoom):** `scale` is **required** — `< 1` zooms **out**, `> 1` zooms **in** (`velocity`
-> is optional, defaulting to `1`). The driver pinches the element resolved by `label`/`identifier`,
+> **`pinch` (zoom):** `scale` is **required** — `< 1` zooms **out**, `> 1` zooms **in**. `velocity`
+> is optional; when omitted its default is **scale-aware** — negative for zoom out (`scale < 1`) and
+> positive for zoom in (`scale > 1`), as `XCUIElement.pinch(withScale:velocity:)` requires the
+> velocity sign to match the scale (a mismatched pair raises `NSInvalidArgumentException`). An
+> explicitly supplied `velocity` is used as-is. The driver pinches the element resolved by `label`/`identifier`,
 > falling back to the whole app when no target is given (so it works on the map, which has no
 > addressable element). A `pinch` with no `scale`, or whose targeted element never appears, is
 > **skipped** (no crash, no failure) and per-step artifacts are still captured. Example — zoom the
