@@ -43,6 +43,23 @@ final class RTLLayoutDirectionTests: XCTestCase {
         XCTAssertEqual(AppLocale.ja.layoutDirection, .leftToRight)
     }
 
+    // MARK: - Arabic RTL verification (story 009 AC1/AC4)
+
+    /// Story 009 (Arabic content) RTL verification: now that ar ships complete content, re-confirm the
+    /// story-008 layout-direction contract holds for Arabic specifically — `.ar` is in the RTL set and
+    /// maps to SwiftUI's `.rightToLeft`, so selecting Arabic renders the whole UI right-to-left
+    /// (AC1/AC4). This is a focused regression guard for the ar locale, not new infrastructure; the
+    /// applied-modifier env propagation for `.ar` is proven by
+    /// `RTLEnvironmentHostingTests.testSelectedRTLLanguagePropagatesRightToLeft`.
+    func testArabicSelectsRightToLeftLayout() {
+        XCTAssertTrue(AppLocale.ar.isRTL, "Arabic must be right-to-left")
+        XCTAssertEqual(
+            AppLocale.ar.layoutDirection,
+            .rightToLeft,
+            "selecting Arabic must drive the app layout direction to .rightToLeft"
+        )
+    }
+
     // MARK: - Launch-time force-RTL override
 
     /// A bare `-HANA_FORCE_RTL` launch argument forces `.rightToLeft` — the simplest thing a UI test
