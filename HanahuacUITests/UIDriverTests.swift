@@ -148,25 +148,55 @@ final class UIDriverTests: XCTestCase {
     /// (same as other unresolvable steps), and a nil OR zero `velocity` is replaced with a
     /// correctly-signed default derived from the scale; an explicit non-zero `velocity` is respected.
     private func pinch(_ step: UIActionStep, in app: XCUIApplication) {
+        guard let scale = step.scale, scale > 0 else {
+            return
+        }
+        let resolvedVelocity = step.velocity ?? 0
+        let velocity = resolvedVelocity == 0 ? (scale < 1 ? -1 : 1) : resolvedVelocity
+        if let element = resolveElement(step, in: app) {
+            if element.waitForExistence(timeout: elementTimeout) {
+                performPinch(on: element, scale: scale, velocity: velocity)
+            }
+            return
+        }
+        performPinch(on: app, scale: scale, velocity: velocity)
+    }
+
+    /// Perform the pinch gesture in a way that compiles on every platform the test target builds for.
+    ///
+    /// On the iOS Simulator we use the native `XCUIElement.pinch(withScale:velocity:)` so the local
+    /// `just ui-walkthrough` produces a genuine zoom-out gesture (AC6 evidence). That API is
+    /// unavailable on Mac Catalyst (CI's "Build & Test" destination), so there we synthesise the same
+    /// pinch from two simultaneous press-drag gestures between coordinates: the two fingers start near
+    /// the element centre and move apart (zoom in, `scale > 1`) or together (zoom out, `scale < 1`).
+    private func performPinch(on element: XCUIElement, scale: Double, velocity: Double) {
         #if targetEnvironment(macCatalyst)
-            // `XCUIElement.pinch(withScale:velocity:)` is unavailable on Mac Catalyst — the platform the
-            // CI "Build & Test" job compiles and runs the UI tests on. Pinch steps are therefore a no-op
-            // there (artifact collection / the rest of the script continues); the gesture is exercised
-            // when the driver runs on an iOS Simulator destination.
-            _ = (step, app)
+            let center = element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            // Zoom out: fingers start far apart and converge. Zoom in: start near and diverge.
+            let startSpread: CGFloat = scale < 1 ? 0.25 : 0.05
+            let endSpread: CGFloat = scale < 1 ? 0.05 : 0.25
+            let fingerOne = (
+                start: center.withOffset(CGVector(dx: -startSpread * 100, dy: 0)),
+                end: center.withOffset(CGVector(dx: -endSpread * 100, dy: 0))
+            )
+            let fingerTwo = (
+                start: center.withOffset(CGVector(dx: startSpread * 100, dy: 0)),
+                end: center.withOffset(CGVector(dx: endSpread * 100, dy: 0))
+            )
+            fingerOne.start.press(
+                forDuration: 0.05,
+                thenDragTo: fingerOne.end,
+                withVelocity: .default,
+                thenHoldForDuration: 0
+            )
+            fingerTwo.start.press(
+                forDuration: 0.05,
+                thenDragTo: fingerTwo.end,
+                withVelocity: .default,
+                thenHoldForDuration: 0
+            )
         #else
-            guard let scale = step.scale, scale > 0 else {
-                return
-            }
-            let resolvedVelocity = step.velocity ?? 0
-            let velocity = resolvedVelocity == 0 ? (scale < 1 ? -1 : 1) : resolvedVelocity
-            if let element = resolveElement(step, in: app) {
-                if element.waitForExistence(timeout: elementTimeout) {
-                    element.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
-                }
-                return
-            }
-            app.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
+            element.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
         #endif
     }
 
