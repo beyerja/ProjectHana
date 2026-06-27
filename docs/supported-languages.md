@@ -54,9 +54,12 @@ Each language carries one of two content contracts, classified per locale in the
 
 - **Complete / no-fallback** — `BASE` (`en`, `es-MX`) plus `FULL` (`fr`, `de`, `es-ES`, `it`, `pl`,
   `nl`, `sr`, `ko`, `ja`, `zh-Hans`, `hi`, `ar`, `bn`, `pt-BR`, `ur`). These carry the **full** canonical
-  UI-key set and full bundled-geo name coverage. Their fallback chain ends straight at English as an
-  ultimate, **never-hit** safety net (e.g. `it` → `[it, en]`), never routing through Spanish. A missing
-  UI key or geo name for one of these locales is a **defect** and fails CI (see gates below).
+  UI-key set and full bundled-geo name coverage, so **no link in their fallback chain is ever exercised
+  in practice** — every key resolves from the locale itself. Most chains are simply `[<self>, en]` with
+  English as an ultimate, never-hit safety net (e.g. `it` → `[it, en]`); a few include an intermediate
+  locale (`es-ES` → `[es-ES, es-MX, en]`, `ko` → `[ko, es-MX, en]`), but because coverage is complete
+  that intermediate is never reached either. A missing UI key or geo name for one of these locales is a
+  **defect** and fails CI (see gates below).
 
 - **Partial / best-effort by design** — `PARTIAL`: `ca`, `eu`, `yua`, `nah`. These are intentionally
   allowed to have gaps; genuine gaps resolve through each locale's fallback chain rather than failing:
