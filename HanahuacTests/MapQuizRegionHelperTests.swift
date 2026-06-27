@@ -206,30 +206,68 @@ final class MapQuizRegionHelperTests: XCTestCase {
         return max(latMeters, lonMeters)
     }
 
-    func testCameraDistanceCapStaysAtCandidatePinScaleNotOverlayScale() {
-        // A handful of tightly-clustered candidate pins (e.g. nearby seas) whose large
-        // overlay polygons/lines would otherwise span tens of degrees.
+    func testCameraDistanceCapAllowsContinentalZoomOut() {
+        // AC5: the zoom-OUT cap is now intentionally relaxed so the user can zoom out
+        // to a continental / world view to orient. A handful of tightly-clustered
+        // candidate pins (e.g. nearby seas) should still permit a far zoom-out.
         let pins: [(Double, Double)] = [(35, 18), (37, 20), (34, 22), (36, 16), (33, 19)]
         let region = QuizRegionMath.region(fittingPins: pins, jitter: .none)
-        // `cameraDistance` is the value that feeds the bounds' `maximumDistance` cap.
+        // `cameraDistance * headroom` is the value that feeds the bounds' `maximumDistance` cap.
         let cap = QuizRegionMath.cameraDistance(for: region) * QuizRegionMath.cameraDistanceHeadroom
 
-        // The cap must equal the framed candidate-pin span (times headroom) — i.e. stay
-        // at the pin scale, never zoom out beyond it.
-        XCTAssertLessThanOrEqual(
+        // The cap must be the framed candidate-pin span scaled up by the (large) headroom,
+        // so the user can pull the camera back well beyond the tight initial frame.
+        XCTAssertEqual(
             cap,
-            framedSpanMeters(of: region) * QuizRegionMath.cameraDistanceHeadroom + 1.0,
-            "Camera cap must frame the candidate-pin span, not zoom out further"
+            framedSpanMeters(of: region) * QuizRegionMath.cameraDistanceHeadroom,
+            accuracy: 1.0,
+            "Zoom-out cap must equal the framed span scaled by the relaxed headroom"
         )
 
-        // A full-course river / large sea polygon would span tens of degrees of latitude.
-        // The cap must be far below that, so overlay extent can never re-frame the camera.
+        // A full-course river / large sea polygon spans tens of degrees of latitude.
+        // The relaxed cap must now EXCEED that continental overlay extent so the user
+        // can zoom out far enough to see the whole continent / world.
         let overlayExtentMeters = 60 * QuizRegionMath.metersPerDegreeLatitude
-        XCTAssertLessThan(
+        XCTAssertGreaterThan(
             cap,
             overlayExtentMeters,
-            "Camera cap must exclude the large overlay (river course / sea polygon) extent"
+            "Relaxed zoom-out cap must permit a continental/world view beyond the overlay extent"
         )
+    }
+
+    func testRelaxedHeadroomIsLargeEnoughForContinentalZoomOut() {
+        // Guard the headroom constant itself: AC5 requires a large multiplier (the old
+        // value was 1.15, which blocked zoom-out). Keep it comfortably above the old cap.
+        XCTAssertGreaterThanOrEqual(
+            QuizRegionMath.cameraDistanceHeadroom,
+            12.0,
+            "Headroom must be large enough to permit continental/world zoom-out"
+        )
+    }
+
+    func testRegionFramingIsUnchangedByRelaxedZoomOut() throws {
+        // AC5 mandate: only the zoom-OUT range is relaxed. The INITIAL framing
+        // (center + span derived from ALL candidate pins) must be unchanged, and the
+        // minimum-distance / containment behaviour must still hold.
+        let countries = makeCountries()
+        let pins = countries.map { ($0.lat, $0.lon) }
+        let region = QuizRegionMath.region(fittingPins: pins, jitter: .none)
+
+        // Center is still the bounding-box center of all pins (no answer-pin hint leak).
+        let lats = pins.map(\.0)
+        let lons = pins.map(\.1)
+        let expectedCenterLat = try (XCTUnwrap(lats.min()) + XCTUnwrap(lats.max())) / 2
+        let expectedCenterLon = try (XCTUnwrap(lons.min()) + XCTUnwrap(lons.max())) / 2
+        XCTAssertEqual(region.center.latitude, expectedCenterLat, accuracy: 1e-6)
+        XCTAssertEqual(region.center.longitude, expectedCenterLon, accuracy: 1e-6)
+
+        // Initial framing still contains every pin (span derivation unchanged).
+        assertAllPinsVisible(pins, region: region)
+
+        // `MapCameraBounds.centerCoordinateBounds` is the very same framed region — the
+        // relaxation lives only in `maximumDistance`, never in the initial framing.
+        // The minimum (zoom-IN) distance is left at MapKit's default (unchanged).
+        _ = QuizRegionMath.cameraBounds(for: region)
     }
 
     func testCameraDistanceFramesEveryCandidatePin() {
