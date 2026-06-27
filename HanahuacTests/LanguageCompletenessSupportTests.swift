@@ -226,6 +226,42 @@ final class LanguageCompletenessSupportTests: XCTestCase {
         )
     }
 
+    // MARK: - pt-BR (Story 007) completeness
+
+    /// Brazilian Portuguese ships a COMPLETE UI string set: zero keys missing relative to the English
+    /// base. Uses the STRICT path — when the pt-BR `.lproj` is not mounted (the simulator unit-test
+    /// host has no asset-pack server), the strict helper THROWS
+    /// ``CompletenessError/stringBundleUnreachable``, which we translate into an `XCTSkip` so the test
+    /// never degrades to a false pass. When the pack IS mounted, a genuine missing key FAILS the
+    /// assertion.
+    func testBrazilianPortugueseHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .ptBR)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("pt-BR UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "pt-BR must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Brazilian Portuguese ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a
+    /// pt-BR name, so the bundled provider's pack reports no gaps for .ptBR. Uses the STRICT path, so a
+    /// missing/nil pt-BR pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testBrazilianPortugueseHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .ptBR)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "pt-BR is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "pt-BR is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
     // MARK: - Strict-path teeth (AC#2): a real gap FAILS rather than degrading to pass
 
     /// Restore the active provider after any test that swaps it, so a swapped stub never leaks into
