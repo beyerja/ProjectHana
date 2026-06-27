@@ -42,12 +42,14 @@ malformed script is **not** an error — the app still launches and emits the in
 | Field        | Type                              | Used by                | Meaning                                                        |
 | ------------ | --------------------------------- | ---------------------- | ------------------------------------------------------------- |
 | `action`     | string (required)                 | all                    | Which action to perform (see table below).                    |
-| `label`      | string                            | `tap`, `typeText`, `swipe`/`scroll` | Accessibility **label** of the target (preferred matcher). |
-| `identifier` | string                            | `tap`, `typeText`, `swipe`/`scroll` | Accessibility **identifier** of the target (fallback).     |
+| `label`      | string                            | `tap`, `typeText`, `swipe`/`scroll`, `pinch` | Accessibility **label** of the target (preferred matcher). |
+| `identifier` | string                            | `tap`, `typeText`, `swipe`/`scroll`, `pinch` | Accessibility **identifier** of the target (fallback).     |
 | `text`       | string                            | `typeText`             | Text to type into the resolved (or first) text field.        |
 | `x`, `y`     | number, normalized `0.0`–`1.0`    | `mapTap`               | Normalized tap coordinate within the app frame.              |
 | `direction`  | `up` \| `down` \| `left` \| `right` | `swipe`, `scroll`    | Direction to swipe/scroll (defaults to `up`).                |
 | `seconds`    | number                            | `wait`                 | How long to sleep.                                            |
+| `scale`      | number (**required** for `pinch`) | `pinch`                | Pinch scale factor: `< 1` zooms **out**, `> 1` zooms **in**. |
+| `velocity`   | number                            | `pinch`                | Pinch velocity (optional). Default is **scale-aware**: negative for zoom out (`scale < 1`), positive for zoom in (`scale > 1`). |
 
 > **Targeting order:** the driver resolves a target by accessibility **label first**, then falls back
 > to **identifier**. Unresolvable targets are skipped (not failed) so artifact collection continues.
@@ -61,12 +63,29 @@ malformed script is **not** an error — the app still launches and emits the in
 | `mapTap`     | Tap a normalized `x`/`y` coordinate (for the map, which has no addressable element).|
 | `swipe`      | Swipe the resolved element (or whole app) in `direction`.                          |
 | `scroll`     | Alias of `swipe` (same direction handling).                                        |
+| `pinch`      | Pinch the resolved element (or whole app) by `scale` (`<1` zoom out, `>1` zoom in).|
 | `wait`       | Sleep for `seconds`.                                                               |
 | `dumpTree`   | No extra action — realized by the element dump emitted after every step.           |
 | `screenshot` | No extra action — realized by the screenshot emitted after every step.             |
 
 Because a screenshot **and** element dump are written after *every* step, `dumpTree`/`screenshot`
 exist as explicit, self-documenting no-op markers in a script.
+
+> **`pinch` (zoom):** `scale` is **required** — `< 1` zooms **out**, `> 1` zooms **in**. `velocity`
+> is optional; when omitted its default is **scale-aware** — negative for zoom out (`scale < 1`) and
+> positive for zoom in (`scale > 1`), as `XCUIElement.pinch(withScale:velocity:)` requires the
+> velocity sign to match the scale (a mismatched pair raises `NSInvalidArgumentException`). An
+> explicitly supplied `velocity` is used as-is. The driver pinches the element resolved by `label`/`identifier`,
+> falling back to the whole app when no target is given (so it works on the map, which has no
+> addressable element). A `pinch` with no `scale`, or whose targeted element never appears, is
+> **skipped** (no crash, no failure) and per-step artifacts are still captured. Example — zoom the
+> map out:
+>
+> ```json
+> [
+>   { "action": "pinch", "scale": 0.5 }
+> ]
+> ```
 
 ## Environment-variable contract
 
