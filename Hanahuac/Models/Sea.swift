@@ -22,6 +22,7 @@ struct Sea: Codable, Identifiable, Hashable {
     let nameBn: String?
     let namePtBr: String?
     let nameAr: String?
+    let nameUr: String?
     let lat: Double
     let lon: Double
 
@@ -49,6 +50,7 @@ struct Sea: Codable, Identifiable, Hashable {
         nameBn: String? = nil,
         namePtBr: String? = nil,
         nameAr: String? = nil,
+        nameUr: String? = nil,
         lat: Double,
         lon: Double
     ) {
@@ -73,6 +75,7 @@ struct Sea: Codable, Identifiable, Hashable {
         self.nameBn = nameBn
         self.namePtBr = namePtBr
         self.nameAr = nameAr
+        self.nameUr = nameUr
         self.lat = lat
         self.lon = lon
     }
