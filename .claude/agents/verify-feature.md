@@ -34,46 +34,73 @@ second, direct means.
 
 If `.workflow/feature.md` contains a `## Acceptance Criteria` section with any visual criteria (criteria that reference UI behavior, screenshots, overlays, colors, gestures, animations, or other user-visible outcomes), perform the following visual end-to-end check after the functional/test checks above. If the feature is purely tooling/workflow with no visual criteria, skip this block.
 
-**Visual verification steps:**
+**Driver walkthrough across the feature's affected flows (default):**
+
+The end-to-end visual check is a broad **multi-screen** `just ui-walkthrough` run — *navigate* across
+every screen the feature touched and inspect per-step screenshots AND accessibility dumps — not a
+single static end-to-end screenshot.
 
 1. **Boot simulator** (no-op if already booted):
    ```sh
    just boot-sim
    ```
+   If the simulator cannot be booted, use the **sim-unavailable fallback** below.
 
-2. **Build and install the app** to the simulator:
+2. **Author a multi-screen action script.** Read the affected story specs to enumerate every flow the
+   feature changed, then write a JSON array to `.workflow/ui-walkthrough/scripts/feature.json` (use the
+   **Write** tool) with `tap`/`scroll`/`mapTap`/`typeText`/`pinch` steps that **navigate across each
+   affected screen** in turn (with `wait` between transitions), so one run spans the whole feature. The
+   action-script schema, targeting order, and full action set (including the story-001 `pinch` zoom
+   action) live in `.workflow/ui-walkthrough/README.md` — read it before authoring. A screenshot **and**
+   accessibility dump are captured after *every* step.
+
+3. **Run the driver** (each run is a compiled `xcodebuild test` cycle of ~tens of seconds, not a live
+   session):
    ```sh
-   just install-sim
+   just ui-walkthrough .workflow/ui-walkthrough/scripts/feature.json feature
    ```
+   The recipe prints the resolved artifact directory (`.workflow/ui-walkthrough/feature/`).
 
-3. **Launch the app:**
-   ```sh
-   just launch-sim || {
-     BUNDLE=$(grep -m1 'PRODUCT_BUNDLE_IDENTIFIER' Hanahuac.xcodeproj/project.pbxproj | sed 's/.*= "//;s/";//')
-     xcrun simctl launch booted "$BUNDLE"
-   }
-   sleep 2
-   ```
+4. **Inspect EVERY per-step artifact** in the printed run dir against the visual acceptance criteria in
+   `.workflow/feature.md` — each `NNN-step.png` with Claude's vision and each `NNN-step.json`
+   accessibility-element dump — covering every affected screen, not one screenshot.
 
-4. **Take a screenshot** and save it:
-   ```sh
-   mkdir -p .workflow/screenshots
-   just screenshot-sim .workflow/screenshots/feature-verify.png
-   ```
+5. **Hunt for concrete bug classes** while inspecting (see *Issue hunting* below).
 
-5. **Inspect the screenshot** using Claude's vision against the visual acceptance criteria in `.workflow/feature.md`.
+6. **If all visual criteria pass** (and no issue-class hit): proceed to mark the feature done (see Outcomes below).
 
-   **No tap automation available:** this toolset can launch + screenshot but cannot tap/navigate.
-   If a visual criterion lives behind navigation (e.g. a Settings screen reached by tapping a
-   toolbar item), verify what you can — that the app launches without crashing and the entry point
-   (e.g. the gear button) renders — and treat the deeper screen as verified when its presentation
-   logic is unit-tested AND it compiles into the shipped bundle. Record this as the verification
-   method; do not block the workflow waiting for a tap you cannot perform.
+7. **If any visual criterion fails, or any *Issue hunting* class is detected:**
+   List each failed criterion / detected issue and identify which story is responsible (by reading each
+   story's spec). Output STATUS: FAILED: `<criterion>` — story `<id>` so the story loop can retry that story.
 
-6. **If all visual criteria pass:** proceed to mark the feature done (see Outcomes below).
+### Issue hunting — actively look for these bug classes
 
-7. **If any visual criterion fails:**
-   List each failed criterion and identify which story is responsible (by reading each story's spec). Output STATUS: FAILED: `<criterion>` — story `<id>` so the story loop can retry that story.
+Inspect the per-step artifacts for the following and **FAIL** — attributing each to the responsible
+story — the moment any is found; do not pass a feature that merely "matches the spec":
+
+- **Empty accessibility tree = crash / app gone.** If any `NNN-step.json` is empty or has no app
+  elements, the app crashed or never launched at that step. Hard fail.
+- **Untranslated text.** English / source-language strings showing while the UI locale is set to
+  another language — a missing-translation defect.
+- **Duplicated, missing, obscured, or overlapping controls.** Two of a control that should appear once,
+  a required control absent from the dump, a control hidden behind another, or overlapping frames.
+
+When found, output STATUS: FAILED: `<criterion-or-issue>` — story `<id>` (per-criterion / per-story
+attribution, matching the outcome format below) so the responsible story is retried.
+
+### Sim-unavailable fallback
+
+This toolset's driver needs a simulator. If `just boot-sim` / `just install-sim` cannot run, do **not**
+block the workflow. Fall back to launch + a single screenshot inspected with vision. `.workflow/screenshots/`
+is gitignored and `screenshot-sim` does not create its parent dir, so create it first:
+```sh
+mkdir -p .workflow/screenshots
+just screenshot-sim .workflow/screenshots/feature-verify.png
+```
+For any criterion that lives behind
+navigation you cannot drive, verify what you can (the app launches without crashing and the entry point
+renders) and treat the deeper screen as verified when its presentation logic is unit-tested AND it
+compiles into the shipped bundle. Record the verification method used.
 
 ---
 
