@@ -17,7 +17,15 @@ struct MapQuizView: View {
     let category: CardCategory?
 
     @State private var session: MapQuizSession?
-    @State private var position: MapCameraPosition = .automatic
+    // Must NOT use .automatic: MapKit resolves .automatic by framing the union of ALL map content
+    // (annotations + featureOverlays). River polylines span 25–30° of latitude; large sea/mountain
+    // polygons can be continent-sized. Using .automatic as the initial value causes the first
+    // rendered frame to zoom out to a continental/global scale before buildSession() can apply the
+    // correct .region(...). We initialise to a zero-span region (not .automatic) so MapKit has no
+    // content-union framing to perform; buildSession() then immediately sets the real region before
+    // the Map view is first composed (session is nil until buildSession runs, so the Map only enters
+    // the view hierarchy after position has already been set to .region(s.mapRegion)).
+    @State private var position: MapCameraPosition = .region(MKCoordinateRegion())
     @State private var isAdvancing = false
     @State private var isPinching = false
     /// Owned handle for the auto-advance Task so it can be cancelled when the view is torn down
