@@ -1,0 +1,14 @@
+[
+  { "action": "dumpTree" },
+  { "action": "screenshot" },
+
+  { "action": "tap", "identifier": "home.mode.mapQuiz" },
+  { "action": "wait", "seconds": 2 },
+  { "action": "dumpTree" },
+  { "action": "screenshot" },
+
+  { "action": "pinch", "scale": 0.25 },
+  { "action": "wait", "seconds": 2 },
+  { "action": "dumpTree" },
+  { "action": "screenshot" }
+]

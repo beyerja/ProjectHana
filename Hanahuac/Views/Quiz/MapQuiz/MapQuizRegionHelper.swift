@@ -168,15 +168,21 @@ enum QuizRegionMath {
     static let metersPerDegreeLatitude = 111_320.0
 
     /// Headroom multiplier applied to the region span when deriving the camera's
-    /// `maximumDistance`. Slightly above the fitted span so the framed region is
-    /// honoured exactly while still hard-capping how far the camera may zoom out —
-    /// far below the extent of the full-course river / large sea-mountain overlays.
-    static let cameraDistanceHeadroom = 1.15
+    /// `maximumDistance` (the zoom-OUT cap). Intentionally large (~16x the fitted
+    /// span) so the user can zoom OUT to a continental / world view to orient
+    /// themselves, while the INITIAL framing remains pinned to the candidate-pin
+    /// region via `centerCoordinateBounds`. The old tight (1.15x) cap blocked
+    /// zoom-out entirely; that intent is reversed here for the zoom-out range only.
+    /// Note this only sets how far the user may *manually* zoom out — it does NOT
+    /// re-frame the initial camera, so overlay geometry (full river courses, large
+    /// sea/mountain polygons) still cannot drag the starting view off the pins.
+    static let cameraDistanceHeadroom = 16.0
 
     /// The camera distance (in metres, the units of `MapCameraBounds`/`MapCamera`)
-    /// that frames `region`'s span. Used to cap the map camera so it cannot zoom out
-    /// to encompass overlay geometry (full river courses, large sea/mountain border
-    /// polygons) that extends far beyond the candidate-pin bounding box.
+    /// that frames `region`'s span. Multiplied by `cameraDistanceHeadroom` to set the
+    /// camera's `maximumDistance` zoom-OUT cap, which is deliberately relaxed to a
+    /// continental/world scale so the user can zoom out to orient. The candidate-pin
+    /// region itself still anchors the INITIAL framing via `centerCoordinateBounds`.
     ///
     /// Derived from the larger on-screen (latitude-compression corrected) extent so
     /// neither axis clips, then converted from degrees to metres.
@@ -187,13 +193,15 @@ enum QuizRegionMath {
         return max(latExtentMeters, lonExtentMeters)
     }
 
-    /// Camera bounds that pin the map to the candidate-pin `region` so overlay
-    /// geometry (full-course river `linePath`, large sea/mountain `borderRings`)
-    /// cannot re-frame the camera away from the pins. Constrains the camera centre to
-    /// the region and caps the zoom-out distance to the region's framed span — the
-    /// single shared mechanism used by both `MapQuizView` and `MapLearningQuizView`
-    /// for every category. Framing stays derived purely from the bounding box of all
-    /// candidate pins, independent of which pin is the answer (no hint leak).
+    /// Camera bounds for the map quiz. The INITIAL framing is pinned to the
+    /// candidate-pin `region` via `centerCoordinateBounds`, derived purely from the
+    /// bounding box of all candidate pins, independent of which pin is the answer
+    /// (no hint leak) — overlay geometry (full-course river `linePath`, large
+    /// sea/mountain `borderRings`) can never re-frame the starting camera away from
+    /// the pins. The `maximumDistance` zoom-OUT cap is intentionally relaxed (via
+    /// `cameraDistanceHeadroom`) so the user can manually zoom out to a continental /
+    /// world view to orient themselves. The single shared mechanism used by both
+    /// `MapQuizView` and `MapLearningQuizView` for every category.
     static func cameraBounds(for region: MKCoordinateRegion) -> MapCameraBounds {
         MapCameraBounds(
             centerCoordinateBounds: region,
