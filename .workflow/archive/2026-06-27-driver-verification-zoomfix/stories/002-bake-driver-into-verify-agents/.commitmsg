@@ -1,0 +1,24 @@
+docs(workflow): bake ui-walkthrough driver into verify agents
+
+Make `just ui-walkthrough` (navigate + per-step screenshot AND accessibility
+dump inspection) the default verification for view-touching stories/features,
+replacing the single static screenshot, and direct verifiers to actively hunt
+concrete bug classes.
+
+- verify-story.md: trigger the driver walkthrough by changed `Hanahuac/Views/**`
+  files (not solely an opt-in `## Visual Verification` section); author a focused
+  per-story action script, run the driver, inspect every NNN-step.png + .json;
+  keep launch+single-screenshot / unit-tested-logic as the sim-unavailable
+  fallback.
+- verify-feature.md: replace the single end-to-end screenshot with a broad
+  multi-screen walkthrough navigating each affected flow; keep the existing
+  fallback (the prior "No tap automation" note) as the fallback path.
+- Both agents: enumerate bug classes to fail + loop back on — empty a11y tree
+  (crash/app-gone), untranslated text in a non-English locale, and
+  duplicated/missing/obscured/overlapping controls — not merely confirm the UI
+  "matches the spec." References `.workflow/ui-walkthrough/README.md` incl. the
+  story-001 `pinch` action.
+
+Agent-definition/doc edits only; no app code. lint + test green.
+
+Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>

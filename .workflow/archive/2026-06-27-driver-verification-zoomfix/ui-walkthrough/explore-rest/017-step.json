@@ -1,0 +1,1130 @@
+[
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "Hanahuac",
+    "type" : "XCUIElementType(rawValue: 2)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 4)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 54,
+      "width" : 402,
+      "x" : 0,
+      "y" : 62
+    },
+    "identifier" : "Progreso",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 21)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 44,
+      "width" : 44,
+      "x" : 16,
+      "y" : 62
+    },
+    "identifier" : "BackButton",
+    "label" : "Back",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.66666666666667,
+      "width" : 72.33333333333334,
+      "x" : 164.66666666666666,
+      "y" : 73.66666666666666
+    },
+    "identifier" : "",
+    "label" : "Progreso",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 46)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 170.8,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 978,
+      "width" : 402,
+      "x" : 0,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 17,
+      "width" : 16.999999999999996,
+      "x" : 17.333333333333332,
+      "y" : 133
+    },
+    "identifier" : "globe",
+    "label" : "Globe",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333343,
+      "width" : 64.66666666666666,
+      "x" : 43.666666666666664,
+      "y" : 134.33333333333334
+    },
+    "identifier" : "",
+    "label" : "Mostrando:",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333343,
+      "width" : 101.66666666666666,
+      "x" : 116.33333333333331,
+      "y" : 134.33333333333334
+    },
+    "identifier" : "",
+    "label" : "Español (México)",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 43,
+      "width" : 23.999999999999993,
+      "x" : 61.666666666666664,
+      "y" : 195
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 43,
+      "width" : 24,
+      "x" : 189,
+      "y" : 195
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 43,
+      "width" : 24,
+      "x" : 316.3333333333333,
+      "y" : 195
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333314,
+      "width" : 110,
+      "x" : 18.666666666666664,
+      "y" : 244
+    },
+    "identifier" : "",
+    "label" : "Tarjetas estudiadas",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333314,
+      "width" : 66,
+      "x" : 168,
+      "y" : 244
+    },
+    "identifier" : "",
+    "label" : "Vencen hoy",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333314,
+      "width" : 79.33333333333331,
+      "x" : 288.66666666666663,
+      "y" : 244
+    },
+    "identifier" : "",
+    "label" : "Racha de días",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.333333333333314,
+      "width" : 106.33333333333333,
+      "x" : 16,
+      "y" : 302.3333333333333
+    },
+    "identifier" : "",
+    "label" : "Por categoría",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333371,
+      "width" : 57.66666666666666,
+      "x" : 28,
+      "y" : 343
+    },
+    "identifier" : "",
+    "label" : "Categoría",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 12.333333969116211,
+      "width" : 12.333333969116211,
+      "x" : 218,
+      "y" : 344
+    },
+    "identifier" : "circle",
+    "label" : "circle",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 13,
+      "width" : 10.333333969116211,
+      "x" : 263,
+      "y" : 343.66666666666663
+    },
+    "identifier" : "flame",
+    "label" : "Flame",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 13,
+      "width" : 10.666666984558105,
+      "x" : 306.66666666666663,
+      "y" : 343.66666666666663
+    },
+    "identifier" : "arrow.clockwise",
+    "label" : "Refresh",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 13,
+      "width" : 13.666666984558105,
+      "x" : 349.3333333333333,
+      "y" : 343.66666666666663
+    },
+    "identifier" : "star.fill",
+    "label" : "Favourite",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 44.33333333333333,
+      "x" : 28,
+      "y" : 376.66666666666663
+    },
+    "identifier" : "",
+    "label" : "Países",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 28.333333333333343,
+      "x" : 209.83333333333334,
+      "y" : 376.66666666666663
+    },
+    "identifier" : "",
+    "label" : "788",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 263,
+      "y" : 376.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 307,
+      "y" : 376.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 351,
+      "y" : 376.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 29.33333333333333,
+      "x" : 28,
+      "y" : 415.66666666666663
+    },
+    "identifier" : "",
+    "label" : "Ríos",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 19.666666666666657,
+      "x" : 214.16666666666666,
+      "y" : 415.66666666666663
+    },
+    "identifier" : "",
+    "label" : "96",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 263,
+      "y" : 415.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 307,
+      "y" : 415.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 351,
+      "y" : 415.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 67.66666666666666,
+      "x" : 28,
+      "y" : 454.66666666666663
+    },
+    "identifier" : "",
+    "label" : "Montañas",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 19.666666666666657,
+      "x" : 214.16666666666666,
+      "y" : 454.66666666666663
+    },
+    "identifier" : "",
+    "label" : "69",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 263,
+      "y" : 454.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 307,
+      "y" : 454.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 351,
+      "y" : 454.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 42.33333333333333,
+      "x" : 28,
+      "y" : 493.66666666666663
+    },
+    "identifier" : "",
+    "label" : "Mares",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 19.666666666666657,
+      "x" : 214.16666666666666,
+      "y" : 493.66666666666663
+    },
+    "identifier" : "",
+    "label" : "60",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 263,
+      "y" : 493.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 307,
+      "y" : 493.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 10,
+      "x" : 351,
+      "y" : 493.66666666666663
+    },
+    "identifier" : "",
+    "label" : "0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.33333333333337,
+      "width" : 201.33333333333331,
+      "x" : 16,
+      "y" : 549.6666666666666
+    },
+    "identifier" : "",
+    "label" : "Tendencias con el tiempo",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 31,
+      "width" : 370,
+      "x" : 16,
+      "y" : 586
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 37)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 32,
+      "width" : 123,
+      "x" : 16,
+      "y" : 586
+    },
+    "identifier" : "",
+    "label" : "7 días",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 32,
+      "width" : 123,
+      "x" : 139,
+      "y" : 586
+    },
+    "identifier" : "",
+    "label" : "30 días",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 32,
+      "width" : 124,
+      "x" : 262,
+      "y" : 586
+    },
+    "identifier" : "",
+    "label" : "Todo",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 31,
+      "width" : 370,
+      "x" : 16,
+      "y" : 627
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 37)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 32,
+      "width" : 74,
+      "x" : 16,
+      "y" : 627
+    },
+    "identifier" : "",
+    "label" : "Todas",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 32,
+      "width" : 74,
+      "x" : 90,
+      "y" : 627
+    },
+    "identifier" : "",
+    "label" : "Países",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 32,
+      "width" : 74,
+      "x" : 164,
+      "y" : 627
+    },
+    "identifier" : "",
+    "label" : "Ríos",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 32,
+      "width" : 74,
+      "x" : 238,
+      "y" : 627
+    },
+    "identifier" : "",
+    "label" : "Montañas",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 32,
+      "width" : 74,
+      "x" : 312,
+      "y" : 627
+    },
+    "identifier" : "",
+    "label" : "Mares",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 308.66666666666663,
+      "x" : 46.666666666666686,
+      "y" : 706
+    },
+    "identifier" : "",
+    "label" : "Sigue aprendiendo para ver aquí tu progreso.",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.33331298828125,
+      "width" : 368.6666564941406,
+      "x" : 16,
+      "y" : 784
+    },
+    "identifier" : "",
+    "label" : "Por tipo de prueba",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.33333333333337,
+      "width" : 146.66666666666666,
+      "x" : 16,
+      "y" : 784
+    },
+    "identifier" : "",
+    "label" : "Por tipo de prueba",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 6.333333492279053,
+      "width" : 10.666666984558105,
+      "x" : 373.99999999999994,
+      "y" : 791
+    },
+    "identifier" : "chevron.down",
+    "label" : "Go Down",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.33331298828125,
+      "width" : 368.6666564941406,
+      "x" : 16,
+      "y" : 832.3333129882812
+    },
+    "identifier" : "",
+    "label" : "Por idioma",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.33333333333337,
+      "width" : 84.33333333333333,
+      "x" : 16,
+      "y" : 832.3333333333334
+    },
+    "identifier" : "",
+    "label" : "Por idioma",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 6.333333492279053,
+      "width" : 10.666666984558105,
+      "x" : 373.99999999999994,
+      "y" : 839.3333333333333
+    },
+    "identifier" : "chevron.down",
+    "label" : "Go Down",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.33333333333337,
+      "width" : 150,
+      "x" : 16,
+      "y" : 880.6666666666667
+    },
+    "identifier" : "",
+    "label" : "Niveles de dominio",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 17,
+      "width" : 17,
+      "x" : 29.666666666666664,
+      "y" : 920
+    },
+    "identifier" : "circle",
+    "label" : "circle",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 32,
+      "x" : 58,
+      "y" : 919.5000000000001
+    },
+    "identifier" : "",
+    "label" : "New",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333371,
+      "width" : 77,
+      "x" : 297,
+      "y" : 921.3333333333335
+    },
+    "identifier" : "",
+    "label" : "Sin comenzar",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 14,
+      "x" : 31,
+      "y" : 963
+    },
+    "identifier" : "flame",
+    "label" : "Flame",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 62.33333333333333,
+      "x" : 58,
+      "y" : 963.0000000000001
+    },
+    "identifier" : "",
+    "label" : "Learning",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333371,
+      "width" : 55,
+      "x" : 319,
+      "y" : 964.8333333333335
+    },
+    "identifier" : "",
+    "label" : "Reps. 1–2",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 14.666666984558105,
+      "x" : 30.666666666666664,
+      "y" : 1007
+    },
+    "identifier" : "arrow.clockwise",
+    "label" : "Refresh",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 17.999999999999886,
+      "width" : 51,
+      "x" : 58,
+      "y" : 1007.0000000000001
+    },
+    "identifier" : "",
+    "label" : "Review",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333371,
+      "width" : 57.333333333333314,
+      "x" : 316.6666666666667,
+      "y" : 1008.8333333333335
+    },
+    "identifier" : "",
+    "label" : "Reps. 3–4",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 18.66666793823243,
+      "x" : 28.666666666666664,
+      "y" : 1051
+    },
+    "identifier" : "star.fill",
+    "label" : "Favourite",
+    "type" : "XCUIElementType(rawValue: 43)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 67.66666666666666,
+      "x" : 58,
+      "y" : 1051
+    },
+    "identifier" : "",
+    "label" : "Mastered",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333485,
+      "width" : 106,
+      "x" : 268,
+      "y" : 1052.8333333333335
+    },
+    "identifier" : "",
+    "label" : "Reps. ≥ 5, EF ≥ 2.0",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 696,
+      "width" : 30,
+      "x" : 369,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "Vertical scroll bar, 2 pages",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 %"
+  },
+  {
+    "frame" : {
+      "height" : 539.3333333333334,
+      "width" : 3,
+      "x" : 396,
+      "y" : 119
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 696,
+      "width" : 30,
+      "x" : 369,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "Vertical scroll bar, 2 pages",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 %"
+  },
+  {
+    "frame" : {
+      "height" : 539.3333333333334,
+      "width" : 3,
+      "x" : 396,
+      "y" : 119
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 4)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  }
+]

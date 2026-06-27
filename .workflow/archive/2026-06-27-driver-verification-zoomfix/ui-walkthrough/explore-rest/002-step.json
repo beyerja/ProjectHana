@@ -1,0 +1,638 @@
+[
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "Hanahuac",
+    "type" : "XCUIElementType(rawValue: 2)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 4)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 54,
+      "width" : 402,
+      "x" : 0,
+      "y" : 62
+    },
+    "identifier" : "Quiz de Capitales",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 21)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 44,
+      "width" : 44,
+      "x" : 16,
+      "y" : 62
+    },
+    "identifier" : "BackButton",
+    "label" : "Back",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 36,
+      "width" : 57.33333333333334,
+      "x" : 76,
+      "y" : 66
+    },
+    "identifier" : "",
+    "label" : "Salir",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 36,
+      "width" : 57.33333333333334,
+      "x" : 76,
+      "y" : 66
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 36,
+      "width" : 57.33333333333333,
+      "x" : 75.99999999999999,
+      "y" : 66
+    },
+    "identifier" : "",
+    "label" : "Salir",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.66666666666667,
+      "width" : 138.66666666666663,
+      "x" : 149.33333333333337,
+      "y" : 73.66666666666666
+    },
+    "identifier" : "",
+    "label" : "Quiz de Capitales",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 46)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 170.8,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 308.3333333333333,
+      "width" : 402,
+      "x" : 0,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 370,
+      "x" : 16,
+      "y" : 132
+    },
+    "identifier" : "",
+    "label" : "0 \/ 197 graduadas",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 correctas"
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 122.33333333333331,
+      "x" : 16,
+      "y" : 132
+    },
+    "identifier" : "",
+    "label" : "0 \/ 197 graduadas",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 71.33333333333331,
+      "x" : 314.6666666666667,
+      "y" : 132
+    },
+    "identifier" : "",
+    "label" : "0 correcto",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 72,
+      "width" : 370,
+      "x" : 16,
+      "y" : 178
+    },
+    "identifier" : "",
+    "label" : "Pregunta",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : "¿Cuál es la capital de Micronesia?"
+  },
+  {
+    "frame" : {
+      "height" : 34,
+      "width" : 370,
+      "x" : 16,
+      "y" : 278
+    },
+    "identifier" : "quiz.input",
+    "label" : "Respuesta",
+    "type" : "XCUIElementType(rawValue: 49)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 328
+    },
+    "identifier" : "quiz.submit",
+    "label" : "Verificar",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 423,
+      "width" : 30,
+      "x" : 369,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "Vertical scroll bar, 1 page",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 %"
+  },
+  {
+    "frame" : {
+      "height" : 302.33333333333337,
+      "width" : 3,
+      "x" : 396,
+      "y" : 233.66666666666663
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 423,
+      "width" : 30,
+      "x" : 369,
+      "y" : 116
+    },
+    "identifier" : "",
+    "label" : "Vertical scroll bar, 1 page",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 %"
+  },
+  {
+    "frame" : {
+      "height" : 302.33333333333337,
+      "width" : 3,
+      "x" : 396,
+      "y" : 233.66666666666663
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 4)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 335,
+      "width" : 402,
+      "x" : 0,
+      "y" : 539
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 335,
+      "width" : 402,
+      "x" : 0,
+      "y" : 539
+    },
+    "identifier" : "inputView",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 4)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 335,
+      "width" : 402,
+      "x" : 0,
+      "y" : 539
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 335,
+      "width" : 402,
+      "x" : 0,
+      "y" : 539
+    },
+    "identifier" : "UIContinuousPathIntroductionView",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 335,
+      "width" : 402,
+      "x" : 0,
+      "y" : 539
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 301,
+      "width" : 320,
+      "x" : 41,
+      "y" : 539
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 253,
+      "width" : 320,
+      "x" : 41,
+      "y" : 539
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 253,
+      "width" : 320,
+      "x" : 41,
+      "y" : 539
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 46)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 250.66666666666663,
+      "width" : 320,
+      "x" : 41,
+      "y" : 539
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 158.33333333333337,
+      "width" : 207,
+      "x" : 97.66666666666669,
+      "y" : 559
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 124.33333333333337,
+      "width" : 207,
+      "x" : 97.66666666666669,
+      "y" : 593
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 46.33333333333337,
+      "width" : 320,
+      "x" : 41,
+      "y" : 737.3333333333334
+    },
+    "identifier" : "",
+    "label" : "Speed up your typing by sliding your finger across the letters to compose a word.",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 21,
+      "width" : 224,
+      "x" : 89,
+      "y" : 819
+    },
+    "identifier" : "",
+    "label" : "Continue",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 22,
+      "width" : 76,
+      "x" : 163,
+      "y" : 818.3333333333333
+    },
+    "identifier" : "",
+    "label" : "Continue",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  }
+]

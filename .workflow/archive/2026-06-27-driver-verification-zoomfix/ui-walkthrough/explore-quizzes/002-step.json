@@ -1,0 +1,686 @@
+[
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "Hanahuac",
+    "type" : "XCUIElementType(rawValue: 2)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 4)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 54,
+      "width" : 402,
+      "x" : 0,
+      "y" : 62
+    },
+    "identifier" : "Aprendizaje en mapa",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 21)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 44,
+      "width" : 44,
+      "x" : 16,
+      "y" : 62
+    },
+    "identifier" : "BackButton",
+    "label" : "Back",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 36,
+      "width" : 57.33333333333334,
+      "x" : 76,
+      "y" : 66
+    },
+    "identifier" : "",
+    "label" : "Salir",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 36,
+      "width" : 57.33333333333334,
+      "x" : 76,
+      "y" : 66
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 36,
+      "width" : 57.33333333333333,
+      "x" : 75.99999999999999,
+      "y" : 66
+    },
+    "identifier" : "",
+    "label" : "Salir",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.66666666666667,
+      "width" : 166.66666666666663,
+      "x" : 149.33333333333337,
+      "y" : 73.66666666666666
+    },
+    "identifier" : "",
+    "label" : "Aprendizaje en mapa",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 724,
+      "width" : 402,
+      "x" : 0,
+      "y" : 116
+    },
+    "identifier" : "map.tapCountry",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 57)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "AnnotationContainer",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 304.2889602127445,
+      "y" : 198.2067338619555
+    },
+    "identifier" : "",
+    "label" : "Map pin",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 304.2889602127445,
+      "y" : 198.2067338619555
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 304.2889602127445,
+      "y" : 198.2067338619555
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 304.2889602127445,
+      "y" : 198.2067338619555
+    },
+    "identifier" : "",
+    "label" : "Guyana",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 359.2960317888114,
+      "y" : 224.87770671081051
+    },
+    "identifier" : "",
+    "label" : "Map pin",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 359.2960317888114,
+      "y" : 224.87770671081051
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 359.2960317888114,
+      "y" : 224.87770671081051
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 359.2960317888114,
+      "y" : 224.87770671081051
+    },
+    "identifier" : "",
+    "label" : "Surinam",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 282.9705235478598,
+      "y" : 715.5985578357727
+    },
+    "identifier" : "",
+    "label" : "Map pin",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 282.9705235478598,
+      "y" : 715.5985578357727
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 282.9705235478598,
+      "y" : 715.5985578357727
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 282.9705235478598,
+      "y" : 715.5985578357727
+    },
+    "identifier" : "",
+    "label" : "Paraguay",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 203.7600045371574,
+      "y" : 169.4055111791586
+    },
+    "identifier" : "",
+    "label" : "Map pin",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 203.7600045371574,
+      "y" : 169.4055111791586
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 203.7600045371574,
+      "y" : 169.4055111791586
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 203.7600045371574,
+      "y" : 169.4055111791586
+    },
+    "identifier" : "",
+    "label" : "Venezuela",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28.00000000000003,
+      "width" : 28,
+      "x" : 35.6486182839558,
+      "y" : 238.6895092343186
+    },
+    "identifier" : "",
+    "label" : "Map pin",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28.00000000000003,
+      "width" : 28,
+      "x" : 35.6486182839558,
+      "y" : 238.6895092343186
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28.00000000000003,
+      "width" : 28,
+      "x" : 35.6486182839558,
+      "y" : 238.6895092343186
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28.00000000000003,
+      "width" : 28,
+      "x" : 35.6486182839558,
+      "y" : 238.6895092343186
+    },
+    "identifier" : "",
+    "label" : "Colombia",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 193.09825736582246,
+      "y" : 619.1678182429943
+    },
+    "identifier" : "",
+    "label" : "Map pin",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 193.09825736582246,
+      "y" : 619.1678182429943
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 193.09825736582246,
+      "y" : 619.1678182429943
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 193.09825736582246,
+      "y" : 619.1678182429943
+    },
+    "identifier" : "",
+    "label" : "Bolivia",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 43.464168882478475,
+      "y" : 547.6960267491947
+    },
+    "identifier" : "",
+    "label" : "Map pin",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 43.464168882478475,
+      "y" : 547.6960267491947
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 43.464168882478475,
+      "y" : 547.6960267491947
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 28,
+      "width" : 28,
+      "x" : 43.464168882478475,
+      "y" : 547.6960267491947
+    },
+    "identifier" : "",
+    "label" : "Perú",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 10.740234375,
+      "width" : 28.57526695728302,
+      "x" : 70.24929682413736,
+      "y" : 819.259765625
+    },
+    "identifier" : "",
+    "label" : "Legal",
+    "type" : "XCUIElementType(rawValue: 42)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 87,
+      "width" : 179.33333333333331,
+      "x" : 111.33333333333333,
+      "y" : 124
+    },
+    "identifier" : "",
+    "label" : "Encuentra en el mapa: Perú",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 \/ 197 graduadas, 0 de 3 correctas seguidas"
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333343,
+      "width" : 74.66666666666666,
+      "x" : 163.66666666666666,
+      "y" : 136
+    },
+    "identifier" : "",
+    "label" : "Toca el mapa",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 26.333333333333343,
+      "width" : 47.66666666666666,
+      "x" : 177.16666666666666,
+      "y" : 154.33333333333334
+    },
+    "identifier" : "",
+    "label" : "Perú",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333314,
+      "width" : 101,
+      "x" : 131.33333333333331,
+      "y" : 184.66666666666669
+    },
+    "identifier" : "",
+    "label" : "0 \/ 197 graduadas",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 14.333333333333314,
+      "width" : 26.33333333333337,
+      "x" : 244.33333333333331,
+      "y" : 184.66666666666669
+    },
+    "identifier" : "",
+    "label" : "0 \/ 3",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  }
+]
