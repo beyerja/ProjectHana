@@ -118,16 +118,18 @@ final class UIDriverTests: XCTestCase {
     /// waited for; if it never appears the step is skipped (no crash, no failure) so artifact
     /// collection continues.
     ///
-    /// `XCUIElement.pinch(withScale:velocity:)` requires the velocity sign to match the scale:
-    /// NEGATIVE for zoom out (`scale < 1`) and POSITIVE for zoom in (`scale > 1`); an invalid
-    /// scale/velocity pairing raises `NSInvalidArgumentException`. So when the caller omits
-    /// `velocity` we derive a correctly-signed default from the scale; an explicit `velocity` is
-    /// respected as-is.
+    /// `XCUIElement.pinch(withScale:velocity:)` requires `scale > 0` AND a non-zero velocity whose
+    /// sign matches the scale: NEGATIVE for zoom out (`scale < 1`) and POSITIVE for zoom in
+    /// (`scale > 1`); a non-positive scale or zero/mismatched velocity raises
+    /// `NSInvalidArgumentException`. So a `pinch` whose `scale` is absent or non-positive is skipped
+    /// (same as other unresolvable steps), and a nil OR zero `velocity` is replaced with a
+    /// correctly-signed default derived from the scale; an explicit non-zero `velocity` is respected.
     private func pinch(_ step: UIActionStep, in app: XCUIApplication) {
-        guard let scale = step.scale else {
+        guard let scale = step.scale, scale > 0 else {
             return
         }
-        let velocity = step.velocity ?? (scale < 1 ? -1 : 1)
+        let resolvedVelocity = step.velocity ?? 0
+        let velocity = resolvedVelocity == 0 ? (scale < 1 ? -1 : 1) : resolvedVelocity
         if let element = resolveElement(step, in: app) {
             if element.waitForExistence(timeout: elementTimeout) {
                 element.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
