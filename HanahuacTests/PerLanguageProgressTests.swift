@@ -200,6 +200,13 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.ar, .en)
     }
 
+    /// Story 010 (Urdu): ur keeps a progress track fully isolated from its English fallback target;
+    /// they are distinct language codes, so the same factID/day coexists across the two and ur progress
+    /// never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForUrdu() {
+        assertProgressIsolated(.ur, .en)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {

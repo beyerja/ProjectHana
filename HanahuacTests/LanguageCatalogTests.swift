@@ -99,18 +99,23 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ur).displayName, "اردو")
     }
 
-    /// The remaining content-pending language is COMPLETE-content by contract: it routes straight to
-    /// English as an ultimate, never-hit safety net, NOT through es-MX/es-ES. `.ja` (story 003),
-    /// `.zhHans` (story 004), `.hi` (story 005), `.bn` (story 006), `.ptBR` (story 007) and `.ar`
-    /// (story 009) have shipped complete content and are asserted separately below.
-    func testFallbackChainForContentPendingLanguagesGoStraightToEnglish() {
+    /// Urdu has shipped COMPLETE content (story 010): it routes straight to English as a never-hit
+    /// safety net `[ur, en]`, NOT through es-MX/es-ES, and its catalog identity (display name "اردو",
+    /// ODR tag "lang-ur", RTL direction) is unchanged. As of story 010 NO language remains
+    /// content-pending — every story-002 placeholder ships complete content.
+    func testFallbackChainForUrduGoesStraightToEnglish() {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ur).fallbackChain, [.ur, .en])
-        for locale in [AppLocale.ur] {
-            XCTAssertFalse(
-                locale.fallsBackThroughSpanish,
-                "\(locale.rawValue) is COMPLETE content and must not route through Spanish"
-            )
-        }
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .ur).displayName, "اردو")
+        XCTAssertEqual(AppLocale.ur.odrTags, ["lang-ur"])
+        XCTAssertEqual(
+            LanguageCatalog.descriptor(for: .ur).textDirection,
+            .rightToLeft,
+            "ur must stay right-to-left"
+        )
+        XCTAssertFalse(
+            AppLocale.ur.fallsBackThroughSpanish,
+            "ur is COMPLETE content and must not route through Spanish"
+        )
     }
 
     /// Arabic has shipped COMPLETE content (story 009): it routes straight to English as a never-hit
