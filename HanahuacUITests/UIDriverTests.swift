@@ -55,6 +55,8 @@ final class UIDriverTests: XCTestCase {
             mapTap(step, in: app)
         case .swipe, .scroll:
             swipe(step, in: app)
+        case .pinch:
+            pinch(step, in: app)
         case .wait:
             wait(step)
         case .dumpTree, .screenshot:
@@ -109,6 +111,24 @@ final class UIDriverTests: XCTestCase {
         case .right:
             element.swipeRight()
         }
+    }
+
+    /// Pinch the resolved element (or the whole app) to zoom. `scale` is required (< 1 zooms out,
+    /// > 1 zooms in) — the step is skipped when it is absent. A label/identifier-targeted element is
+    /// waited for; if it never appears the step is skipped (no crash, no failure) so artifact
+    /// collection continues.
+    private func pinch(_ step: UIActionStep, in app: XCUIApplication) {
+        guard let scale = step.scale else {
+            return
+        }
+        let velocity = step.velocity ?? 1
+        if let element = resolveElement(step, in: app) {
+            if element.waitForExistence(timeout: elementTimeout) {
+                element.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
+            }
+            return
+        }
+        app.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
     }
 
     /// Sleep for the requested number of seconds.

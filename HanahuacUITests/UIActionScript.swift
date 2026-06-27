@@ -10,6 +10,7 @@ enum UIActionKind: String, Codable {
     case mapTap
     case swipe
     case scroll
+    case pinch
     case wait
     case dumpTree
     case screenshot
@@ -43,6 +44,10 @@ struct UIActionStep: Codable {
     let direction: UISwipeDirection?
     /// Seconds to wait for `wait`.
     let seconds: Double?
+    /// Pinch scale factor for `pinch` (required for it): < 1 zooms out, > 1 zooms in.
+    let scale: Double?
+    /// Pinch velocity for `pinch` (optional; defaults to 1 when absent).
+    let velocity: Double?
 }
 
 /// Loads the action script from the environment, returning an EMPTY step list when no script is
