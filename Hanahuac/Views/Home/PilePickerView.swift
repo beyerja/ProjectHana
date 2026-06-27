@@ -76,7 +76,8 @@ struct PilePickerView: View {
 
             Spacer()
 
-            Image(systemName: "chevron.right")
+            // `chevron.forward` (not `.right`) so the disclosure indicator mirrors under RTL.
+            Image(systemName: "chevron.forward")
                 .font(.caption)
                 .foregroundStyle(.tertiary)
         }

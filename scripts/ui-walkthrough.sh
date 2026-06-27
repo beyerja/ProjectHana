@@ -80,6 +80,14 @@ export TEST_RUNNER_HANA_UI_RUN="${RUN_NAME}"
 TEST_RUNNER_HANA_UI_SCRIPT="$(cat "${SCRIPT_PATH}")"
 export TEST_RUNNER_HANA_UI_SCRIPT
 
+# Forward an optional force-RTL request into the runner. When HANA_FORCE_RTL is set (e.g. by the
+# `ui-walkthrough-rtl` recipe), the driver launches the app with the `-HANA_FORCE_RTL` argument so the
+# captured artifacts show the mirrored right-to-left layout — letting stories 009/010 verify ar/ur
+# visually before that content exists.
+if [[ -n "${HANA_FORCE_RTL:-}" ]]; then
+    export TEST_RUNNER_HANA_FORCE_RTL="${HANA_FORCE_RTL}"
+fi
+
 xcodebuild test \
     -project "${ROOT}/Hanahuac.xcodeproj" \
     -scheme Hanahuac \

@@ -147,7 +147,9 @@ struct HomeView: View {
             Spacer()
 
             if isEnabled {
-                Image(systemName: "chevron.right")
+                // `chevron.forward` (not `.right`) so the disclosure indicator mirrors to point
+                // leftward under a right-to-left layout direction.
+                Image(systemName: "chevron.forward")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(Theme.Palette.textSecondary.opacity(0.6))
             }
