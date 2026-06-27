@@ -2,6 +2,7 @@
   {
     "id": "nile",
     "name": "Nile",
+    "name_bn": "নীল নদ",
     "name_hi": "नील नदी",
     "name_zh_hans": "尼罗河",
     "name_ja": "ナイル川",
@@ -26,6 +27,7 @@
   {
     "id": "amazon",
     "name": "Amazon",
+    "name_bn": "আমাজন নদী",
     "name_hi": "अमेज़न नदी",
     "name_zh_hans": "亚马逊河",
     "name_ja": "アマゾン川",
@@ -51,6 +53,7 @@
   {
     "id": "yangtze",
     "name": "Yangtze",
+    "name_bn": "ইয়াংসি নদী",
     "name_hi": "यांग्त्ज़ी नदी",
     "name_zh_hans": "长江",
     "name_ja": "長江",
@@ -74,6 +77,7 @@
   {
     "id": "mississippi",
     "name": "Mississippi",
+    "name_bn": "মিসিসিপি নদী",
     "name_hi": "मिसिसिपी नदी",
     "name_zh_hans": "密西西比河",
     "name_ja": "ミシシッピ川",
@@ -99,6 +103,7 @@
   {
     "id": "yenisei",
     "name": "Yenisei",
+    "name_bn": "ইয়েনিসেই নদী",
     "name_hi": "येनिसेई नदी",
     "name_zh_hans": "叶尼塞河",
     "name_ja": "エニセイ川",
@@ -121,6 +126,7 @@
   {
     "id": "yellow-river",
     "name": "Yellow River",
+    "name_bn": "হোয়াংহো",
     "name_hi": "ह्वांग हो",
     "name_zh_hans": "黄河",
     "name_ja": "黄河",
@@ -144,6 +150,7 @@
   {
     "id": "ob",
     "name": "Ob",
+    "name_bn": "ওব নদী",
     "name_hi": "ओब नदी",
     "name_zh_hans": "鄂毕河",
     "name_ja": "オビ川",
@@ -166,6 +173,7 @@
   {
     "id": "congo",
     "name": "Congo",
+    "name_bn": "কঙ্গো নদী",
     "name_hi": "कांगो नदी",
     "name_zh_hans": "刚果河",
     "name_ja": "コンゴ川",
@@ -189,6 +197,7 @@
   {
     "id": "lena",
     "name": "Lena",
+    "name_bn": "লেনা নদী",
     "name_hi": "लीना नदी",
     "name_zh_hans": "勒拿河",
     "name_ja": "レナ川",
@@ -211,6 +220,7 @@
   {
     "id": "niger",
     "name": "Niger",
+    "name_bn": "নাইজার নদী",
     "name_hi": "नाइजर नदी",
     "name_zh_hans": "尼日尔河",
     "name_ja": "ニジェール川",
@@ -234,6 +244,7 @@
   {
     "id": "mekong",
     "name": "Mekong",
+    "name_bn": "মেকং নদী",
     "name_hi": "मेकांग नदी",
     "name_zh_hans": "湄公河",
     "name_ja": "メコン川",
@@ -257,6 +268,7 @@
   {
     "id": "missouri",
     "name": "Missouri",
+    "name_bn": "মিজৌরি নদী",
     "name_hi": "मिसौरी नदी",
     "name_zh_hans": "密苏里河",
     "name_ja": "ミズーリ川",
@@ -279,6 +291,7 @@
   {
     "id": "volga",
     "name": "Volga",
+    "name_bn": "ভলগা নদী",
     "name_hi": "वोल्गा नदी",
     "name_zh_hans": "伏尔加河",
     "name_ja": "ヴォルガ川",
@@ -302,6 +315,7 @@
   {
     "id": "zambezi",
     "name": "Zambezi",
+    "name_bn": "জাম্বেজি নদী",
     "name_hi": "ज़ाम्बेज़ी नदी",
     "name_zh_hans": "赞比西河",
     "name_ja": "ザンベジ川",
@@ -324,6 +338,7 @@
   {
     "id": "ganges",
     "name": "Ganges",
+    "name_bn": "গঙ্গা",
     "name_hi": "गंगा",
     "name_zh_hans": "恒河",
     "name_ja": "ガンジス川",
@@ -347,6 +362,7 @@
   {
     "id": "indus",
     "name": "Indus",
+    "name_bn": "সিন্ধু নদ",
     "name_hi": "सिंधु नदी",
     "name_zh_hans": "印度河",
     "name_ja": "インダス川",
@@ -370,6 +386,7 @@
   {
     "id": "murray",
     "name": "Murray",
+    "name_bn": "মারে নদী",
     "name_hi": "मरे नदी",
     "name_zh_hans": "墨累河",
     "name_ja": "マレー川",
@@ -392,6 +409,7 @@
   {
     "id": "euphrates",
     "name": "Euphrates",
+    "name_bn": "ইউফ্রেটিস নদী",
     "name_hi": "फ़रात नदी",
     "name_zh_hans": "幼发拉底河",
     "name_ja": "ユーフラテス川",
@@ -415,6 +433,7 @@
   {
     "id": "tigris",
     "name": "Tigris",
+    "name_bn": "টাইগ্রিস নদী",
     "name_hi": "दजला नदी",
     "name_zh_hans": "底格里斯河",
     "name_ja": "ティグリス川",
@@ -438,6 +457,7 @@
   {
     "id": "rhine",
     "name": "Rhine",
+    "name_bn": "রাইন নদী",
     "name_hi": "राइन नदी",
     "name_zh_hans": "莱茵河",
     "name_ja": "ライン川",
@@ -461,6 +481,7 @@
   {
     "id": "danube",
     "name": "Danube",
+    "name_bn": "দানিউব নদী",
     "name_hi": "डैन्यूब नदी",
     "name_zh_hans": "多瑙河",
     "name_ja": "ドナウ川",
@@ -484,6 +505,7 @@
   {
     "id": "colorado",
     "name": "Colorado",
+    "name_bn": "কলোরাডো নদী",
     "name_hi": "कोलोराडो नदी",
     "name_zh_hans": "科罗拉多河",
     "name_ja": "コロラド川",
@@ -508,6 +530,7 @@
   {
     "id": "columbia",
     "name": "Columbia",
+    "name_bn": "কলম্বিয়া নদী",
     "name_hi": "कोलंबिया नदी",
     "name_zh_hans": "哥伦比亚河",
     "name_ja": "コロンビア川",
@@ -530,6 +553,7 @@
   {
     "id": "irrawaddy",
     "name": "Irrawaddy",
+    "name_bn": "ইরাবতী নদী",
     "name_hi": "इरावदी नदी",
     "name_zh_hans": "伊洛瓦底江",
     "name_ja": "イラワジ川",
@@ -552,6 +576,7 @@
   {
     "id": "orange",
     "name": "Orange",
+    "name_bn": "অরেঞ্জ নদী",
     "name_hi": "ऑरेंज नदी",
     "name_zh_hans": "奥兰治河",
     "name_ja": "オレンジ川",
@@ -574,6 +599,7 @@
   {
     "id": "parana",
     "name": "Paraná",
+    "name_bn": "পারানা নদী",
     "name_hi": "पाराना नदी",
     "name_zh_hans": "巴拉那河",
     "name_ja": "パラナ川",
@@ -598,6 +624,7 @@
   {
     "id": "amur",
     "name": "Amur",
+    "name_bn": "আমুর নদী",
     "name_hi": "अमूर नदी",
     "name_zh_hans": "黑龙江",
     "name_ja": "アムール川",
@@ -621,6 +648,7 @@
   {
     "id": "dnieper",
     "name": "Dnieper",
+    "name_bn": "নিপার নদী",
     "name_hi": "नीपर नदी",
     "name_zh_hans": "第聂伯河",
     "name_ja": "ドニエプル川",
@@ -644,6 +672,7 @@
   {
     "id": "senegal-river",
     "name": "Senegal",
+    "name_bn": "সেনেগাল নদী",
     "name_hi": "सेनेगल नदी",
     "name_zh_hans": "塞内加尔河",
     "name_ja": "セネガル川",
@@ -667,6 +696,7 @@
   {
     "id": "orinoco",
     "name": "Orinoco",
+    "name_bn": "ওরিনোকো নদী",
     "name_hi": "ओरिनोको नदी",
     "name_zh_hans": "奥里诺科河",
     "name_ja": "オリノコ川",
@@ -691,6 +721,7 @@
   {
     "id": "sao-francisco",
     "name": "São Francisco",
+    "name_bn": "সাও ফ্রান্সিসকো নদী",
     "name_hi": "साओ फ़्रांसिस्को नदी",
     "name_zh_hans": "圣弗朗西斯科河",
     "name_ja": "サンフランシスコ川",
@@ -714,6 +745,7 @@
   {
     "id": "tocantins",
     "name": "Tocantins",
+    "name_bn": "তোকান্তিন্স নদী",
     "name_hi": "टोकैंटिन्स नदी",
     "name_zh_hans": "托坎廷斯河",
     "name_ja": "トカンティンス川",

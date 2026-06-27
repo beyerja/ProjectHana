@@ -99,16 +99,15 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ur).displayName, "اردو")
     }
 
-    /// The remaining 4 content-pending languages are COMPLETE-content by contract: each routes
+    /// The remaining 3 content-pending languages are COMPLETE-content by contract: each routes
     /// straight to English as an ultimate, never-hit safety net, NOT through es-MX/es-ES. `.ja`
-    /// (story 003), `.zhHans` (story 004) and `.hi` (story 005) have shipped complete content and are
-    /// asserted separately below.
+    /// (story 003), `.zhHans` (story 004), `.hi` (story 005) and `.bn` (story 006) have shipped complete
+    /// content and are asserted separately below.
     func testFallbackChainForContentPendingLanguagesGoStraightToEnglish() {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ar).fallbackChain, [.ar, .en])
-        XCTAssertEqual(LanguageCatalog.descriptor(for: .bn).fallbackChain, [.bn, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ptBR).fallbackChain, [.ptBR, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ur).fallbackChain, [.ur, .en])
-        for locale in [AppLocale.ar, .bn, .ptBR, .ur] {
+        for locale in [AppLocale.ar, .ptBR, .ur] {
             XCTAssertFalse(
                 locale.fallsBackThroughSpanish,
                 "\(locale.rawValue) is COMPLETE content and must not route through Spanish"
@@ -152,6 +151,19 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertFalse(
             AppLocale.hi.fallsBackThroughSpanish,
             "hi is COMPLETE content and must not route through Spanish"
+        )
+    }
+
+    /// Bengali has shipped COMPLETE content (story 006): it routes straight to English as a never-hit
+    /// safety net `[bn, en]`, NOT through es-MX/es-ES, and its catalog identity (display name "বাংলা",
+    /// ODR tag "lang-bn") is unchanged.
+    func testFallbackChainForBengaliGoesStraightToEnglish() {
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .bn).fallbackChain, [.bn, .en])
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .bn).displayName, "বাংলা")
+        XCTAssertEqual(AppLocale.bn.odrTags, ["lang-bn"])
+        XCTAssertFalse(
+            AppLocale.bn.fallsBackThroughSpanish,
+            "bn is COMPLETE content and must not route through Spanish"
         )
     }
 

@@ -179,6 +179,13 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.hi, .en)
     }
 
+    /// Story 006 (Bengali): Bengali keeps a progress track fully isolated from its English fallback
+    /// target; they are distinct language codes, so the same factID/day coexists across the two and
+    /// Bengali progress never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForBengali() {
+        assertProgressIsolated(.bn, .en)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {
