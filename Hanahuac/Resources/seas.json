@@ -2,6 +2,7 @@
   {
     "id": "pacific",
     "name": "Pacific Ocean",
+    "name_hi": "प्रशांत महासागर",
     "name_zh_hans": "太平洋",
     "name_ja": "太平洋",
     "name_fr": "Océan Pacifique",
@@ -23,6 +24,7 @@
   {
     "id": "atlantic",
     "name": "Atlantic Ocean",
+    "name_hi": "अटलांटिक महासागर",
     "name_zh_hans": "大西洋",
     "name_ja": "大西洋",
     "name_fr": "Océan Atlantique",
@@ -43,6 +45,7 @@
   {
     "id": "indian",
     "name": "Indian Ocean",
+    "name_hi": "हिंद महासागर",
     "name_zh_hans": "印度洋",
     "name_ja": "インド洋",
     "name_fr": "Océan Indien",
@@ -62,6 +65,7 @@
   {
     "id": "southern",
     "name": "Southern Ocean",
+    "name_hi": "दक्षिणी महासागर",
     "name_zh_hans": "南冰洋",
     "name_ja": "南極海",
     "name_fr": "Océan Austral",
@@ -81,6 +85,7 @@
   {
     "id": "arctic",
     "name": "Arctic Ocean",
+    "name_hi": "आर्कटिक महासागर",
     "name_zh_hans": "北冰洋",
     "name_ja": "北極海",
     "name_fr": "Océan Arctique",
@@ -100,6 +105,7 @@
   {
     "id": "mediterranean",
     "name": "Mediterranean Sea",
+    "name_hi": "भूमध्य सागर",
     "name_zh_hans": "地中海",
     "name_ja": "地中海",
     "name_fr": "Mer Méditerranée",
@@ -119,6 +125,7 @@
   {
     "id": "caribbean",
     "name": "Caribbean Sea",
+    "name_hi": "कैरिबियन सागर",
     "name_zh_hans": "加勒比海",
     "name_ja": "カリブ海",
     "name_fr": "Mer des Caraïbes",
@@ -140,6 +147,7 @@
   {
     "id": "south-china",
     "name": "South China Sea",
+    "name_hi": "दक्षिण चीन सागर",
     "name_zh_hans": "南海",
     "name_ja": "南シナ海",
     "name_fr": "Mer de Chine méridionale",
@@ -159,6 +167,7 @@
   {
     "id": "bering",
     "name": "Bering Sea",
+    "name_hi": "बेरिंग सागर",
     "name_zh_hans": "白令海",
     "name_ja": "ベーリング海",
     "name_fr": "Mer de Béring",
@@ -178,6 +187,7 @@
   {
     "id": "gulf-of-mexico",
     "name": "Gulf of Mexico",
+    "name_hi": "मेक्सिको की खाड़ी",
     "name_zh_hans": "墨西哥湾",
     "name_ja": "メキシコ湾",
     "name_fr": "Golfe du Mexique",
@@ -198,6 +208,7 @@
   {
     "id": "north-sea",
     "name": "North Sea",
+    "name_hi": "उत्तरी सागर",
     "name_zh_hans": "北海",
     "name_ja": "北海",
     "name_fr": "Mer du Nord",
@@ -217,6 +228,7 @@
   {
     "id": "red-sea",
     "name": "Red Sea",
+    "name_hi": "लाल सागर",
     "name_zh_hans": "红海",
     "name_ja": "紅海",
     "name_fr": "Mer Rouge",
@@ -236,6 +248,7 @@
   {
     "id": "black-sea",
     "name": "Black Sea",
+    "name_hi": "काला सागर",
     "name_zh_hans": "黑海",
     "name_ja": "黒海",
     "name_fr": "Mer Noire",
@@ -255,6 +268,7 @@
   {
     "id": "caspian-sea",
     "name": "Caspian Sea",
+    "name_hi": "कैस्पियन सागर",
     "name_zh_hans": "里海",
     "name_ja": "カスピ海",
     "name_fr": "Mer Caspienne",
@@ -274,6 +288,7 @@
   {
     "id": "persian-gulf",
     "name": "Persian Gulf",
+    "name_hi": "फ़ारस की खाड़ी",
     "name_zh_hans": "波斯湾",
     "name_ja": "ペルシア湾",
     "name_fr": "Golfe Persique",
@@ -293,6 +308,7 @@
   {
     "id": "east-china",
     "name": "East China Sea",
+    "name_hi": "पूर्वी चीन सागर",
     "name_zh_hans": "东海",
     "name_ja": "東シナ海",
     "name_fr": "Mer de Chine orientale",
@@ -312,6 +328,7 @@
   {
     "id": "bay-of-bengal",
     "name": "Bay of Bengal",
+    "name_hi": "बंगाल की खाड़ी",
     "name_zh_hans": "孟加拉湾",
     "name_ja": "ベンガル湾",
     "name_fr": "Golfe du Bengale",
@@ -331,6 +348,7 @@
   {
     "id": "arabian-sea",
     "name": "Arabian Sea",
+    "name_hi": "अरब सागर",
     "name_zh_hans": "阿拉伯海",
     "name_ja": "アラビア海",
     "name_fr": "Mer d'Arabie",
@@ -350,6 +368,7 @@
   {
     "id": "coral-sea",
     "name": "Coral Sea",
+    "name_hi": "कोरल सागर",
     "name_zh_hans": "珊瑚海",
     "name_ja": "サンゴ海",
     "name_fr": "Mer de Corail",
@@ -368,6 +387,7 @@
   {
     "id": "tasman-sea",
     "name": "Tasman Sea",
+    "name_hi": "तस्मान सागर",
     "name_zh_hans": "塔斯曼海",
     "name_ja": "タスマン海",
     "name_fr": "Mer de Tasman",
