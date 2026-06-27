@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "Download mislukt";
 "settings.language.retry" = "Opnieuw proberen";
 "settings.language.available" = "Beschikbaar";
+"settings.language.group.downloaded" = "Gedownload";
+"settings.language.search_placeholder" = "Talen zoeken";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud-synchronisatie";

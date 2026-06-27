@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "ダウンロードに失敗しました";
 "settings.language.retry" = "再試行";
 "settings.language.available" = "利用可能";
+"settings.language.group.downloaded" = "ダウンロード済み";
+"settings.language.search_placeholder" = "言語を検索";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud同期";

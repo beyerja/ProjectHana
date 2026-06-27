@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "Download failed";
 "settings.language.retry" = "Retry";
 "settings.language.available" = "Available";
+"settings.language.group.downloaded" = "Downloaded";
+"settings.language.search_placeholder" = "Search languages";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud Sync";

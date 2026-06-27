@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "下载失败";
 "settings.language.retry" = "重试";
 "settings.language.available" = "可用";
+"settings.language.group.downloaded" = "已下载";
+"settings.language.search_placeholder" = "搜索语言";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud 同步";

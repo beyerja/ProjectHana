@@ -39,6 +39,12 @@ enum AppLocale: String, CaseIterable, Identifiable {
         descriptor.displayName
     }
 
+    /// The language's name in English (e.g. "Korean", "Japanese"). Not shown in the UI; used by the
+    /// picker's incremental search so a query typed in English matches alongside the native script.
+    var englishName: String {
+        descriptor.englishName
+    }
+
     /// The ordered chain of locales to consult when resolving a localized string, derived from the
     /// catalog descriptor (selected → es-MX → en for ko/nah; selected → en for fr/de; en → [en];
     /// es-MX → [es-MX, en]).

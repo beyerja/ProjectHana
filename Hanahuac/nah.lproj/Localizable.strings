@@ -33,6 +33,8 @@
 "settings.language.download_failed" = "Ahmo huel motēmōh";
 "settings.language.retry" = "Oc ceppa";
 "settings.language.available" = "Ōncah";
+"settings.language.group.downloaded" = "Tlatemoltin";
+"settings.language.search_placeholder" = "Xictemo tlahtōlli";
 
 /* StatsView */
 "stats.tier.not_started" = "Ahmo pēhua";
