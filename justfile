@@ -250,3 +250,9 @@ screenshot-sim path:
 # (run-dir resolution, env-var plumbing, artifact-dir echo) lives in `scripts/ui-walkthrough.sh`.
 ui-walkthrough script=".workflow/ui-walkthrough/scripts/smoke.json" run="":
     bash scripts/ui-walkthrough.sh '{{script}}' '{{run}}' '{{sim}}' '{{sim_dd}}'
+
+# Same as `ui-walkthrough`, but forces a right-to-left layout (sets HANA_FORCE_RTL) so the captured
+# artifacts show the mirrored RTL layout. Drives the greenfield RTL infrastructure (story 008) without
+# requiring ar/ur content; stories 009/010 use this to verify Arabic/Urdu render correctly mirrored.
+ui-walkthrough-rtl script=".workflow/ui-walkthrough/scripts/smoke.json" run="":
+    HANA_FORCE_RTL=1 bash scripts/ui-walkthrough.sh '{{script}}' '{{run}}' '{{sim}}' '{{sim_dd}}'

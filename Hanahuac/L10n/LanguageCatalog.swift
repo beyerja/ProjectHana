@@ -142,11 +142,16 @@ enum LanguageCatalog {
             fallbackChain: [.hi, .en],
             availability: .downloadablePack
         ),
+        // Arabic is a right-to-left language: its descriptor declares `.rightToLeft` so selecting it
+        // flips the whole app's `layoutDirection`, independently of the device locale. The RTL
+        // infrastructure (story 008) lands before ar content, so this drives the mirrored layout the
+        // moment ar is selectable.
         LanguageDescriptor(
             code: AppLocale.ar.rawValue,
             displayName: "العربية",
             fallbackChain: [.ar, .en],
-            availability: .downloadablePack
+            availability: .downloadablePack,
+            textDirection: .rightToLeft
         ),
         LanguageDescriptor(
             code: AppLocale.bn.rawValue,
@@ -160,11 +165,14 @@ enum LanguageCatalog {
             fallbackChain: [.ptBR, .en],
             availability: .downloadablePack
         ),
+        // Urdu is a right-to-left language: like Arabic it declares `.rightToLeft` so selecting it
+        // mirrors the whole app's layout.
         LanguageDescriptor(
             code: AppLocale.ur.rawValue,
             displayName: "اردو",
             fallbackChain: [.ur, .en],
-            availability: .downloadablePack
+            availability: .downloadablePack,
+            textDirection: .rightToLeft
         )
     ]
 
