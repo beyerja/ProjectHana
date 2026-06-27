@@ -20,6 +20,7 @@ struct MountainRange: Codable, Identifiable, Hashable {
     let nameZhHans: String?
     let nameHi: String?
     let nameBn: String?
+    let namePtBr: String?
     let continent: String
     let lat: Double
     let lon: Double
@@ -48,6 +49,7 @@ struct MountainRange: Codable, Identifiable, Hashable {
         nameZhHans: String? = nil,
         nameHi: String? = nil,
         nameBn: String? = nil,
+        namePtBr: String? = nil,
         continent: String,
         lat: Double,
         lon: Double,
@@ -73,6 +75,7 @@ struct MountainRange: Codable, Identifiable, Hashable {
         self.nameZhHans = nameZhHans
         self.nameHi = nameHi
         self.nameBn = nameBn
+        self.namePtBr = namePtBr
         self.continent = continent
         self.lat = lat
         self.lon = lon
