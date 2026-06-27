@@ -193,6 +193,13 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.ptBR, .en)
     }
 
+    /// Story 009 (Arabic): ar keeps a progress track fully isolated from its English fallback target;
+    /// they are distinct language codes, so the same factID/day coexists across the two and ar progress
+    /// never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForArabic() {
+        assertProgressIsolated(.ar, .en)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {

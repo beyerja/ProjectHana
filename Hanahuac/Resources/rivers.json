@@ -2,6 +2,7 @@
   {
     "id": "nile",
     "name": "Nile",
+    "name_ar": "نهر النيل",
     "name_pt_br": "Rio Nilo",
     "name_bn": "নীল নদ",
     "name_hi": "नील नदी",
@@ -28,6 +29,7 @@
   {
     "id": "amazon",
     "name": "Amazon",
+    "name_ar": "نهر الأمازون",
     "name_pt_br": "Rio Amazonas",
     "name_bn": "আমাজন নদী",
     "name_hi": "अमेज़न नदी",
@@ -55,6 +57,7 @@
   {
     "id": "yangtze",
     "name": "Yangtze",
+    "name_ar": "نهر اليانغتسي",
     "name_pt_br": "Rio Yangtzé",
     "name_bn": "ইয়াংসি নদী",
     "name_hi": "यांग्त्ज़ी नदी",
@@ -80,6 +83,7 @@
   {
     "id": "mississippi",
     "name": "Mississippi",
+    "name_ar": "نهر المسيسيبي",
     "name_pt_br": "Rio Mississippi",
     "name_bn": "মিসিসিপি নদী",
     "name_hi": "मिसिसिपी नदी",
@@ -107,6 +111,7 @@
   {
     "id": "yenisei",
     "name": "Yenisei",
+    "name_ar": "نهر ينيسي",
     "name_pt_br": "Rio Ienissei",
     "name_bn": "ইয়েনিসেই নদী",
     "name_hi": "येनिसेई नदी",
@@ -131,6 +136,7 @@
   {
     "id": "yellow-river",
     "name": "Yellow River",
+    "name_ar": "النهر الأصفر",
     "name_pt_br": "Rio Amarelo",
     "name_bn": "হোয়াংহো",
     "name_hi": "ह्वांग हो",
@@ -156,6 +162,7 @@
   {
     "id": "ob",
     "name": "Ob",
+    "name_ar": "نهر أوب",
     "name_pt_br": "Rio Ob",
     "name_bn": "ওব নদী",
     "name_hi": "ओब नदी",
@@ -180,6 +187,7 @@
   {
     "id": "congo",
     "name": "Congo",
+    "name_ar": "نهر الكونغو",
     "name_pt_br": "Rio Congo",
     "name_bn": "কঙ্গো নদী",
     "name_hi": "कांगो नदी",
@@ -205,6 +213,7 @@
   {
     "id": "lena",
     "name": "Lena",
+    "name_ar": "نهر لينا",
     "name_pt_br": "Rio Lena",
     "name_bn": "লেনা নদী",
     "name_hi": "लीना नदी",
@@ -229,6 +238,7 @@
   {
     "id": "niger",
     "name": "Niger",
+    "name_ar": "نهر النيجر",
     "name_pt_br": "Rio Níger",
     "name_bn": "নাইজার নদী",
     "name_hi": "नाइजर नदी",
@@ -254,6 +264,7 @@
   {
     "id": "mekong",
     "name": "Mekong",
+    "name_ar": "نهر الميكونغ",
     "name_pt_br": "Rio Mecongue",
     "name_bn": "মেকং নদী",
     "name_hi": "मेकांग नदी",
@@ -279,6 +290,7 @@
   {
     "id": "missouri",
     "name": "Missouri",
+    "name_ar": "نهر ميزوري",
     "name_pt_br": "Rio Missouri",
     "name_bn": "মিজৌরি নদী",
     "name_hi": "मिसौरी नदी",
@@ -303,6 +315,7 @@
   {
     "id": "volga",
     "name": "Volga",
+    "name_ar": "نهر الفولغا",
     "name_pt_br": "Rio Volga",
     "name_bn": "ভলগা নদী",
     "name_hi": "वोल्गा नदी",
@@ -328,6 +341,7 @@
   {
     "id": "zambezi",
     "name": "Zambezi",
+    "name_ar": "نهر زامبيزي",
     "name_pt_br": "Rio Zambeze",
     "name_bn": "জাম্বেজি নদী",
     "name_hi": "ज़ाम्बेज़ी नदी",
@@ -352,6 +366,7 @@
   {
     "id": "ganges",
     "name": "Ganges",
+    "name_ar": "نهر الغانج",
     "name_pt_br": "Rio Ganges",
     "name_bn": "গঙ্গা",
     "name_hi": "गंगा",
@@ -377,6 +392,7 @@
   {
     "id": "indus",
     "name": "Indus",
+    "name_ar": "نهر السند",
     "name_pt_br": "Rio Indo",
     "name_bn": "সিন্ধু নদ",
     "name_hi": "सिंधु नदी",
@@ -402,6 +418,7 @@
   {
     "id": "murray",
     "name": "Murray",
+    "name_ar": "نهر موراي",
     "name_pt_br": "Rio Murray",
     "name_bn": "মারে নদী",
     "name_hi": "मरे नदी",
@@ -426,6 +443,7 @@
   {
     "id": "euphrates",
     "name": "Euphrates",
+    "name_ar": "نهر الفرات",
     "name_pt_br": "Rio Eufrates",
     "name_bn": "ইউফ্রেটিস নদী",
     "name_hi": "फ़रात नदी",
@@ -451,6 +469,7 @@
   {
     "id": "tigris",
     "name": "Tigris",
+    "name_ar": "نهر دجلة",
     "name_pt_br": "Rio Tigre",
     "name_bn": "টাইগ্রিস নদী",
     "name_hi": "दजला नदी",
@@ -476,6 +495,7 @@
   {
     "id": "rhine",
     "name": "Rhine",
+    "name_ar": "نهر الراين",
     "name_pt_br": "Rio Reno",
     "name_bn": "রাইন নদী",
     "name_hi": "राइन नदी",
@@ -501,6 +521,7 @@
   {
     "id": "danube",
     "name": "Danube",
+    "name_ar": "نهر الدانوب",
     "name_pt_br": "Rio Danúbio",
     "name_bn": "দানিউব নদী",
     "name_hi": "डैन्यूब नदी",
@@ -526,6 +547,7 @@
   {
     "id": "colorado",
     "name": "Colorado",
+    "name_ar": "نهر كولورادو",
     "name_pt_br": "Rio Colorado",
     "name_bn": "কলোরাডো নদী",
     "name_hi": "कोलोराडो नदी",
@@ -552,6 +574,7 @@
   {
     "id": "columbia",
     "name": "Columbia",
+    "name_ar": "نهر كولومبيا",
     "name_pt_br": "Rio Columbia",
     "name_bn": "কলম্বিয়া নদী",
     "name_hi": "कोलंबिया नदी",
@@ -576,6 +599,7 @@
   {
     "id": "irrawaddy",
     "name": "Irrawaddy",
+    "name_ar": "نهر إيراوادي",
     "name_pt_br": "Rio Irauádi",
     "name_bn": "ইরাবতী নদী",
     "name_hi": "इरावदी नदी",
@@ -600,6 +624,7 @@
   {
     "id": "orange",
     "name": "Orange",
+    "name_ar": "نهر أورانج",
     "name_pt_br": "Rio Laranja",
     "name_bn": "অরেঞ্জ নদী",
     "name_hi": "ऑरेंज नदी",
@@ -624,6 +649,7 @@
   {
     "id": "parana",
     "name": "Paraná",
+    "name_ar": "نهر بارانا",
     "name_pt_br": "Rio Paraná",
     "name_bn": "পারানা নদী",
     "name_hi": "पाराना नदी",
@@ -650,6 +676,7 @@
   {
     "id": "amur",
     "name": "Amur",
+    "name_ar": "نهر آمور",
     "name_pt_br": "Rio Amur",
     "name_bn": "আমুর নদী",
     "name_hi": "अमूर नदी",
@@ -675,6 +702,7 @@
   {
     "id": "dnieper",
     "name": "Dnieper",
+    "name_ar": "نهر دنيبر",
     "name_pt_br": "Rio Dniepre",
     "name_bn": "নিপার নদী",
     "name_hi": "नीपर नदी",
@@ -700,6 +728,7 @@
   {
     "id": "senegal-river",
     "name": "Senegal",
+    "name_ar": "نهر السنغال",
     "name_pt_br": "Rio Senegal",
     "name_bn": "সেনেগাল নদী",
     "name_hi": "सेनेगल नदी",
@@ -725,6 +754,7 @@
   {
     "id": "orinoco",
     "name": "Orinoco",
+    "name_ar": "نهر أورينوكو",
     "name_pt_br": "Rio Orinoco",
     "name_bn": "ওরিনোকো নদী",
     "name_hi": "ओरिनोको नदी",
@@ -751,6 +781,7 @@
   {
     "id": "sao-francisco",
     "name": "São Francisco",
+    "name_ar": "نهر ساو فرانسيسكو",
     "name_pt_br": "Rio São Francisco",
     "name_bn": "সাও ফ্রান্সিসকো নদী",
     "name_hi": "साओ फ़्रांसिस्को नदी",
@@ -776,6 +807,7 @@
   {
     "id": "tocantins",
     "name": "Tocantins",
+    "name_ar": "نهر توكانتينس",
     "name_pt_br": "Rio Tocantins",
     "name_bn": "তোকান্তিন্স নদী",
     "name_hi": "टोकैंटिन्स नदी",

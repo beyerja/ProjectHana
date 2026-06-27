@@ -2,6 +2,7 @@
   {
     "id": "himalayas",
     "name": "Himalayas",
+    "name_ar": "جبال الهيمالايا",
     "name_pt_br": "Himalaia",
     "name_bn": "হিমালয়",
     "name_hi": "हिमालय",
@@ -27,6 +28,7 @@
   {
     "id": "andes",
     "name": "Andes",
+    "name_ar": "جبال الأنديز",
     "name_pt_br": "Cordilheira dos Andes",
     "name_bn": "আন্দিজ পর্বতমালা",
     "name_hi": "एंडीज़ पर्वत",
@@ -54,6 +56,7 @@
   {
     "id": "rockies",
     "name": "Rocky Mountains",
+    "name_ar": "جبال روكي",
     "name_pt_br": "Montanhas Rochosas",
     "name_bn": "রকি পর্বতমালা",
     "name_hi": "रॉकी पर्वत",
@@ -80,6 +83,7 @@
   {
     "id": "alps",
     "name": "Alps",
+    "name_ar": "جبال الألب",
     "name_pt_br": "Alpes",
     "name_bn": "আল্পস পর্বতমালা",
     "name_hi": "आल्प्स पर्वत",
@@ -105,6 +109,7 @@
   {
     "id": "great-dividing-range",
     "name": "Great Dividing Range",
+    "name_ar": "السلسلة الفاصلة الكبرى",
     "name_pt_br": "Grande Cordilheira Divisória",
     "name_bn": "গ্রেট ডিভাইডিং রেঞ্জ",
     "name_hi": "ग्रेट डिवाइडिंग रेंज",
@@ -129,6 +134,7 @@
   {
     "id": "kunlun",
     "name": "Kunlun Mountains",
+    "name_ar": "جبال كونلون",
     "name_pt_br": "Montanhas Kunlun",
     "name_bn": "কুনলুন পর্বতমালা",
     "name_hi": "कुनलुन पर्वत",
@@ -153,6 +159,7 @@
   {
     "id": "tian-shan",
     "name": "Tian Shan",
+    "name_ar": "جبال تيان شان",
     "name_pt_br": "Tian Shan",
     "name_bn": "তিয়েন শান",
     "name_hi": "तियेन शान",
@@ -177,6 +184,7 @@
   {
     "id": "altai",
     "name": "Altai Mountains",
+    "name_ar": "جبال ألتاي",
     "name_pt_br": "Montanhas Altai",
     "name_bn": "আলতাই পর্বতমালা",
     "name_hi": "अल्ताई पर्वत",
@@ -201,6 +209,7 @@
   {
     "id": "caucasus",
     "name": "Caucasus",
+    "name_ar": "جبال القوقاز",
     "name_pt_br": "Cáucaso",
     "name_bn": "ককেশাস পর্বতমালা",
     "name_hi": "काकेशस पर्वत",
@@ -226,6 +235,7 @@
   {
     "id": "pyrenees",
     "name": "Pyrenees",
+    "name_ar": "جبال البيرينيه",
     "name_pt_br": "Pirenéus",
     "name_bn": "পিরেনিজ পর্বতমালা",
     "name_hi": "पिरेनीज़ पर्वत",
@@ -251,6 +261,7 @@
   {
     "id": "carpathians",
     "name": "Carpathians",
+    "name_ar": "جبال الكاربات",
     "name_pt_br": "Cárpatos",
     "name_bn": "কার্পেথিয়ান পর্বতমালা",
     "name_hi": "कार्पेथियन पर्वत",
@@ -276,6 +287,7 @@
   {
     "id": "appalachians",
     "name": "Appalachians",
+    "name_ar": "جبال الأبلاش",
     "name_pt_br": "Montes Apalaches",
     "name_bn": "আপালেশিয়ান পর্বতমালা",
     "name_hi": "अपलाचियन पर्वत",
@@ -302,6 +314,7 @@
   {
     "id": "atlas",
     "name": "Atlas Mountains",
+    "name_ar": "جبال الأطلس",
     "name_pt_br": "Cordilheira do Atlas",
     "name_bn": "আটলাস পর্বতমালা",
     "name_hi": "एटलस पर्वत",
@@ -327,6 +340,7 @@
   {
     "id": "drakensberg",
     "name": "Drakensberg",
+    "name_ar": "جبال دراكنزبرغ",
     "name_pt_br": "Montanhas Drakensberg",
     "name_bn": "ড্রাকেন্সবার্গ পর্বতমালা",
     "name_hi": "ड्रेकेन्सबर्ग पर्वत",
@@ -351,6 +365,7 @@
   {
     "id": "ethiopian-highlands",
     "name": "Ethiopian Highlands",
+    "name_ar": "المرتفعات الإثيوبية",
     "name_pt_br": "Planalto Etíope",
     "name_bn": "ইথিওপীয় উচ্চভূমি",
     "name_hi": "इथियोपियाई उच्चभूमि",
@@ -375,6 +390,7 @@
   {
     "id": "scandinavian-mountains",
     "name": "Scandinavian Mountains",
+    "name_ar": "الجبال الإسكندنافية",
     "name_pt_br": "Montanhas Escandinavas",
     "name_bn": "স্ক্যান্ডিনেভীয় পর্বতমালা",
     "name_hi": "स्कैंडिनेवियाई पर्वत",
@@ -400,6 +416,7 @@
   {
     "id": "hindu-kush",
     "name": "Hindu Kush",
+    "name_ar": "جبال هندوكوش",
     "name_pt_br": "Hindu Kush",
     "name_bn": "হিন্দুকুশ",
     "name_hi": "हिंदू कुश",
@@ -425,6 +442,7 @@
   {
     "id": "karakoram",
     "name": "Karakoram",
+    "name_ar": "جبال قراقورم",
     "name_pt_br": "Caracórum",
     "name_bn": "কারাকোরাম",
     "name_hi": "काराकोरम",
@@ -450,6 +468,7 @@
   {
     "id": "pamir",
     "name": "Pamir Mountains",
+    "name_ar": "جبال بامير",
     "name_pt_br": "Montanhas Pamir",
     "name_bn": "পামির পর্বতমালা",
     "name_hi": "पामीर पर्वत",
@@ -474,6 +493,7 @@
   {
     "id": "sierra-nevada-us",
     "name": "Sierra Nevada",
+    "name_ar": "سييرا نيفادا",
     "name_pt_br": "Serra Nevada",
     "name_bn": "সিয়েরা নেভাদা",
     "name_hi": "सिएरा नेवादा",
@@ -500,6 +520,7 @@
   {
     "id": "southern-alps",
     "name": "Southern Alps",
+    "name_ar": "الألب الجنوبية",
     "name_pt_br": "Alpes do Sul",
     "name_bn": "দক্ষিণ আল্পস",
     "name_hi": "दक्षिणी आल्प्स",
@@ -524,6 +545,7 @@
   {
     "id": "zagros",
     "name": "Zagros Mountains",
+    "name_ar": "جبال زاغروس",
     "name_pt_br": "Montes Zagros",
     "name_bn": "জাগ্রোস পর্বতমালা",
     "name_hi": "ज़ाग्रोस पर्वत",
@@ -549,6 +571,7 @@
   {
     "id": "eastern-rift-highlands",
     "name": "East African Rift Highlands",
+    "name_ar": "مرتفعات الوادي المتصدع الشرقي",
     "name_pt_br": "Planaltos do Vale do Rift Oriental",
     "name_bn": "পূর্ব রিফট উচ্চভূমি",
     "name_hi": "पूर्वी दरार उच्चभूमि",
