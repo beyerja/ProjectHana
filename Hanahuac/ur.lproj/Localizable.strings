@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "ڈاؤن لوڈ ناکام";
 "settings.language.retry" = "دوبارہ کوشش کریں";
 "settings.language.available" = "دستیاب";
+"settings.language.group.downloaded" = "ڈاؤن لوڈ شدہ";
+"settings.language.search_placeholder" = "زبانیں تلاش کریں";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud مطابقت";

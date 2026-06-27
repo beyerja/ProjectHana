@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "Ha fallat la baixada";
 "settings.language.retry" = "Torna-ho a provar";
 "settings.language.available" = "Disponible";
+"settings.language.group.downloaded" = "Baixats";
+"settings.language.search_placeholder" = "Cerca idiomes";
 
 /* iCloud sync */
 /* NOTE: "settings.sync.toggle" is deliberately omitted from Catalan to exercise the

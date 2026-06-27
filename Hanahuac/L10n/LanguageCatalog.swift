@@ -18,42 +18,49 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.en.rawValue,
             displayName: "English",
+            englishName: "English",
             fallbackChain: [.en],
             availability: .bundledBase
         ),
         LanguageDescriptor(
             code: AppLocale.fr.rawValue,
             displayName: "Français",
+            englishName: "French",
             fallbackChain: [.fr, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
             code: AppLocale.de.rawValue,
             displayName: "Deutsch",
+            englishName: "German",
             fallbackChain: [.de, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
             code: AppLocale.esMX.rawValue,
             displayName: "Español (México)",
+            englishName: "Spanish (Mexico)",
             fallbackChain: [.esMX, .en],
             availability: .bundledBase
         ),
         LanguageDescriptor(
             code: AppLocale.esES.rawValue,
             displayName: "Español (España)",
+            englishName: "Spanish (Spain)",
             fallbackChain: [.esES, .esMX, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
             code: AppLocale.ca.rawValue,
             displayName: "Català",
+            englishName: "Catalan",
             fallbackChain: [.ca, .esES, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
             code: AppLocale.eu.rawValue,
             displayName: "Euskara",
+            englishName: "Basque",
             fallbackChain: [.eu, .esES, .en],
             availability: .downloadablePack
         ),
@@ -63,6 +70,7 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.yua.rawValue,
             displayName: "Màaya t'àan",
+            englishName: "Yucatec Maya",
             fallbackChain: [.yua, .esMX, .en],
             availability: .downloadablePack
         ),
@@ -72,6 +80,7 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.it.rawValue,
             displayName: "Italiano",
+            englishName: "Italian",
             fallbackChain: [.it, .en],
             availability: .downloadablePack
         ),
@@ -81,6 +90,7 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.pl.rawValue,
             displayName: "Polski",
+            englishName: "Polish",
             fallbackChain: [.pl, .en],
             availability: .downloadablePack
         ),
@@ -90,6 +100,7 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.nl.rawValue,
             displayName: "Nederlands",
+            englishName: "Dutch",
             fallbackChain: [.nl, .en],
             availability: .downloadablePack
         ),
@@ -105,18 +116,21 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.sr.rawValue,
             displayName: "Српски",
+            englishName: "Serbian",
             fallbackChain: [.sr, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
             code: AppLocale.ko.rawValue,
             displayName: "한국어",
+            englishName: "Korean",
             fallbackChain: [.ko, .esMX, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
             code: AppLocale.nah.rawValue,
             displayName: "Nāhuatl",
+            englishName: "Nahuatl",
             fallbackChain: [.nah, .esMX, .en],
             availability: .downloadablePack
         ),
@@ -127,18 +141,21 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.ja.rawValue,
             displayName: "日本語",
+            englishName: "Japanese",
             fallbackChain: [.ja, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
             code: AppLocale.zhHans.rawValue,
             displayName: "简体中文",
+            englishName: "Chinese (Simplified)",
             fallbackChain: [.zhHans, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
             code: AppLocale.hi.rawValue,
             displayName: "हिन्दी",
+            englishName: "Hindi",
             fallbackChain: [.hi, .en],
             availability: .downloadablePack
         ),
@@ -149,6 +166,7 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.ar.rawValue,
             displayName: "العربية",
+            englishName: "Arabic",
             fallbackChain: [.ar, .en],
             availability: .downloadablePack,
             textDirection: .rightToLeft
@@ -156,12 +174,14 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.bn.rawValue,
             displayName: "বাংলা",
+            englishName: "Bengali",
             fallbackChain: [.bn, .en],
             availability: .downloadablePack
         ),
         LanguageDescriptor(
             code: AppLocale.ptBR.rawValue,
             displayName: "Português (Brasil)",
+            englishName: "Portuguese (Brazil)",
             fallbackChain: [.ptBR, .en],
             availability: .downloadablePack
         ),
@@ -170,6 +190,7 @@ enum LanguageCatalog {
         LanguageDescriptor(
             code: AppLocale.ur.rawValue,
             displayName: "اردو",
+            englishName: "Urdu",
             fallbackChain: [.ur, .en],
             availability: .downloadablePack,
             textDirection: .rightToLeft

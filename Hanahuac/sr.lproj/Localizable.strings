@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "Преузимање није успело";
 "settings.language.retry" = "Покушај поново";
 "settings.language.available" = "Доступно";
+"settings.language.group.downloaded" = "Преузето";
+"settings.language.search_placeholder" = "Претражи језике";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud синхронизација";
