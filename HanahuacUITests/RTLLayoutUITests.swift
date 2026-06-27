@@ -14,9 +14,14 @@ final class RTLLayoutUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    /// Under forced RTL the home toolbar's `.topBarTrailing` settings gear mirrors to the LEADING
-    /// (left) edge; under LTR it sits on the trailing (right) edge. Asserting the gear is on the
-    /// left-half in RTL and the right-half in LTR proves the navigation chrome actually mirrors.
+    /// Element-layout + reading-order assertion under RTL (AC2/AC3): under forced RTL the home
+    /// toolbar's `.topBarTrailing` settings gear mirrors to the LEADING (left) edge; under LTR it sits
+    /// on the trailing (right) edge. Asserting the same control lands on opposite sides of the screen
+    /// midline between the two directions proves the navigation chrome (and thus the trailing-edge
+    /// reading position) actually mirrors — it fails if RTL were not applied. The *reading order* that
+    /// SwiftUI derives from `\.layoutDirection` is asserted directly at the unit level by
+    /// `RTLEnvironmentHostingTests` (the environment value reaches the view tree); this is the
+    /// end-to-end element-layout half of that guarantee.
     func testHomeToolbarMirrorsUnderRTL() {
         let rtlFraction = settingsGearMidXFraction(forceRTL: true)
         let ltrFraction = settingsGearMidXFraction(forceRTL: false)
@@ -28,28 +33,6 @@ final class RTLLayoutUITests: XCTestCase {
             rtlFraction, ltrFraction,
             "the gear must move leftward when the layout flips to RTL"
         )
-    }
-
-    /// Accessibility / reading-order assertion under RTL: in a horizontally laid-out row the elements'
-    /// VoiceOver order follows the mirrored visual order. We verify on the home category rows that the
-    /// (mirrored) leading element — the mode icon — sits on the RIGHT under RTL, i.e. the row's content
-    /// is mirrored rather than left in LTR order.
-    func testHomeRowContentMirrorsUnderRTL() {
-        let app = launch(forceRTL: true)
-        // The first enabled mode button (countries → some mode) is addressable by its identifier
-        // prefix; resolve the first home.mode.* button that exists.
-        let firstMode = app.buttons.matching(
-            NSPredicate(format: "identifier BEGINSWITH 'home.mode.'")
-        ).firstMatch
-        XCTAssertTrue(firstMode.waitForExistence(timeout: timeout), "a home mode row should exist")
-
-        // Its disclosure chevron mirrors with the row; the row frame is mirrored as a whole, which we
-        // assert by confirming the row spans the screen width (full-width card) and is laid out — the
-        // visual mirror is captured in the screenshot artifact for stories 009/010 to verify ar/ur.
-        let rowFrame = firstMode.frame
-        XCTAssertGreaterThan(rowFrame.width, 0, "mode row should be laid out under RTL")
-
-        attachScreenshot(name: "rtl-home")
     }
 
     /// LTR regression control: the settings screen + language picker open and render under the default
@@ -87,6 +70,7 @@ final class RTLLayoutUITests: XCTestCase {
         XCTAssertTrue(gear.waitForExistence(timeout: timeout), "settings gear should exist")
         let window = app.windows.firstMatch
         let midX = gear.frame.midX
+        attachScreenshot(name: forceRTL ? "rtl-home" : "ltr-home")
         return window.frame.width > 0 ? midX / window.frame.width : 0
     }
 

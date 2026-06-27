@@ -13,16 +13,6 @@ extension AppLocale {
     }
 }
 
-extension View {
-    /// Drive this subtree's layout direction from the SELECTED language, so picking an RTL language
-    /// (Arabic, Urdu) mirrors the entire app — independently of the device locale. Applied once at the
-    /// app root; every descendant inherits the environment value and SwiftUI mirrors leading/trailing
-    /// layout, navigation chrome, and direction-aware SF Symbols automatically.
-    func appLayoutDirection(for locale: AppLocale) -> some View {
-        environment(\.layoutDirection, locale.layoutDirection)
-    }
-}
-
 /// Resolves a forced/overridden layout direction from the launch environment, so XCUITests and the UI
 /// walkthrough driver can exercise the RTL layout BEFORE ar/ur content exists (and on an LTR host).
 ///
