@@ -12,6 +12,21 @@ final class UIDriverTests: XCTestCase {
     /// How long to wait for a targeted element to appear before acting on it.
     private let elementTimeout: TimeInterval = 10
 
+    /// Launch argument that forces a right-to-left layout. Mirrors the app's
+    /// `LayoutDirectionOverride.forceRTLKey`; duplicated as a literal because the UI-test target runs
+    /// out-of-process and does not import the app module.
+    private let forceRTLArgument = "-HANA_FORCE_RTL"
+
+    /// Whether the walkthrough was asked to force RTL, via the `HANA_FORCE_RTL` env var the helper
+    /// forwards (any non-empty, non-falsy value) into the runner.
+    private var isForceRTLRequested: Bool {
+        guard let raw = ProcessInfo.processInfo.environment["HANA_FORCE_RTL"]?
+            .trimmingCharacters(in: .whitespacesAndNewlines), !raw.isEmpty else {
+            return false
+        }
+        return !["0", "false", "no", "ltr"].contains(raw.lowercased())
+    }
+
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
@@ -20,6 +35,14 @@ final class UIDriverTests: XCTestCase {
     /// Drive the app from the configured action script (or just produce the initial artifacts).
     func testRunUIScript() {
         let app = XCUIApplication()
+        // Force a right-to-left layout when the walkthrough requests it, so the captured artifacts show
+        // the mirrored RTL layout. The app reads the same `HANA_FORCE_RTL` launch argument at its root
+        // (`LayoutDirectionOverride`); this lets stories 009/010 capture RTL screenshots before/while
+        // verifying ar/ur. The env var is forwarded as a launch ARGUMENT so the app sees it regardless
+        // of how the runner's environment is plumbed.
+        if isForceRTLRequested {
+            app.launchArguments.append(forceRTLArgument)
+        }
         app.launch()
 
         let recorder = UIWalkthroughRecorder()
