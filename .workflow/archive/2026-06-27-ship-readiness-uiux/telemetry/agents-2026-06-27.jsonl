@@ -1,0 +1,12 @@
+{"ts":"2026-06-27T05:25:22Z","event":"start","agent":"implement-story","story":"005-language-hi","feature":"primary"}
+{"ts":"2026-06-27T05:27:12Z","event":"start","agent":"verify-feature","story":"feature","feature":"primary"}
+{"ts":"2026-06-27T05:34:11Z","event":"end","agent":"implement-story","story":"005-language-hi","feature":"primary","duration_s":529,"reads":12,"writes":4,"edits":18,"bashes":11,"est_chars":95000,"est_tokens":23750,"notes":"clean-no-retries-strict-hi-geo-test-passes"}
+{"ts":"2026-06-27T05:35:28Z","event":"start","agent":"independent-review","story":"005-language-hi","feature":"primary"}
+{"ts":"2026-06-27T05:38:15Z","event":"end","agent":"independent-review","story":"005-language-hi","feature":"primary","duration_s":167,"reads":7,"writes":2,"edits":0,"bashes":8,"est_chars":62000,"est_tokens":15500,"notes":"APPROVED"}
+{"ts":"2026-06-27T05:38:50Z","event":"start","agent":"code-owner-review","story":"005-language-hi","feature":"primary"}
+{"ts":"2026-06-27T05:39:44Z","event":"end","agent":"verify-feature","story":"feature","feature":"primary","duration_s":752,"reads":60,"writes":0,"edits":2,"bashes":0,"est_chars":9000,"est_tokens":2250,"notes":"DONE"}
+{"ts":"2026-06-27T05:41:24Z","event":"end","agent":"code-owner-review","story":"005-language-hi","feature":"primary","duration_s":154,"reads":11,"writes":1,"edits":1,"bashes":11,"est_chars":9000,"est_tokens":2250,"notes":"APPROVED"}
+{"ts":"2026-06-27T05:41:49Z","event":"start","agent":"evaluate-workflow","story":"feature","feature":"primary"}
+{"ts":"2026-06-27T05:42:38Z","event":"start","agent":"implement-story","story":"006-language-bn","feature":"primary"}
+{"ts":"2026-06-27T05:43:10Z","event":"end","agent":"evaluate-workflow","story":"feature","feature":"primary","duration_s":81,"reads":5,"writes":0,"edits":4,"bashes":6,"est_chars":8000,"est_tokens":2000,"notes":""}
+{"ts":"2026-06-27T05:43:47Z","event":"start","agent":"archive-workflow","story":"feature","feature":"primary"}
