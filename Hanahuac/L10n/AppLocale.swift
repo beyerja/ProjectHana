@@ -71,6 +71,16 @@ enum AppLocale: String, CaseIterable, Identifiable {
         self != .esMX && fallbackChain.contains(.esMX)
     }
 
+    /// Whether this language is written right-to-left (Arabic, Urdu), in which case the whole app's
+    /// layout must mirror. Catalog-backed (reads ``LanguageDescriptor/textDirection``) so the RTL set
+    /// lives in one place; SwiftUI wiring maps this to `\.environment(\.layoutDirection, …)`.
+    ///
+    /// This is the single, language-driven RTL signal — it derives from the SELECTED language, not the
+    /// device locale, so forcing/selecting an RTL language flips the app even on an LTR device.
+    var isRTL: Bool {
+        descriptor.textDirection == .rightToLeft
+    }
+
     /// Resolve a `Locale` to the best-matching `AppLocale`.
     ///
     /// Resolution order:

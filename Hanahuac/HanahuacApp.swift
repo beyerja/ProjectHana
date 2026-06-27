@@ -27,11 +27,19 @@ struct HanahuacApp: App {
     }
 }
 
+/// Hosts the app's view tree under the language-driven layout direction. Splitting this out keeps the
+/// `@Scene` body declarative while letting the layout direction track the active language reactively
+/// (and honor the `HANA_FORCE_RTL` launch override that UI tests / the walkthrough use to exercise RTL
+/// before ar/ur content exists).
 private struct AppRootView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(LanguageManager.self) private var languageManager
     @State private var cardStoreProvider: CardStoreProvider?
     @State private var progressStatsStore: ProgressStatsStore?
+
+    /// A launch-time forced direction (set by UI tests / the walkthrough), or `nil` so the selected
+    /// language drives the direction in production.
+    private let forcedDirection = LayoutDirectionOverride.forcedDirection()
 
     var body: some View {
         Group {
@@ -47,6 +55,10 @@ private struct AppRootView: View {
                 ProgressView("Loading…")
             }
         }
+        // Drive the WHOLE app's layout direction from the selected language (RTL for ar/ur), honoring
+        // the launch-time force-RTL override. This is the single, centralized RTL seam: every screen
+        // mirrors automatically through the inherited `\.layoutDirection` environment value.
+        .appLayoutDirection(for: languageManager.current, override: forcedDirection)
         .onAppear { rebuildStores(for: languageManager.current) }
         // Rebuild the language-scoped stores whenever the active language changes so progress for
         // each language stays fully independent and persistent.
