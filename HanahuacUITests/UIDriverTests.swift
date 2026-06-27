@@ -148,18 +148,26 @@ final class UIDriverTests: XCTestCase {
     /// (same as other unresolvable steps), and a nil OR zero `velocity` is replaced with a
     /// correctly-signed default derived from the scale; an explicit non-zero `velocity` is respected.
     private func pinch(_ step: UIActionStep, in app: XCUIApplication) {
-        guard let scale = step.scale, scale > 0 else {
-            return
-        }
-        let resolvedVelocity = step.velocity ?? 0
-        let velocity = resolvedVelocity == 0 ? (scale < 1 ? -1 : 1) : resolvedVelocity
-        if let element = resolveElement(step, in: app) {
-            if element.waitForExistence(timeout: elementTimeout) {
-                element.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
+        #if targetEnvironment(macCatalyst)
+            // `XCUIElement.pinch(withScale:velocity:)` is unavailable on Mac Catalyst — the platform the
+            // CI "Build & Test" job compiles and runs the UI tests on. Pinch steps are therefore a no-op
+            // there (artifact collection / the rest of the script continues); the gesture is exercised
+            // when the driver runs on an iOS Simulator destination.
+            _ = (step, app)
+        #else
+            guard let scale = step.scale, scale > 0 else {
+                return
             }
-            return
-        }
-        app.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
+            let resolvedVelocity = step.velocity ?? 0
+            let velocity = resolvedVelocity == 0 ? (scale < 1 ? -1 : 1) : resolvedVelocity
+            if let element = resolveElement(step, in: app) {
+                if element.waitForExistence(timeout: elementTimeout) {
+                    element.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
+                }
+                return
+            }
+            app.pinch(withScale: CGFloat(scale), velocity: CGFloat(velocity))
+        #endif
     }
 
     /// Sleep for the requested number of seconds.
