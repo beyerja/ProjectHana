@@ -76,6 +76,78 @@ final class MapQuizSessionTests: XCTestCase {
         }
     }
 
+    /// Sea features whose pin coordinate is the explicit lat/lon from the model (no border-loader).
+    private func makeSeas() -> [Sea] {
+        [
+            Sea(id: "s0", name: "S0", nameFr: nil, nameDe: nil, nameEs: nil, lat: 36, lon: 14),
+            Sea(id: "s1", name: "S1", nameFr: nil, nameDe: nil, nameEs: nil, lat: 43, lon: 15),
+            Sea(id: "s2", name: "S2", nameFr: nil, nameDe: nil, nameEs: nil, lat: 40, lon: 19),
+            Sea(id: "s3", name: "S3", nameFr: nil, nameDe: nil, nameEs: nil, lat: 38, lon: 22),
+            Sea(id: "s4", name: "S4", nameFr: nil, nameDe: nil, nameEs: nil, lat: 55, lon: 18),
+            Sea(id: "s5", name: "S5", nameFr: nil, nameDe: nil, nameEs: nil, lat: 60, lon: 20),
+            Sea(id: "s6", name: "S6", nameFr: nil, nameDe: nil, nameEs: nil, lat: 35, lon: -5),
+            Sea(id: "s7", name: "S7", nameFr: nil, nameDe: nil, nameEs: nil, lat: 44, lon: 33),
+            Sea(id: "s8", name: "S8", nameFr: nil, nameDe: nil, nameEs: nil, lat: 37, lon: 25),
+            Sea(id: "s9", name: "S9", nameFr: nil, nameDe: nil, nameEs: nil, lat: 65, lon: 15),
+            Sea(id: "s10", name: "S10", nameFr: nil, nameDe: nil, nameEs: nil, lat: 69, lon: 19),
+            Sea(id: "s11", name: "S11", nameFr: nil, nameDe: nil, nameEs: nil, lat: 58, lon: 22)
+        ]
+    }
+
+    /// MountainRange features whose pin coordinate is the explicit lat/lon from the model (no border-loader).
+    private func makeMountainRanges() -> [MountainRange] {
+        [
+            MountainRange(
+                id: "m0", name: "M0", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 46, lon: 9, highestPeak: "P0", elevationMetres: 4000
+            ),
+            MountainRange(
+                id: "m1", name: "M1", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 43, lon: 0, highestPeak: "P1", elevationMetres: 3400
+            ),
+            MountainRange(
+                id: "m2", name: "M2", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 42, lon: 24, highestPeak: "P2", elevationMetres: 2900
+            ),
+            MountainRange(
+                id: "m3", name: "M3", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 44, lon: 43, highestPeak: "P3", elevationMetres: 5600
+            ),
+            MountainRange(
+                id: "m4", name: "M4", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 47, lon: 13, highestPeak: "P4", elevationMetres: 3700
+            ),
+            MountainRange(
+                id: "m5", name: "M5", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 63, lon: 9, highestPeak: "P5", elevationMetres: 2469
+            ),
+            MountainRange(
+                id: "m6", name: "M6", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 65, lon: 17, highestPeak: "P6", elevationMetres: 2117
+            ),
+            MountainRange(
+                id: "m7", name: "M7", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 41, lon: 20, highestPeak: "P7", elevationMetres: 2764
+            ),
+            MountainRange(
+                id: "m8", name: "M8", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 45, lon: 26, highestPeak: "P8", elevationMetres: 2544
+            ),
+            MountainRange(
+                id: "m9", name: "M9", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 50, lon: 19, highestPeak: "P9", elevationMetres: 1602
+            ),
+            MountainRange(
+                id: "m10", name: "M10", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 43, lon: 12, highestPeak: "P10", elevationMetres: 2914
+            ),
+            MountainRange(
+                id: "m11", name: "M11", nameFr: nil, nameDe: nil, nameEs: nil,
+                continent: "EU", lat: 37, lon: -3, highestPeak: "P11", elevationMetres: 3478
+            )
+        ]
+    }
+
     /// River features whose pin coordinate is the source→mouth midpoint (no path-loader).
     private func makeRivers() -> [River] {
         [
@@ -164,6 +236,38 @@ final class MapQuizSessionTests: XCTestCase {
         )
     }
 
+    func testMapQuizSessionSea_mapRegionHasNonZeroSpanOnInit() {
+        let seas = makeSeas()
+        let cards = seas.map { makeCard(factID: $0.id, category: .sea) }
+        let session = MapQuizSession(cards: cards, allFeatures: seas)
+        XCTAssertGreaterThan(
+            session.mapRegion.span.latitudeDelta,
+            0,
+            "MapQuizSession(sea) mapRegion.latitudeDelta must be > 0 immediately after init"
+        )
+        XCTAssertGreaterThan(
+            session.mapRegion.span.longitudeDelta,
+            0,
+            "MapQuizSession(sea) mapRegion.longitudeDelta must be > 0 immediately after init"
+        )
+    }
+
+    func testMapQuizSessionMountain_mapRegionHasNonZeroSpanOnInit() {
+        let mountains = makeMountainRanges()
+        let cards = mountains.map { makeCard(factID: $0.id, category: .mountain) }
+        let session = MapQuizSession(cards: cards, allFeatures: mountains)
+        XCTAssertGreaterThan(
+            session.mapRegion.span.latitudeDelta,
+            0,
+            "MapQuizSession(mountain) mapRegion.latitudeDelta must be > 0 immediately after init"
+        )
+        XCTAssertGreaterThan(
+            session.mapRegion.span.longitudeDelta,
+            0,
+            "MapQuizSession(mountain) mapRegion.longitudeDelta must be > 0 immediately after init"
+        )
+    }
+
     // MARK: - MapLearningSession: mapRegion seeded on init
 
     func testMapLearningSessionCountry_mapRegionHasNonZeroSpanOnInit() {
@@ -195,6 +299,38 @@ final class MapQuizSessionTests: XCTestCase {
             session.mapRegion.span.longitudeDelta,
             0,
             "MapLearningSession(river) mapRegion.longitudeDelta must be > 0 immediately after init"
+        )
+    }
+
+    func testMapLearningSessionSea_mapRegionHasNonZeroSpanOnInit() {
+        let seas = makeSeas()
+        let cards = seas.map { makeCard(factID: $0.id, category: .sea) }
+        let session = MapLearningSession(newCards: cards, allFeatures: seas)
+        XCTAssertGreaterThan(
+            session.mapRegion.span.latitudeDelta,
+            0,
+            "MapLearningSession(sea) mapRegion.latitudeDelta must be > 0 immediately after init"
+        )
+        XCTAssertGreaterThan(
+            session.mapRegion.span.longitudeDelta,
+            0,
+            "MapLearningSession(sea) mapRegion.longitudeDelta must be > 0 immediately after init"
+        )
+    }
+
+    func testMapLearningSessionMountain_mapRegionHasNonZeroSpanOnInit() {
+        let mountains = makeMountainRanges()
+        let cards = mountains.map { makeCard(factID: $0.id, category: .mountain) }
+        let session = MapLearningSession(newCards: cards, allFeatures: mountains)
+        XCTAssertGreaterThan(
+            session.mapRegion.span.latitudeDelta,
+            0,
+            "MapLearningSession(mountain) mapRegion.latitudeDelta must be > 0 immediately after init"
+        )
+        XCTAssertGreaterThan(
+            session.mapRegion.span.longitudeDelta,
+            0,
+            "MapLearningSession(mountain) mapRegion.longitudeDelta must be > 0 immediately after init"
         )
     }
 }
