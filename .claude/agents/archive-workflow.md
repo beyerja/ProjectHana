@@ -12,7 +12,16 @@ Derive the slug from `HANA_FEATURE_SLUG` if set (the shared run slug), else from
 
 Move `.workflow/feature.md`, `.workflow/stories.md`, `.workflow/log.md`, `.workflow/stories/`, and `.workflow/telemetry/` into `.workflow/archive/<YYYY-MM-DD>-<slug>/`, preserving the directory structure.
 
-Leave `.workflow/` empty except for `README.md`.
+**Never move or delete `.workflow/ui-walkthrough/`.** It is a PERMANENT, shipped capability (the
+`just ui-walkthrough` driver's `README.md`, canonical `scripts/` — incl. the recipe default
+`smoke.json` — and `demo/` evidence), NOT per-run tracking state. Deleting it breaks `just
+ui-walkthrough` (its default points at `.workflow/ui-walkthrough/scripts/smoke.json`) and the
+`verify-story`/`verify-feature` agents that depend on it. If this run produced timestamped
+`.workflow/ui-walkthrough/<run>/` output worth keeping as evidence, *copy* (don't move) it into the
+archive's own `ui-walkthrough/` subdir; the canonical `README.md` + `scripts/` + `demo/` stay put.
+
+Leave `.workflow/` containing **only** `README.md` and the permanent `.workflow/ui-walkthrough/`
+capability dir — move everything else (the per-run tracking state listed above) into the archive.
 
 **Worktree note:** the live working set (feature.md, stories.md, log.md, stories/) is gitignored, so
 only the `archive/<date>-<slug>/` you create here is tracked. Committing it on this run's feature branch
