@@ -234,16 +234,15 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.allCases.count, 21)
     }
 
-    /// The remaining 4 content-pending languages are enumerated in the picker with their native-script
+    /// The remaining 3 content-pending languages are enumerated in the picker with their native-script
     /// display names and their candidate chain goes straight to English (COMPLETE-content by contract).
-    /// `.ja` (story 003), `.zhHans` (story 004) and `.hi` (story 005) have shipped complete content and
-    /// are asserted separately below.
+    /// `.ja` (story 003), `.zhHans` (story 004), `.hi` (story 005) and `.bn` (story 006) have shipped
+    /// complete content and are asserted separately below.
     func testContentPendingLanguagesEnumeratedWithNativeDisplayNames() {
         XCTAssertEqual(AppLocale.ar.displayName, "العربية")
-        XCTAssertEqual(AppLocale.bn.displayName, "বাংলা")
         XCTAssertEqual(AppLocale.ptBR.displayName, "Português (Brasil)")
         XCTAssertEqual(AppLocale.ur.displayName, "اردو")
-        for locale in [AppLocale.ar, .bn, .ptBR, .ur] {
+        for locale in [AppLocale.ar, .ptBR, .ur] {
             XCTAssertEqual(
                 L10n.bundleCandidates(for: locale),
                 [locale.rawValue, "en"],
@@ -301,6 +300,22 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertFalse(
             AppLocale.hi.fallsBackThroughSpanish,
             "hi is COMPLETE content and must not route through Spanish"
+        )
+    }
+
+    /// Bengali has shipped COMPLETE content (story 006): it is enumerated in the picker with its native
+    /// display name "বাংলা", its bundle-candidate chain goes straight to English `[bn, en]` (en is a
+    /// never-hit safety net), and it never routes through Spanish.
+    func testBengaliEnumeratedAsCompleteContentLanguage() {
+        XCTAssertEqual(AppLocale.bn.displayName, "বাংলা")
+        XCTAssertEqual(
+            L10n.bundleCandidates(for: .bn),
+            ["bn", "en"],
+            "bn is COMPLETE content → straight to English"
+        )
+        XCTAssertFalse(
+            AppLocale.bn.fallsBackThroughSpanish,
+            "bn is COMPLETE content and must not route through Spanish"
         )
     }
 
