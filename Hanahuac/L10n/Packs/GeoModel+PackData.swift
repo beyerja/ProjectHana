@@ -28,9 +28,10 @@ extension Country {
         case .bn: nameBn
         case .ptBR: namePtBr
         case .ar: nameAr
-        // Content-pending languages (story 002): the bundled geo source has no name column for these
-        // yet, so they have no raw value until their content story (010) adds the column.
-        case .en, .ur: nil
+        case .ur: nameUr
+        // Content-pending languages (story 002): the bundled English base name is the resolver's final
+        // fallback, so the base locale needs no pack column.
+        case .en: nil
         }
     }
 
@@ -55,9 +56,10 @@ extension Country {
         case .bn: capitalBn
         case .ptBR: capitalPtBr
         case .ar: capitalAr
-        // Content-pending languages (story 002): the bundled geo source has no capital column for
-        // these yet, so they have no raw value until their content story (010) adds the column.
-        case .en, .ur: nil
+        case .ur: capitalUr
+        // Content-pending languages (story 002): the bundled English base capital is the resolver's
+        // final fallback, so the base locale needs no pack column.
+        case .en: nil
         }
     }
 }
@@ -84,9 +86,10 @@ extension River {
         case .bn: nameBn
         case .ptBR: namePtBr
         case .ar: nameAr
-        // Content-pending languages (story 002): the bundled geo source has no name column for these
-        // yet, so they have no raw value until their content story (010) adds the column.
-        case .en, .ur: nil
+        case .ur: nameUr
+        // Content-pending languages (story 002): the bundled English base name is the resolver's final
+        // fallback, so the base locale needs no pack column.
+        case .en: nil
         }
     }
 }
@@ -113,9 +116,10 @@ extension MountainRange {
         case .bn: nameBn
         case .ptBR: namePtBr
         case .ar: nameAr
-        // Content-pending languages (story 002): the bundled geo source has no name column for these
-        // yet, so they have no raw value until their content story (010) adds the column.
-        case .en, .ur: nil
+        case .ur: nameUr
+        // Content-pending languages (story 002): the bundled English base name is the resolver's final
+        // fallback, so the base locale needs no pack column.
+        case .en: nil
         }
     }
 }
@@ -142,9 +146,10 @@ extension Sea {
         case .bn: nameBn
         case .ptBR: namePtBr
         case .ar: nameAr
-        // Content-pending languages (story 002): the bundled geo source has no name column for these
-        // yet, so they have no raw value until their content story (010) adds the column.
-        case .en, .ur: nil
+        case .ur: nameUr
+        // Content-pending languages (story 002): the bundled English base name is the resolver's final
+        // fallback, so the base locale needs no pack column.
+        case .en: nil
         }
     }
 }
