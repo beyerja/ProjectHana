@@ -1,14 +1,205 @@
-/* Urdu (ur) — content-pending placeholder.
- *
- * Story 002 lands this scaffolded .lproj so the bundle resolves; real translations (and RTL verify)
- * land in story 010, which flips ur from SCAFFOLDED to FULL in scripts/check-l10n-completeness.py.
- * Until then every UI string resolves via the [ur, en] fallback chain (English supplies every key).
- * This file is intentionally empty of keys — do NOT copy English values here as placeholders.
- */
+/* Urdu (ur) — اردو */
+
+/* HomeView */
+"home.tagline" = "ایک دنیا، ایک وقت میں ایک کوئز";
+"home.categories" = "زمرے";
+"home.category.countries" = "ممالک";
+"home.category.rivers" = "دریا";
+"home.category.mountains" = "پہاڑ";
+"home.category.seas" = "سمندر";
+"home.view_progress" = "پیش رفت دیکھیں";
+"home.tile.new" = "نیا";
+"home.tile.pending" = "زیرِ التوا";
+"home.tile.all_done" = "سب مکمل";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "نقشے پر ٹیپ کوئز";
+"quiz.mode.map_tap.desc" = "نقشے پر درست ملک پر ٹیپ کریں";
+"quiz.mode.type_capital.title" = "دارالحکومت لکھیں";
+"quiz.mode.type_capital.desc" = "«X کا دارالحکومت کیا ہے؟»";
+"quiz.mode.name_feature.title" = "اس جگہ کا نام بتائیں";
+"quiz.mode.name_feature.desc" = "نقشے پر نشان زدہ جگہ کا نام لکھیں";
+"quiz.mode.multiple_choice.title" = "کثیر الانتخاب";
+"quiz.mode.multiple_choice.desc" = "4 اختیارات میں سے دارالحکومت منتخب کریں";
+"quiz.cards_due.singular" = "کارڈ واجب";
+"quiz.cards_due.plural" = "کارڈز واجب";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "ترتیبات";
+"settings.section.general" = "عمومی";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "زبان";
+"settings.language.picker_title" = "ایپ کی زبان";
+"settings.language.downloading" = "ڈاؤن لوڈ ہو رہا ہے…";
+"settings.language.download_failed" = "ڈاؤن لوڈ ناکام";
+"settings.language.retry" = "دوبارہ کوشش کریں";
+"settings.language.available" = "دستیاب";
+"settings.language.group.downloaded" = "ڈاؤن لوڈ شدہ";
+"settings.language.search_placeholder" = "زبانیں تلاش کریں";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud مطابقت";
+"settings.sync.status_label" = "حالت";
+"settings.sync.status.off" = "بند";
+"settings.sync.status.unavailable" = "دستیاب نہیں";
+"settings.sync.status.on" = "آن";
+"settings.sync.status.syncing" = "مطابقت ہو رہی ہے…";
+"settings.sync.status.idle" = "تازہ ترین";
+"settings.sync.status.error" = "خرابی";
+"settings.sync.unavailable_note" = "iCloud مطابقت دستیاب نہیں۔ iCloud میں سائن اِن کریں اور مطابقت فعال والا بلڈ استعمال کریں۔";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "پیش رفت جلد آرہی ہے";
+"progress.placeholder_desc" = "آپ کے سیکھنے کے اعداد و شمار یہاں ظاہر ہوں گے۔";
+"progress.title" = "پیش رفت";
+
+/* StatsView */
+"stats.title" = "پیش رفت";
+"stats.cards_reviewed" = "نظرثانی شدہ کارڈز";
+"stats.due_today" = "آج واجب";
+"stats.day_streak" = "روزانہ تسلسل";
+"stats.by_category" = "زمرے کے لحاظ سے";
+"stats.showing_language" = "دکھایا جا رہا ہے:";
+"stats.by_language" = "زبان کے لحاظ سے";
+"stats.by_mode" = "کوئز کی قسم کے لحاظ سے";
+"stats.category_header" = "زمرہ";
+"stats.mastery_tiers" = "مہارت کے درجے";
+"stats.tier.not_started" = "شروع نہیں ہوا";
+"stats.tier.reps_1_2" = "تکرار 1–2";
+"stats.tier.reps_3_4" = "تکرار 3–4";
+"stats.tier.mastered" = "تکرار ≥ 5، EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "وقت کے ساتھ رجحانات";
+"stats.charts.range.7d" = "7 دن";
+"stats.charts.range.30d" = "30 دن";
+"stats.charts.range.all" = "تمام وقت";
+"stats.charts.category.all" = "تمام";
+"stats.charts.mastery_growth" = "مہارت میں اضافہ";
+"stats.charts.reviews_completed" = "مکمل نظرثانیاں";
+"stats.charts.cards_graduated" = "فارغ التحصیل کارڈز";
+"stats.charts.streak_history" = "تسلسل";
+"stats.charts.series.review" = "نظرثانی";
+"stats.charts.series.mastered" = "ماہر";
+"stats.charts.empty" = "اپنی پیش رفت کے رجحانات یہاں دیکھنے کے لیے سیکھتے رہیں۔";
+
+/* LearningQuizView */
+"learn.title" = "سیکھیں";
+"learn.results" = "نتائج";
+"learn.done" = "ہو گیا";
+"learn.no_cards_title" = "سیکھنے کے لیے کوئی کارڈ نہیں";
+"learn.no_cards_desc" = "تمام کارڈز پہلے ہی آپ کے نظرثانی شیڈول میں ہیں۔";
+"learn.graduated_count" = "%d / %d فارغ التحصیل";
+"learn.active_count" = "%d فعال";
+"learn.complete_title" = "سیکھنا مکمل!";
+"learn.complete_desc" = "تمام کارڈز آپ کے نظرثانی شیڈول میں شامل کر دیے گئے ہیں۔";
+"learn.cards_graduated" = "فارغ التحصیل کارڈز";
+
+/* MapQuizView */
+"map_quiz.title" = "نقشہ کوئز";
+"map_quiz.tap_on_map" = "نقشے پر ٹیپ کریں";
+"map_quiz.nothing_due_title" = "کچھ واجب نہیں";
+"map_quiz.nothing_due_desc" = "ابھی کوئی کارڈ واجب نہیں۔ بعد میں دوبارہ آئیں!";
+"map_quiz.feedback.correct" = "درست!";
+"map_quiz.feedback.incorrect_prefix" = "غلط — وہ تھا";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "نتائج";
+"quiz_summary.session_complete" = "سیشن مکمل!";
+"quiz_summary.cards_reviewed" = "نظرثانی شدہ کارڈز";
+"quiz_summary.correct" = "درست";
+"quiz_summary.next_review" = "اگلی نظرثانی";
+"quiz_summary.done" = "ہو گیا";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "کچھ واجب نہیں";
+"mcq_quiz.nothing_due_desc" = "ابھی کوئی کارڈ واجب نہیں۔";
+"mcq_quiz.correct_count" = "%d درست";
+"mcq_quiz.nav.country" = "ممالک کوئز";
+"mcq_quiz.nav.river" = "دریا کوئز";
+"mcq_quiz.nav.mountain" = "پہاڑ کوئز";
+"mcq_quiz.nav.sea" = "سمندر کوئز";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "کچھ واجب نہیں";
+"capital_quiz.nothing_due_desc" = "ابھی کوئی کارڈ واجب نہیں۔";
+"capital_quiz.check" = "جانچیں";
+"capital_quiz.next" = "اگلا →";
+"capital_quiz.placeholder" = "اپنا جواب لکھیں…";
+"capital_quiz.feedback.correct" = "درست! ✓";
+"capital_quiz.feedback.wrong_prefix" = "جواب ہے:";
+"capital_quiz.nav.capital" = "دارالحکومت کوئز";
+"capital_quiz.nav.country" = "ممالک کوئز";
+"capital_quiz.correct_count" = "%d درست";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "اس جگہ کا نام بتائیں";
+"name_feature.nav" = "اس جگہ کا نام بتائیں";
+"name_feature.nothing_due_title" = "کچھ واجب نہیں";
+"name_feature.nothing_due_desc" = "ابھی کوئی کارڈ واجب نہیں۔";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "کوئز جلد آرہا ہے";
+"quiz_placeholder.desc" = "%@ کوئز اگلی اپڈیٹ میں دستیاب ہوگا۔";
+"quiz_placeholder.all_categories" = "تمام زمرے";
+
+/* Continent labels */
+"continent.africa" = "افریقہ";
+"continent.asia" = "ایشیا";
+"continent.europe" = "یورپ";
+"continent.north_america" = "شمالی امریکہ";
+"continent.oceania" = "اوقیانوسیہ";
+"continent.south_america" = "جنوبی امریکہ";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "%@ کا دارالحکومت کیا ہے؟";
+"quiz.prompt.continent_of" = "%@ کس براعظم میں واقع ہے؟";
+"quiz.prompt.country_of_capital" = "کس ملک کا دارالحکومت %@ ہے؟";
+"quiz.prompt.sea_location" = "%@ کے قریب کون سا آبی ذخیرہ واقع ہے؟";
+"quiz.region.north" = "ش";
+"quiz.region.south" = "ج";
+"quiz.region.east" = "مش";
+"quiz.region.west" = "مغ";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "نئے کارڈز سیکھیں";
+"learn.mode_picker.map.title" = "نقشہ کوئز";
+"learn.mode_picker.map.desc" = "نقشے پر درست ملک پر ٹیپ کریں";
+"learn.mode_picker.mcq.title" = "کثیر الانتخاب";
+"learn.mode_picker.mcq.desc" = "4 اختیارات میں سے جواب منتخب کریں";
+
+/* Map learning quiz */
+"learn_map.title" = "نقشہ سیکھنا";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "سوال";
+"a11y.progress" = "سوال %d از %d";
+"a11y.score" = "%d درست";
+"a11y.graduated" = "%d از %d فارغ التحصیل";
+"a11y.active" = "%d فعال";
+"a11y.answer_field.label" = "جواب";
+"a11y.answer_field.hint" = "اپنا جواب لکھیں، پھر جانچیں کو فعال کریں۔";
+"a11y.check.hint" = "آپ کے جواب کی جانچ کرتا ہے۔";
+"a11y.next.hint" = "اگلے سوال پر جاتا ہے۔";
+"a11y.option.hint" = "یہ جواب منتخب کرنے کے لیے ڈبل ٹیپ کریں۔";
+"a11y.state.selected" = "منتخب شدہ";
+"a11y.state.correct" = "درست جواب";
+"a11y.state.incorrect" = "غلط جواب";
+"a11y.state.not_answered" = "جواب نہیں دیا گیا";
+"a11y.feedback.correct" = "درست";
+"a11y.feedback.incorrect" = "غلط";
+"a11y.summary.accuracy" = "%d فیصد درستگی";
+"a11y.summary.result_icon" = "سیشن کا نتیجہ";
+"a11y.done.hint" = "اس کوئز کو بند کرتا ہے۔";
+"a11y.map.pin.hint" = "یہ جگہ منتخب کرنے کے لیے ڈبل ٹیپ کریں۔";
+"a11y.map.prompt.label" = "نقشے پر تلاش کریں";
+"a11y.map.progress" = "جگہ %d از %d";
+"a11y.map.streak" = "لگاتار 3 میں سے %d درست";
 
 /* Story 003 — Progress tier names + map back button (AC4 / AC7) */
 "stats.tier.name.new" = "نیا";
 "stats.tier.name.learning" = "سیکھ رہے";
 "stats.tier.name.review" = "نظرثانی";
-"stats.tier.name.mastered" = "مہارت";
+"stats.tier.name.mastered" = "ماہر";
 "a11y.back" = "واپس";

@@ -38,6 +38,8 @@
 "settings.language.download_failed" = "다운로드 실패";
 "settings.language.retry" = "다시 시도";
 "settings.language.available" = "사용 가능";
+"settings.language.group.downloaded" = "다운로드됨";
+"settings.language.search_placeholder" = "언어 검색";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud 동기화";

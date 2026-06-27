@@ -234,24 +234,37 @@ final class AppLocaleTests: XCTestCase {
         XCTAssertEqual(AppLocale.allCases.count, 21)
     }
 
-    /// The remaining 2 content-pending languages are enumerated in the picker with their native-script
-    /// display names and their candidate chain goes straight to English (COMPLETE-content by contract).
-    /// `.ja` (story 003), `.zhHans` (story 004), `.hi` (story 005), `.bn` (story 006) and `.ptBR`
-    /// (story 007) have shipped complete content and are asserted separately below.
-    func testContentPendingLanguagesEnumeratedWithNativeDisplayNames() {
-        XCTAssertEqual(AppLocale.ar.displayName, "العربية")
+    /// Urdu has shipped COMPLETE content (story 010): it is enumerated in the picker with its native
+    /// display name "اردو", its bundle-candidate chain goes straight to English `[ur, en]` (en is a
+    /// never-hit safety net), and it never routes through Spanish. As of story 010 NO language remains
+    /// content-pending — every story-002 placeholder ships complete content and is asserted as such.
+    func testUrduEnumeratedAsCompleteContentLanguage() {
         XCTAssertEqual(AppLocale.ur.displayName, "اردو")
-        for locale in [AppLocale.ar, .ur] {
-            XCTAssertEqual(
-                L10n.bundleCandidates(for: locale),
-                [locale.rawValue, "en"],
-                "\(locale.rawValue) is COMPLETE content → straight to English"
-            )
-            XCTAssertFalse(
-                locale.fallsBackThroughSpanish,
-                "\(locale.rawValue) must not route through Spanish"
-            )
-        }
+        XCTAssertEqual(
+            L10n.bundleCandidates(for: .ur),
+            ["ur", "en"],
+            "ur is COMPLETE content → straight to English"
+        )
+        XCTAssertFalse(
+            AppLocale.ur.fallsBackThroughSpanish,
+            "ur is COMPLETE content and must not route through Spanish"
+        )
+    }
+
+    /// Arabic has shipped COMPLETE content (story 009): it is enumerated in the picker with its native
+    /// display name "العربية", its bundle-candidate chain goes straight to English `[ar, en]` (en is a
+    /// never-hit safety net), and it never routes through Spanish.
+    func testArabicEnumeratedAsCompleteContentLanguage() {
+        XCTAssertEqual(AppLocale.ar.displayName, "العربية")
+        XCTAssertEqual(
+            L10n.bundleCandidates(for: .ar),
+            ["ar", "en"],
+            "ar is COMPLETE content → straight to English"
+        )
+        XCTAssertFalse(
+            AppLocale.ar.fallsBackThroughSpanish,
+            "ar is COMPLETE content and must not route through Spanish"
+        )
     }
 
     /// Japanese has shipped COMPLETE content (story 003): it is enumerated in the picker with its

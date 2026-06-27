@@ -10,23 +10,21 @@ Parses every ``Hanahuac/<code>.lproj/Localizable.strings`` and enforces:
       never be silently skipped. Every on-disk locale MUST have a declared role; an unclassified
       on-disk locale fails the check (catch a new ``.lproj`` that nobody assigned a role).
         - ``BASE`` (en, es-MX): always-bundled, must contain the FULL canonical key set.
-        - ``FULL`` (de, fr, es-ES, it, pl, nl, sr, ko, ja, zh-Hans, hi, bn, pt-BR and the future 2): fully-translated
+        - ``FULL`` (de, fr, es-ES, it, pl, nl, sr, ko, ja, zh-Hans, hi, bn, pt-BR, ar, ur): fully-translated
           canonical locales, must contain the FULL canonical key set. Any missing key fails, listing
           the offending locale + keys.
         - ``PARTIAL`` (nah, yua, ca, eu): fallback-permitted by design — genuine gaps resolve via the
           locale's fallback chain (e.g. nah/yua -> es-MX -> en; ca/eu -> es-ES -> en; see
           Hanahuac/L10n/LanguageCatalog.swift fallbackChain). Their coverage is reported as
           INFORMATIONAL, never a failure.
-        - ``SCAFFOLDED`` (ar, ur): content-pending placeholder locales
-          landed by story 002. Their ``.lproj`` exists on disk but is intentionally near-empty until
-          their content story (009-010) fills the translations. Coverage is reported INFORMATIONAL,
-          never a failure — the runtime ``[<self>, .en]`` fallback chain (en supplies every key) keeps
-          these resolving cleanly while their UI strings are pending.
-  (c) The remaining story-002 scaffolded locales (ar, ur) are ``SCAFFOLDED``
-      (NOT yet ``FULL``): they ship placeholder ``.lproj`` so the bundle resolves, and the static gate
-      does NOT enforce the full canonical key set on them. Each content story 009-010 flips EXACTLY its
-      own locale from ``SCAFFOLDED`` to ``FULL`` when it fills the real translations. (Stories 003-007
-      have already flipped ``ja``, ``zh-Hans``, ``hi``, ``bn`` and ``pt-BR`` to ``FULL``.)
+        - ``SCAFFOLDED``: content-pending placeholder locales landed by story 002. As of story 010
+          there are NONE left — every story-002 locale has been flipped to ``FULL`` by its content
+          story. The role is retained so a future placeholder locale can be classified.
+  (c) All story-002 scaffolded locales have now been flipped from ``SCAFFOLDED`` to ``FULL``: each
+      shipped a placeholder ``.lproj`` so the bundle resolved, and each content story 003-010 flipped
+      EXACTLY its own locale to ``FULL`` when it filled the real translations. (Stories 003-007, 009
+      and 010 flipped ``ja``, ``zh-Hans``, ``hi``, ``bn``, ``pt-BR``, ``ar`` and ``ur`` to ``FULL``;
+      no locale remains ``SCAFFOLDED``.)
   (d) Untranslated values are detected: a non-base locale value byte-identical to the en value for
       the same key is reported as a WARNING (so a copy-paste-but-forgot-to-translate slips no
       further), with an allowlist for legitimately-identical strings (brand names, ISO/shared
@@ -52,7 +50,8 @@ FULL = "full"  # fully-translated canonical locale — must contain the FULL can
 PARTIAL = "partial"  # fallback-permitted by design — coverage is informational, never a failure.
 # content-pending placeholder locale (story 002) — coverage is informational, never a failure, until
 # its content story (003-010) flips it to FULL. Distinct from PARTIAL: PARTIAL is fallback-permitted
-# *by design forever*; SCAFFOLDED is a temporary state that becomes FULL when translations land.
+# *by design forever*; SCAFFOLDED is a temporary state that becomes FULL when translations land. As of
+# story 010 NO locale is SCAFFOLDED; the role is kept for a future placeholder locale.
 SCAFFOLDED = "scaffolded"
 
 # Single source of truth for every locale's enforcement role, keyed by locale code. The set of
@@ -63,8 +62,8 @@ SCAFFOLDED = "scaffolded"
 # The story-002 locales started SCAFFOLDED: story 002 lands their placeholder `.lproj` so the bundle
 # resolves, but the gate must NOT enforce the full canonical key set on those placeholders. Each
 # content story 003-010 flips EXACTLY its own locale from SCAFFOLDED to FULL when it fills the real
-# translations (and seeds its IDENTICAL_VALUE_ALLOWLIST entries). Stories 003-007 have flipped `ja`,
-# `zh-Hans`, `hi`, `bn` and `pt-BR` to FULL; ar, ur remain SCAFFOLDED until their stories (009-010).
+# translations (and seeds its IDENTICAL_VALUE_ALLOWLIST entries). Stories 003-007, 009 and 010 have
+# flipped `ja`, `zh-Hans`, `hi`, `bn`, `pt-BR`, `ar` and `ur` to FULL; no locale remains SCAFFOLDED.
 ROLE_MAP: dict[str, str] = {
     # Base / always-bundled — 100% complete.
     "en": BASE,
@@ -95,6 +94,12 @@ ROLE_MAP: dict[str, str] = {
     # pt-BR (Brazilian Portuguese, Latin script) ships a complete UI string set + full geo coverage
     # (story 007); held to the full canonical key set like de/fr/ko.
     "pt-BR": FULL,
+    # ar (Arabic, Arabic script العربية, RTL) ships a complete UI string set + full geo coverage
+    # (story 009); held to the full canonical key set like de/fr/ko.
+    "ar": FULL,
+    # ur (Urdu, Perso-Arabic/Nastaʿlīq script اردو, RTL) ships a complete UI string set + full geo
+    # coverage (story 010); held to the full canonical key set like de/fr/ko.
+    "ur": FULL,
     # Partial / fallback-permitted by design — genuine gaps resolve via the locale's fallback chain
     # (LanguageCatalog.fallbackChain): nah/yua -> es-MX -> en; ca/eu -> es-ES -> en. Coverage is
     # reported informationally only, never a failure.
@@ -102,14 +107,9 @@ ROLE_MAP: dict[str, str] = {
     "yua": PARTIAL,
     "ca": PARTIAL,
     "eu": PARTIAL,
-    # --- Story-002 scaffolded locales: placeholder `.lproj` on disk, content pending. ---
-    # Reported informationally only; each content story 007-010 flips EXACTLY its own locale to FULL
-    # when it fills translations:
-    #   ar -> 009, ur -> 010.
-    # (ja -> 003, zh-Hans -> 004, hi -> 005, bn -> 006 and pt-BR -> 007 have already flipped to FULL
-    # above.)
-    "ar": SCAFFOLDED,
-    "ur": SCAFFOLDED,
+    # --- Story-002 scaffolded locales: ALL flipped to FULL by their content stories. ---
+    # (ja -> 003, zh-Hans -> 004, hi -> 005, bn -> 006, pt-BR -> 007, ar -> 009 and ur -> 010 have all
+    # flipped to FULL above.) No locale remains SCAFFOLDED.
 }
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -145,6 +145,8 @@ IDENTICAL_VALUE_ALLOWLIST: set[tuple[str, str]] = {
     ("hi", "settings.section.icloud"),
     ("bn", "settings.section.icloud"),
     ("pt-BR", "settings.section.icloud"),
+    ("ar", "settings.section.icloud"),
+    ("ur", "settings.section.icloud"),
     # "%d / 3" is a pure format string (digit + slash); identical in every language.
     ("de", "learn_map.streak"),
     ("fr", "learn_map.streak"),
@@ -153,6 +155,16 @@ IDENTICAL_VALUE_ALLOWLIST: set[tuple[str, str]] = {
     ("zh-Hans", "learn_map.streak"),
     ("hi", "learn_map.streak"),
     ("bn", "learn_map.streak"),
+    # ar (Arabic, Arabic script) shared strings, legitimately identical to English, not stubs:
+    #   "iCloud" (Apple brand, above) and "%d / 3" (pure format string — digit + slash). Every other
+    #   ar value is Arabic script, so nothing else collides with the Latin-script English values (the
+    #   compass abbreviations are Arabic ش/ج/شر/غ, not N/S).
+    ("ar", "learn_map.streak"),
+    # ur (Urdu, Perso-Arabic/Nastaʿlīq script) shared strings, legitimately identical to English, not
+    #   stubs: "iCloud" (Apple brand, above) and "%d / 3" (pure format string — digit + slash). Every
+    #   other ur value is Urdu script, so nothing else collides with the Latin-script English values
+    #   (the compass abbreviations are Urdu ش/ج/مش/مغ, not N/S).
+    ("ur", "learn_map.streak"),
     # pt-BR (Brazilian Portuguese) shared strings, all legitimately identical to English, not stubs:
     #   "iCloud" (Apple brand, above), "%d / 3" (pure format string), "Status" (spelled identically in
     #   Portuguese), "Oceania" (continent proper noun, identical), and the compass abbreviations N

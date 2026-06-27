@@ -262,6 +262,76 @@ final class LanguageCompletenessSupportTests: XCTestCase {
         )
     }
 
+    // MARK: - ar (Story 009) completeness
+
+    /// Arabic ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses the
+    /// STRICT path — when the ar `.lproj` is not mounted (the simulator unit-test host has no asset-pack
+    /// server), the strict helper THROWS ``CompletenessError/stringBundleUnreachable``, which we
+    /// translate into an `XCTSkip` so the test never degrades to a false pass. When the pack IS mounted,
+    /// a genuine missing key FAILS the assertion.
+    func testArabicHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .ar)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("ar UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "ar must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Arabic ships COMPLETE geo coverage: every country/capital/river/mountain/sea has an ar name, so
+    /// the bundled provider's pack reports no gaps for .ar. Uses the STRICT path, so a missing/nil ar
+    /// pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testArabicHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .ar)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "ar is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "ar is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
+    // MARK: - ur (Story 010) completeness
+
+    /// Urdu ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses the
+    /// STRICT path — when the ur `.lproj` is not mounted (the simulator unit-test host has no asset-pack
+    /// server), the strict helper THROWS ``CompletenessError/stringBundleUnreachable``, which we
+    /// translate into an `XCTSkip` so the test never degrades to a false pass. When the pack IS mounted,
+    /// a genuine missing key FAILS the assertion.
+    func testUrduHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .ur)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("ur UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "ur must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Urdu ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a ur name, so
+    /// the bundled provider's pack reports no gaps for .ur. Uses the STRICT path, so a missing/nil ur
+    /// pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testUrduHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .ur)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "ur is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "ur is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
     // MARK: - Strict-path teeth (AC#2): a real gap FAILS rather than degrading to pass
 
     /// Restore the active provider after any test that swaps it, so a swapped stub never leaks into

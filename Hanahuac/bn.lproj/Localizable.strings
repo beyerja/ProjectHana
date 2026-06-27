@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "ডাউনলোড ব্যর্থ";
 "settings.language.retry" = "পুনরায় চেষ্টা করুন";
 "settings.language.available" = "উপলব্ধ";
+"settings.language.group.downloaded" = "ডাউনলোড করা হয়েছে";
+"settings.language.search_placeholder" = "ভাষা খুঁজুন";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud সিঙ্ক";

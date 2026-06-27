@@ -1,10 +1,201 @@
-/* Arabic (ar) — content-pending placeholder.
- *
- * Story 002 lands this scaffolded .lproj so the bundle resolves; real translations (and RTL verify)
- * land in story 009, which flips ar from SCAFFOLDED to FULL in scripts/check-l10n-completeness.py.
- * Until then every UI string resolves via the [ar, en] fallback chain (English supplies every key).
- * This file is intentionally empty of keys — do NOT copy English values here as placeholders.
- */
+/* Arabic (ar) — العربية */
+
+/* HomeView */
+"home.tagline" = "عالم واحد، اختبار تلو الآخر";
+"home.categories" = "الفئات";
+"home.category.countries" = "الدول";
+"home.category.rivers" = "الأنهار";
+"home.category.mountains" = "الجبال";
+"home.category.seas" = "البحار";
+"home.view_progress" = "عرض التقدّم";
+"home.tile.new" = "جديد";
+"home.tile.pending" = "قيد الانتظار";
+"home.tile.all_done" = "اكتمل كل شيء";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "اختبار النقر على الخريطة";
+"quiz.mode.map_tap.desc" = "انقر على الدولة الصحيحة على الخريطة";
+"quiz.mode.type_capital.title" = "اكتب العاصمة";
+"quiz.mode.type_capital.desc" = "«ما عاصمة كذا؟»";
+"quiz.mode.name_feature.title" = "سمِّ هذا المكان";
+"quiz.mode.name_feature.desc" = "اكتب اسم المكان المحدّد على الخريطة";
+"quiz.mode.multiple_choice.title" = "اختيار من متعدد";
+"quiz.mode.multiple_choice.desc" = "اختر العاصمة من بين 4 خيارات";
+"quiz.cards_due.singular" = "بطاقة مستحقة";
+"quiz.cards_due.plural" = "بطاقات مستحقة";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "الإعدادات";
+"settings.section.general" = "عام";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "اللغة";
+"settings.language.picker_title" = "لغة التطبيق";
+"settings.language.downloading" = "جارٍ التنزيل…";
+"settings.language.download_failed" = "فشل التنزيل";
+"settings.language.retry" = "إعادة المحاولة";
+"settings.language.available" = "متاح";
+"settings.language.group.downloaded" = "تم التنزيل";
+"settings.language.search_placeholder" = "البحث عن اللغات";
+
+/* iCloud sync */
+"settings.sync.toggle" = "مزامنة iCloud";
+"settings.sync.status_label" = "الحالة";
+"settings.sync.status.off" = "متوقّف";
+"settings.sync.status.unavailable" = "غير متاح";
+"settings.sync.status.on" = "مفعّل";
+"settings.sync.status.syncing" = "جارٍ المزامنة…";
+"settings.sync.status.idle" = "محدّث";
+"settings.sync.status.error" = "خطأ";
+"settings.sync.unavailable_note" = "مزامنة iCloud غير متاحة. سجّل الدخول إلى iCloud واستخدم إصدارًا مفعّلًا فيه المزامنة.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "التقدّم قريبًا";
+"progress.placeholder_desc" = "ستظهر إحصاءات تعلّمك هنا.";
+"progress.title" = "التقدّم";
+
+/* StatsView */
+"stats.title" = "التقدّم";
+"stats.cards_reviewed" = "البطاقات المُراجَعة";
+"stats.due_today" = "المستحقة اليوم";
+"stats.day_streak" = "أيام متتالية";
+"stats.by_category" = "حسب الفئة";
+"stats.showing_language" = "المعروض:";
+"stats.by_language" = "حسب اللغة";
+"stats.by_mode" = "حسب نوع الاختبار";
+"stats.category_header" = "الفئة";
+"stats.mastery_tiers" = "مستويات الإتقان";
+"stats.tier.not_started" = "لم يبدأ";
+"stats.tier.reps_1_2" = "التكرارات ١–٢";
+"stats.tier.reps_3_4" = "التكرارات ٣–٤";
+"stats.tier.mastered" = "التكرارات ≥ 5، EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "الاتجاهات عبر الزمن";
+"stats.charts.range.7d" = "٧ أيام";
+"stats.charts.range.30d" = "٣٠ يومًا";
+"stats.charts.range.all" = "كل الأوقات";
+"stats.charts.category.all" = "الكل";
+"stats.charts.mastery_growth" = "نمو الإتقان";
+"stats.charts.reviews_completed" = "المراجعات المكتملة";
+"stats.charts.cards_graduated" = "البطاقات المتخرّجة";
+"stats.charts.streak_history" = "السلسلة";
+"stats.charts.series.review" = "مراجعة";
+"stats.charts.series.mastered" = "متقَن";
+"stats.charts.empty" = "واصل التعلّم لرؤية اتجاهات تقدّمك هنا.";
+
+/* LearningQuizView */
+"learn.title" = "تعلّم";
+"learn.results" = "النتائج";
+"learn.done" = "تم";
+"learn.no_cards_title" = "لا توجد بطاقات للتعلّم";
+"learn.no_cards_desc" = "كل البطاقات موجودة بالفعل في جدول مراجعتك.";
+"learn.graduated_count" = "%d / %d متخرّجة";
+"learn.active_count" = "%d نشطة";
+"learn.complete_title" = "اكتمل التعلّم!";
+"learn.complete_desc" = "تمت إضافة كل البطاقات إلى جدول مراجعتك.";
+"learn.cards_graduated" = "البطاقات المتخرّجة";
+
+/* MapQuizView */
+"map_quiz.title" = "اختبار الخريطة";
+"map_quiz.tap_on_map" = "انقر على الخريطة";
+"map_quiz.nothing_due_title" = "لا شيء مستحق";
+"map_quiz.nothing_due_desc" = "لا توجد بطاقات مستحقة الآن. عُد لاحقًا!";
+"map_quiz.feedback.correct" = "صحيح!";
+"map_quiz.feedback.incorrect_prefix" = "خطأ — كانت";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "النتائج";
+"quiz_summary.session_complete" = "اكتملت الجلسة!";
+"quiz_summary.cards_reviewed" = "البطاقات المُراجَعة";
+"quiz_summary.correct" = "صحيح";
+"quiz_summary.next_review" = "المراجعة التالية";
+"quiz_summary.done" = "تم";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "لا شيء مستحق";
+"mcq_quiz.nothing_due_desc" = "لا توجد بطاقات مستحقة الآن.";
+"mcq_quiz.correct_count" = "%d صحيحة";
+"mcq_quiz.nav.country" = "اختبار الدول";
+"mcq_quiz.nav.river" = "اختبار الأنهار";
+"mcq_quiz.nav.mountain" = "اختبار الجبال";
+"mcq_quiz.nav.sea" = "اختبار البحار";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "لا شيء مستحق";
+"capital_quiz.nothing_due_desc" = "لا توجد بطاقات مستحقة الآن.";
+"capital_quiz.check" = "تحقّق";
+"capital_quiz.next" = "التالي →";
+"capital_quiz.placeholder" = "اكتب إجابتك…";
+"capital_quiz.feedback.correct" = "صحيح! ✓";
+"capital_quiz.feedback.wrong_prefix" = "الإجابة هي:";
+"capital_quiz.nav.capital" = "اختبار العواصم";
+"capital_quiz.nav.country" = "اختبار الدول";
+"capital_quiz.correct_count" = "%d صحيحة";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "سمِّ هذا المكان";
+"name_feature.nav" = "سمِّ هذا المكان";
+"name_feature.nothing_due_title" = "لا شيء مستحق";
+"name_feature.nothing_due_desc" = "لا توجد بطاقات مستحقة الآن.";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "الاختبار قريبًا";
+"quiz_placeholder.desc" = "سيتوفّر اختبار %@ في التحديث القادم.";
+"quiz_placeholder.all_categories" = "كل الفئات";
+
+/* Continent labels */
+"continent.africa" = "أفريقيا";
+"continent.asia" = "آسيا";
+"continent.europe" = "أوروبا";
+"continent.north_america" = "أمريكا الشمالية";
+"continent.oceania" = "أوقيانوسيا";
+"continent.south_america" = "أمريكا الجنوبية";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "ما عاصمة %@؟";
+"quiz.prompt.continent_of" = "في أي قارة تقع %@؟";
+"quiz.prompt.country_of_capital" = "أي دولة عاصمتها %@؟";
+"quiz.prompt.sea_location" = "أي مسطّح مائي يقع بالقرب من %@؟";
+"quiz.region.north" = "ش";
+"quiz.region.south" = "ج";
+"quiz.region.east" = "شر";
+"quiz.region.west" = "غ";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "تعلّم بطاقات جديدة";
+"learn.mode_picker.map.title" = "اختبار الخريطة";
+"learn.mode_picker.map.desc" = "انقر على الدولة الصحيحة على الخريطة";
+"learn.mode_picker.mcq.title" = "اختيار من متعدد";
+"learn.mode_picker.mcq.desc" = "اختر الإجابة من بين 4 خيارات";
+
+/* Map learning quiz */
+"learn_map.title" = "تعلّم الخريطة";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "سؤال";
+"a11y.progress" = "السؤال %d من %d";
+"a11y.score" = "%d صحيحة";
+"a11y.graduated" = "%d من %d متخرّجة";
+"a11y.active" = "%d نشطة";
+"a11y.answer_field.label" = "الإجابة";
+"a11y.answer_field.hint" = "اكتب إجابتك، ثم فعّل التحقّق.";
+"a11y.check.hint" = "يتحقّق من إجابتك.";
+"a11y.next.hint" = "ينتقل إلى السؤال التالي.";
+"a11y.option.hint" = "انقر نقرًا مزدوجًا لاختيار هذه الإجابة.";
+"a11y.state.selected" = "محدّد";
+"a11y.state.correct" = "إجابة صحيحة";
+"a11y.state.incorrect" = "إجابة خاطئة";
+"a11y.state.not_answered" = "لم تتم الإجابة";
+"a11y.feedback.correct" = "صحيح";
+"a11y.feedback.incorrect" = "خطأ";
+"a11y.summary.accuracy" = "دقّة %d بالمئة";
+"a11y.summary.result_icon" = "نتيجة الجلسة";
+"a11y.done.hint" = "يغلق هذا الاختبار.";
+"a11y.map.pin.hint" = "انقر نقرًا مزدوجًا لاختيار هذا المكان.";
+"a11y.map.prompt.label" = "ابحث على الخريطة";
+"a11y.map.progress" = "المكان %d من %d";
+"a11y.map.streak" = "%d من 3 صحيحة على التوالي";
 
 /* Story 003 — Progress tier names + map back button (AC4 / AC7) */
 "stats.tier.name.new" = "جديد";

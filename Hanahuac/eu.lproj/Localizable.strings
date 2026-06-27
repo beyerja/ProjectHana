@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "Deskargak huts egin du";
 "settings.language.retry" = "Saiatu berriro";
 "settings.language.available" = "Eskuragarri";
+"settings.language.group.downloaded" = "Deskargatuta";
+"settings.language.search_placeholder" = "Bilatu hizkuntzak";
 
 /* iCloud sync */
 /* NOTE: "settings.sync.toggle" is deliberately omitted from Basque to exercise the

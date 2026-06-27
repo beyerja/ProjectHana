@@ -35,6 +35,8 @@
 "settings.language.download_failed" = "Ma' páajchaj u éemsa'al";
 "settings.language.retry" = "Káajbes tu ka'atéen";
 "settings.language.available" = "Yaan";
+"settings.language.group.downloaded" = "Ts'o'ok u sa'ato'ob";
+"settings.language.search_placeholder" = "Kaxant t'aano'ob";
 
 /* iCloud sync */
 /* NOTE: "settings.sync.toggle" is deliberately omitted from Yucatec Maya to exercise the fallback

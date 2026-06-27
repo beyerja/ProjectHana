@@ -101,6 +101,17 @@ final class LanguagePickerViewModelTests: XCTestCase {
         return LanguageManager(preferences: KeyValuePreferenceStore(store: fake))
     }
 
+    /// Build a picker view model selecting `locale`, off a fresh in-memory store when none is given.
+    private func makeViewModel(
+        selecting locale: AppLocale,
+        store: LanguagePackDownloadStore? = nil
+    ) -> LanguagePickerViewModel {
+        LanguagePickerViewModel(
+            languageManager: makeManager(selecting: locale),
+            store: store ?? LanguagePackDownloadStore()
+        )
+    }
+
     private func row(_ viewModel: LanguagePickerViewModel, _ locale: AppLocale) throws -> LanguagePickerRow {
         try XCTUnwrap(viewModel.rows.first { $0.locale == locale })
     }
@@ -312,5 +323,154 @@ final class LanguagePickerViewModelTests: XCTestCase {
         viewModel.reconcileSelectedDownloadOnAppear()
 
         XCTAssertTrue(factory.made.isEmpty, "an already-available pack is not re-downloaded on appear")
+    }
+
+    // MARK: - story 011: incremental search (native + English name)
+
+    /// AC1: a query typed in English ("Japanese") surfaces 日本語, AND a query typed in the native
+    /// script ("日本") surfaces it too — proving search matches BOTH the native display name and the
+    /// English name.
+    func testSearch_matchesBothEnglishAndNativeName() {
+        let viewModel = makeViewModel(selecting: .en)
+
+        viewModel.query = "Japanese"
+        XCTAssertEqual(
+            viewModel.filteredRows.map(\.locale),
+            [.ja],
+            "an English query matches the English name"
+        )
+        XCTAssertEqual(viewModel.filteredRows.first?.displayName, "日本語")
+
+        viewModel.query = "日本"
+        XCTAssertEqual(
+            viewModel.filteredRows.map(\.locale),
+            [.ja],
+            "a native-script substring matches the native display name"
+        )
+    }
+
+    /// Native-script substring matching works for every non-Latin script the feature ships
+    /// (ja/zh-Hans/hi/bn/ar/ur), not just Japanese.
+    func testSearch_nativeScriptSubstring_worksForNonLatinScripts() {
+        let viewModel = makeViewModel(selecting: .en)
+        let cases: [(query: String, expected: AppLocale)] = [
+            ("中文", .zhHans),
+            ("हिन्दी", .hi),
+            ("বাংলা", .bn),
+            ("العربية", .ar),
+            ("اردو", .ur)
+        ]
+        for (query, expected) in cases {
+            viewModel.query = query
+            XCTAssertTrue(
+                viewModel.filteredRows.contains { $0.locale == expected },
+                "native-script query '\(query)' must surface \(expected.rawValue)"
+            )
+        }
+    }
+
+    /// AC: matching is case- AND diacritic-insensitive — "espanol" (no accent, lowercase) matches
+    /// "Español".
+    func testSearch_isCaseAndDiacriticInsensitive() {
+        let viewModel = makeViewModel(selecting: .en)
+
+        viewModel.query = "espanol"
+        let matched = viewModel.filteredRows.map(\.locale)
+        XCTAssertTrue(matched.contains(.esMX), "'espanol' folds to match 'Español (México)'")
+        XCTAssertTrue(matched.contains(.esES), "'espanol' folds to match 'Español (España)'")
+
+        viewModel.query = "FRENCH"
+        XCTAssertEqual(viewModel.filteredRows.map(\.locale), [.fr], "uppercase English query matches")
+    }
+
+    /// AC: an empty (or whitespace-only) query shows all 21 languages.
+    func testSearch_emptyQuery_showsAllTwentyOne() {
+        let viewModel = makeViewModel(selecting: .en)
+
+        XCTAssertEqual(viewModel.filteredRows.count, 21, "empty query → every language shows")
+
+        viewModel.query = "   "
+        XCTAssertEqual(viewModel.filteredRows.count, 21, "a whitespace-only query is treated as empty")
+
+        viewModel.query = "definitely-no-such-language"
+        XCTAssertTrue(viewModel.filteredRows.isEmpty, "a non-matching query filters everything out")
+    }
+
+    // MARK: - story 011: grouped layout (downloaded vs available)
+
+    /// AC2: the picker splits rows into a "downloaded" group (bundled base + already-downloaded packs)
+    /// and an "available" group (downloadable / downloading / failed), consistent with ODR state.
+    func testGroups_splitDownloadedVsAvailable() throws {
+        let store = LanguagePackDownloadStore()
+        store.markAvailable(.fr) // a downloaded pack → downloaded group
+        store.markDownloading(.de, progress: 0.3) // in flight → available group
+        let viewModel = LanguagePickerViewModel(languageManager: makeManager(selecting: .en), store: store)
+
+        let downloaded = try XCTUnwrap(viewModel.groups.first { $0.kind == .downloaded })
+        let available = try XCTUnwrap(viewModel.groups.first { $0.kind == .available })
+
+        let downloadedLocales = downloaded.rows.map(\.locale)
+        XCTAssertTrue(downloadedLocales.contains(.en), "bundled base en is downloaded")
+        XCTAssertTrue(downloadedLocales.contains(.esMX), "bundled base es-MX is downloaded")
+        XCTAssertTrue(downloadedLocales.contains(.fr), "a downloaded pack is in the downloaded group")
+        XCTAssertFalse(downloadedLocales.contains(.de), "an in-flight download is NOT yet downloaded")
+
+        let availableLocales = available.rows.map(\.locale)
+        XCTAssertTrue(availableLocales.contains(.de), "an in-flight download is in the available group")
+        XCTAssertTrue(availableLocales.contains(.ko), "a not-requested pack is available to download")
+        XCTAssertFalse(availableLocales.contains(.fr), "a downloaded pack is not in the available group")
+
+        // Every language appears in exactly one group; the union is all 21.
+        XCTAssertEqual(downloaded.rows.count + available.rows.count, 21)
+        XCTAssertEqual(viewModel.groups.first?.kind, .downloaded, "downloaded section precedes available")
+    }
+
+    /// A group with no matching rows is omitted (the picker never draws an empty header). With nothing
+    /// downloaded beyond the two bundled bases, narrowing the search to a downloadable-only match yields
+    /// only the available group.
+    func testGroups_emptyGroupOmittedUnderSearch() {
+        let viewModel = makeViewModel(selecting: .en)
+
+        viewModel.query = "French" // fr is a not-downloaded pack → available only
+        XCTAssertEqual(viewModel.groups.map(\.kind), [.available], "only the non-empty group is present")
+        XCTAssertEqual(viewModel.groups.first?.rows.map(\.locale), [.fr])
+    }
+
+    // MARK: - story 011: search + grouping under an RTL locale
+
+    /// AC3: with an RTL language (Arabic) selected, search and grouping still produce correct results —
+    /// the view-model projection is layout-direction-independent, so the mirrored UI renders correct
+    /// data. (The mirrored *layout* is driven separately by `appLayoutDirection`; this asserts the data
+    /// feeding it is right.)
+    func testSearchAndGrouping_underRTLSelectedLocale() throws {
+        XCTAssertTrue(AppLocale.ar.isRTL, "precondition: ar is an RTL language")
+        let store = LanguagePackDownloadStore()
+        store.markAvailable(.ar) // the selected RTL pack is downloaded
+        let viewModel = LanguagePickerViewModel(languageManager: makeManager(selecting: .ar), store: store)
+
+        // Empty query under RTL still shows all 21, grouped, with the downloaded RTL pack present.
+        XCTAssertEqual(viewModel.filteredRows.count, 21)
+        let downloaded = try XCTUnwrap(viewModel.groups.first { $0.kind == .downloaded })
+        XCTAssertTrue(
+            downloaded.rows.contains { $0.locale == .ar && $0.isSelected },
+            "the selected, downloaded RTL pack is in the downloaded group and marked selected"
+        )
+
+        // Native-script search under RTL surfaces the Arabic row.
+        viewModel.query = "العربية"
+        XCTAssertEqual(viewModel.filteredRows.map(\.locale), [.ar], "native RTL-script search filters correctly")
+
+        // English search under RTL also works.
+        viewModel.query = "Urdu"
+        XCTAssertEqual(viewModel.filteredRows.map(\.locale), [.ur])
+    }
+
+    // MARK: - story 011: rows carry the English name for search
+
+    func testRows_carryEnglishNameAlongsideNativeDisplayName() throws {
+        let viewModel = makeViewModel(selecting: .en)
+        let ja = try row(viewModel, .ja)
+        XCTAssertEqual(ja.displayName, "日本語", "native display name is unchanged")
+        XCTAssertEqual(ja.englishName, "Japanese", "the English name is exposed for search")
     }
 }

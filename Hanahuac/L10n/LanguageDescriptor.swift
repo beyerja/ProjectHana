@@ -35,6 +35,12 @@ struct LanguageDescriptor: Equatable {
     /// `"Español (México)"`). Presented in the language's own script, never translated.
     let displayName: String
 
+    /// The language's name in English (e.g. `"Korean"`, `"Japanese"`, `"Spanish (Mexico)"`). This is
+    /// NOT shown in the UI; it exists so the picker's incremental search can match a query typed in
+    /// English ("Japanese" → 日本語) in addition to the native-script ``displayName`` ("日本" → 日本語).
+    /// For a language whose native name already IS its English name (e.g. English), the two are equal.
+    let englishName: String
+
     /// The ordered chain of locales to consult when resolving a localized string, from most to
     /// least preferred. The first entry is always the language itself. Partially translated
     /// languages (ko, nah) route through Mexican Spanish before English (selected → es-MX → en);
@@ -61,6 +67,7 @@ struct LanguageDescriptor: Equatable {
     init(
         code: String,
         displayName: String,
+        englishName: String,
         fallbackChain: [AppLocale],
         availability: Availability,
         odrTags: Set<String>? = nil,
@@ -68,6 +75,7 @@ struct LanguageDescriptor: Equatable {
     ) {
         self.code = code
         self.displayName = displayName
+        self.englishName = englishName
         self.fallbackChain = fallbackChain
         self.availability = availability
         self.textDirection = textDirection
