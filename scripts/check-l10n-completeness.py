@@ -10,23 +10,23 @@ Parses every ``Hanahuac/<code>.lproj/Localizable.strings`` and enforces:
       never be silently skipped. Every on-disk locale MUST have a declared role; an unclassified
       on-disk locale fails the check (catch a new ``.lproj`` that nobody assigned a role).
         - ``BASE`` (en, es-MX): always-bundled, must contain the FULL canonical key set.
-        - ``FULL`` (de, fr, es-ES, it, pl, nl, sr, ko, ja, zh-Hans, hi, bn and the future 3): fully-translated
+        - ``FULL`` (de, fr, es-ES, it, pl, nl, sr, ko, ja, zh-Hans, hi, bn, pt-BR and the future 2): fully-translated
           canonical locales, must contain the FULL canonical key set. Any missing key fails, listing
           the offending locale + keys.
         - ``PARTIAL`` (nah, yua, ca, eu): fallback-permitted by design — genuine gaps resolve via the
           locale's fallback chain (e.g. nah/yua -> es-MX -> en; ca/eu -> es-ES -> en; see
           Hanahuac/L10n/LanguageCatalog.swift fallbackChain). Their coverage is reported as
           INFORMATIONAL, never a failure.
-        - ``SCAFFOLDED`` (ar, pt-BR, ur): content-pending placeholder locales
+        - ``SCAFFOLDED`` (ar, ur): content-pending placeholder locales
           landed by story 002. Their ``.lproj`` exists on disk but is intentionally near-empty until
-          their content story (007-010) fills the translations. Coverage is reported INFORMATIONAL,
+          their content story (009-010) fills the translations. Coverage is reported INFORMATIONAL,
           never a failure — the runtime ``[<self>, .en]`` fallback chain (en supplies every key) keeps
           these resolving cleanly while their UI strings are pending.
-  (c) The remaining story-002 scaffolded locales (ar, pt-BR, ur) are ``SCAFFOLDED``
+  (c) The remaining story-002 scaffolded locales (ar, ur) are ``SCAFFOLDED``
       (NOT yet ``FULL``): they ship placeholder ``.lproj`` so the bundle resolves, and the static gate
-      does NOT enforce the full canonical key set on them. Each content story 007-010 flips EXACTLY its
-      own locale from ``SCAFFOLDED`` to ``FULL`` when it fills the real translations. (Stories 003-006
-      have already flipped ``ja``, ``zh-Hans``, ``hi`` and ``bn`` to ``FULL``.)
+      does NOT enforce the full canonical key set on them. Each content story 009-010 flips EXACTLY its
+      own locale from ``SCAFFOLDED`` to ``FULL`` when it fills the real translations. (Stories 003-007
+      have already flipped ``ja``, ``zh-Hans``, ``hi``, ``bn`` and ``pt-BR`` to ``FULL``.)
   (d) Untranslated values are detected: a non-base locale value byte-identical to the en value for
       the same key is reported as a WARNING (so a copy-paste-but-forgot-to-translate slips no
       further), with an allowlist for legitimately-identical strings (brand names, ISO/shared
@@ -63,8 +63,8 @@ SCAFFOLDED = "scaffolded"
 # The story-002 locales started SCAFFOLDED: story 002 lands their placeholder `.lproj` so the bundle
 # resolves, but the gate must NOT enforce the full canonical key set on those placeholders. Each
 # content story 003-010 flips EXACTLY its own locale from SCAFFOLDED to FULL when it fills the real
-# translations (and seeds its IDENTICAL_VALUE_ALLOWLIST entries). Stories 003-006 have flipped `ja`,
-# `zh-Hans`, `hi` and `bn` to FULL; ar, pt-BR, ur remain SCAFFOLDED until their stories (007-010).
+# translations (and seeds its IDENTICAL_VALUE_ALLOWLIST entries). Stories 003-007 have flipped `ja`,
+# `zh-Hans`, `hi`, `bn` and `pt-BR` to FULL; ar, ur remain SCAFFOLDED until their stories (009-010).
 ROLE_MAP: dict[str, str] = {
     # Base / always-bundled — 100% complete.
     "en": BASE,
@@ -92,6 +92,9 @@ ROLE_MAP: dict[str, str] = {
     # bn (Bengali, Bengali script বাংলা) ships a complete UI string set + full geo coverage
     # (story 006); held to the full canonical key set like de/fr/ko.
     "bn": FULL,
+    # pt-BR (Brazilian Portuguese, Latin script) ships a complete UI string set + full geo coverage
+    # (story 007); held to the full canonical key set like de/fr/ko.
+    "pt-BR": FULL,
     # Partial / fallback-permitted by design — genuine gaps resolve via the locale's fallback chain
     # (LanguageCatalog.fallbackChain): nah/yua -> es-MX -> en; ca/eu -> es-ES -> en. Coverage is
     # reported informationally only, never a failure.
@@ -102,10 +105,10 @@ ROLE_MAP: dict[str, str] = {
     # --- Story-002 scaffolded locales: placeholder `.lproj` on disk, content pending. ---
     # Reported informationally only; each content story 007-010 flips EXACTLY its own locale to FULL
     # when it fills translations:
-    #   pt-BR -> 007, ar -> 009, ur -> 010.
-    # (ja -> 003, zh-Hans -> 004, hi -> 005 and bn -> 006 have already flipped to FULL above.)
+    #   ar -> 009, ur -> 010.
+    # (ja -> 003, zh-Hans -> 004, hi -> 005, bn -> 006 and pt-BR -> 007 have already flipped to FULL
+    # above.)
     "ar": SCAFFOLDED,
-    "pt-BR": SCAFFOLDED,
     "ur": SCAFFOLDED,
 }
 
@@ -141,6 +144,7 @@ IDENTICAL_VALUE_ALLOWLIST: set[tuple[str, str]] = {
     ("zh-Hans", "settings.section.icloud"),
     ("hi", "settings.section.icloud"),
     ("bn", "settings.section.icloud"),
+    ("pt-BR", "settings.section.icloud"),
     # "%d / 3" is a pure format string (digit + slash); identical in every language.
     ("de", "learn_map.streak"),
     ("fr", "learn_map.streak"),
@@ -149,6 +153,16 @@ IDENTICAL_VALUE_ALLOWLIST: set[tuple[str, str]] = {
     ("zh-Hans", "learn_map.streak"),
     ("hi", "learn_map.streak"),
     ("bn", "learn_map.streak"),
+    # pt-BR (Brazilian Portuguese) shared strings, all legitimately identical to English, not stubs:
+    #   "iCloud" (Apple brand, above), "%d / 3" (pure format string), "Status" (spelled identically in
+    #   Portuguese), "Oceania" (continent proper noun, identical), and the compass abbreviations N
+    #   (Norte) and S (Sul) — identical to English. East/West differ (pt-BR uses L/O), so only N/S
+    #   collide.
+    ("pt-BR", "learn_map.streak"),
+    ("pt-BR", "settings.sync.status_label"),
+    ("pt-BR", "continent.oceania"),
+    ("pt-BR", "quiz.region.north"),
+    ("pt-BR", "quiz.region.south"),
     # es-ES (Castilian) shared strings: proper noun "Asia", the "%d / 3" format string, the loanword
     # "General", the Apple brand "iCloud", and "Error" (identical in Spanish) — all legitimately
     # identical to English, not untranslated stubs.
