@@ -186,6 +186,13 @@ final class PerLanguageProgressTests: XCTestCase {
         assertProgressIsolated(.bn, .en)
     }
 
+    /// Story 007 (Brazilian Portuguese): pt-BR keeps a progress track fully isolated from its English
+    /// fallback target; they are distinct language codes, so the same factID/day coexists across the
+    /// two and pt-BR progress never bleeds into the English track it ultimately falls back to.
+    func testProgressIsolationForBrazilianPortuguese() {
+        assertProgressIsolated(.ptBR, .en)
+    }
+
     // MARK: - CardStore isolation
 
     func testCardStoreOnlySeesItsOwnLanguage() {
