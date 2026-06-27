@@ -12,6 +12,15 @@ just log start story-workflow "<story-id>" || true
 
 Run the following steps in order, spawning a dedicated sub-agent for each. Pass the story directory as context to every agent.
 
+**Resume idempotently — trust live state over any briefing.** A run may be re-spawned after an
+interruption (foreground session-token limits resume mid-feature), so a story you are handed may already
+be partly or fully done. Before acting, **read `<story-dir>/log.md` and the live git/gh state** (branch,
+`gh pr list --head story/<slug>/<story-id>`), and treat each step as a skip-if-already-done gate: don't
+re-break-tasks if `tasks.md` is complete, don't `create-pr` if a PR is already open (pick up at its
+review/merge state), don't re-merge a merged PR. Where the spawning briefing and live state disagree
+(e.g. the briefing says "no PR yet" but `gh` shows an open one), **the live git/gh state wins** — the
+briefing is a snapshot that may be stale. Record the resume point in `<story-dir>/log.md`.
+
 **PR-base contract (autonomous, no human gate):** each story PR targets **`main`** directly (not an
 intermediate feature branch), so it is CI-gated and goes through the independent-review loop below.
 There is no story→feature-branch PR and no human merge click anywhere in this loop — merge is automatic
@@ -20,7 +29,8 @@ merge a story PR.
 
 1. **Break tasks** — spawn `break-tasks` agent
 2. **Implement** — spawn `implement-story` agent
-3. **Create PR** — spawn `create-pr` agent
+3. **Create PR** — spawn `create-pr` agent (skip if a PR for this story branch is already open per the
+   resume check above; carry its number forward to step 4)
 4. **Wait for CI** — spawn `wait-for-ci` agent with the PR number from step 3 and the story-id
    - STATUS: FAIL → fix the failure (go to step 2 with CI failure as context), then re-push; repeat from step 4
    - STATUS: PASS → continue
