@@ -25,9 +25,10 @@ extension Country {
         case .ja: nameJa
         case .zhHans: nameZhHans
         case .hi: nameHi
+        case .bn: nameBn
         // Content-pending languages (story 002): the bundled geo source has no name column for these
-        // yet, so they have no raw value until their content story (006-010) adds the column.
-        case .en, .ar, .bn, .ptBR, .ur: nil
+        // yet, so they have no raw value until their content story (007-010) adds the column.
+        case .en, .ar, .ptBR, .ur: nil
         }
     }
 
@@ -49,9 +50,10 @@ extension Country {
         case .ja: capitalJa
         case .zhHans: capitalZhHans
         case .hi: capitalHi
+        case .bn: capitalBn
         // Content-pending languages (story 002): the bundled geo source has no capital column for
-        // these yet, so they have no raw value until their content story (006-010) adds the column.
-        case .en, .ar, .bn, .ptBR, .ur: nil
+        // these yet, so they have no raw value until their content story (007-010) adds the column.
+        case .en, .ar, .ptBR, .ur: nil
         }
     }
 }
@@ -75,9 +77,10 @@ extension River {
         case .ja: nameJa
         case .zhHans: nameZhHans
         case .hi: nameHi
+        case .bn: nameBn
         // Content-pending languages (story 002): the bundled geo source has no name column for these
-        // yet, so they have no raw value until their content story (006-010) adds the column.
-        case .en, .ar, .bn, .ptBR, .ur: nil
+        // yet, so they have no raw value until their content story (007-010) adds the column.
+        case .en, .ar, .ptBR, .ur: nil
         }
     }
 }
@@ -101,9 +104,10 @@ extension MountainRange {
         case .ja: nameJa
         case .zhHans: nameZhHans
         case .hi: nameHi
+        case .bn: nameBn
         // Content-pending languages (story 002): the bundled geo source has no name column for these
-        // yet, so they have no raw value until their content story (006-010) adds the column.
-        case .en, .ar, .bn, .ptBR, .ur: nil
+        // yet, so they have no raw value until their content story (007-010) adds the column.
+        case .en, .ar, .ptBR, .ur: nil
         }
     }
 }
@@ -127,9 +131,10 @@ extension Sea {
         case .ja: nameJa
         case .zhHans: nameZhHans
         case .hi: nameHi
+        case .bn: nameBn
         // Content-pending languages (story 002): the bundled geo source has no name column for these
-        // yet, so they have no raw value until their content story (006-010) adds the column.
-        case .en, .ar, .bn, .ptBR, .ur: nil
+        // yet, so they have no raw value until their content story (007-010) adds the column.
+        case .en, .ar, .ptBR, .ur: nil
         }
     }
 }
