@@ -156,6 +156,41 @@ final class LanguageCompletenessSupportTests: XCTestCase {
         )
     }
 
+    // MARK: - hi (Story 005) completeness
+
+    /// Hindi ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses the
+    /// STRICT path — when the hi `.lproj` is not mounted (the simulator unit-test host has no
+    /// asset-pack server), the strict helper THROWS ``CompletenessError/stringBundleUnreachable``,
+    /// which we translate into an `XCTSkip` so the test never degrades to a false pass. When the pack
+    /// IS mounted, a genuine missing key FAILS the assertion.
+    func testHindiHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .hi)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("hi UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "hi must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Hindi ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a Hindi name,
+    /// so the bundled provider's pack reports no gaps for .hi. Uses the STRICT path, so a missing/nil
+    /// hi pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testHindiHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .hi)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "hi is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "hi is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
     // MARK: - Strict-path teeth (AC#2): a real gap FAILS rather than degrading to pass
 
     /// Restore the active provider after any test that swaps it, so a swapped stub never leaks into

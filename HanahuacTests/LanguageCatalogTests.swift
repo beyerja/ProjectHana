@@ -99,17 +99,16 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ur).displayName, "اردو")
     }
 
-    /// The remaining 5 content-pending languages are COMPLETE-content by contract: each routes
+    /// The remaining 4 content-pending languages are COMPLETE-content by contract: each routes
     /// straight to English as an ultimate, never-hit safety net, NOT through es-MX/es-ES. `.ja`
-    /// (story 003) and `.zhHans` (story 004) have shipped complete content and are asserted separately
-    /// below.
+    /// (story 003), `.zhHans` (story 004) and `.hi` (story 005) have shipped complete content and are
+    /// asserted separately below.
     func testFallbackChainForContentPendingLanguagesGoStraightToEnglish() {
-        XCTAssertEqual(LanguageCatalog.descriptor(for: .hi).fallbackChain, [.hi, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ar).fallbackChain, [.ar, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .bn).fallbackChain, [.bn, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ptBR).fallbackChain, [.ptBR, .en])
         XCTAssertEqual(LanguageCatalog.descriptor(for: .ur).fallbackChain, [.ur, .en])
-        for locale in [AppLocale.hi, .ar, .bn, .ptBR, .ur] {
+        for locale in [AppLocale.ar, .bn, .ptBR, .ur] {
             XCTAssertFalse(
                 locale.fallsBackThroughSpanish,
                 "\(locale.rawValue) is COMPLETE content and must not route through Spanish"
@@ -140,6 +139,19 @@ final class LanguageCatalogTests: XCTestCase {
         XCTAssertFalse(
             AppLocale.zhHans.fallsBackThroughSpanish,
             "zh-Hans is COMPLETE content and must not route through Spanish"
+        )
+    }
+
+    /// Hindi has shipped COMPLETE content (story 005): it routes straight to English as a never-hit
+    /// safety net `[hi, en]`, NOT through es-MX/es-ES, and its catalog identity (display name "हिन्दी",
+    /// ODR tag "lang-hi") is unchanged.
+    func testFallbackChainForHindiGoesStraightToEnglish() {
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .hi).fallbackChain, [.hi, .en])
+        XCTAssertEqual(LanguageCatalog.descriptor(for: .hi).displayName, "हिन्दी")
+        XCTAssertEqual(AppLocale.hi.odrTags, ["lang-hi"])
+        XCTAssertFalse(
+            AppLocale.hi.fallsBackThroughSpanish,
+            "hi is COMPLETE content and must not route through Spanish"
         )
     }
 
