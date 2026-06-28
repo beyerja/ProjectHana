@@ -51,3 +51,6 @@
 ### Step 11 — Merge closing artifacts PR
 - 2026-06-28 merge-pr: PR #213 (chore/map-quiz-wrong-answer-zoom/evaluate-improvements) was BEHIND base; updated branch, re-ran CI (all pass), re-posted code-owner-review gate on new SHA 06d0743568d25c015d73725d26299d4604f2f18a (conclusion: success). Squash-merged and deleted head branch. main fast-forwarded to 74fad19.
 - 2026-06-28 merge-pr: DONE
+
+### Step 12 — code-owner-review gate (PR #216)
+- 2026-06-28 code-owner-review: APPROVED — workflow-only diff (log.md append + ui-walkthrough JSON), all CI green, no production code changed. Gate check posted success on SHA 11622b9b10b270c4643e20982316282af113db6f via App id 4144849. Read-back confirmed {conclusion: success, app_id: 4144849}. Summary comment denied by auto-mode (non-blocking — check is the gate); body saved to code-owner-review-comment.md.
