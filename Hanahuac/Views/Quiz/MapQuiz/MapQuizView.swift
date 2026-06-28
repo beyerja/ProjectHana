@@ -37,7 +37,7 @@ struct MapQuizView: View {
             if let session {
                 if session.isFinished {
                     QuizSummaryView(
-                        reviewed: session.reviewedCount,
+                        reviewed: session.totalCards,
                         correct: session.correctCount,
                         nextDue: session.nextDueDate
                     )
@@ -153,7 +153,7 @@ struct MapQuizView: View {
             Text(featureName)
                 .font(.title2.bold())
                 .multilineTextAlignment(.center)
-            Text("\(min(session.correctCount + 1, session.totalCards)) / \(session.totalCards)")
+            Text("\(session.correctCount) / \(session.totalCards)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
@@ -170,7 +170,7 @@ struct MapQuizView: View {
         .accessibilityValue(
             String(
                 format: L10n["a11y.map.progress"],
-                min(session.correctCount + 1, session.totalCards),
+                session.correctCount,
                 session.totalCards
             )
         )

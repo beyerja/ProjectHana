@@ -109,6 +109,14 @@ final class MapQuizSession {
             currentIndex += 1
         }
 
+        // Safety: if the deck is exhausted but correctCount hasn't reached totalCards
+        // (e.g. a card whose factID has no matching feature so it can never be answered correctly),
+        // finish the session rather than looping forever.
+        if currentIndex >= cards.count {
+            isFinished = true
+            return
+        }
+
         if correctCount == totalCards {
             isFinished = true
         } else {
