@@ -32,6 +32,16 @@ path, then rule out the region math, a lat/lon swap, and a data error). Fixing t
 theory without this often patches a symptom and leaves the real defect; the cheap confirmation pass up
 front is what makes the fix land at the right altitude in one shared code path.
 
+**Do not conclude a view-layer bug is "already fixed" from model-layer evidence alone.** A common
+false-confidence trap: you find that an initializer or setup method already writes the correct value
+into a `@State` / `@Published` / observed property, and conclude the fix is in place. This is wrong
+when the framework resolves the initial rendered frame *before* Swift's update cycle delivers that write
+(e.g. MapKit resolving `.automatic` framing on the first paint, before `buildSession()` sets
+`position = .region(...)`). A model-layer assertion that a value is correct is *necessary but not
+sufficient* to close a rendering-time bug — you must also confirm what value the framework *reads on
+first render*. When a fix story adds only tests but does not change the view's initial `@State`
+default, treat it as incomplete and re-read the views before marking DONE.
+
 For each unchecked task:
 1. Implement following existing project patterns
 2. Run project checks. **In a worktree run, invoke `just` at the worktree path** —
