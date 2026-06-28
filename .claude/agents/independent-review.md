@@ -83,6 +83,18 @@ and never reaches the gate-check step.)
    the running app (e.g. a provider/protocol implemented but never installed as the active one — a
    production downcast stays nil and the feature does nothing). If a new behavior has no production
    call path, that is a **blocking** finding (AC unmet), regardless of test coverage.
+
+   **For shell-script or agent-protocol deliverables, trace every conditional branch — not just the
+   happy path.** Read the control flow of each `if`/`case` arm and loop body independently:
+   - Does each variable get re-assigned after the event that changes it (e.g. after a push, is `sha`
+     re-read before the next check)?
+   - Is each condition scoped to the right superset of cases (e.g. a "skip" branch that should fire only
+     for `UNKNOWN` must not also fire for `MERGEABLE`)?
+   - Is there a required `sleep <n>` before a `--watch` call that follows a PR close/reopen (GitHub
+     needs a moment to register the new CI events before `--watch` can poll them)?
+   - After any skip/continue path, is cleanup (branch restore, temp-branch delete) run before the
+     `continue` statement?
+   Shell-script bugs in conditional branches are the dominant source of round-2 blocking findings.
 5. Post / update the **stable summary comment** (below) reflecting the verdict.
 6. Append to `<story-dir>/log.md`: `<timestamp> independent-review: <APPROVED|CHANGES_REQUESTED> — <one-line reason>`.
 7. Emit the matching STATUS line.

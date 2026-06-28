@@ -69,6 +69,9 @@ sub-agent for each:
      ```
    - If `triage-dep-prs` returns with skipped PRs, note them in `.workflow/log.md` and continue —
      skipped dep PRs never block feature stories.
+   - **Resume after interruption mid-step-1**: if the worktree's `.workflow/log.md` shows triage started
+     but not completed, check for any still-open dep PRs before proceeding. Re-spawn `triage-dep-prs` if
+     PRs remain; skip triage entirely if the log shows it completed or all dep PRs are now merged.
 2. **Clarify** — spawn `clarify-feature` agent. **Skip it** only when the request already supplies
    unambiguous goal + acceptance criteria + root cause (e.g. a bug report that names the offending view
    and the established fix pattern, or a follow-up to a merged PR). In that case write `.workflow/feature.md`
