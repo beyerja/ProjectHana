@@ -47,3 +47,7 @@
 
 ### Step 10 — Archive workflow
 - 2026-06-28 archive-workflow: DONE — archived to `.workflow/archive/2026-06-28-map-quiz-wrong-answer-zoom/`
+
+### Step 11 — Merge closing artifacts PR
+- 2026-06-28 merge-pr: PR #213 (chore/map-quiz-wrong-answer-zoom/evaluate-improvements) was BEHIND base; updated branch, re-ran CI (all pass), re-posted code-owner-review gate on new SHA 06d0743568d25c015d73725d26299d4604f2f18a (conclusion: success). Squash-merged and deleted head branch. main fast-forwarded to 74fad19.
+- 2026-06-28 merge-pr: DONE
