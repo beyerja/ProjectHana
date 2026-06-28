@@ -58,20 +58,31 @@ before any other step:
 Then run the following steps in order (from the worktree), spawning a dedicated
 sub-agent for each:
 
-1. **Clarify** — spawn `clarify-feature` agent. **Skip it** only when the request already supplies
+1. **Triage dep PRs** — spawn `triage-dep-prs` agent, passing the repo slug (owner/repo), the worktree
+   path, and the worktree branch name. This clears all open Dependabot / Renovate PRs before story work
+   begins, so feature stories build on a stable, up-to-date base.
+   - **After triage completes**, pull the freshly-merged dep changes into the worktree branch so all
+     subsequent steps and story branches see the clean post-triage `main`:
+     ```sh
+     git -C <worktree> fetch origin
+     git -C <worktree> merge origin/main
+     ```
+   - If `triage-dep-prs` returns with skipped PRs, note them in `.workflow/log.md` and continue —
+     skipped dep PRs never block feature stories.
+2. **Clarify** — spawn `clarify-feature` agent. **Skip it** only when the request already supplies
    unambiguous goal + acceptance criteria + root cause (e.g. a bug report that names the offending view
    and the established fix pattern, or a follow-up to a merged PR). In that case write `.workflow/feature.md`
    directly and record *why* clarification was unnecessary in `.workflow/log.md`. When in doubt, spawn it.
-2. **Break stories** — spawn `break-stories` agent
-3. **Assess health** — spawn `assess-project-health` agent (may prepend setup stories)
-4. **Story loop** — for each story in `.workflow/stories.md` where status ≠ done:
+3. **Break stories** — spawn `break-stories` agent
+4. **Assess health** — spawn `assess-project-health` agent (may prepend setup stories)
+5. **Story loop** — for each story in `.workflow/stories.md` where status ≠ done:
    - Spawn `story-workflow` agent with the story's directory path
    - If the story comes back FAILED, re-run it (pass prior failure context)
-5. **Create PR** — **NOTE:** each `story-workflow` PR already targets `main` directly and merges
+6. **Create PR** — **NOTE:** each `story-workflow` PR already targets `main` directly and merges
    incrementally (its "PR-base contract"), so by the time the story loop finishes the feature is normally
    already fully landed on `main`. That is the **expected** path, not a deviation: in it this step has no
    separate feature PR to open — verify every story merged, confirm the feature branch is an ancestor of
-   `origin/main` (fast-forward / nothing to PR), and proceed to step 6/7. Only open a feature PR here if
+   `origin/main` (fast-forward / nothing to PR), and proceed to step 7/8. Only open a feature PR here if
    unmerged feature-branch commits remain that never went through a story PR. When a feature PR *is*
    needed, first **integrate the latest `main`** into the feature branch (`git fetch origin`
    then `git merge origin/main`), because `main` may have advanced since the worktree was cut — long
@@ -93,20 +104,20 @@ sub-agent for each:
      (asset catalogs, schema entities, feature flags).
    Only then spawn `create-pr` to push and open the PR against main (skip if one already
    exists). A stale-base PR shows `mergeState: DIRTY` with no checks — that means re-integrate `main`.
-6. **Wait for CI** — spawn `wait-for-ci` agent with the PR number from step 5
-   - STATUS: FAIL → fix the failure (spawn `implement-story` on the responsible story with CI failure as context), push, then repeat from step 6. NOTE: CI runs against a **clean** store/build, so it catches failures a stale local simulator masks (e.g. SwiftData container-init aborts) — reproduce those locally with `xcrun simctl erase` before assuming a fix works.
+7. **Wait for CI** — spawn `wait-for-ci` agent with the PR number from step 6
+   - STATUS: FAIL → fix the failure (spawn `implement-story` on the responsible story with CI failure as context), push, then repeat from step 7. NOTE: CI runs against a **clean** store/build, so it catches failures a stale local simulator masks (e.g. SwiftData container-init aborts) — reproduce those locally with `xcrun simctl erase` before assuming a fix works.
    - STATUS: PASS → continue
-   - If `main` advances again while CI runs and the PR goes `DIRTY`, re-integrate `main` (step 5) and re-push.
-7. **Verify feature** — spawn `verify-feature` agent
-   - STATUS: FAILED → identify responsible story, return to step 4 for that story
+   - If `main` advances again while CI runs and the PR goes `DIRTY`, re-integrate `main` (step 6) and re-push.
+8. **Verify feature** — spawn `verify-feature` agent
+   - STATUS: FAILED → identify responsible story, return to step 5 for that story
    - STATUS: DONE → continue
-8. **Evaluate** — spawn `evaluate-workflow` agent
-9. **Archive** — spawn `archive-workflow` agent
-10. **Commit closing artifacts** — commit and push the archive move **and** any agent-file edits the
+9. **Evaluate** — spawn `evaluate-workflow` agent
+10. **Archive** — spawn `archive-workflow` agent
+11. **Commit closing artifacts** — commit and push the archive move **and** any agent-file edits the
     `evaluate-workflow` step applied, via a `chore/<slug>/…` branch + PR (squash-merge once CI is
     green). Then verify `git status --porcelain .workflow` is clean — nothing in `.workflow/` (outside
     the gitignored telemetry sink) may be left as an uncommitted delta.
-11. **Worktree teardown** — Step 0 always creates a worktree, so always tear it down. After the
+12. **Worktree teardown** — Step 0 always creates a worktree, so always tear it down. After the
     closing-artifact PR is merged, return to the primary checkout and remove this run's worktree and
     branch so nothing is left behind:
     ```sh
