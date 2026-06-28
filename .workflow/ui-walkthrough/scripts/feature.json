@@ -2,41 +2,30 @@
   { "action": "wait", "seconds": 2 },
   { "action": "dumpTree" },
 
-  { "action": "tap", "identifier": "home.mode.mapQuiz", "label": "Quiz de Mapa, Nuevo 197" },
+  { "action": "tap", "identifier": "home.mode.mapQuiz" },
   { "action": "wait", "seconds": 3 },
   { "action": "screenshot" },
   { "action": "dumpTree" },
 
-  { "action": "tap", "identifier": "BackButton" },
+  { "action": "pinch", "scale": 3.0 },
   { "action": "wait", "seconds": 1 },
-
-  { "action": "scroll", "direction": "up" },
-  { "action": "wait", "seconds": 1 },
-
-  { "action": "tap", "identifier": "home.mode.mapQuiz", "label": "Quiz de Mapa, Nuevo 32" },
-  { "action": "wait", "seconds": 3 },
   { "action": "screenshot" },
   { "action": "dumpTree" },
 
-  { "action": "tap", "identifier": "BackButton" },
+  { "action": "tap", "label": "Irlanda" },
   { "action": "wait", "seconds": 1 },
-
-  { "action": "scroll", "direction": "up" },
-  { "action": "wait", "seconds": 1 },
-
-  { "action": "tap", "identifier": "home.mode.mapQuiz", "label": "Quiz de Mapa, Nuevo 23" },
-  { "action": "wait", "seconds": 3 },
   { "action": "screenshot" },
   { "action": "dumpTree" },
 
-  { "action": "tap", "identifier": "BackButton" },
   { "action": "wait", "seconds": 1 },
+  { "action": "screenshot" },
+  { "action": "dumpTree" },
 
-  { "action": "scroll", "direction": "up" },
   { "action": "wait", "seconds": 1 },
+  { "action": "screenshot" },
+  { "action": "dumpTree" },
 
-  { "action": "tap", "identifier": "home.mode.mapQuiz", "label": "Quiz de Mapa, Nuevo 20" },
-  { "action": "wait", "seconds": 3 },
+  { "action": "wait", "seconds": 1 },
   { "action": "screenshot" },
   { "action": "dumpTree" }
 ]
