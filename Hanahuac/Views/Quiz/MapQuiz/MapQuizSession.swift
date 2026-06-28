@@ -36,6 +36,12 @@ final class MapQuizSession {
     private(set) var annotationFeatures: [any MappableFeature] = []
     private(set) var mapRegion: MKCoordinateRegion = .init()
 
+    /// The number of distinct cards in the session, fixed at init (before shuffle).
+    private(set) var totalCards: Int
+
+    /// Total number of `advance()` calls made (includes retries for wrong answers).
+    private var attemptCount = 0
+
     var currentCard: ReviewCard? {
         cards.indices.contains(currentIndex) ? cards[currentIndex] : nil
     }
@@ -45,8 +51,9 @@ final class MapQuizSession {
         return allFeatures.first { $0.id == card.factID }
     }
 
+    /// Total attempts made so far (advances, including retries).
     var reviewedCount: Int {
-        min(currentIndex, cards.count)
+        attemptCount
     }
 
     var nextDueDate: Date? {
@@ -54,6 +61,7 @@ final class MapQuizSession {
     }
 
     init(cards: [ReviewCard], allFeatures: [any MappableFeature]) {
+        totalCards = cards.count
         self.cards = cards.shuffled()
         self.allFeatures = allFeatures
         refreshAnnotations()
@@ -89,8 +97,27 @@ final class MapQuizSession {
         // The streak belongs to the reviewed card's language, keeping streaks per-language.
         StreakTracker.recordReview(language: card.language)
 
-        currentIndex += 1
+        attemptCount += 1
+
+        if case .incorrect = answerState {
+            // Wrong answer: reinsert card later in the queue so the user sees it again.
+            cards.remove(at: currentIndex)
+            let insertAt = Int.random(in: max(1, currentIndex) ..< max(2, cards.count + 1))
+            cards.insert(card, at: min(insertAt, cards.count))
+            // currentIndex stays — next card slides into the same position.
+        } else {
+            currentIndex += 1
+        }
+
+        // Safety: if the deck is exhausted but correctCount hasn't reached totalCards
+        // (e.g. a card whose factID has no matching feature so it can never be answered correctly),
+        // finish the session rather than looping forever.
         if currentIndex >= cards.count {
+            isFinished = true
+            return
+        }
+
+        if correctCount == totalCards {
             isFinished = true
         } else {
             answerState = .unanswered
