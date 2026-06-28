@@ -69,18 +69,20 @@ mergeable=$(gh -R <owner/repo> pr view <number> --json mergeable --jq .mergeable
 ```
 
 **If `mergeable == UNKNOWN`:** GitHub is still computing mergeability asynchronously. Wait ~10 seconds,
-then re-fetch once:
+then re-fetch once and assign the result:
 ```sh
-gh -R <owner/repo> pr view <number> --json mergeable --jq .mergeable
+sleep 10
+mergeable=$(gh -R <owner/repo> pr view <number> --json mergeable --jq .mergeable)
 ```
 If it is still `UNKNOWN` after the retry, treat it as "cannot auto-fix": append the PR URL and reason
 (`mergeable UNKNOWN after retry`) to `.workflow/log.md` via the Edit tool, add the PR to the skipped
-list, and continue to the next PR.
+list, and **continue to the next PR** — do NOT proceed to step 2b or any further step for this PR.
 
 ### 2b — Check out the dep PR's branch in the worktree
 
-For **all** dep PRs (regardless of `mergeable` status), check out the dep branch into the worktree so
-that lint/test in step 2d run against the dep PR's code, not the feature branch:
+For dep PRs where `mergeable` is `MERGEABLE` or `CONFLICTING` (i.e. not skipped in 2a), check out
+the dep branch into the worktree so that lint/test in step 2d run against the dep PR's code, not the
+feature branch:
 
 1. Delete any leftover temp branch from a previous crashed run:
    ```sh
@@ -132,14 +134,16 @@ gh -R <owner/repo> pr close <number>
 gh -R <owner/repo> pr reopen <number>
 ```
 
-Then wait for CI:
+Then wait for CI (sleep first to give GitHub time to register the CI events):
 ```sh
+sleep 15
 gh pr checks <number> -R <owner/repo> --watch --fail-fast
 ```
 
 If close/reopen yields no runs within ~30s, push an empty commit to force a new event:
 ```sh
-git -C <worktree> commit --allow-empty -m "ci: re-trigger"
+# Write the message via the Write tool to $RUN_TMPDIR/retrigger-msg.txt (content: ci: re-trigger)
+git -C <worktree> commit --allow-empty -F $RUN_TMPDIR/retrigger-msg.txt
 git -C <worktree> push origin dep/<number>-work:<headRefName>
 ```
 
@@ -176,11 +180,16 @@ just -f <worktree>/justfile test
 
 **Lint and test MUST pass before proceeding. Never post the gate check on a broken build.**
 
-### 2f — CI self-heal again (after any push in 2c or 2e)
+### 2f — CI self-heal again (after any push in 2c, 2d, or 2e)
 
-After any push that changes the head SHA, repeat the CI self-heal check from step 2d:
-re-read `sha`, check for required CI contexts, close/reopen if absent, wait with
+After **any** push that changes the head SHA — including the empty-commit push in 2d — repeat the CI
+self-heal check from step 2d: re-read `sha`, check for required CI contexts, close/reopen if absent
+(with `sleep 15` before `--watch`), and wait with
 `gh pr checks <number> -R <owner/repo> --watch --fail-fast`.
+
+This step runs unconditionally for all PRs after any potential push in steps 2c, 2d, or 2e. Always
+re-read the fresh head SHA immediately before performing the check-run lookup, so the SHA used here
+reflects any empty-commit or rebase push made in 2c/2d.
 
 ### 2g — Post the `code-owner-review` gate check
 
@@ -199,8 +208,12 @@ scripts/gh-review-bot.sh gh api -X POST repos/<owner/repo>/check-runs \
 
 ### 2h — Verify the check posted (MANDATORY)
 
+The verification read does NOT go through the wrapper — it uses plain `gh api` (check-run reads are
+public and do not require bot credentials). This avoids mis-attributing a POST success as a failure
+when Keychain creds are absent on the read-back.
+
 ```sh
-scripts/gh-review-bot.sh gh api repos/<owner/repo>/commits/$sha/check-runs \
+gh api repos/<owner/repo>/commits/$sha/check-runs \
   --jq '.check_runs[] | select(.name=="code-owner-review") | {conclusion, app_id: .app.id}'
 ```
 
@@ -208,9 +221,15 @@ Confirm an entry `{conclusion: "success", app_id: <the App id>}` — the expecte
 registered for `hanahuac-review-bot`; see `scripts/gh-review-bot.sh` for the authoritative value.
 
 - **Present with the right conclusion + app_id:** proceed to merge.
-- **Wrapper exited non-zero (Keychain creds absent):** fall to graceful degradation (step 2i).
-- **Absent for any other reason:** do NOT merge. Append the failure verbatim to `.workflow/log.md`,
-  add the PR to the skipped list, and continue to the next PR.
+- **Wrapper exited non-zero during the POST in 2g (Keychain creds absent):** the POST itself failed,
+  fall to graceful degradation (step 2i).
+- **Absent for any other reason (plain `gh api` read returned no matching entry):** do NOT merge.
+  Run cleanup first (restore branch + delete temp branch, same as step 2k), then append the failure
+  verbatim to `.workflow/log.md`, add the PR to the skipped list, and continue to the next PR:
+  ```sh
+  git -C <worktree> checkout $original_branch
+  git -C <worktree> branch -D dep/<number>-work 2>/dev/null || true
+  ```
 
 ### 2i — Graceful degradation (wrapper exits non-zero / creds absent)
 
