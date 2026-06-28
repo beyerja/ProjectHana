@@ -26,7 +26,7 @@ struct MultipleChoiceQuizView: View {
             if let session {
                 if session.isFinished {
                     QuizSummaryView(
-                        reviewed: session.reviewedCount,
+                        reviewed: session.totalQuestions,
                         correct: session.correctCount,
                         nextDue: session.nextDueDate
                     )
@@ -73,7 +73,7 @@ struct MultipleChoiceQuizView: View {
 
     private func progressHeader(session: MultipleChoiceSession) -> some View {
         HStack {
-            Text("\(session.reviewedCount + 1) / \(session.questions.count)")
+            Text("\(session.currentIndex + 1) / \(session.totalQuestions)")
                 .font(.subheadline).foregroundStyle(.secondary)
             Spacer()
             Text(String(format: L10n["mcq_quiz.correct_count"], session.correctCount))
@@ -81,7 +81,7 @@ struct MultipleChoiceQuizView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
-            String(format: L10n["a11y.progress"], session.reviewedCount + 1, session.questions.count)
+            String(format: L10n["a11y.progress"], session.currentIndex + 1, session.totalQuestions)
         )
         .accessibilityValue(String(format: L10n["a11y.score"], session.correctCount))
     }
