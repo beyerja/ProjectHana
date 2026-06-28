@@ -268,6 +268,100 @@ final class MapQuizSessionTests: XCTestCase {
         )
     }
 
+    // MARK: - MapQuizSession: retry mechanic
+
+    /// Build a small 3-card country session for driving retry tests.
+    private func makeRetrySession() -> MapQuizSession {
+        let countries = [
+            Country(
+                id: "r_c0", name: "Alpha", nameFr: nil, nameDe: nil, nameEs: nil,
+                capital: "A", capitalFr: nil, capitalDe: nil, capitalEs: nil,
+                continent: "EU", lat: 48, lon: 14
+            ),
+            Country(
+                id: "r_c1", name: "Beta", nameFr: nil, nameDe: nil, nameEs: nil,
+                capital: "B", capitalFr: nil, capitalDe: nil, capitalEs: nil,
+                continent: "EU", lat: 52, lon: 13
+            ),
+            Country(
+                id: "r_c2", name: "Gamma", nameFr: nil, nameDe: nil, nameEs: nil,
+                capital: "G", capitalFr: nil, capitalDe: nil, capitalEs: nil,
+                continent: "EU", lat: 46, lon: 8
+            )
+        ]
+        let cards = countries.map { makeCard(factID: $0.id, category: .country) }
+        return MapQuizSession(cards: cards, allFeatures: countries)
+    }
+
+    /// Answer the current card correctly and advance.
+    private func tapCorrect(_ session: MapQuizSession) {
+        guard let id = session.currentCard?.factID else { return }
+        session.handleTap(featureID: id)
+        session.advance()
+    }
+
+    /// Answer the current card incorrectly (tap a placeholder ID) and advance.
+    private func tapWrong(_ session: MapQuizSession) {
+        session.handleTap(featureID: "__wrong__")
+        session.advance()
+    }
+
+    func testRetry_wrongTapLeavesCardCountUnchanged() {
+        let session = makeRetrySession()
+        let countBefore = session.cards.count
+        tapWrong(session)
+        XCTAssertEqual(
+            session.cards.count,
+            countBefore,
+            "A wrong tap must remove and reinsert the card (net-zero): cards.count must be unchanged"
+        )
+    }
+
+    func testRetry_notFinishedAfterOneWrongAnswer() {
+        let session = makeRetrySession()
+        tapWrong(session)
+        XCTAssertFalse(
+            session.isFinished,
+            "Session must not be finished after a single wrong answer"
+        )
+    }
+
+    func testRetry_finishesWhenAllCardsAnsweredCorrectly() {
+        let session = makeRetrySession()
+        let total = session.totalCards
+        var safetyLimit = total * 20
+        while !session.isFinished, safetyLimit > 0 {
+            safetyLimit -= 1
+            switch session.answerState {
+            case .unanswered:
+                // Tap correct every time so session eventually finishes.
+                guard let id = session.currentCard?.factID else { break }
+                session.handleTap(featureID: id)
+            default:
+                session.advance()
+            }
+        }
+        XCTAssertTrue(session.isFinished, "Session must be finished after all cards answered correctly")
+        XCTAssertEqual(
+            session.correctCount,
+            total,
+            "correctCount must equal totalCards when session finishes"
+        )
+    }
+
+    func testRetry_reviewedCountIncludesWrongAttempts() {
+        let session = makeRetrySession()
+        // Tap wrong 2 times, then tap correct once — total 3 advances.
+        tapWrong(session)
+        tapWrong(session)
+        tapCorrect(session)
+        XCTAssertEqual(
+            session.reviewedCount,
+            3,
+            "reviewedCount must count every advance(): 2 wrongs + 1 correct = 3"
+        )
+    }
+
     // MARK: - MapLearningSession: mapRegion seeded on init
 
     func testMapLearningSessionCountry_mapRegionHasNonZeroSpanOnInit() {
