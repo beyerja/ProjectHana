@@ -66,6 +66,12 @@ Then decide **your own** verdict:
 - `CHANGES_REQUESTED` — you find at least one blocking issue (a correctness bug, an unmet/unreachable AC, a
   regression, or an unresolved blocking comment from the first reviewer).
 
+**Blocking check — degrade-to-pass on an enforcement/completeness test.** When the diff touches a strict
+completeness or no-fallback test (e.g. `test<Lang>HasFullGeoCoverage`), confirm the enforcement assertion
+still runs with real teeth: an `XCTSkip`, `try?`, or `do/catch` newly wrapped around the *enforcement*
+assertion (as opposed to a pre-existing skip on an unreachable ambient bundle resource) silently disables
+the guarantee the story exists to add → **CHANGES_REQUESTED**, never approve it.
+
 This is a focused confirming pass, not a re-run of the deep review — but it is a **real** judgment. If you
 cannot in good conscience approve, do not.
 

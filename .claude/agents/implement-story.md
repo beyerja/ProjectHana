@@ -122,6 +122,18 @@ the provider seam with an **explicit test double** (e.g. a local `PackAbsentProv
 intended state), restoring the active provider in `setUp`/`tearDown` — never rely on what happens to be
 embedded in `Bundle.main` at runtime.
 
+**Never degrade a completeness/enforcement test to pass — fix the wiring instead**
+When a story flips a language/feature to a "fully enforced" state, its strict completeness test (e.g.
+`test<Lang>HasFullGeoCoverage`, a no-fallback guarantee) is the *whole point* — it must FAIL until the
+real wiring is done. If that test fails because a switch arm still returns `nil` or a provider list
+omits the new entry, the fix is to **complete the wiring**, never to wrap the assertion in `XCTSkip`,
+`try?`, or a `do/catch` that swallows the failure. A skip/catch on the enforcement assertion silently
+disables the guarantee the story exists to add — it is a degrade-to-pass and a blocking defect.
+(The legitimately-skippable case is narrow and separate: a test that reads an **ambient bundle
+resource not mounted in the sim/test host** may `XCTSkip` on unreachability — see the bundle-seam rule
+above — but the *enforcement* assertion itself, driven through the provider seam or checked-in source,
+must always run with real teeth.)
+
 **Xcode project is generated — never hand-edit the pbxproj**
 The project is generated from `project.yml` by xcodegen. Source/resource files are enumerated
 from folder paths (`Hanahuac/`, `HanahuacTests/`), so after **adding or removing any file** run:
