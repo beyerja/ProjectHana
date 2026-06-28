@@ -303,6 +303,18 @@ final class MapQuizRegionHelperTests: XCTestCase {
         )
     }
 
+    // MARK: - Two-pin framing (wrong-answer zoom contract)
+
+    /// Confirms that calling `QuizRegionMath.region(fittingPins:jitter:.none)` with
+    /// exactly two geographically separated pins produces a region whose banner-free
+    /// visible rect contains both pins. This is the contract relied on by the
+    /// MapQuizView `.incorrect` branch that re-frames the camera on a wrong tap.
+    func testTwoPinRegionContainsBothPinsInVisibleRect() {
+        let pins: [(Double, Double)] = [(35, 18), (55, 9)]
+        let region = QuizRegionMath.region(fittingPins: pins, jitter: .none)
+        assertAllPinsVisible(pins, region: region)
+    }
+
     // MARK: - Generic pin-in-polygon tests
 
     /// Verifies that every country with border data gets a computed pin coordinate that

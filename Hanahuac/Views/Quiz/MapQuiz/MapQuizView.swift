@@ -107,6 +107,13 @@ struct MapQuizView: View {
         .onChange(of: session.answerState) { _, newState in
             guard newState != .unanswered, !isAdvancing else { return }
             isAdvancing = true
+            if case let .incorrect(tappedID, correctID) = newState {
+                let pins = session.annotationFeatures
+                    .filter { $0.id == tappedID || $0.id == correctID }
+                    .map { ($0.quizLat, $0.quizLon) }
+                let twoPin = QuizRegionMath.region(fittingPins: pins, jitter: .none)
+                withAnimation { position = .region(twoPin) }
+            }
             let delay: UInt64 = {
                 if case .correct = newState { return 1_500_000_000 }
                 return 2_000_000_000
