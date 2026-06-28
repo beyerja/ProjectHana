@@ -12,7 +12,7 @@
   { "action": "screenshot" },
   { "action": "dumpTree" },
 
-  { "action": "tap", "label": "Irlanda" },
+  { "action": "tap", "identifier": "map.tapCountry" },
   { "action": "wait", "seconds": 1 },
   { "action": "screenshot" },
   { "action": "dumpTree" },

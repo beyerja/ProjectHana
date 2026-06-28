@@ -15,16 +15,17 @@ token (e.g. `"all-AC-pass-CI-green"`), with no semicolons or parentheses.
 
 Read `.workflow/feature.md` acceptance criteria and all story specs for full scope context.
 
-**Checking merged feature files — use `origin/main`, not the working tree.**
+**Checking merged feature files — fetch then use `origin/main`, not the working tree.**
 When verifying that a feature's code is present after its PR merged, do NOT read files from the
 primary checkout's working tree (`/Users/Private/Documents/Code/ProjectHana/`). That local `main`
 may be diverged/stale and will make the feature appear absent even after a successful merge.
-Always use `git -C <primary-checkout> show origin/main:<relative-path>` to read the authoritative
-post-merge state. Example:
+Always fetch first, then use `git show origin/main:<relative-path>` to read the authoritative
+post-merge state:
 ```sh
+git -C /Users/Private/Documents/Code/ProjectHana fetch origin
 git -C /Users/Private/Documents/Code/ProjectHana show origin/main:Hanahuac/SomeFile.swift
 ```
-`origin/main` is the source of truth once a PR merges; the local working tree is not.
+`origin/main` after a fresh fetch is the source of truth once a PR merges; the local working tree is not.
 
 Run the full test suite. Exercise the feature end-to-end. Check each acceptance criterion explicitly.
 
