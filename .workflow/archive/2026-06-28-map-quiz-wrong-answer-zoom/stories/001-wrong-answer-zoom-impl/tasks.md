@@ -1,0 +1,4 @@
+## Tasks
+
+- [x] 001: In `MapQuizView.swift` `.onChange(of: session.answerState)`, add an `.incorrect(tappedID:correctID:)` branch that looks up both pins in `session.annotationFeatures`, calls `QuizRegionMath.region(fittingPins:jitter:.none)` with their `(quizLat, quizLon)` coordinates, and animates `position` to `.region(…)` via `withAnimation` — immediately after `isAdvancing = true` and before the `advanceTask` is created, so the camera re-frames as soon as the wrong tap is registered
+- [x] 002: Add a unit test in `MapQuizRegionHelperTests.swift` that calls `QuizRegionMath.region(fittingPins:jitter:.none)` with two geographically separated pins (e.g. one near (35, 18) and one near (55, 9)) and asserts that both pins fall within the banner-free `visibleContentRect` — confirming the two-pin framing contract that the view change in task 001 relies on
