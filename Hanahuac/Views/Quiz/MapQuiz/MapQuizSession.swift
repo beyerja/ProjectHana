@@ -26,7 +26,7 @@ extension AnswerState {
 
 @Observable
 final class MapQuizSession {
-    var cards: [ReviewCard]
+    private(set) var cards: [ReviewCard]
     let allFeatures: [any MappableFeature]
 
     private(set) var currentIndex = 0

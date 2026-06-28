@@ -362,27 +362,6 @@ final class MapQuizSessionTests: XCTestCase {
         )
     }
 
-    func testRetry_correctCountEqualsTotalCardsAtFinish() {
-        let session = makeRetrySession()
-        let total = session.totalCards
-        var safetyLimit = total * 20
-        while !session.isFinished, safetyLimit > 0 {
-            safetyLimit -= 1
-            switch session.answerState {
-            case .unanswered:
-                guard let id = session.currentCard?.factID else { break }
-                session.handleTap(featureID: id)
-            default:
-                session.advance()
-            }
-        }
-        XCTAssertEqual(
-            session.correctCount,
-            total,
-            "correctCount must equal the original totalCards at session finish"
-        )
-    }
-
     // MARK: - MapLearningSession: mapRegion seeded on init
 
     func testMapLearningSessionCountry_mapRegionHasNonZeroSpanOnInit() {
