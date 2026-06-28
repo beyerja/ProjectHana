@@ -1,0 +1,11 @@
+{"ts":"2026-06-28T00:02:06Z","event":"end","agent":"code-owner-review","story":"002-fix-camera-initial-position","feature":"primary","duration_s":0,"reads":6,"writes":1,"edits":1,"bashes":8,"est_chars":4200,"est_tokens":1050,"notes":"APPROVED"}
+{"ts":"2026-06-28T00:02:32Z","event":"start","agent":"merge-pr","story":"002","feature":"primary"}
+{"ts":"2026-06-28T00:03:51Z","event":"end","agent":"merge-pr","story":"002","feature":"primary","duration_s":79,"reads":0,"writes":0,"edits":0,"bashes":0,"est_chars":0,"est_tokens":0,"notes":""}
+{"ts":"2026-06-28T00:04:29Z","event":"start","agent":"verify-story","story":"002-fix-camera-initial-position","feature":"primary"}
+{"ts":"2026-06-28T00:13:50Z","event":"end","agent":"verify-story","story":"002-fix-camera-initial-position","feature":"primary","duration_s":561,"reads":12,"writes":3,"edits":0,"bashes":0,"est_chars":8500,"est_tokens":2125,"notes":"DONE"}
+{"ts":"2026-06-28T00:14:07Z","event":"end","agent":"story-workflow","story":"002-fix-camera-initial-position","feature":"primary","duration_s":0,"reads":0,"writes":0,"edits":0,"bashes":4,"est_chars":0,"est_tokens":0,"notes":""}
+{"ts":"2026-06-28T00:16:29Z","event":"start","agent":"verify-feature","story":"feature","feature":"primary"}
+{"ts":"2026-06-28T00:22:06Z","event":"end","agent":"verify-feature","story":"feature","feature":"primary","duration_s":337,"reads":0,"writes":0,"edits":0,"bashes":0,"est_chars":0,"est_tokens":0,"notes":"DONE"}
+{"ts":"2026-06-28T00:23:13Z","event":"start","agent":"evaluate-workflow","story":"feature","feature":"primary"}
+{"ts":"2026-06-28T00:25:08Z","event":"end","agent":"evaluate-workflow","story":"feature","feature":"primary","duration_s":115,"reads":28,"writes":0,"edits":3,"bashes":8,"est_chars":45000,"est_tokens":11250,"notes":""}
+{"ts":"2026-06-28T00:26:07Z","event":"start","agent":"archive-workflow","story":"feature","feature":"primary"}

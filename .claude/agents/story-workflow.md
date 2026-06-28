@@ -66,6 +66,10 @@ merge a story PR.
 6. **Merge** — once **both** `independent-review` and `code-owner-review` emitted APPROVED **and** CI is
    green, spawn `merge-pr` **unconditionally**. Do not assume the user already merged and do not wait for a
    human merge click.
+   **Worktree lifecycle:** `merge-pr` deletes the story *branch* (via `--delete-branch`) but must NOT
+   remove or exit the worktree directory — the worktree must remain intact through step 7. When running
+   inside a dedicated feature worktree, only the feature-orchestrator's archive step may remove the
+   worktree, never story-workflow.
 7. **Verify** — spawn `verify-story` agent
    - STATUS: FAILED → go to step 2 (re-implement with failure context)
    - STATUS: DONE → finish
