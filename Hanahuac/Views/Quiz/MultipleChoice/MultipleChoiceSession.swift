@@ -23,18 +23,23 @@ enum MCQAnswerState: Equatable {
 
 @Observable
 final class MultipleChoiceSession {
-    let questions: [MCQQuestion]
+    private(set) var questions: [MCQQuestion]
+    /// The number of distinct questions in the session, fixed at init (before shuffle).
+    let totalQuestions: Int
     private(set) var currentIndex = 0
     private(set) var correctCount = 0
     private(set) var answerState: MCQAnswerState = .unanswered
     private(set) var isFinished = false
+
+    /// Total number of `advance()` calls made (includes retries for wrong answers).
+    private var attemptCount = 0
 
     var current: MCQQuestion? {
         questions.indices.contains(currentIndex) ? questions[currentIndex] : nil
     }
 
     var reviewedCount: Int {
-        min(currentIndex, questions.count)
+        attemptCount
     }
 
     var nextDueDate: Date? {
@@ -42,6 +47,7 @@ final class MultipleChoiceSession {
     }
 
     init(questions: [MCQQuestion]) {
+        totalQuestions = questions.count
         self.questions = questions.shuffled()
     }
 
@@ -64,9 +70,31 @@ final class MultipleChoiceSession {
         SM2Scheduler.apply(result, to: q.card, quality: quality)
         // The streak belongs to the reviewed card's language, keeping streaks per-language.
         StreakTracker.recordReview(language: q.card.language)
-        currentIndex += 1
-        isFinished = currentIndex >= questions.count
-        if !isFinished { answerState = .unanswered }
+
+        attemptCount += 1
+
+        if case .incorrect = answerState {
+            // Wrong answer: reinsert question later in the queue so the user sees it again.
+            questions.remove(at: currentIndex)
+            let insertAt = Int.random(in: max(1, currentIndex) ..< max(2, questions.count + 1))
+            questions.insert(q, at: min(insertAt, questions.count))
+            // currentIndex stays — the next question slides into the same position.
+        } else {
+            currentIndex += 1
+        }
+
+        // Safety: if the queue is exhausted before correctCount reaches totalQuestions
+        // (e.g. a degenerate empty-question edge case), finish to avoid an infinite loop.
+        if currentIndex >= questions.count {
+            isFinished = true
+            return
+        }
+
+        if correctCount == totalQuestions {
+            isFinished = true
+        } else {
+            answerState = .unanswered
+        }
     }
 
     // MARK: – Factory methods
