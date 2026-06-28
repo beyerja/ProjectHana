@@ -21,6 +21,14 @@ review/merge state), don't re-merge a merged PR. Where the spawning briefing and
 (e.g. the briefing says "no PR yet" but `gh` shows an open one), **the live git/gh state wins** — the
 briefing is a snapshot that may be stale. Record the resume point in `<story-dir>/log.md`.
 
+**Branch-behind resume case.** When a PR is already open but `gh pr view <n> --json mergeStateStatus`
+reports `BEHIND` (main advanced while the session was interrupted), bring it current before continuing:
+```sh
+gh pr update-branch <n> -R <owner/repo>
+```
+After update-branch, the head SHA changes, so CI must re-run and the `code-owner-review` gate check must
+be re-posted on the new SHA. Pick up at step 4 (wait-for-ci) with the updated PR.
+
 **PR-base contract (autonomous, no human gate):** each story PR targets **`main`** directly (not an
 intermediate feature branch), so it is CI-gated and goes through the independent-review loop below.
 There is no story→feature-branch PR and no human merge click anywhere in this loop — merge is automatic
