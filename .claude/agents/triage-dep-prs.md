@@ -19,9 +19,17 @@ with a log entry — they never block the feature workflow.
 
 ## Bot identity
 
-Gate check `code-owner-review` is posted by **App id `4144849`** (`hanahuac-review-bot`). All
-App-authenticated calls go through `scripts/gh-review-bot.sh`. Never read, echo, or write bot secrets
-directly.
+Gate check `code-owner-review` is posted by the `hanahuac-review-bot` GitHub App through
+`scripts/gh-review-bot.sh`. Never read, echo, or write bot secrets directly.
+
+## Per-run temp directory
+
+At the very start, create a per-run temp directory to avoid collisions under parallel runs:
+```sh
+RUN_TMPDIR=$(mktemp -d)
+```
+
+Use `$RUN_TMPDIR/` for all temp files throughout this run (commit messages, comment bodies, etc.).
 
 ## Step 1 — Detect qualifying dep PRs
 
@@ -47,6 +55,11 @@ Edit tool, never `cat >>` or a heredoc), then jump straight to the telemetry foo
 Process one PR at a time in ascending PR-number order. Track all skipped PRs in a list for the final
 STATUS output.
 
+Before processing each PR, capture the worktree's current branch so it can be restored after:
+```sh
+original_branch=$(git -C <worktree> rev-parse --abbrev-ref HEAD)
+```
+
 ### 2a — Fetch the PR state
 
 ```sh
@@ -55,14 +68,35 @@ mergeable=$(gh -R <owner/repo> pr view <number> --json mergeable --jq .mergeable
 # mergeable values: MERGEABLE, CONFLICTING, UNKNOWN
 ```
 
-### 2b — Resolve merge conflicts (if `mergeable == CONFLICTING`)
+**If `mergeable == UNKNOWN`:** GitHub is still computing mergeability asynchronously. Wait ~10 seconds,
+then re-fetch once:
+```sh
+gh -R <owner/repo> pr view <number> --json mergeable --jq .mergeable
+```
+If it is still `UNKNOWN` after the retry, treat it as "cannot auto-fix": append the PR URL and reason
+(`mergeable UNKNOWN after retry`) to `.workflow/log.md` via the Edit tool, add the PR to the skipped
+list, and continue to the next PR.
 
-1. Fetch the dep branch into the worktree:
+### 2b — Check out the dep PR's branch in the worktree
+
+For **all** dep PRs (regardless of `mergeable` status), check out the dep branch into the worktree so
+that lint/test in step 2d run against the dep PR's code, not the feature branch:
+
+1. Delete any leftover temp branch from a previous crashed run:
+   ```sh
+   git -C <worktree> branch -D dep/<number>-work 2>/dev/null || true
+   ```
+2. Fetch and create a local tracking branch:
    ```sh
    git -C <worktree> fetch origin <headRefName>
    git -C <worktree> checkout -b dep/<number>-work origin/<headRefName>
    ```
-2. Rebase onto main:
+
+### 2c — Resolve merge conflicts (only if `mergeable == CONFLICTING`)
+
+If `mergeable == CONFLICTING`, rebase the dep branch onto main:
+
+1. Rebase onto main (already on `dep/<number>-work`):
    ```sh
    git -C <worktree> fetch origin main
    git -C <worktree> rebase origin/main
@@ -73,17 +107,17 @@ mergeable=$(gh -R <owner/repo> pr view <number> --json mergeable --jq .mergeable
    - **All other conflicted files**: prefer `main` (`git checkout --ours <file>` then
      `git add <file>`).
    - After resolving each file: `git -C <worktree> rebase --continue`
-3. Force-push the resolved branch:
+2. Force-push the resolved branch:
    ```sh
    git -C <worktree> push origin dep/<number>-work:<headRefName> --force-with-lease
    ```
-4. Re-read `sha` and `mergeable` after the push.
-5. If the rebase fails in a way you cannot resolve automatically, append the PR URL and reason to
+3. Re-read `sha` and `mergeable` after the push.
+4. If the rebase fails in a way you cannot resolve automatically, append the PR URL and reason to
    `.workflow/log.md` via the Edit tool, add the PR to the skipped list, clean up
-   (`git -C <worktree> rebase --abort` if in progress; `git -C <worktree> checkout -` and
+   (`git -C <worktree> rebase --abort` if in progress; `git -C <worktree> checkout $original_branch` and
    `git -C <worktree> branch -D dep/<number>-work`), then continue to the next PR.
 
-### 2c — CI self-heal: ensure CI actually ran on the head SHA
+### 2d — CI self-heal: ensure CI actually ran on the head SHA
 
 ```sh
 sha=$(gh -R <owner/repo> pr view <number> --json headRefOid --jq .headRefOid)
@@ -105,14 +139,18 @@ gh pr checks <number> -R <owner/repo> --watch --fail-fast
 
 If close/reopen yields no runs within ~30s, push an empty commit to force a new event:
 ```sh
-git -C <worktree> checkout <headRefName>
 git -C <worktree> commit --allow-empty -m "ci: re-trigger"
-git -C <worktree> push origin <headRefName>
+git -C <worktree> push origin dep/<number>-work:<headRefName>
+```
+
+After the empty-commit push, wait for CI before proceeding:
+```sh
+gh pr checks <number> -R <owner/repo> --watch --fail-fast
 ```
 
 Record the re-trigger action in `.workflow/log.md`.
 
-### 2d — Run lint and test in the worktree
+### 2e — Run lint and test in the worktree
 
 ```sh
 just -f <worktree>/justfile lint
@@ -125,10 +163,10 @@ just -f <worktree>/justfile test
    Use the Edit tool for source edits; no architectural changes.
 3. Write a one-line commit message to a temp file, then commit and push:
    ```sh
-   # Write message via Write tool to /tmp/dep-fix-msg.txt
+   # Write message via Write tool to $RUN_TMPDIR/dep-fix-msg.txt
    git -C <worktree> add -A
-   git -C <worktree> commit -F /tmp/dep-fix-msg.txt
-   git -C <worktree> push origin <headRefName>
+   git -C <worktree> commit -F $RUN_TMPDIR/dep-fix-msg.txt
+   git -C <worktree> push origin dep/<number>-work:<headRefName>
    ```
    (No heredocs; no `$(...)` payloads; message always written to a file first.)
 4. Re-run `just -f <worktree>/justfile lint` and `just -f <worktree>/justfile test`.
@@ -138,13 +176,13 @@ just -f <worktree>/justfile test
 
 **Lint and test MUST pass before proceeding. Never post the gate check on a broken build.**
 
-### 2e — CI self-heal again (after any push in 2b or 2d)
+### 2f — CI self-heal again (after any push in 2c or 2e)
 
-After any push that changes the head SHA, repeat the CI self-heal check from step 2c:
+After any push that changes the head SHA, repeat the CI self-heal check from step 2d:
 re-read `sha`, check for required CI contexts, close/reopen if absent, wait with
 `gh pr checks <number> -R <owner/repo> --watch --fail-fast`.
 
-### 2f — Post the `code-owner-review` gate check
+### 2g — Post the `code-owner-review` gate check
 
 Read the fresh head SHA:
 ```sh
@@ -159,26 +197,27 @@ scripts/gh-review-bot.sh gh api -X POST repos/<owner/repo>/check-runs \
   -f 'output[summary]=Dependency-update PR verified by triage-dep-prs agent.'
 ```
 
-### 2g — Verify the check posted (MANDATORY)
+### 2h — Verify the check posted (MANDATORY)
 
 ```sh
 scripts/gh-review-bot.sh gh api repos/<owner/repo>/commits/$sha/check-runs \
   --jq '.check_runs[] | select(.name=="code-owner-review") | {conclusion, app_id: .app.id}'
 ```
 
-Confirm an entry `{conclusion: "success", app_id: 4144849}`.
+Confirm an entry `{conclusion: "success", app_id: <the App id>}` — the expected App id is the one
+registered for `hanahuac-review-bot`; see `scripts/gh-review-bot.sh` for the authoritative value.
 
 - **Present with the right conclusion + app_id:** proceed to merge.
-- **Wrapper exited non-zero (Keychain creds absent):** fall to graceful degradation (step 2h).
+- **Wrapper exited non-zero (Keychain creds absent):** fall to graceful degradation (step 2i).
 - **Absent for any other reason:** do NOT merge. Append the failure verbatim to `.workflow/log.md`,
   add the PR to the skipped list, and continue to the next PR.
 
-### 2h — Graceful degradation (wrapper exits non-zero / creds absent)
+### 2i — Graceful degradation (wrapper exits non-zero / creds absent)
 
 When the wrapper exits non-zero (creds absent), skip the gate check and post a plain informational
 comment instead:
 
-1. Write the comment body to `/tmp/dep-triage-comment.md` via the Write tool:
+1. Write the comment body to `$RUN_TMPDIR/dep-triage-comment.md` via the Write tool:
    ```
    **Dependency PR triage:** `just lint` and `just test` passed but the `code-owner-review` gate
    check could not be posted (bot credentials absent). Gate check SKIPPED. Merge manually or
@@ -186,12 +225,12 @@ comment instead:
    ```
 2. Post the comment:
    ```sh
-   gh -R <owner/repo> pr comment <number> --body-file /tmp/dep-triage-comment.md
+   gh -R <owner/repo> pr comment <number> --body-file $RUN_TMPDIR/dep-triage-comment.md
    ```
 3. Append to `.workflow/log.md` (Edit tool): `<timestamp> triage-dep-prs: PR #<n> gate check SKIPPED — bot creds absent`
 4. Add PR to skipped list with reason "gate check SKIPPED (creds absent)" and continue to the next PR.
 
-### 2i — Merge the PR
+### 2j — Merge the PR
 
 ```sh
 gh pr merge <number> -R <owner/repo> --squash --delete-branch
@@ -199,10 +238,10 @@ gh pr merge <number> -R <owner/repo> --squash --delete-branch
 
 Append to `.workflow/log.md` (Edit tool): `<timestamp> triage-dep-prs: PR #<n> merged — <title>`
 
-### 2j — Clean up the temporary worktree branch (if created in 2b)
+### 2k — Clean up the temporary worktree branch
 
 ```sh
-git -C <worktree> checkout -
+git -C <worktree> checkout $original_branch
 git -C <worktree> branch -D dep/<number>-work 2>/dev/null || true
 ```
 
