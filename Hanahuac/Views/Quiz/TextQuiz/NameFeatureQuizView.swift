@@ -72,7 +72,7 @@ struct NameFeatureQuizView: View {
                 quizBody(
                     feature: feature,
                     answerState: session.answerState,
-                    progressText: "\(session.reviewedCount + 1) / \(session.questions.count)",
+                    progressText: "\(session.currentIndex + 1) / \(session.totalQuestions)",
                     onCheck: { session.checkAnswer($0) },
                     onNext: { advancePending(session) }
                 )

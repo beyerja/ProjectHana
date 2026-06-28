@@ -86,18 +86,19 @@ final class TextQuizSession {
             currentIndex += 1
         }
 
-        // Safety: if the queue is exhausted before correctCount reaches totalQuestions
-        // (e.g. a degenerate empty-question edge case), finish to avoid an infinite loop.
+        if correctCount == totalQuestions {
+            isFinished = true
+            return
+        }
+
+        // Safety: queue exhausted before all questions answered correctly
+        // (e.g. empty-init edge case) — finish to avoid an infinite loop.
         if currentIndex >= questions.count {
             isFinished = true
             return
         }
 
-        if correctCount == totalQuestions {
-            isFinished = true
-        } else {
-            answerState = .unanswered
-        }
+        answerState = .unanswered
     }
 
     // MARK: – Factory methods
