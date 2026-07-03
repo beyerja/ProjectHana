@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       # Install Nix so the linters come from the flake — no hardcoded /nix paths, and the
       # versions match the local dev shell exactly.
