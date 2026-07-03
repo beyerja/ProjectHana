@@ -4,6 +4,12 @@
       "filename" : "AppIcon.png",
       "idiom" : "universal",
       "size" : "1024x1024"
+    },
+    {
+      "filename" : "AppIcon.png",
+      "idiom" : "mac",
+      "scale" : "1x",
+      "size" : "1024x1024"
     }
   ],
   "info" : {
