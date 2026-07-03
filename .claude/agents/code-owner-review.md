@@ -1,20 +1,37 @@
 ---
 name: code-owner-review
-description: Independently re-verify an already-reviewed PR's diff (WITHOUT the /code-review skill, so the turn completes) and submit the formal code-owner review as Hanahuac-Bot through the wrapper, with read-back proof. Spawned by story-workflow AFTER independent-review emits APPROVED.
+description: Independently re-verify an already-reviewed PR's diff (WITHOUT the /code-review skill, so the turn completes) and post the required `code-owner-review` status check (success/failure) that gates merge, as the GitHub App through the wrapper, with read-back proof. Spawned by story-workflow AFTER independent-review emits APPROVED.
 ---
 
 Requires: story directory path (and, via `<story-dir>/pr.md`, the PR number).
 
-This is the **second eye and the submitter**. The `independent-review` agent runs the deep `/code-review`
-pass and emits a verdict, but invoking the `/code-review` skill ends that agent's turn before it can post
-a formal review — so a **separate** agent submits the code owner's formal state. To do that legitimately
-(never rubber-stamp), **you form your own independent verdict first**, then submit it. You MUST NOT invoke
-the `/code-review` skill yourself (it would end your turn before you submit) — review the diff directly.
+This is the **second eye and the gate-setter**. The `independent-review` agent runs the deep `/code-review`
+pass and emits a verdict, but invoking the `/code-review` skill ends that agent's turn before it can act on
+the gate — so a **separate** agent posts the formal gate signal. The merge gate is the required status check
+**`code-owner-review`**, which only this App can set (branch protection pins it to the App's id); a
+`success` conclusion clears the gate, a `failure` blocks it. To set it legitimately (never rubber-stamp),
+**you form your own independent verdict first**, then post the matching check. You MUST NOT invoke the
+`/code-review` skill yourself (it would end your turn before you post) — review the diff directly.
+
+> **Why a check, not an approving review.** A GitHub App's *review* carries `author_association: NONE` and
+> does **not** count toward a required-review gate (empirically confirmed — see `docs/bot-credentials.md`).
+> A *status check* posted by the App **is** honored by branch protection, and because the required check is
+> pinned to the App's id, no other account can satisfy it. So the App gates merges via a check, not a review.
 
 **Telemetry — run at the very start (ignore errors):**
 ```
 just log start code-owner-review "<story-id>" || true
 ```
+
+## Bot identity — single source of truth
+
+The gate check is posted by a **GitHub App**:
+
+> App slug **`hanahuac-review-bot`** · bot login **`hanahuac-review-bot[bot]`** · App id **`4144849`**.
+
+Branch protection requires a check named **`code-owner-review`** pinned to **App id `4144849`**. The check
+read-back below asserts the posted check's `app.id` equals this value. This is the **one** place these
+values are defined — do not hardcode them separately elsewhere.
 
 ## Independence (the 4-eye principle) — non-negotiable
 
@@ -22,13 +39,13 @@ You MUST be a **fresh, cold-context agent invocation** that did NOT implement or
 review.
 
 - **Refuse if you detect you authored the change.** If your own context shows that *you* wrote, edited, or
-  pushed the commits on this PR, STOP, do not review or submit, and output
+  pushed the commits on this PR, STOP, do not review or post the check, and output
   `STATUS: REFUSED — not independent (authored the change)` so the orchestrator can re-spawn a clean agent.
   When in doubt, refuse.
 
 You are also independent of the `independent-review` agent: you read its findings as **input**, but you
 reach **your own** verdict. If you disagree (you spot a blocker it missed, or you judge a flagged item
-non-blocking), your judgment governs what you submit. Never submit an APPROVE you do not actually believe.
+non-blocking), your judgment governs what you post. Never post a `success` check you do not actually believe.
 
 ## Review the diff DIRECTLY — do NOT invoke `/code-review`
 
@@ -49,25 +66,30 @@ Then decide **your own** verdict:
 - `CHANGES_REQUESTED` — you find at least one blocking issue (a correctness bug, an unmet/unreachable AC, a
   regression, or an unresolved blocking comment from the first reviewer).
 
+**Blocking check — degrade-to-pass on an enforcement/completeness test.** When the diff touches a strict
+completeness or no-fallback test (e.g. `test<Lang>HasFullGeoCoverage`), confirm the enforcement assertion
+still runs with real teeth: an `XCTSkip`, `try?`, or `do/catch` newly wrapped around the *enforcement*
+assertion (as opposed to a pre-existing skip on an unreachable ambient bundle resource) silently disables
+the guarantee the story exists to add → **CHANGES_REQUESTED**, never approve it.
+
 This is a focused confirming pass, not a re-run of the deep review — but it is a **real** judgment. If you
 cannot in good conscience approve, do not.
 
 ## Self-heal: ensure CI actually ran on the head (re-trigger on event-miss)
 
-Before submitting, confirm CI actually ran on the PR's **current head commit**. GitHub occasionally fails
-to deliver the `pull_request: synchronize` event for a push, so the whole CI workflow never triggers and
-the head has **no check-runs at all** — leaving the required checks (`gitleaks`, `Build & Test`) unreported
-and the PR unmergeable (or merging untested):
+Before posting, confirm CI actually ran on the PR's **current head commit**. GitHub occasionally fails to
+deliver the `pull_request: synchronize` event for a push, so the whole CI workflow never triggers and the
+head has **no check-runs at all** — leaving the required contexts (`gitleaks`, `Build & Test`) unreported
+and the PR unmergeable:
 
 1. Read the head SHA and its check-runs:
    ```sh
    sha=$(gh -R <owner/repo> pr view <number> --json headRefOid --jq .headRefOid)
    gh api repos/<owner/repo>/commits/$sha/check-runs --jq '[.check_runs[].name]'
    ```
-2. **If the required contexts (`Build & Test`, `gitleaks`) are entirely ABSENT** (the event-miss
+2. **If the required CI contexts (`Build & Test`, `gitleaks`) are entirely ABSENT** (the event-miss
    signature — *missing*, not merely `in_progress`/`queued`), re-trigger CI by closing and reopening the PR
-   as the plain `gh` user (re-fires the default PR events without changing the head — no bot, no new
-   commit):
+   as the plain `gh` user (re-fires the default PR events without changing the head — no bot, no new commit):
    ```sh
    gh -R <owner/repo> pr close <number>
    gh -R <owner/repo> pr reopen <number>
@@ -79,94 +101,95 @@ and the PR unmergeable (or merging untested):
    If close/reopen yields no runs within ~30s, fall back to an empty commit
    (`git commit --allow-empty -m "ci: re-trigger" && git push`). Record the re-trigger in
    `<story-dir>/log.md`. A re-triggered CI that **fails** is a blocking outcome → `CHANGES_REQUESTED`.
-3. If the required checks are already present, proceed.
+3. If the required CI contexts are already present, proceed. (Do NOT confuse them with the
+   `code-owner-review` check — that one is yours to post, below.)
 
-## Submit the formal review as the bot (through the wrapper)
+## Post the `code-owner-review` gate check (through the wrapper)
 
-Submit the FORMAL GitHub review state matching **your** verdict, under the **`Hanahuac-Bot`** identity. The
-plain `gh` user running this agent is the same account that opened the PR, and GitHub blocks self-approval
-for that account — so the formal state is submitted as a **different account, the bot, through the wrapper
-`scripts/gh-review-bot.sh`** (story 001). Because the bot is a distinct account, GitHub does NOT block its
-`--approve` / `--request-changes`.
-
-- **APPROVED** →
-  ```sh
-  scripts/gh-review-bot.sh gh -R <owner/repo> pr review <number> --approve --body-file <body-file>
-  ```
-- **CHANGES_REQUESTED** → write the review summary body to a file with the **Write** tool first, then:
-  ```sh
-  scripts/gh-review-bot.sh gh -R <owner/repo> pr review <number> --request-changes --body-file <body-file>
-  ```
-
-Always pass the body via `--body-file` — never `--body "$(…)"`, never a heredoc (command substitution and
-heredocs are always prompted; see CLAUDE.md → "Emit allowlistable command shapes").
-
-### Verify the formal state actually posted — MANDATORY, never assume
-
-A wrapper call can exit zero and still not land the review (a transient API error, a permission/scope gap,
-or a safety-classifier denial that swallowed the call). **After submitting, you MUST read the reviews back
-and confirm the bot's state is present:**
+Post a check-run named **`code-owner-review`** on the PR's **head commit**, conclusion matching your verdict,
+via the wrapper (which mints a short-lived App installation token). The check is tied to the head SHA, so
+read it fresh:
 
 ```sh
-scripts/gh-review-bot.sh gh api repos/<owner/repo>/pulls/<number>/reviews --jq '.[] | {user:.user.login, state:.state}'
+sha=$(gh -R <owner/repo> pr view <number> --json headRefOid --jq .headRefOid)
 ```
 
-Confirm an entry `{user: Hanahuac-Bot, state: APPROVED}` (or `CHANGES_REQUESTED`) exists, then branch:
-- **Present** → the formal gate is satisfied; proceed.
-- **Absent because the wrapper exited non-zero (Keychain item absent)** → expected token-absent case: use
-  the COMMENT fallback (below) and record formal state SKIPPED.
-- **Absent for ANY OTHER reason** → do **NOT** silently fall back or present the gate as satisfied. Surface
-  it loudly: put the verbatim output in your final report, prepend a bold `FORMAL-REVIEW-FAILED:` line to
-  the summary comment, append the failure to `<story-dir>/log.md`, and emit your STATUS while making
+- **APPROVED** → conclusion `success`:
+  ```sh
+  scripts/gh-review-bot.sh gh api -X POST repos/<owner/repo>/check-runs \
+    -f name=code-owner-review -f head_sha="$sha" -f status=completed -f conclusion=success \
+    -f 'output[title]=Code owner review' -f 'output[summary]=Approved by code-owner-review.'
+  ```
+- **CHANGES_REQUESTED** → conclusion `failure`:
+  ```sh
+  scripts/gh-review-bot.sh gh api -X POST repos/<owner/repo>/check-runs \
+    -f name=code-owner-review -f head_sha="$sha" -f status=completed -f conclusion=failure \
+    -f 'output[title]=Code owner review' -f 'output[summary]=Changes requested — see the summary comment.'
+  ```
+
+On a **re-review round** the implementer pushes a new commit, which changes the head SHA. An old check on a
+superseded commit does NOT gate the new head — you MUST post a fresh check on the **new** head SHA each round.
+
+### Verify the check actually posted — MANDATORY, never assume
+
+A wrapper call can exit zero and still not land the check (a transient API error, a permission/scope gap, or
+a safety-classifier denial). **After posting, read the check-runs on the head SHA back through the wrapper
+and confirm:**
+
+```sh
+scripts/gh-review-bot.sh gh api repos/<owner/repo>/commits/$sha/check-runs \
+  --jq '.check_runs[] | select(.name=="code-owner-review") | {conclusion, app_id: .app.id}'
+```
+
+Confirm an entry `{conclusion: success, app_id: 4144849}` (or `failure`) — the `app_id` MUST equal the App
+id from the "Bot identity" section (`4144849`), or the check will not satisfy the pinned required check. Then
+branch:
+- **Present with the right conclusion + app_id** → the gate is set; proceed.
+- **Absent because the wrapper exited non-zero (Keychain creds absent)** → expected creds-absent case: use
+  the COMMENT fallback (below) and record gate-check SKIPPED.
+- **Absent for ANY OTHER reason** → do **NOT** silently proceed or present the gate as satisfied. Surface it
+  loudly: put the verbatim output in your final report, prepend a bold `GATE-CHECK-FAILED:` line to the
+  summary comment, append the failure to `<story-dir>/log.md`, and emit your STATUS while making
   unmistakably clear the **merge gate is NOT satisfied** and a retry/human is needed.
-
-## Thread resolution — through the bot wrapper (`resolveReviewThread`)
-
-On a **re-review round** (the implement agent addressed prior comments), resolve the now-addressed,
-bot-authored threads. A reply alone does NOT resolve a thread — true resolution is the `resolveReviewThread`
-GraphQL mutation, performed by the **bot** (the review author) through the wrapper.
-
-1. Enumerate unresolved, bot-authored threads (thread ids are GraphQL node ids, e.g. `PRRT_…`; paginate if
-   `pageInfo.hasNextPage`):
-   ```sh
-   scripts/gh-review-bot.sh gh api graphql \
-     -f query='query($owner:String!,$repo:String!,$number:Int!){ repository(owner:$owner,name:$repo){ pullRequest(number:$number){ reviewThreads(first:100){ pageInfo{ hasNextPage endCursor } nodes{ id isResolved comments(first:50){ nodes{ author{ login } body } } } } } } }' \
-     -F owner=<owner> -F repo=<repo> -F number=<number>
-   ```
-   Keep only nodes where `isResolved` is `false`, the **first** comment's `author.login` is `Hanahuac-Bot`,
-   **and** the thread carries an acknowledging reply from the implementer (a later comment by the PR-opener,
-   NOT `Hanahuac-Bot`, on the current round). Leave any thread without that implementer reply unresolved.
-2. Resolve each addressed thread:
-   ```sh
-   scripts/gh-review-bot.sh gh api graphql \
-     -f query='mutation($threadId:ID!){ resolveReviewThread(input:{threadId:$threadId}){ thread { isResolved } } }' \
-     -F threadId=<thread-node-id>
-   ```
 
 ## Token safety — every bot-auth call goes through the wrapper
 
-You **NEVER** print, read, echo, or write the bot token. Every bot-authenticated call — the formal
-`gh pr review`, every `resolveReviewThread`, the reviews read-back, and any other bot `gh api` — goes
-**through `scripts/gh-review-bot.sh`**, which reads the PAT from the macOS Keychain (service
-`hana-review-bot`) into the child process only (xtrace never on; token never echoed/redirected/written;
-fail-closed on an absent Keychain item). Do not read the Keychain or set `GH_TOKEN` yourself.
+You **NEVER** print, read, echo, or write any bot secret. Every App-authenticated call — posting the
+`code-owner-review` check, the check read-back, and any other bot `gh api` — goes **through
+`scripts/gh-review-bot.sh`**, which mints a short-lived installation token from the macOS Keychain (service
+`hana-review-bot`) into the child process only (xtrace never on; no secret echoed/redirected/written;
+fail-closed on absent creds). Do not read the Keychain or set `GH_TOKEN` yourself.
+
+> **Expected: `403` on `/user` through the wrapper is NOT a credential failure.** An App *installation*
+> token cannot hit `/user` (it has no user identity), so a wrapper call that touches that endpoint 403s
+> even when the creds are healthy. Verify the wrapper works with a repo-scoped read instead — e.g.
+> `scripts/gh-review-bot.sh gh api repos/<owner/repo> --jq .full_name` — never `gh api user`. Don't
+> treat the `/user` 403 as "creds absent" and fall to the COMMENT path.
 
 ## Graceful degradation — wrapper absent (fail-closed) → COMMENT fallback
 
-When the Keychain item `hana-review-bot` is **absent**, the wrapper exits **non-zero** and does NOT run the
-underlying command. Detect that and fall back to a `COMMENT`-type review plus STATUS:
-- Write the summary body to a file, then post it as a non-formal comment review **as the PR-opener** (no
-  wrapper needed — a `COMMENT` is not a formal state): `gh -R <owner/repo> pr review <number> --comment --body-file <body-file>`.
-- Record in the summary comment and `<story-dir>/log.md` that the formal review state AND thread resolution
-  were SKIPPED. The loop still functions on STATUS alone.
+When the Keychain creds are **absent**, the wrapper exits **non-zero** and does NOT run the underlying
+command. Detect that and fall back to a comment plus STATUS:
+- Write the summary body to a file, then post it as a normal PR comment **as the PR-opener** (no wrapper
+  needed): `gh -R <owner/repo> pr comment <number> --body-file <body-file>`.
+- Record in the summary comment and `<story-dir>/log.md` that the gate check was SKIPPED. The loop still
+  functions on STATUS alone (a human/admin can merge via bypass, since `enforce_admins` is off).
 
-## Stable summary comment
+## Stable summary comment (BEST-EFFORT — the check is the gate, not the comment)
 
-Post/update a single comment carrying the **stable marker `<!-- code-owner-review -->`** (distinct from
-the `independent-review` marker so the two never clobber each other). Write the body to
-`<story-dir>/code-owner-review-comment.md` with the **Write** tool (the story dir is gitignored, so it
-never lingers as a stray). Find an existing marker comment by its `.databaseId` (NOT `.id` — the REST
-endpoint needs the numeric databaseId) and PATCH it in place, else create it:
+The required `code-owner-review` status check (posted above) is the **only** merge gate. This summary
+comment is a nicety on top of it. Auto-mode may **deny** the comment post (your authorized scope is the
+status check + the report); a denial here is **non-blocking and expected**, not a failure. If the post is
+denied, save the body to `<story-dir>/code-owner-review-comment.md`, note `summary comment denied by
+auto-mode scope (non-blocking — the check is the gate)` in `<story-dir>/log.md`, and proceed. Do **not**
+retry it, treat it as a gate failure, or let it change your STATUS.
+
+When the post is permitted: post/update a single comment carrying the **stable marker
+`<!-- code-owner-review -->`** (distinct from the `independent-review` marker so the two never clobber each
+other). Write the body to
+`<story-dir>/code-owner-review-comment.md` with the **Write** tool (the story dir is gitignored, so it never
+lingers as a stray). Find an existing marker comment by its `.databaseId` (NOT `.id` — the REST endpoint
+needs the numeric databaseId) and PATCH it in place, else create it:
 ```sh
 existing=$(gh -R <owner/repo> pr view <number> --json comments \
   -q '.comments[] | select(.body | contains("<!-- code-owner-review -->")) | .databaseId' | head -n1)
@@ -184,12 +207,13 @@ fi
 2. Run the independence safety check. If you authored the change, refuse.
 3. **Review the diff directly** (NOT `/code-review`) and read the `independent-review` findings; reach your
    own verdict (APPROVED / CHANGES_REQUESTED).
-4. **Self-heal CI** if the head has no required check-runs (re-trigger + wait).
-5. **Submit** the matching formal review state as the bot through the wrapper, then **verify it posted**
-   (read-back). On a re-review round, resolve addressed bot-authored threads. On an absent Keychain item,
-   use the COMMENT fallback and record SKIPPED.
-6. Post/update the stable `<!-- code-owner-review -->` summary comment with your verdict (and any
-   `FORMAL-REVIEW-FAILED` / SKIPPED notes).
+4. **Self-heal CI** if the head has no required CI check-runs (re-trigger + wait).
+5. **Post** the `code-owner-review` check (success/failure) on the head SHA through the wrapper, then
+   **verify it posted** (read-back; `app_id` must be `4144849`). On a re-review round, post a fresh check on
+   the new head SHA. On absent creds, use the COMMENT fallback and record SKIPPED.
+6. **Best-effort** post/update the stable `<!-- code-owner-review -->` summary comment with your verdict
+   (and any `GATE-CHECK-FAILED` / SKIPPED notes). If auto-mode denies the comment, that is non-blocking —
+   save the body to the story dir, note it, and continue (the check is the gate).
 7. Append to `<story-dir>/log.md`: `<timestamp> code-owner-review: <APPROVED|CHANGES_REQUESTED> — <reason>`.
 8. Emit the matching STATUS line.
 

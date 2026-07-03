@@ -1,0 +1,205 @@
+/* Simplified Chinese (zh-Hans) */
+
+/* HomeView */
+"home.tagline" = "一个世界，一次一题";
+"home.categories" = "类别";
+"home.category.countries" = "国家";
+"home.category.rivers" = "河流";
+"home.category.mountains" = "山脉";
+"home.category.seas" = "海洋";
+"home.view_progress" = "查看进度";
+"home.tile.new" = "新增";
+"home.tile.pending" = "待完成";
+"home.tile.all_done" = "全部完成";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "地图点选测验";
+"quiz.mode.map_tap.desc" = "在地图上点选正确的国家";
+"quiz.mode.type_capital.title" = "输入首都";
+"quiz.mode.type_capital.desc" = "“X 的首都是什么？”";
+"quiz.mode.name_feature.title" = "猜地名";
+"quiz.mode.name_feature.desc" = "输入地图上标记地点的名称";
+"quiz.mode.multiple_choice.title" = "选择题";
+"quiz.mode.multiple_choice.desc" = "从 4 个选项中选出首都";
+"quiz.cards_due.singular" = "张卡片到期";
+"quiz.cards_due.plural" = "张卡片到期";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "设置";
+"settings.section.general" = "通用";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "语言";
+"settings.language.picker_title" = "应用语言";
+"settings.language.downloading" = "正在下载…";
+"settings.language.download_failed" = "下载失败";
+"settings.language.retry" = "重试";
+"settings.language.available" = "可用";
+"settings.language.group.downloaded" = "已下载";
+"settings.language.search_placeholder" = "搜索语言";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud 同步";
+"settings.sync.status_label" = "状态";
+"settings.sync.status.off" = "已关闭";
+"settings.sync.status.unavailable" = "不可用";
+"settings.sync.status.on" = "已开启";
+"settings.sync.status.syncing" = "正在同步…";
+"settings.sync.status.idle" = "已是最新";
+"settings.sync.status.error" = "错误";
+"settings.sync.unavailable_note" = "iCloud 同步不可用。请登录 iCloud 并使用已启用同步的版本。";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "进度功能即将推出";
+"progress.placeholder_desc" = "你的学习统计将显示在这里。";
+"progress.title" = "进度";
+
+/* StatsView */
+"stats.title" = "进度";
+"stats.cards_reviewed" = "已复习卡片";
+"stats.due_today" = "今日到期";
+"stats.day_streak" = "连续天数";
+"stats.by_category" = "按类别";
+"stats.showing_language" = "显示：";
+"stats.by_language" = "按语言";
+"stats.by_mode" = "按测验类型";
+"stats.category_header" = "类别";
+"stats.mastery_tiers" = "掌握等级";
+"stats.tier.not_started" = "未开始";
+"stats.tier.reps_1_2" = "复习 1–2 次";
+"stats.tier.reps_3_4" = "复习 3–4 次";
+"stats.tier.mastered" = "复习 ≥ 5 次，EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "随时间的变化趋势";
+"stats.charts.range.7d" = "7 天";
+"stats.charts.range.30d" = "30 天";
+"stats.charts.range.all" = "全部时间";
+"stats.charts.category.all" = "全部";
+"stats.charts.mastery_growth" = "掌握增长";
+"stats.charts.reviews_completed" = "已完成复习";
+"stats.charts.cards_graduated" = "已毕业卡片";
+"stats.charts.streak_history" = "连续记录";
+"stats.charts.series.review" = "复习";
+"stats.charts.series.mastered" = "已掌握";
+"stats.charts.empty" = "继续学习，即可在此查看你的进度趋势。";
+
+/* LearningQuizView */
+"learn.title" = "学习";
+"learn.results" = "结果";
+"learn.done" = "完成";
+"learn.no_cards_title" = "没有可学习的卡片";
+"learn.no_cards_desc" = "所有卡片均已加入你的复习计划。";
+"learn.graduated_count" = "%d / %d 已毕业";
+"learn.active_count" = "%d 张进行中";
+"learn.complete_title" = "学习完成！";
+"learn.complete_desc" = "所有卡片均已加入你的复习计划。";
+"learn.cards_graduated" = "已毕业卡片";
+
+/* MapQuizView */
+"map_quiz.title" = "地图测验";
+"map_quiz.tap_on_map" = "点击地图";
+"map_quiz.nothing_due_title" = "暂无到期";
+"map_quiz.nothing_due_desc" = "目前没有到期的卡片。请稍后再来！";
+"map_quiz.feedback.correct" = "正确！";
+"map_quiz.feedback.incorrect_prefix" = "错误 — 正确答案是";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "结果";
+"quiz_summary.session_complete" = "本轮完成！";
+"quiz_summary.cards_reviewed" = "已复习卡片";
+"quiz_summary.correct" = "正确";
+"quiz_summary.next_review" = "下次复习";
+"quiz_summary.done" = "完成";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "暂无到期";
+"mcq_quiz.nothing_due_desc" = "目前没有到期的卡片。";
+"mcq_quiz.correct_count" = "%d 题正确";
+"mcq_quiz.nav.country" = "国家测验";
+"mcq_quiz.nav.river" = "河流测验";
+"mcq_quiz.nav.mountain" = "山脉测验";
+"mcq_quiz.nav.sea" = "海洋测验";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "暂无到期";
+"capital_quiz.nothing_due_desc" = "目前没有到期的卡片。";
+"capital_quiz.check" = "检查";
+"capital_quiz.next" = "下一题 →";
+"capital_quiz.placeholder" = "输入你的答案…";
+"capital_quiz.feedback.correct" = "正确！ ✓";
+"capital_quiz.feedback.wrong_prefix" = "正确答案是：";
+"capital_quiz.nav.capital" = "首都测验";
+"capital_quiz.nav.country" = "国家测验";
+"capital_quiz.correct_count" = "%d 题正确";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "这个地方叫什么？";
+"name_feature.nav" = "猜地名";
+"name_feature.nothing_due_title" = "暂无到期";
+"name_feature.nothing_due_desc" = "目前没有到期的卡片。";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "测验即将推出";
+"quiz_placeholder.desc" = "%@测验将在下次更新中提供。";
+"quiz_placeholder.all_categories" = "全部类别";
+
+/* Continent labels */
+"continent.africa" = "非洲";
+"continent.asia" = "亚洲";
+"continent.europe" = "欧洲";
+"continent.north_america" = "北美洲";
+"continent.oceania" = "大洋洲";
+"continent.south_america" = "南美洲";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "%@的首都是什么？";
+"quiz.prompt.continent_of" = "%@位于哪个大洲？";
+"quiz.prompt.country_of_capital" = "哪个国家以%@为首都？";
+"quiz.prompt.sea_location" = "%@附近是哪片水域？";
+"quiz.region.north" = "北";
+"quiz.region.south" = "南";
+"quiz.region.east" = "东";
+"quiz.region.west" = "西";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "学习新卡片";
+"learn.mode_picker.map.title" = "地图测验";
+"learn.mode_picker.map.desc" = "在地图上点选正确的国家";
+"learn.mode_picker.mcq.title" = "选择题";
+"learn.mode_picker.mcq.desc" = "从 4 个选项中选出答案";
+
+/* Map learning quiz */
+"learn_map.title" = "地图学习";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "问题";
+"a11y.progress" = "第 %d 题，共 %d 题";
+"a11y.score" = "%d 题正确";
+"a11y.graduated" = "%d / %d 已毕业";
+"a11y.active" = "%d 张进行中";
+"a11y.answer_field.label" = "答案";
+"a11y.answer_field.hint" = "请输入答案，然后点按“检查”。";
+"a11y.check.hint" = "检查你的答案。";
+"a11y.next.hint" = "前往下一题。";
+"a11y.option.hint" = "双击以选择此答案。";
+"a11y.state.selected" = "已选择";
+"a11y.state.correct" = "正确答案";
+"a11y.state.incorrect" = "错误答案";
+"a11y.state.not_answered" = "未作答";
+"a11y.feedback.correct" = "正确";
+"a11y.feedback.incorrect" = "错误";
+"a11y.summary.accuracy" = "正确率百分之%d";
+"a11y.summary.result_icon" = "本轮结果";
+"a11y.done.hint" = "关闭此测验。";
+"a11y.map.pin.hint" = "双击以选择此地点。";
+"a11y.map.prompt.label" = "在地图上查找";
+"a11y.map.progress" = "第 %d 个地点，共 %d 个";
+"a11y.map.streak" = "连续答对 %d / 3";
+
+/* Progress tier names + map back button (merged from main: #187 AC4/AC7, #185) */
+"stats.tier.name.new" = "新增";
+"stats.tier.name.learning" = "学习中";
+"stats.tier.name.review" = "复习";
+"stats.tier.name.mastered" = "已掌握";
+"a11y.back" = "返回";

@@ -37,9 +37,6 @@ struct CapitalQuizView: View {
         content
             .navigationTitle(L10n["capital_quiz.nav.capital"])
             .inlineNavigationTitle()
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) { Button(L10n["capital_quiz.exit"]) { dismiss() } }
-            }
             .onAppear(perform: buildIfNeeded)
     }
 
@@ -166,6 +163,11 @@ struct CapitalQuizView: View {
         onCheck: @escaping (String) -> Void,
         onNext: @escaping () -> Void
     ) -> some View {
+        // Prompt + progress scroll in the top region; the answer field and action button are pinned
+        // to the bottom via a `.safeAreaInset(edge: .bottom)` so SwiftUI's keyboard avoidance lifts
+        // them together and the "Verificar"/"Siguiente" button is never pushed under the keyboard (or
+        // the iOS multilingual-keyboard onboarding card). `.scrollDismissesKeyboard(.interactively)`
+        // keeps the scrolling prompt reachable while the keyboard is up.
         ScrollView {
             VStack(spacing: 28) {
                 HStack {
@@ -186,15 +188,19 @@ struct CapitalQuizView: View {
                     .background(Theme.Palette.surfaceAlt, in: RoundedRectangle(cornerRadius: 16))
                     .accessibilityLabel(L10n["a11y.prompt.label"])
                     .accessibilityValue(prompt)
-                answerSection(
-                    answerState: answerState,
-                    correctAnswerOverride: correctAnswerOverride,
-                    onCheck: onCheck,
-                    onNext: onNext
-                )
-                Spacer(minLength: 0)
             }
             .padding()
+        }
+        .scrollDismissesKeyboard(.interactively)
+        .safeAreaInset(edge: .bottom) {
+            answerSection(
+                answerState: answerState,
+                correctAnswerOverride: correctAnswerOverride,
+                onCheck: onCheck,
+                onNext: onNext
+            )
+            .padding()
+            .background(.bar)
         }
     }
 
@@ -215,6 +221,7 @@ struct CapitalQuizView: View {
                     .submitLabel(.done)
                     .autocorrectionDisabled()
                     .neverAutocapitalize()
+                    .accessibilityIdentifier("quiz.input")
                     .accessibilityLabel(L10n["a11y.answer_field.label"])
                     .accessibilityHint(L10n["a11y.answer_field.hint"])
                 Button(L10n["capital_quiz.check"]) { onCheck(inputText) }
@@ -227,6 +234,7 @@ struct CapitalQuizView: View {
                     )
                     .foregroundStyle(.white)
                     .disabled(inputText.isEmpty)
+                    .accessibilityIdentifier("quiz.submit")
                     .accessibilityHint(L10n["a11y.check.hint"])
             }
             .onAppear { fieldFocused = true }

@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "Error de descarga";
 "settings.language.retry" = "Reintentar";
 "settings.language.available" = "Disponible";
+"settings.language.group.downloaded" = "Descargados";
+"settings.language.search_placeholder" = "Buscar idiomas";
 
 /* iCloud sync */
 "settings.sync.toggle" = "Sincronización con iCloud";
@@ -83,7 +85,6 @@
 /* LearningQuizView */
 "learn.title" = "Aprender";
 "learn.results" = "Resultados";
-"learn.exit" = "Salir";
 "learn.done" = "Hecho";
 "learn.no_cards_title" = "No hay tarjetas para aprender";
 "learn.no_cards_desc" = "Todas las tarjetas ya están en tu plan de repaso.";
@@ -95,7 +96,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Prueba en el mapa";
-"map_quiz.exit" = "Salir";
 "map_quiz.tap_on_map" = "Toca el mapa";
 "map_quiz.nothing_due_title" = "Nada pendiente";
 "map_quiz.nothing_due_desc" = "No hay tarjetas pendientes por ahora. ¡Vuelve más tarde!";
@@ -113,7 +113,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Nada pendiente";
 "mcq_quiz.nothing_due_desc" = "No hay tarjetas pendientes por ahora.";
-"mcq_quiz.exit" = "Salir";
 "mcq_quiz.correct_count" = "%d correctas";
 "mcq_quiz.nav.country" = "Prueba de países";
 "mcq_quiz.nav.river" = "Prueba de ríos";
@@ -123,7 +122,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Nada pendiente";
 "capital_quiz.nothing_due_desc" = "No hay tarjetas pendientes por ahora.";
-"capital_quiz.exit" = "Salir";
 "capital_quiz.check" = "Comprobar";
 "capital_quiz.next" = "Siguiente →";
 "capital_quiz.placeholder" = "Escribe tu respuesta…";
@@ -156,6 +154,11 @@
 "quiz.prompt.capital_of" = "¿Cuál es la capital de %@?";
 "quiz.prompt.continent_of" = "¿En qué continente se encuentra %@?";
 "quiz.prompt.country_of_capital" = "¿Qué país tiene %@ como capital?";
+"quiz.prompt.sea_location" = "¿Qué masa de agua se encuentra cerca de %@?";
+"quiz.region.north" = "N";
+"quiz.region.south" = "S";
+"quiz.region.east" = "E";
+"quiz.region.west" = "O";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Aprender tarjetas nuevas";
@@ -195,3 +198,10 @@
 "a11y.state.selected" = "seleccionada";
 "a11y.summary.accuracy" = "%d por ciento de acierto";
 "a11y.summary.result_icon" = "Resultado de la sesión";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Nuevo";
+"stats.tier.name.learning" = "Aprendiendo";
+"stats.tier.name.review" = "Repaso";
+"stats.tier.name.mastered" = "Dominado";
+"a11y.back" = "Atrás";

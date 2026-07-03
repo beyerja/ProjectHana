@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "code": "yua",
+  "entries": {
+    "AR": {
+      "name": "Arjentina",
+      "capital": "Buenos Aires"
+    },
+    "AU": {
+      "name": "Australia"
+    },
+    "BO": {
+      "name": "Boliibia"
+    },
+    "BR": {
+      "name": "Brasil",
+      "capital": "Brasilia"
+    },
+    "BZ": {
+      "name": "Belise",
+      "capital": "Belmopan"
+    },
+    "CA": {
+      "name": "Kanada",
+      "capital": "Ottawa"
+    },
+    "CL": {
+      "name": "Chile",
+      "capital": "Santiago"
+    },
+    "CN": {
+      "name": "China",
+      "capital": "Pekin"
+    },
+    "CO": {
+      "name": "Kolombia",
+      "capital": "Bogota"
+    },
+    "CR": {
+      "name": "Kosta Rika"
+    },
+    "CU": {
+      "name": "Kuba",
+      "capital": "La Habana"
+    },
+    "DE": {
+      "name": "Alemania",
+      "capital": "Berlin"
+    },
+    "DO": {
+      "name": "Repuublika Dominikana"
+    },
+    "EC": {
+      "name": "Ekuador"
+    },
+    "EG": {
+      "name": "Ejipto"
+    },
+    "ES": {
+      "name": "Espanya",
+      "capital": "Madrid"
+    },
+    "FR": {
+      "name": "Fransia",
+      "capital": "Paris"
+    },
+    "GB": {
+      "name": "Noj Bretanya",
+      "capital": "Londres"
+    },
+    "GT": {
+      "name": "Watemala",
+      "capital": "U Noj Kaajil Watemala"
+    },
+    "HN": {
+      "name": "Honduras"
+    },
+    "HT": {
+      "name": "Aití"
+    },
+    "IN": {
+      "name": "India"
+    },
+    "IT": {
+      "name": "Italia",
+      "capital": "Roma"
+    },
+    "JP": {
+      "name": "Japon",
+      "capital": "Tokio"
+    },
+    "MX": {
+      "name": "Mejiko",
+      "capital": "U Noj Kaajil Mejiko"
+    },
+    "NI": {
+      "name": "Nikaragua"
+    },
+    "PA": {
+      "name": "Panama"
+    },
+    "PE": {
+      "name": "Peru",
+      "capital": "Lima"
+    },
+    "PT": {
+      "name": "Portugal",
+      "capital": "Lisboa"
+    },
+    "PY": {
+      "name": "Paraguay"
+    },
+    "RU": {
+      "name": "Rusia",
+      "capital": "Mosku"
+    },
+    "SV": {
+      "name": "El Salbador"
+    },
+    "US": {
+      "name": "Noj Lu'umil Amerika",
+      "capital": "Washington"
+    },
+    "UY": {
+      "name": "Uruguay"
+    },
+    "VE": {
+      "name": "Benesuela"
+    },
+    "ZA": {
+      "name": "Africa Nojol"
+    },
+    "amazon": {
+      "name": "Amasonas"
+    },
+    "andes": {
+      "name": "Andes"
+    },
+    "appalachians": {
+      "name": "Apalaches"
+    },
+    "atlantic": {
+      "name": "K'áak'náab Atlántiko"
+    },
+    "caribbean": {
+      "name": "K'áak'náab Karibe"
+    },
+    "colorado": {
+      "name": "Kolorado"
+    },
+    "gulf-of-mexico": {
+      "name": "U Móol K'áak'náabil Mejiko"
+    },
+    "mississippi": {
+      "name": "Misisipi"
+    },
+    "nile": {
+      "name": "Nilo"
+    },
+    "orinoco": {
+      "name": "Orinoko"
+    },
+    "pacific": {
+      "name": "K'áak'náab Pasífiko"
+    },
+    "parana": {
+      "name": "Parana"
+    },
+    "rockies": {
+      "name": "Puksó'ob Rocosas"
+    },
+    "sierra-nevada-us": {
+      "name": "Sierra Nevada"
+    }
+  }
+}

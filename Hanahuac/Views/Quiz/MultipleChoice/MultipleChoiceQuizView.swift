@@ -17,13 +17,16 @@ struct MultipleChoiceQuizView: View {
 
     @State private var session: MultipleChoiceSession?
     @State private var isAdvancing = false
+    /// Owned handle for the auto-advance Task so it can be cancelled when the view is torn down
+    /// (system back chevron / swipe-back). Prevents the dismiss-while-advancing crash (AC2).
+    @State private var advanceTask: Task<Void, Never>?
 
     var body: some View {
         Group {
             if let session {
                 if session.isFinished {
                     QuizSummaryView(
-                        reviewed: session.reviewedCount,
+                        reviewed: session.totalQuestions,
                         correct: session.correctCount,
                         nextDue: session.nextDueDate
                     )
@@ -40,10 +43,14 @@ struct MultipleChoiceQuizView: View {
         }
         .navigationTitle(navigationTitle)
         .inlineNavigationTitle()
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button(L10n["mcq_quiz.exit"]) { dismiss() } }
-        }
         .onAppear { buildSession() }
+        .onDisappear {
+            // Cancel the in-flight advance so its post-sleep persist/snapshot never runs against a
+            // torn-down environment when the user exits via the system back chevron (AC2).
+            advanceTask?.cancel()
+            advanceTask = nil
+            isAdvancing = false
+        }
     }
 
     // MARK: – Quiz body
@@ -66,7 +73,7 @@ struct MultipleChoiceQuizView: View {
 
     private func progressHeader(session: MultipleChoiceSession) -> some View {
         HStack {
-            Text("\(session.reviewedCount + 1) / \(session.questions.count)")
+            Text("\(session.currentIndex + 1) / \(session.totalQuestions)")
                 .font(.subheadline).foregroundStyle(.secondary)
             Spacer()
             Text(String(format: L10n["mcq_quiz.correct_count"], session.correctCount))
@@ -74,7 +81,7 @@ struct MultipleChoiceQuizView: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(
-            String(format: L10n["a11y.progress"], session.reviewedCount + 1, session.questions.count)
+            String(format: L10n["a11y.progress"], session.currentIndex + 1, session.totalQuestions)
         )
         .accessibilityValue(String(format: L10n["a11y.score"], session.correctCount))
     }
@@ -92,7 +99,7 @@ struct MultipleChoiceQuizView: View {
 
     private func optionButtons(session: MultipleChoiceSession) -> some View {
         VStack(spacing: 12) {
-            ForEach(session.current?.options ?? []) { option in
+            ForEach(Array((session.current?.options ?? []).enumerated()), id: \.element.id) { index, option in
                 Button {
                     guard !isAdvancing else { return }
                     session.select(optionID: option.id)
@@ -109,6 +116,7 @@ struct MultipleChoiceQuizView: View {
                         .foregroundStyle(buttonForeground(for: option, in: session))
                 }
                 .disabled(session.answerState != .unanswered || isAdvancing)
+                .accessibilityIdentifier("quiz.answer.\(index)")
                 .accessibilityLabel(option.label)
                 .accessibilityValue(optionStateValue(for: option, in: session))
                 .accessibilityAddTraits(isSelected(option, in: session) ? .isSelected : [])
@@ -184,17 +192,21 @@ struct MultipleChoiceQuizView: View {
             if case .correct = session.answerState { return 1_500_000_000 }
             return 2_000_000_000
         }()
-        Task {
-            try? await Task.sleep(nanoseconds: delay)
-            session.advance()
-            cardStore.persistCardChanges()
-            progressStatsStore?.recordSnapshot(
-                allCards: cardStoreProvider.allCards,
-                modeCards: cardStore.allCards,
-                mode: .multipleChoice,
-                streak: StreakTracker.currentStreak(language: cardStore.language)
-            )
-            isAdvancing = false
+        advanceTask = Task {
+            await QuizAdvanceScheduler.run(afterNanoseconds: delay) {
+                session.advance()
+                cardStore.persistCardChanges()
+                progressStatsStore?.recordSnapshot(
+                    allCards: cardStoreProvider.allCards,
+                    modeCards: cardStore.allCards,
+                    mode: .multipleChoice,
+                    streak: StreakTracker.currentStreak(language: cardStore.language)
+                )
+            }
+            // Only clear the in-flight flag if this Task is still the live one (not cancelled by exit).
+            if !Task.isCancelled {
+                isAdvancing = false
+            }
         }
     }
 

@@ -1,0 +1,1 @@
+2026-06-27 code-owner-review: APPROVED — independently re-verified pinch/zoom driver action (AC4); handler wired into dispatch switch, scale>0 guard + scale-aware default velocity, graceful skip; required CI green; posted code-owner-review=success on head c624dbd via App (app id 4144849), verified by read-back.

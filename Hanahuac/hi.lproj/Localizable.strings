@@ -1,0 +1,205 @@
+/* Hindi (hi) — हिन्दी */
+
+/* HomeView */
+"home.tagline" = "एक दुनिया, एक बार में एक प्रश्नोत्तरी";
+"home.categories" = "श्रेणियाँ";
+"home.category.countries" = "देश";
+"home.category.rivers" = "नदियाँ";
+"home.category.mountains" = "पर्वत";
+"home.category.seas" = "समुद्र";
+"home.view_progress" = "प्रगति देखें";
+"home.tile.new" = "नया";
+"home.tile.pending" = "लंबित";
+"home.tile.all_done" = "सब पूरा हुआ";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "मानचित्र स्पर्श प्रश्नोत्तरी";
+"quiz.mode.map_tap.desc" = "मानचित्र पर सही देश पर टैप करें";
+"quiz.mode.type_capital.title" = "राजधानी लिखें";
+"quiz.mode.type_capital.desc" = "“X की राजधानी क्या है?”";
+"quiz.mode.name_feature.title" = "स्थान का नाम बताएँ";
+"quiz.mode.name_feature.desc" = "मानचित्र पर चिह्नित स्थान का नाम लिखें";
+"quiz.mode.multiple_choice.title" = "बहुविकल्पीय";
+"quiz.mode.multiple_choice.desc" = "4 विकल्पों में से राजधानी चुनें";
+"quiz.cards_due.singular" = "कार्ड देय";
+"quiz.cards_due.plural" = "कार्ड देय";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "सेटिंग्स";
+"settings.section.general" = "सामान्य";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "भाषा";
+"settings.language.picker_title" = "ऐप भाषा";
+"settings.language.downloading" = "डाउनलोड हो रहा है…";
+"settings.language.download_failed" = "डाउनलोड विफल";
+"settings.language.retry" = "पुनः प्रयास करें";
+"settings.language.available" = "उपलब्ध";
+"settings.language.group.downloaded" = "डाउनलोड किए गए";
+"settings.language.search_placeholder" = "भाषाएँ खोजें";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud सिंक";
+"settings.sync.status_label" = "स्थिति";
+"settings.sync.status.off" = "बंद";
+"settings.sync.status.unavailable" = "अनुपलब्ध";
+"settings.sync.status.on" = "चालू";
+"settings.sync.status.syncing" = "सिंक हो रहा है…";
+"settings.sync.status.idle" = "अद्यतित";
+"settings.sync.status.error" = "त्रुटि";
+"settings.sync.unavailable_note" = "iCloud सिंक अनुपलब्ध है। iCloud में साइन इन करें और सिंक सक्षम वाले बिल्ड का उपयोग करें।";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "प्रगति जल्द आ रही है";
+"progress.placeholder_desc" = "आपके सीखने के आँकड़े यहाँ दिखाई देंगे।";
+"progress.title" = "प्रगति";
+
+/* StatsView */
+"stats.title" = "प्रगति";
+"stats.cards_reviewed" = "समीक्षित कार्ड";
+"stats.due_today" = "आज देय";
+"stats.day_streak" = "दिनों की श्रृंखला";
+"stats.by_category" = "श्रेणी अनुसार";
+"stats.showing_language" = "दिखाया जा रहा है:";
+"stats.by_language" = "भाषा अनुसार";
+"stats.by_mode" = "प्रश्नोत्तरी प्रकार अनुसार";
+"stats.category_header" = "श्रेणी";
+"stats.mastery_tiers" = "महारत स्तर";
+"stats.tier.not_started" = "शुरू नहीं हुआ";
+"stats.tier.reps_1_2" = "दोहराव 1–2";
+"stats.tier.reps_3_4" = "दोहराव 3–4";
+"stats.tier.mastered" = "दोहराव ≥ 5, EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "समय के साथ रुझान";
+"stats.charts.range.7d" = "7 दिन";
+"stats.charts.range.30d" = "30 दिन";
+"stats.charts.range.all" = "सर्वकाल";
+"stats.charts.category.all" = "सभी";
+"stats.charts.mastery_growth" = "महारत वृद्धि";
+"stats.charts.reviews_completed" = "पूर्ण समीक्षाएँ";
+"stats.charts.cards_graduated" = "उत्तीर्ण कार्ड";
+"stats.charts.streak_history" = "श्रृंखला";
+"stats.charts.series.review" = "समीक्षा";
+"stats.charts.series.mastered" = "महारत";
+"stats.charts.empty" = "अपने प्रगति रुझान यहाँ देखने के लिए सीखते रहें।";
+
+/* LearningQuizView */
+"learn.title" = "सीखें";
+"learn.results" = "परिणाम";
+"learn.done" = "पूर्ण";
+"learn.no_cards_title" = "सीखने के लिए कोई कार्ड नहीं";
+"learn.no_cards_desc" = "सभी कार्ड पहले से ही आपकी समीक्षा अनुसूची में हैं।";
+"learn.graduated_count" = "%d / %d उत्तीर्ण";
+"learn.active_count" = "%d सक्रिय";
+"learn.complete_title" = "सीखना पूर्ण!";
+"learn.complete_desc" = "सभी कार्ड आपकी समीक्षा अनुसूची में जोड़ दिए गए हैं।";
+"learn.cards_graduated" = "उत्तीर्ण कार्ड";
+
+/* MapQuizView */
+"map_quiz.title" = "मानचित्र प्रश्नोत्तरी";
+"map_quiz.tap_on_map" = "मानचित्र पर टैप करें";
+"map_quiz.nothing_due_title" = "कुछ देय नहीं";
+"map_quiz.nothing_due_desc" = "अभी कोई कार्ड देय नहीं है। बाद में आएँ!";
+"map_quiz.feedback.correct" = "सही!";
+"map_quiz.feedback.incorrect_prefix" = "गलत — वह था";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "परिणाम";
+"quiz_summary.session_complete" = "सत्र पूर्ण!";
+"quiz_summary.cards_reviewed" = "समीक्षित कार्ड";
+"quiz_summary.correct" = "सही";
+"quiz_summary.next_review" = "अगली समीक्षा";
+"quiz_summary.done" = "पूर्ण";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "कुछ देय नहीं";
+"mcq_quiz.nothing_due_desc" = "अभी कोई कार्ड देय नहीं है।";
+"mcq_quiz.correct_count" = "%d सही";
+"mcq_quiz.nav.country" = "देश प्रश्नोत्तरी";
+"mcq_quiz.nav.river" = "नदियाँ प्रश्नोत्तरी";
+"mcq_quiz.nav.mountain" = "पर्वत प्रश्नोत्तरी";
+"mcq_quiz.nav.sea" = "समुद्र प्रश्नोत्तरी";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "कुछ देय नहीं";
+"capital_quiz.nothing_due_desc" = "अभी कोई कार्ड देय नहीं है।";
+"capital_quiz.check" = "जाँचें";
+"capital_quiz.next" = "अगला →";
+"capital_quiz.placeholder" = "अपना उत्तर लिखें…";
+"capital_quiz.feedback.correct" = "सही! ✓";
+"capital_quiz.feedback.wrong_prefix" = "उत्तर है:";
+"capital_quiz.nav.capital" = "राजधानी प्रश्नोत्तरी";
+"capital_quiz.nav.country" = "देश प्रश्नोत्तरी";
+"capital_quiz.correct_count" = "%d सही";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "इस स्थान का नाम बताएँ";
+"name_feature.nav" = "स्थान का नाम बताएँ";
+"name_feature.nothing_due_title" = "कुछ देय नहीं";
+"name_feature.nothing_due_desc" = "अभी कोई कार्ड देय नहीं है।";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "प्रश्नोत्तरी जल्द आ रही है";
+"quiz_placeholder.desc" = "%@ प्रश्नोत्तरी अगले अपडेट में उपलब्ध होगी।";
+"quiz_placeholder.all_categories" = "सभी श्रेणियाँ";
+
+/* Continent labels */
+"continent.africa" = "अफ़्रीका";
+"continent.asia" = "एशिया";
+"continent.europe" = "यूरोप";
+"continent.north_america" = "उत्तरी अमेरिका";
+"continent.oceania" = "ओशिनिया";
+"continent.south_america" = "दक्षिण अमेरिका";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "%@ की राजधानी क्या है?";
+"quiz.prompt.continent_of" = "%@ किस महाद्वीप में स्थित है?";
+"quiz.prompt.country_of_capital" = "किस देश की राजधानी %@ है?";
+"quiz.prompt.sea_location" = "%@ के निकट कौन-सा जलाशय स्थित है?";
+"quiz.region.north" = "उ";
+"quiz.region.south" = "द";
+"quiz.region.east" = "पू";
+"quiz.region.west" = "प";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "नए कार्ड सीखें";
+"learn.mode_picker.map.title" = "मानचित्र प्रश्नोत्तरी";
+"learn.mode_picker.map.desc" = "मानचित्र पर सही देश पर टैप करें";
+"learn.mode_picker.mcq.title" = "बहुविकल्पीय";
+"learn.mode_picker.mcq.desc" = "4 विकल्पों में से उत्तर चुनें";
+
+/* Map learning quiz */
+"learn_map.title" = "मानचित्र अधिगम";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "प्रश्न";
+"a11y.progress" = "%d में से प्रश्न %d";
+"a11y.score" = "%d सही";
+"a11y.graduated" = "%d में से %d उत्तीर्ण";
+"a11y.active" = "%d सक्रिय";
+"a11y.answer_field.label" = "उत्तर";
+"a11y.answer_field.hint" = "अपना उत्तर लिखें, फिर जाँचें सक्रिय करें।";
+"a11y.check.hint" = "आपके उत्तर की जाँच करता है।";
+"a11y.next.hint" = "अगले प्रश्न पर जाता है।";
+"a11y.option.hint" = "इस उत्तर को चुनने के लिए डबल-टैप करें।";
+"a11y.state.selected" = "चयनित";
+"a11y.state.correct" = "सही उत्तर";
+"a11y.state.incorrect" = "गलत उत्तर";
+"a11y.state.not_answered" = "उत्तर नहीं दिया";
+"a11y.feedback.correct" = "सही";
+"a11y.feedback.incorrect" = "गलत";
+"a11y.summary.accuracy" = "%d प्रतिशत सटीकता";
+"a11y.summary.result_icon" = "सत्र परिणाम";
+"a11y.done.hint" = "यह प्रश्नोत्तरी बंद करता है।";
+"a11y.map.pin.hint" = "इस स्थान को चुनने के लिए डबल-टैप करें।";
+"a11y.map.prompt.label" = "मानचित्र पर खोजें";
+"a11y.map.progress" = "%d में से स्थान %d";
+"a11y.map.streak" = "लगातार %d / 3 सही";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "नया";
+"stats.tier.name.learning" = "सीख रहे";
+"stats.tier.name.review" = "समीक्षा";
+"stats.tier.name.mastered" = "महारत";
+"a11y.back" = "वापस";

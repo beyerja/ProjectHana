@@ -1,0 +1,7 @@
+{
+  "body": "**Blocking: default `velocity = 1` is the wrong sign for zoom-out and will throw at runtime.**\n\n`XCUIElement.pinch(withScale:velocity:)` has a documented precondition: `velocity` must be **negative** when `scale < 1` (zoom out) and **positive** when `scale > 1` (zoom in). An invalid scale/velocity combination raises `NSInvalidArgumentException`.\n\nHere `velocity` defaults to `1` (always positive) regardless of `scale`. The README's own example — `{ \"action\": \"pinch\", \"scale\": 0.5 }` (zoom out, no velocity) — therefore calls `pinch(withScale: 0.5, velocity: 1)`, which is exactly the invalid combination and throws, failing the driver test. This defeats AC2 (zoom-out semantics) and AC3 (no crash) for the documented example.\n\nMake the default velocity track the scale direction, e.g.:\n\n```suggestion\n        // velocity must be negative to zoom out (scale < 1) and positive to zoom in (scale > 1);\n        // default the magnitude to 1 in the correct direction for the requested scale.\n        let velocity = step.velocity ?? (scale < 1 ? -1 : 1)\n```",
+  "commit_id": "7febc7509e4965ed92ebd817cc7f829aee33e490",
+  "path": "HanahuacUITests/UIDriverTests.swift",
+  "line": 124,
+  "side": "RIGHT"
+}

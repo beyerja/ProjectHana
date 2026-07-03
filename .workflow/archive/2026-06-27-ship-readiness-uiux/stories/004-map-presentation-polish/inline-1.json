@@ -1,0 +1,7 @@
+{
+  "body": "Non-blocking nit (consistency): the corner radius here stays at the literal `14` while the prompt cards in this PR were unified to `Theme.Metrics.cardRadius`. Since the story's AC3 is about cross-quiz visual consistency, consider routing the feedback banner radius through the same `Theme.Metrics.cardRadius` (or a named feedback-banner constant) so there's no stray magic number. Not a blocker.",
+  "commit_id": "76382439351250e4ed6016bd4377cf7dae85ddef",
+  "path": "Hanahuac/Views/Quiz/MapQuiz/MapQuizView.swift",
+  "line": 189,
+  "side": "RIGHT"
+}

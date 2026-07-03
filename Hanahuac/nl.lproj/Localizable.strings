@@ -1,0 +1,205 @@
+/* Dutch (Nederlands) */
+
+/* HomeView */
+"home.tagline" = "Eén wereld, één quiz per keer";
+"home.categories" = "Categorieën";
+"home.category.countries" = "Landen";
+"home.category.rivers" = "Rivieren";
+"home.category.mountains" = "Bergen";
+"home.category.seas" = "Zeeën";
+"home.view_progress" = "Voortgang bekijken";
+"home.tile.new" = "Nieuw";
+"home.tile.pending" = "In behandeling";
+"home.tile.all_done" = "Helemaal bij";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Kaartquiz";
+"quiz.mode.map_tap.desc" = "Tik het juiste land op de kaart aan";
+"quiz.mode.type_capital.title" = "Typ de hoofdstad";
+"quiz.mode.type_capital.desc" = "\"Wat is de hoofdstad van X?\"";
+"quiz.mode.name_feature.title" = "Raad de plaats";
+"quiz.mode.name_feature.desc" = "Typ de naam van de gemarkeerde plaats op de kaart";
+"quiz.mode.multiple_choice.title" = "Meerkeuze";
+"quiz.mode.multiple_choice.desc" = "Kies de hoofdstad uit 4 opties";
+"quiz.cards_due.singular" = "kaart te herhalen";
+"quiz.cards_due.plural" = "kaarten te herhalen";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Instellingen";
+"settings.section.general" = "Algemeen";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "Taal";
+"settings.language.picker_title" = "App-taal";
+"settings.language.downloading" = "Downloaden…";
+"settings.language.download_failed" = "Download mislukt";
+"settings.language.retry" = "Opnieuw proberen";
+"settings.language.available" = "Beschikbaar";
+"settings.language.group.downloaded" = "Gedownload";
+"settings.language.search_placeholder" = "Talen zoeken";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud-synchronisatie";
+"settings.sync.status_label" = "Status";
+"settings.sync.status.off" = "Uit";
+"settings.sync.status.unavailable" = "Niet beschikbaar";
+"settings.sync.status.on" = "Aan";
+"settings.sync.status.syncing" = "Synchroniseren…";
+"settings.sync.status.idle" = "Bijgewerkt";
+"settings.sync.status.error" = "Fout";
+"settings.sync.unavailable_note" = "iCloud-synchronisatie is niet beschikbaar. Meld je aan bij iCloud en gebruik een versie met synchronisatie ingeschakeld.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Voortgang binnenkort beschikbaar";
+"progress.placeholder_desc" = "Je leerstatistieken verschijnen hier.";
+"progress.title" = "Voortgang";
+
+/* StatsView */
+"stats.title" = "Voortgang";
+"stats.cards_reviewed" = "Herhaalde kaarten";
+"stats.due_today" = "Vandaag te doen";
+"stats.day_streak" = "Dagen op rij";
+"stats.by_category" = "Per categorie";
+"stats.showing_language" = "Weergave:";
+"stats.by_language" = "Per taal";
+"stats.by_mode" = "Per quiztype";
+"stats.category_header" = "Categorie";
+"stats.mastery_tiers" = "Beheersingsniveaus";
+"stats.tier.not_started" = "Niet begonnen";
+"stats.tier.reps_1_2" = "Herh. 1–2";
+"stats.tier.reps_3_4" = "Herh. 3–4";
+"stats.tier.mastered" = "Herh. ≥ 5, EF ≥ 2,0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Verloop in de tijd";
+"stats.charts.range.7d" = "7 dagen";
+"stats.charts.range.30d" = "30 dagen";
+"stats.charts.range.all" = "Altijd";
+"stats.charts.category.all" = "Alle";
+"stats.charts.mastery_growth" = "Groei in beheersing";
+"stats.charts.reviews_completed" = "Voltooide herhalingen";
+"stats.charts.cards_graduated" = "Voltooide kaarten";
+"stats.charts.streak_history" = "Reeks";
+"stats.charts.series.review" = "Herhaling";
+"stats.charts.series.mastered" = "Beheerst";
+"stats.charts.empty" = "Blijf leren om hier je voortgang te zien.";
+
+/* LearningQuizView */
+"learn.title" = "Leren";
+"learn.results" = "Resultaten";
+"learn.done" = "Klaar";
+"learn.no_cards_title" = "Geen kaarten om te leren";
+"learn.no_cards_desc" = "Alle kaarten staan al in je herhalingsschema.";
+"learn.graduated_count" = "%d / %d voltooid";
+"learn.active_count" = "%d actief";
+"learn.complete_title" = "Leren voltooid!";
+"learn.complete_desc" = "Alle kaarten zijn aan je herhalingsschema toegevoegd.";
+"learn.cards_graduated" = "Voltooide kaarten";
+
+/* MapQuizView */
+"map_quiz.title" = "Kaartquiz";
+"map_quiz.tap_on_map" = "Tik op de kaart";
+"map_quiz.nothing_due_title" = "Niets te doen";
+"map_quiz.nothing_due_desc" = "Er zijn op dit moment geen kaarten te herhalen. Kom later terug!";
+"map_quiz.feedback.correct" = "Juist!";
+"map_quiz.feedback.incorrect_prefix" = "Fout — het was";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Resultaten";
+"quiz_summary.session_complete" = "Sessie voltooid!";
+"quiz_summary.cards_reviewed" = "Herhaalde kaarten";
+"quiz_summary.correct" = "Juist";
+"quiz_summary.next_review" = "Volgende herhaling";
+"quiz_summary.done" = "Klaar";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Niets te doen";
+"mcq_quiz.nothing_due_desc" = "Er zijn op dit moment geen kaarten te herhalen.";
+"mcq_quiz.correct_count" = "%d juist";
+"mcq_quiz.nav.country" = "Landenquiz";
+"mcq_quiz.nav.river" = "Rivierenquiz";
+"mcq_quiz.nav.mountain" = "Bergenquiz";
+"mcq_quiz.nav.sea" = "Zeeënquiz";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Niets te doen";
+"capital_quiz.nothing_due_desc" = "Er zijn op dit moment geen kaarten te herhalen.";
+"capital_quiz.check" = "Controleren";
+"capital_quiz.next" = "Volgende →";
+"capital_quiz.placeholder" = "Typ je antwoord…";
+"capital_quiz.feedback.correct" = "Juist! ✓";
+"capital_quiz.feedback.wrong_prefix" = "Het antwoord is:";
+"capital_quiz.nav.capital" = "Hoofdstedenquiz";
+"capital_quiz.nav.country" = "Landenquiz";
+"capital_quiz.correct_count" = "%d juist";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Benoem deze plaats";
+"name_feature.nav" = "Raad de plaats";
+"name_feature.nothing_due_title" = "Niets te doen";
+"name_feature.nothing_due_desc" = "Er zijn op dit moment geen kaarten te herhalen.";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Quiz binnenkort beschikbaar";
+"quiz_placeholder.desc" = "De quiz \"%@\" komt beschikbaar in de volgende update.";
+"quiz_placeholder.all_categories" = "Alle categorieën";
+
+/* Continent labels */
+"continent.africa" = "Afrika";
+"continent.asia" = "Azië";
+"continent.europe" = "Europa";
+"continent.north_america" = "Noord-Amerika";
+"continent.oceania" = "Oceanië";
+"continent.south_america" = "Zuid-Amerika";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "Wat is de hoofdstad van %@?";
+"quiz.prompt.continent_of" = "Op welk continent ligt %@?";
+"quiz.prompt.country_of_capital" = "Welk land heeft %@ als hoofdstad?";
+"quiz.prompt.sea_location" = "Welk water bevindt zich nabij %@?";
+"quiz.region.north" = "N";
+"quiz.region.south" = "Z";
+"quiz.region.east" = "O";
+"quiz.region.west" = "W";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "Nieuwe kaarten leren";
+"learn.mode_picker.map.title" = "Kaartquiz";
+"learn.mode_picker.map.desc" = "Tik het juiste land op de kaart aan";
+"learn.mode_picker.mcq.title" = "Meerkeuze";
+"learn.mode_picker.mcq.desc" = "Kies het antwoord uit 4 opties";
+
+/* Map learning quiz */
+"learn_map.title" = "Leren op de kaart";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "Vraag";
+"a11y.progress" = "Vraag %d van %d";
+"a11y.score" = "%d juist";
+"a11y.graduated" = "%d van %d voltooid";
+"a11y.active" = "%d actief";
+"a11y.answer_field.label" = "Antwoord";
+"a11y.answer_field.hint" = "Typ je antwoord en activeer daarna Controleren.";
+"a11y.check.hint" = "Controleert je antwoord.";
+"a11y.next.hint" = "Gaat naar de volgende vraag.";
+"a11y.option.hint" = "Dubbeltik om dit antwoord te kiezen.";
+"a11y.state.selected" = "geselecteerd";
+"a11y.state.correct" = "juiste antwoord";
+"a11y.state.incorrect" = "onjuiste antwoord";
+"a11y.state.not_answered" = "niet beantwoord";
+"a11y.feedback.correct" = "Juist";
+"a11y.feedback.incorrect" = "Fout";
+"a11y.summary.accuracy" = "%d procent juist";
+"a11y.summary.result_icon" = "Sessieresultaat";
+"a11y.done.hint" = "Sluit deze quiz.";
+"a11y.map.pin.hint" = "Dubbeltik om deze plaats te kiezen.";
+"a11y.map.prompt.label" = "Vind op de kaart";
+"a11y.map.progress" = "Plaats %d van %d";
+"a11y.map.streak" = "%d van 3 juist op rij";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Nieuw";
+"stats.tier.name.learning" = "Leren";
+"stats.tier.name.review" = "Herhaling";
+"stats.tier.name.mastered" = "Beheerst";
+"a11y.back" = "Terug";

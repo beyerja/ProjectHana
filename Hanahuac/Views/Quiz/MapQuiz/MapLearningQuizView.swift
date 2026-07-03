@@ -21,9 +21,26 @@ struct MapLearningQuizView: View {
     let category: CardCategory?
 
     @State private var session: MapLearningSession?
-    @State private var position: MapCameraPosition = .automatic
+    // Must NOT use .automatic: MapKit resolves .automatic by framing the union of ALL map content
+    // (annotations + featureOverlays). River polylines span 25–30° of latitude; large sea/mountain
+    // polygons can be continent-sized. Using .automatic as the initial value causes the first
+    // rendered frame to zoom out to a continental/global scale before buildSession() can apply the
+    // correct .region(...). We initialise to a zero-span region (not .automatic) so MapKit has no
+    // content-union framing to perform; buildSession() then immediately sets the real region before
+    // the Map view is first composed (session is nil until buildSession runs, so the Map only enters
+    // the view hierarchy after position has already been set to .region(s.mapRegion)).
+    @State private var position: MapCameraPosition = .region(MKCoordinateRegion())
     @State private var isAdvancing = false
     @State private var isPinching = false
+    /// Owned handle for the auto-advance Task so it can be cancelled when the view is torn down
+    /// (system back chevron / swipe-back). Prevents the dismiss-while-advancing crash (AC2).
+    @State private var advanceTask: Task<Void, Never>?
+
+    /// True while the back chevron should be shown — i.e. everywhere except the completion screen,
+    /// which intentionally offers only a "Done" button.
+    private var showsBackButton: Bool {
+        session?.isFinished != true
+    }
 
     var body: some View {
         Group {
@@ -39,12 +56,30 @@ struct MapLearningQuizView: View {
         }
         .navigationTitle(L10n["learn_map.title"])
         .inlineNavigationTitle()
+        // Hide the system back button: over the satellite imagery its translucent glass backing
+        // renders as a blurry, doubled chevron. Replace it with a single crisp custom control.
+        .navigationBarBackButtonHidden()
         .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button(L10n["map_quiz.exit"]) { dismiss() }
+            if showsBackButton {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Image(systemName: "chevron.backward")
+                    }
+                    .accessibilityIdentifier("BackButton")
+                    .accessibilityLabel(L10n["a11y.back"])
+                }
             }
         }
         .onAppear { buildSession() }
+        .onDisappear {
+            // Cancel the in-flight advance so its post-sleep persist never runs against a torn-down
+            // environment when the user exits via the system back chevron (AC2).
+            advanceTask?.cancel()
+            advanceTask = nil
+            isAdvancing = false
+        }
     }
 
     // MARK: - Quiz body
@@ -74,6 +109,7 @@ struct MapLearningQuizView: View {
             }
             .mapStyle(.imagery(elevation: .flat))
             .ignoresSafeArea(edges: .horizontal)
+            .accessibilityIdentifier("map.tapCountry")
             .simultaneousGesture(
                 MagnificationGesture()
                     .onChanged { _ in isPinching = true }
@@ -97,18 +133,22 @@ struct MapLearningQuizView: View {
                 if case .correct = newState { return 1_500_000_000 }
                 return 2_000_000_000
             }()
-            Task {
-                try? await Task.sleep(nanoseconds: delay)
-                if case .correct = newState {
-                    session.recordCorrect()
-                } else {
-                    session.recordWrong()
+            advanceTask = Task {
+                let didRun = await QuizAdvanceScheduler.run(afterNanoseconds: delay) {
+                    if case .correct = newState {
+                        session.recordCorrect()
+                    } else {
+                        session.recordWrong()
+                    }
+                    cardStore.persistCardChanges()
                 }
-                cardStore.persistCardChanges()
-                if !session.isFinished {
-                    withAnimation { position = .region(session.mapRegion) }
+                // Only mutate map/advance state if the advance ran (i.e. the exit did not cancel us).
+                if didRun {
+                    if !session.isFinished {
+                        withAnimation { position = .region(session.mapRegion) }
+                    }
+                    isAdvancing = false
                 }
-                isAdvancing = false
             }
         }
         .onChange(of: session.currentIndex) { _, _ in
@@ -153,7 +193,10 @@ struct MapLearningQuizView: View {
         }
         .padding(.vertical, 12)
         .padding(.horizontal, 20)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .background(
+            .regularMaterial,
+            in: RoundedRectangle(cornerRadius: Theme.Metrics.cardRadius, style: .continuous)
+        )
         .padding(.top, 8)
         .padding(.horizontal)
         .accessibilityElement(children: .ignore)
@@ -208,8 +251,10 @@ struct MapLearningQuizView: View {
             .multilineTextAlignment(.center)
             .padding(.horizontal, 24)
             .padding(.vertical, 14)
-            .background(color, in: RoundedRectangle(cornerRadius: 14))
-            .padding(.bottom, 24)
+            .background(color, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            // Clear MapKit's auto-rendered "Apple Maps / Legal" attribution, which sits at the map's
+            // bottom-left edge: extra bottom inset keeps the feedback banner from overlapping it.
+            .padding(.bottom, 40)
             .padding(.horizontal)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(feedbackAccessibilityLabel(session: session))

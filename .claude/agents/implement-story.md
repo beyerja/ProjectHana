@@ -32,6 +32,16 @@ path, then rule out the region math, a lat/lon swap, and a data error). Fixing t
 theory without this often patches a symptom and leaves the real defect; the cheap confirmation pass up
 front is what makes the fix land at the right altitude in one shared code path.
 
+**Do not conclude a view-layer bug is "already fixed" from model-layer evidence alone.** A common
+false-confidence trap: you find that an initializer or setup method already writes the correct value
+into a `@State` / `@Published` / observed property, and conclude the fix is in place. This is wrong
+when the framework resolves the initial rendered frame *before* Swift's update cycle delivers that write
+(e.g. MapKit resolving `.automatic` framing on the first paint, before `buildSession()` sets
+`position = .region(...)`). A model-layer assertion that a value is correct is *necessary but not
+sufficient* to close a rendering-time bug — you must also confirm what value the framework *reads on
+first render*. When a fix story adds only tests but does not change the view's initial `@State`
+default, treat it as incomplete and re-read the views before marking DONE.
+
 For each unchecked task:
 1. Implement following existing project patterns
 2. Run project checks. **In a worktree run, invoke `just` at the worktree path** —
@@ -94,6 +104,15 @@ call site, add an **explicit memberwise `init` that defaults the new field(s)** 
 `nameKo: String? = nil`); `Codable` still decodes the new key via `decodeIfPresent`. Faster and
 lower-risk than touching dozens of call sites.
 
+**Adding an `AppLocale` case touches a fixed fan-out — update the whole set in one commit**
+A new locale is not done when `Country` compiles. It requires, every time: a `nameXx` (and
+`capitalXx` where present) on **all four** geo models — `Country`, `River`, `MountainRange`, `Sea`
+(not just `Country`) — and a new `case .xx` arm in **every** exhaustive switch over `AppLocale`,
+including the five in `GeoModel+PackData.swift`. Before committing, grep the full site set
+(`grep -rn "case .esES\|nameXx" Hanahuac/`) and confirm each model and each switch is updated; a
+partial set is a "switch must be exhaustive" build failure. Keep this fan-out within a single commit
+so an interrupted WIP still compiles rather than leaving three models and the switches behind.
+
 **Tests must not assert on ambient bundle/resource presence — drive through the seam**
 A test that asserts a resource is present in (or absent from) `Bundle.main` is environment-dependent and
 will pass locally but fail in clean CI. The Catalyst/sim dev build embeds tagged ODR resources in the
@@ -102,6 +121,18 @@ contents differ. Any test about pack presence/absence or offline-fallback behavi
 the provider seam with an **explicit test double** (e.g. a local `PackAbsentProvider` that returns the
 intended state), restoring the active provider in `setUp`/`tearDown` — never rely on what happens to be
 embedded in `Bundle.main` at runtime.
+
+**Never degrade a completeness/enforcement test to pass — fix the wiring instead**
+When a story flips a language/feature to a "fully enforced" state, its strict completeness test (e.g.
+`test<Lang>HasFullGeoCoverage`, a no-fallback guarantee) is the *whole point* — it must FAIL until the
+real wiring is done. If that test fails because a switch arm still returns `nil` or a provider list
+omits the new entry, the fix is to **complete the wiring**, never to wrap the assertion in `XCTSkip`,
+`try?`, or a `do/catch` that swallows the failure. A skip/catch on the enforcement assertion silently
+disables the guarantee the story exists to add — it is a degrade-to-pass and a blocking defect.
+(The legitimately-skippable case is narrow and separate: a test that reads an **ambient bundle
+resource not mounted in the sim/test host** may `XCTSkip` on unreachability — see the bundle-seam rule
+above — but the *enforcement* assertion itself, driven through the provider seam or checked-in source,
+must always run with real teeth.)
 
 **Xcode project is generated — never hand-edit the pbxproj**
 The project is generated from `project.yml` by xcodegen. Source/resource files are enumerated
@@ -163,6 +194,16 @@ spell out `HomeQuizMode.multipleChoice`.
 
 **iOS-only APIs**
 Modifiers unavailable on macOS (`navigationBarTitleDisplayMode`, `textInputAutocapitalization`, etc.) must use the wrappers in `Hanahuac/Views/ViewExtensions.swift` rather than direct calls.
+
+**XCUITest/UITest APIs can be platform-conditional — `just test` locally does NOT cover the CI target set**
+Local `just test`/`just ui-walkthrough` build the **iOS Simulator** test target; CI also builds the
+**Mac Catalyst** test target. Some XCUITest APIs exist on one and not the other — e.g.
+`XCUIElement.pinch(withScale:velocity:)` compiles for the Simulator but is **unavailable on Mac
+Catalyst**, so a green local run still breaks the CI build (a real detour this workflow). When adding a
+UITest gesture/API, guard the platform-specific call behind `#if targetEnvironment(macCatalyst)` with a
+non-no-op fallback (synthesize the gesture from `XCUICoordinate` press-drag so the contract still holds),
+and route both call sites through one helper. Confirm with a Catalyst `xcodebuild build-for-testing`
+before pushing — the simulator pass alone will not catch it.
 
 **Bundled Natural-Earth geo data (generate-*.py pattern)**
 When a story derives bundled geo data from Natural Earth (rivers, borders, etc.):

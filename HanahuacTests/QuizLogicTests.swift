@@ -143,6 +143,103 @@ final class QuizLogicTests: XCTestCase {
         XCTAssertEqual(Set(q.options.map(\.label)).count, 4)
     }
 
+    // MARK: – MultipleChoiceSessionRetryTests
+
+    /// Helper: make a minimal MCQQuestion with one correct and one incorrect option.
+    private func makeMCQQuestion(factID: String) -> MCQQuestion {
+        let card = makeCard(factID: factID)
+        let correct = MCQOption(label: "Correct-\(factID)", isCorrect: true)
+        let wrong = MCQOption(label: "Wrong-\(factID)", isCorrect: false)
+        return MCQQuestion(card: card, prompt: "Q-\(factID)", options: [correct, wrong])
+    }
+
+    /// Select the wrong option on the current question and call advance().
+    private func answerWrong(session: MultipleChoiceSession) throws {
+        let q = try XCTUnwrap(session.current)
+        let wrongOpt = try XCTUnwrap(q.options.first { !$0.isCorrect })
+        session.select(optionID: wrongOpt.id)
+        session.advance()
+    }
+
+    /// Select the correct option on the current question and call advance().
+    private func answerCorrect(session: MultipleChoiceSession) throws {
+        let q = try XCTUnwrap(session.current)
+        let correctOpt = try XCTUnwrap(q.options.first(where: \.isCorrect))
+        session.select(optionID: correctOpt.id)
+        session.advance()
+    }
+
+    func testMCQRetry_wrongAnswerReinserts_sessionNotFinished() throws {
+        let session = MultipleChoiceSession(questions: [makeMCQQuestion(factID: "a")])
+        try answerWrong(session: session)
+        XCTAssertFalse(session.isFinished, "Session must not be finished after one wrong answer")
+        XCTAssertNotNil(session.current, "The reinserted question must be present as current")
+    }
+
+    func testMCQRetry_notFinishedAfterOneWrongAnswer() throws {
+        let q1 = makeMCQQuestion(factID: "a")
+        let q2 = makeMCQQuestion(factID: "b")
+        let session = MultipleChoiceSession(questions: [q1, q2])
+        // Answer the first current question incorrectly.
+        try answerWrong(session: session)
+        XCTAssertFalse(session.isFinished, "Session must not finish after a single wrong answer")
+    }
+
+    func testMCQRetry_finishesOnlyAfterAllCorrect() throws {
+        let q1 = makeMCQQuestion(factID: "a")
+        let q2 = makeMCQQuestion(factID: "b")
+        let session = MultipleChoiceSession(questions: [q1, q2])
+        // Drive the session until finished, always answering correctly.
+        var iterations = 0
+        while !session.isFinished {
+            try answerCorrect(session: session)
+            iterations += 1
+            XCTAssertLessThan(iterations, 20, "Session should finish in a bounded number of steps")
+        }
+        XCTAssertTrue(session.isFinished, "Session must be finished after all correct")
+        XCTAssertEqual(
+            session.correctCount, session.totalQuestions,
+            "correctCount must equal totalQuestions when session finishes"
+        )
+    }
+
+    func testMCQRetry_reviewedCountCountsAttempts() throws {
+        let session = MultipleChoiceSession(questions: [makeMCQQuestion(factID: "a")])
+        let wrongAnswers = 3
+        for _ in 0 ..< wrongAnswers {
+            try answerWrong(session: session)
+        }
+        try answerCorrect(session: session)
+        // N wrong + 1 correct = N+1 attempts total.
+        XCTAssertEqual(
+            session.reviewedCount, wrongAnswers + 1,
+            "reviewedCount must equal total advance() calls (wrong + correct)"
+        )
+    }
+
+    func testMCQRetry_correctCountEqualsTotalQuestionsOnFinish() throws {
+        let q1 = makeMCQQuestion(factID: "a")
+        let q2 = makeMCQQuestion(factID: "b")
+        let q3 = makeMCQQuestion(factID: "c")
+        let session = MultipleChoiceSession(questions: [q1, q2, q3])
+        // Answer some wrong, all eventually correct, then verify correctCount.
+        var iterations = 0
+        while !session.isFinished {
+            // Answer wrong on even iterations for variety, correct otherwise.
+            if iterations % 2 == 0 {
+                try answerWrong(session: session)
+            } else {
+                try answerCorrect(session: session)
+            }
+            iterations += 1
+            XCTAssertLessThan(iterations, 50, "Session should finish in bounded steps")
+        }
+        XCTAssertEqual(
+            session.correctCount, session.totalQuestions,
+            "correctCount must equal totalQuestions when session finishes"
+        )
+    }
+
     // MARK: – Fixtures
 
     private func sampleCountries() -> [Country] {

@@ -38,6 +38,8 @@
 "settings.language.download_failed" = "다운로드 실패";
 "settings.language.retry" = "다시 시도";
 "settings.language.available" = "사용 가능";
+"settings.language.group.downloaded" = "다운로드됨";
+"settings.language.search_placeholder" = "언어 검색";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud 동기화";
@@ -88,7 +90,6 @@
 /* LearningQuizView */
 "learn.title" = "학습";
 "learn.results" = "결과";
-"learn.exit" = "나가기";
 "learn.done" = "완료";
 "learn.no_cards_title" = "학습할 카드가 없습니다";
 "learn.no_cards_desc" = "모든 카드가 이미 복습 일정에 있습니다.";
@@ -100,7 +101,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "지도 퀴즈";
-"map_quiz.exit" = "나가기";
 "map_quiz.tap_on_map" = "지도를 탭하세요";
 "map_quiz.nothing_due_title" = "예정된 항목 없음";
 "map_quiz.nothing_due_desc" = "지금 복습할 카드가 없습니다. 나중에 다시 오세요!";
@@ -118,7 +118,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "예정된 항목 없음";
 "mcq_quiz.nothing_due_desc" = "지금 복습할 카드가 없습니다.";
-"mcq_quiz.exit" = "나가기";
 "mcq_quiz.correct_count" = "%d개 정답";
 "mcq_quiz.nav.country" = "국가 퀴즈";
 "mcq_quiz.nav.river" = "강 퀴즈";
@@ -128,7 +127,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "예정된 항목 없음";
 "capital_quiz.nothing_due_desc" = "지금 복습할 카드가 없습니다.";
-"capital_quiz.exit" = "나가기";
 "capital_quiz.check" = "확인";
 "capital_quiz.next" = "다음 →";
 "capital_quiz.placeholder" = "답을 입력하세요…";
@@ -161,6 +159,11 @@
 "quiz.prompt.capital_of" = "%@의 수도는 무엇인가요?";
 "quiz.prompt.continent_of" = "%@은(는) 어느 대륙에 있나요?";
 "quiz.prompt.country_of_capital" = "%@를 수도로 하는 국가는 어디인가요?";
+"quiz.prompt.sea_location" = "%@ 근처에 있는 수역은 무엇인가요?";
+"quiz.region.north" = "북";
+"quiz.region.south" = "남";
+"quiz.region.east" = "동";
+"quiz.region.west" = "서";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "새 카드 학습";
@@ -197,3 +200,10 @@
 "a11y.map.prompt.label" = "지도에서 찾기";
 "a11y.map.progress" = "%d개 중 %d번째 장소";
 "a11y.map.streak" = "연속 %d / 3개 정답";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "신규";
+"stats.tier.name.learning" = "학습 중";
+"stats.tier.name.review" = "복습";
+"stats.tier.name.mastered" = "완료";
+"a11y.back" = "뒤로";

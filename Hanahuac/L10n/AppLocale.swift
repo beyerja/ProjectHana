@@ -8,8 +8,20 @@ enum AppLocale: String, CaseIterable, Identifiable {
     case esES = "es-ES"
     case ca
     case eu
+    case yua
+    case it
+    case pl
+    case nl
+    case sr
     case ko
     case nah
+    case ja
+    case zhHans = "zh-Hans"
+    case hi
+    case ar
+    case bn
+    case ptBR = "pt-BR"
+    case ur
 
     var id: String {
         rawValue
@@ -25,6 +37,12 @@ enum AppLocale: String, CaseIterable, Identifiable {
     /// The language's native display name shown in the language picker.
     var displayName: String {
         descriptor.displayName
+    }
+
+    /// The language's name in English (e.g. "Korean", "Japanese"). Not shown in the UI; used by the
+    /// picker's incremental search so a query typed in English matches alongside the native script.
+    var englishName: String {
+        descriptor.englishName
     }
 
     /// The ordered chain of locales to consult when resolving a localized string, derived from the
@@ -59,15 +77,35 @@ enum AppLocale: String, CaseIterable, Identifiable {
         self != .esMX && fallbackChain.contains(.esMX)
     }
 
+    /// Whether this language is written right-to-left (Arabic, Urdu), in which case the whole app's
+    /// layout must mirror. Catalog-backed (reads ``LanguageDescriptor/textDirection``) so the RTL set
+    /// lives in one place; SwiftUI wiring maps this to `\.environment(\.layoutDirection, …)`.
+    ///
+    /// This is the single, language-driven RTL signal — it derives from the SELECTED language, not the
+    /// device locale, so forcing/selecting an RTL language flips the app even on an LTR device.
+    var isRTL: Bool {
+        descriptor.textDirection == .rightToLeft
+    }
+
     /// Resolve a `Locale` to the best-matching `AppLocale`.
     ///
     /// Resolution order:
-    /// 1. Any `es-*` locale maps to `.esMX`.
-    /// 2. The Nahuatl macrolanguage code plus its common ISO 639-3 individual codes map to `.nah`.
-    /// 3. Match by language code against the catalog (`en`, `fr`, `de`, `ca`, `eu`, `ko`); a `ca`
-    ///    device locale auto-selects Catalan and an `eu` device locale auto-selects Basque via this
-    ///    code lookup (code == rawValue), without perturbing the es-* → es-MX mapping above.
-    /// 4. Fall back to `.en` for unrecognized locales.
+    /// 1. Any `es-*` locale maps to `.esMX` (unchanged — es-* never auto-selects es-ES).
+    /// 2. The Nahuatl macrolanguage code plus its common ISO 639-3 individual codes map to `.nah`
+    ///    (unchanged).
+    /// 3. Any `zh*` locale (generic `zh`, `zh-Hans`, `zh-Hant`, `zh-CN`, …) maps to `.zhHans`, and any
+    ///    `pt*` locale (generic `pt`, `pt-BR`, `pt-PT`, …) maps to `.ptBR`. These are the two
+    ///    macrolanguage → regional mappings the catalog code-lookup cannot express, mirroring the
+    ///    `es` → `.esMX` pattern.
+    /// 4. Match by language code against the catalog (`en`, `fr`, `de`, `ca`, `eu`, `yua`, `it`, `pl`,
+    ///    `nl`, `sr`, `ko`, plus the regional-code-free new languages `ja`, `hi`, `ar`, `bn`, `ur`); a
+    ///    `ca` device locale auto-selects Catalan, an `eu` device locale auto-selects Basque, a `yua`
+    ///    device locale auto-selects Yucatec Maya, an `it` device locale auto-selects Italian, a `pl`
+    ///    device locale auto-selects Polish, an `nl` device locale auto-selects Dutch, an `sr` device
+    ///    locale auto-selects Serbian (Cyrillic), and `ja`/`hi`/`ar`/`bn`/`ur` device locales
+    ///    auto-select Japanese/Hindi/Arabic/Bengali/Urdu — all via this code lookup (code == rawValue),
+    ///    without perturbing the es-* → es-MX or Nahuatl mappings above.
+    /// 5. Fall back to `.en` for unrecognized locales.
     static func matching(_ locale: Locale) -> AppLocale {
         let language: String = if #available(iOS 16, macOS 13, *) {
             locale.language.languageCode?.identifier ?? ""
@@ -84,6 +122,18 @@ enum AppLocale: String, CaseIterable, Identifiable {
         // ISO 639-3 codes that fall under it (e.g. `nhn` Central Nahuatl, `nch` Central Huasteca).
         if nahuatlCodes.contains(language) {
             return .nah
+        }
+
+        // Generic Chinese (any zh* variant — zh, zh-Hans, zh-Hant, zh-CN, …) maps to Simplified
+        // Chinese, mirroring the es → esMX collapse above (the catalog code lookup cannot express a
+        // macrolanguage → regional-rawValue mapping).
+        if language == "zh" {
+            return .zhHans
+        }
+
+        // Generic Portuguese (any pt* variant — pt, pt-BR, pt-PT, …) maps to Brazilian Portuguese.
+        if language == "pt" {
+            return .ptBR
         }
 
         // Simple per-language-code cases resolve via the catalog's `code` lookup, so adding a

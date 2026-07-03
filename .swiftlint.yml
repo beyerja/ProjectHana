@@ -73,6 +73,13 @@ inclusive_language:
   override_allowed_terms:
     - master   # mastery tier / "isMastered" — SRS domain term
 
+# The geo-name pack bridges (GeoModel+PackData) and other locale switches are pure 1:1 maps over
+# the AppLocale enum — one trivial `case` per language. Each language added grows the case count
+# (now 11) without adding real branching logic, so exclude switch `case` statements from the
+# cyclomatic-complexity count; the rule still catches genuinely tangled control flow.
+cyclomatic_complexity:
+  ignores_case_statements: true
+
 # One coordinator entry point legitimately takes 6 parameters; allow a little headroom.
 function_parameter_count:
   warning: 6

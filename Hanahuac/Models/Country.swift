@@ -9,8 +9,20 @@ struct Country: Codable, Identifiable, Hashable {
     let nameEsEs: String?
     let nameCa: String?
     let nameEu: String?
+    let nameYua: String?
+    let nameIt: String?
+    let namePl: String?
+    let nameNl: String?
+    let nameSr: String?
     let nameKo: String?
     let nameNah: String?
+    let nameJa: String?
+    let nameZhHans: String?
+    let nameHi: String?
+    let nameBn: String?
+    let namePtBr: String?
+    let nameAr: String?
+    let nameUr: String?
     let capital: String
     let capitalFr: String?
     let capitalDe: String?
@@ -18,8 +30,20 @@ struct Country: Codable, Identifiable, Hashable {
     let capitalEsEs: String?
     let capitalCa: String?
     let capitalEu: String?
+    let capitalYua: String?
+    let capitalIt: String?
+    let capitalPl: String?
+    let capitalNl: String?
+    let capitalSr: String?
     let capitalKo: String?
     let capitalNah: String?
+    let capitalJa: String?
+    let capitalZhHans: String?
+    let capitalHi: String?
+    let capitalBn: String?
+    let capitalPtBr: String?
+    let capitalAr: String?
+    let capitalUr: String?
     let continent: String
     let lat: Double
     let lon: Double
@@ -36,8 +60,20 @@ struct Country: Codable, Identifiable, Hashable {
         nameEsEs: String? = nil,
         nameCa: String? = nil,
         nameEu: String? = nil,
+        nameYua: String? = nil,
+        nameIt: String? = nil,
+        namePl: String? = nil,
+        nameNl: String? = nil,
+        nameSr: String? = nil,
         nameKo: String? = nil,
         nameNah: String? = nil,
+        nameJa: String? = nil,
+        nameZhHans: String? = nil,
+        nameHi: String? = nil,
+        nameBn: String? = nil,
+        namePtBr: String? = nil,
+        nameAr: String? = nil,
+        nameUr: String? = nil,
         capital: String,
         capitalFr: String?,
         capitalDe: String?,
@@ -45,8 +81,20 @@ struct Country: Codable, Identifiable, Hashable {
         capitalEsEs: String? = nil,
         capitalCa: String? = nil,
         capitalEu: String? = nil,
+        capitalYua: String? = nil,
+        capitalIt: String? = nil,
+        capitalPl: String? = nil,
+        capitalNl: String? = nil,
+        capitalSr: String? = nil,
         capitalKo: String? = nil,
         capitalNah: String? = nil,
+        capitalJa: String? = nil,
+        capitalZhHans: String? = nil,
+        capitalHi: String? = nil,
+        capitalBn: String? = nil,
+        capitalPtBr: String? = nil,
+        capitalAr: String? = nil,
+        capitalUr: String? = nil,
         continent: String,
         lat: Double,
         lon: Double
@@ -59,8 +107,20 @@ struct Country: Codable, Identifiable, Hashable {
         self.nameEsEs = nameEsEs
         self.nameCa = nameCa
         self.nameEu = nameEu
+        self.nameYua = nameYua
+        self.nameIt = nameIt
+        self.namePl = namePl
+        self.nameNl = nameNl
+        self.nameSr = nameSr
         self.nameKo = nameKo
         self.nameNah = nameNah
+        self.nameJa = nameJa
+        self.nameZhHans = nameZhHans
+        self.nameHi = nameHi
+        self.nameBn = nameBn
+        self.namePtBr = namePtBr
+        self.nameAr = nameAr
+        self.nameUr = nameUr
         self.capital = capital
         self.capitalFr = capitalFr
         self.capitalDe = capitalDe
@@ -68,8 +128,20 @@ struct Country: Codable, Identifiable, Hashable {
         self.capitalEsEs = capitalEsEs
         self.capitalCa = capitalCa
         self.capitalEu = capitalEu
+        self.capitalYua = capitalYua
+        self.capitalIt = capitalIt
+        self.capitalPl = capitalPl
+        self.capitalNl = capitalNl
+        self.capitalSr = capitalSr
         self.capitalKo = capitalKo
         self.capitalNah = capitalNah
+        self.capitalJa = capitalJa
+        self.capitalZhHans = capitalZhHans
+        self.capitalHi = capitalHi
+        self.capitalBn = capitalBn
+        self.capitalPtBr = capitalPtBr
+        self.capitalAr = capitalAr
+        self.capitalUr = capitalUr
         self.continent = continent
         self.lat = lat
         self.lon = lon

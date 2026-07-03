@@ -30,6 +30,7 @@ struct HomeView: View {
                         Image(systemName: "gearshape.fill")
                             .foregroundStyle(Theme.Palette.textSecondary)
                     }
+                    .accessibilityIdentifier("home.settings")
                 }
             }
             .navigationDestination(for: QuizRoute.self) { route in
@@ -99,6 +100,7 @@ struct HomeView: View {
         }
         .buttonStyle(PressableCardButtonStyle())
         .disabled(!isEnabled)
+        .accessibilityIdentifier("home.mode.\(mode.quizModeRawValue)")
     }
 
     private func navigateTo(mode: HomeQuizMode, category: CardCategory, newCount: Int, pendingCount: Int) {
@@ -145,7 +147,9 @@ struct HomeView: View {
             Spacer()
 
             if isEnabled {
-                Image(systemName: "chevron.right")
+                // `chevron.forward` (not `.right`) so the disclosure indicator mirrors to point
+                // leftward under a right-to-left layout direction.
+                Image(systemName: "chevron.forward")
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(Theme.Palette.textSecondary.opacity(0.6))
             }
@@ -228,6 +232,7 @@ struct HomeView: View {
                 .shadow(color: Theme.Palette.accent.opacity(0.35), radius: 10, x: 0, y: 5)
         }
         .buttonStyle(PressableCardButtonStyle())
+        .accessibilityIdentifier("home.progress")
     }
 }
 

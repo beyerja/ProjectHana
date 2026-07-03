@@ -13,6 +13,9 @@ struct LearningQuizView: View {
     @State private var currentQuestion: MCQQuestion?
     @State private var answerState: MCQAnswerState = .unanswered
     @State private var isAdvancing = false
+    /// Owned handle for the auto-advance Task so it can be cancelled when the view is torn down
+    /// (system back chevron / swipe-back). Prevents the dismiss-while-advancing crash (AC2).
+    @State private var advanceTask: Task<Void, Never>?
 
     /// Completion-icon point size that scales with Dynamic Type (relative to largeTitle).
     @ScaledMetric(relativeTo: .largeTitle) private var completionIconSize: CGFloat = 64
@@ -45,10 +48,14 @@ struct LearningQuizView: View {
         }
         .navigationTitle(L10n["learn.title"])
         .inlineNavigationTitle()
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) { Button(L10n["learn.exit"]) { dismiss() } }
-        }
         .onAppear { refreshQuestion() }
+        .onDisappear {
+            // Cancel the in-flight advance so its post-sleep persist never runs against a torn-down
+            // environment when the user exits via the system back chevron (AC2).
+            advanceTask?.cancel()
+            advanceTask = nil
+            isAdvancing = false
+        }
     }
 
     // MARK: – Quiz body
@@ -97,7 +104,7 @@ struct LearningQuizView: View {
 
     private func optionButtons(question: MCQQuestion) -> some View {
         VStack(spacing: 12) {
-            ForEach(question.options) { option in
+            ForEach(Array(question.options.enumerated()), id: \.element.id) { index, option in
                 Button {
                     guard !isAdvancing else { return }
                     handleAnswer(option: option, question: question)
@@ -110,6 +117,7 @@ struct LearningQuizView: View {
                         .foregroundStyle(buttonForeground(for: option))
                 }
                 .disabled(answerState != .unanswered || isAdvancing)
+                .accessibilityIdentifier("quiz.answer.\(index)")
                 .accessibilityLabel(option.label)
                 .accessibilityValue(optionStateValue(for: option))
                 .accessibilityAddTraits(isSelected(option) ? .isSelected : [])
@@ -166,17 +174,21 @@ struct LearningQuizView: View {
     private func scheduleAdvance(wasCorrect: Bool) {
         isAdvancing = true
         let delay: UInt64 = wasCorrect ? 1_000_000_000 : 2_000_000_000
-        Task {
-            try? await Task.sleep(nanoseconds: delay)
-            if wasCorrect {
-                session.recordCorrect()
-            } else {
-                session.recordWrong()
+        advanceTask = Task {
+            let didRun = await QuizAdvanceScheduler.run(afterNanoseconds: delay) {
+                if wasCorrect {
+                    session.recordCorrect()
+                } else {
+                    session.recordWrong()
+                }
+                cardStore.persistCardChanges()
             }
-            cardStore.persistCardChanges()
-            answerState = .unanswered
-            isAdvancing = false
-            refreshQuestion()
+            // Only mutate view state if the advance actually ran (i.e. the exit did not cancel us).
+            if didRun {
+                answerState = .unanswered
+                isAdvancing = false
+                refreshQuestion()
+            }
         }
     }
 
@@ -264,26 +276,32 @@ struct LearningQuizView: View {
     // MARK: – Question factory
 
     private func makeQuestion(for card: ReviewCard) -> MCQQuestion? {
+        // Resolve the active app language so the new-card MC prompt + feature names localize the same
+        // way the review MC quiz does (MultipleChoiceQuizView.buildSession); without this the factory
+        // methods default to `.en` and the prompt leaks English even when the UI is e.g. Spanish.
+        let locale = LanguageManager.shared.current
         switch card.cardCategory {
         case .country:
-            MultipleChoiceSession.countryCapitalQuestions(
-                cards: [card], countries: geo.countries
+            return MultipleChoiceSession.countryCapitalQuestions(
+                cards: [card], countries: geo.countries, locale: locale
             ).first
         case .river:
-            MultipleChoiceSession.continentQuestions(
+            return MultipleChoiceSession.continentQuestions(
                 cards: [card], facts: geo.rivers,
                 factID: \.id, factName: \.name, factContinent: \.continent,
-                categoryLabel: "river"
+                categoryLabel: "river", locale: locale,
+                factLocalizedName: { $0.localizedName(for: $1) }
             ).first
         case .mountain:
-            MultipleChoiceSession.continentQuestions(
+            return MultipleChoiceSession.continentQuestions(
                 cards: [card], facts: geo.mountains,
                 factID: \.id, factName: \.name, factContinent: \.continent,
-                categoryLabel: "mountain range"
+                categoryLabel: "mountain range", locale: locale,
+                factLocalizedName: { $0.localizedName(for: $1) }
             ).first
         case .sea:
-            MultipleChoiceSession.seaIdentificationQuestions(
-                cards: [card], seas: geo.seas
+            return MultipleChoiceSession.seaIdentificationQuestions(
+                cards: [card], seas: geo.seas, locale: locale
             ).first
         }
     }

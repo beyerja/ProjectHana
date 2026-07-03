@@ -31,20 +31,30 @@ final class LanguageCompletenessSupportTests: XCTestCase {
 
     // MARK: - es-ES (Story 002) completeness
 
-    /// es-ES ships a COMPLETE UI string set: zero keys missing relative to the English base. When the
-    /// ODR `.lproj` pack is not mounted in this environment the helper degrades to the empty set, so
-    /// either way there must be no missing keys.
-    func testSpainSpanishHasNoMissingUIKeys() {
+    /// es-ES ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses the
+    /// STRICT path: rather than silently returning the empty set when the es-ES `.lproj` is not
+    /// mounted, the strict helper THROWS ``CompletenessError/stringBundleUnreachable``. We translate
+    /// that distinct "pack unreachable" signal into an `XCTSkip` (matching every other ODR content
+    /// test in this suite — the simulator unit-test host has no asset-pack server), so the test never
+    /// degrades to a false pass. When the pack IS mounted, a genuine missing key FAILS the assertion.
+    func testSpainSpanishHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .esES)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("es-ES UI strings not reachable in this environment: \(error)")
+        }
         XCTAssertTrue(
-            LanguageCompletenessSupport.missingUIKeys(for: .esES).isEmpty,
+            missing.isEmpty,
             "es-ES must define every English UI key (no missing keys)"
         )
     }
 
     /// es-ES ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a Castilian
-    /// name, so the bundled provider's pack reports no gaps for .esES.
-    func testSpainSpanishHasFullGeoCoverage() {
-        let report = LanguageCompletenessSupport.geoCoverageGaps(for: .esES)
+    /// name, so the bundled provider's pack reports no gaps for .esES. Uses the STRICT path, so a
+    /// missing/nil es-ES pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testSpainSpanishHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .esES)
         XCTAssertTrue(
             report.geoEntitiesMissingName.isEmpty,
             "es-ES is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
@@ -72,5 +82,318 @@ final class LanguageCompletenessSupportTests: XCTestCase {
             report.countriesMissingCapital.isSubset(of: countryIDs),
             "missing-capital ids must be a subset of the bundled country ids"
         )
+    }
+
+    // MARK: - ja (Story 003) completeness
+
+    /// Japanese ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses
+    /// the STRICT path — when the ja `.lproj` is not mounted (the simulator unit-test host has no
+    /// asset-pack server), the strict helper THROWS ``CompletenessError/stringBundleUnreachable``,
+    /// which we translate into an `XCTSkip` so the test never degrades to a false pass. When the pack
+    /// IS mounted, a genuine missing key FAILS the assertion.
+    func testJapaneseHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .ja)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("ja UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "ja must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Japanese ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a Japanese
+    /// name, so the bundled provider's pack reports no gaps for .ja. Uses the STRICT path, so a
+    /// missing/nil ja pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testJapaneseHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .ja)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "ja is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "ja is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
+    // MARK: - zh-Hans (Story 004) completeness
+
+    /// Simplified Chinese ships a COMPLETE UI string set: zero keys missing relative to the English
+    /// base. Uses the STRICT path — when the zh-Hans `.lproj` is not mounted (the simulator unit-test
+    /// host has no asset-pack server), the strict helper THROWS
+    /// ``CompletenessError/stringBundleUnreachable``, which we translate into an `XCTSkip` so the test
+    /// never degrades to a false pass. When the pack IS mounted, a genuine missing key FAILS the
+    /// assertion.
+    func testSimplifiedChineseHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .zhHans)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("zh-Hans UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "zh-Hans must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Simplified Chinese ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a
+    /// Simplified Chinese name, so the bundled provider's pack reports no gaps for .zhHans. Uses the
+    /// STRICT path, so a missing/nil zh-Hans pack FAILS (throws) rather than reporting a degenerate
+    /// empty/whole-set report.
+    func testSimplifiedChineseHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .zhHans)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "zh-Hans is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "zh-Hans is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
+    // MARK: - hi (Story 005) completeness
+
+    /// Hindi ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses the
+    /// STRICT path — when the hi `.lproj` is not mounted (the simulator unit-test host has no
+    /// asset-pack server), the strict helper THROWS ``CompletenessError/stringBundleUnreachable``,
+    /// which we translate into an `XCTSkip` so the test never degrades to a false pass. When the pack
+    /// IS mounted, a genuine missing key FAILS the assertion.
+    func testHindiHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .hi)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("hi UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "hi must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Hindi ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a Hindi name,
+    /// so the bundled provider's pack reports no gaps for .hi. Uses the STRICT path, so a missing/nil
+    /// hi pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testHindiHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .hi)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "hi is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "hi is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
+    // MARK: - bn (Story 006) completeness
+
+    /// Bengali ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses the
+    /// STRICT path — when the bn `.lproj` is not mounted (the simulator unit-test host has no
+    /// asset-pack server), the strict helper THROWS ``CompletenessError/stringBundleUnreachable``,
+    /// which we translate into an `XCTSkip` so the test never degrades to a false pass. When the pack
+    /// IS mounted, a genuine missing key FAILS the assertion.
+    func testBengaliHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .bn)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("bn UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "bn must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Bengali ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a Bengali
+    /// name, so the bundled provider's pack reports no gaps for .bn. Uses the STRICT path, so a
+    /// missing/nil bn pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testBengaliHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .bn)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "bn is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "bn is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
+    // MARK: - pt-BR (Story 007) completeness
+
+    /// Brazilian Portuguese ships a COMPLETE UI string set: zero keys missing relative to the English
+    /// base. Uses the STRICT path — when the pt-BR `.lproj` is not mounted (the simulator unit-test
+    /// host has no asset-pack server), the strict helper THROWS
+    /// ``CompletenessError/stringBundleUnreachable``, which we translate into an `XCTSkip` so the test
+    /// never degrades to a false pass. When the pack IS mounted, a genuine missing key FAILS the
+    /// assertion.
+    func testBrazilianPortugueseHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .ptBR)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("pt-BR UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "pt-BR must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Brazilian Portuguese ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a
+    /// pt-BR name, so the bundled provider's pack reports no gaps for .ptBR. Uses the STRICT path, so a
+    /// missing/nil pt-BR pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testBrazilianPortugueseHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .ptBR)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "pt-BR is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "pt-BR is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
+    // MARK: - ar (Story 009) completeness
+
+    /// Arabic ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses the
+    /// STRICT path — when the ar `.lproj` is not mounted (the simulator unit-test host has no asset-pack
+    /// server), the strict helper THROWS ``CompletenessError/stringBundleUnreachable``, which we
+    /// translate into an `XCTSkip` so the test never degrades to a false pass. When the pack IS mounted,
+    /// a genuine missing key FAILS the assertion.
+    func testArabicHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .ar)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("ar UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "ar must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Arabic ships COMPLETE geo coverage: every country/capital/river/mountain/sea has an ar name, so
+    /// the bundled provider's pack reports no gaps for .ar. Uses the STRICT path, so a missing/nil ar
+    /// pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testArabicHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .ar)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "ar is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "ar is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
+    // MARK: - ur (Story 010) completeness
+
+    /// Urdu ships a COMPLETE UI string set: zero keys missing relative to the English base. Uses the
+    /// STRICT path — when the ur `.lproj` is not mounted (the simulator unit-test host has no asset-pack
+    /// server), the strict helper THROWS ``CompletenessError/stringBundleUnreachable``, which we
+    /// translate into an `XCTSkip` so the test never degrades to a false pass. When the pack IS mounted,
+    /// a genuine missing key FAILS the assertion.
+    func testUrduHasNoMissingUIKeys() throws {
+        let missing: Set<String>
+        do {
+            missing = try LanguageCompletenessSupport.missingUIKeysStrict(for: .ur)
+        } catch let error as LanguageCompletenessSupport.CompletenessError {
+            throw XCTSkip("ur UI strings not reachable in this environment: \(error)")
+        }
+        XCTAssertTrue(
+            missing.isEmpty,
+            "ur must define every English UI key (no missing keys)"
+        )
+    }
+
+    /// Urdu ships COMPLETE geo coverage: every country/capital/river/mountain/sea has a ur name, so
+    /// the bundled provider's pack reports no gaps for .ur. Uses the STRICT path, so a missing/nil ur
+    /// pack FAILS (throws) rather than reporting a degenerate empty/whole-set report.
+    func testUrduHasFullGeoCoverage() throws {
+        let report = try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .ur)
+        XCTAssertTrue(
+            report.geoEntitiesMissingName.isEmpty,
+            "ur is missing geo names for: \(report.geoEntitiesMissingName.sorted())"
+        )
+        XCTAssertTrue(
+            report.countriesMissingCapital.isEmpty,
+            "ur is missing capitals for: \(report.countriesMissingCapital.sorted())"
+        )
+    }
+
+    // MARK: - Strict-path teeth (AC#2): a real gap FAILS rather than degrading to pass
+
+    /// Restore the active provider after any test that swaps it, so a swapped stub never leaks into
+    /// another test (the holder is process-wide).
+    private var savedProvider: LanguagePackProvider?
+
+    override func tearDown() {
+        if let savedProvider {
+            LanguagePackProviderHolder.active = savedProvider
+            self.savedProvider = nil
+        }
+        super.tearDown()
+    }
+
+    /// Proves the STRICT geo path has teeth: with a stub provider that returns `nil` geo data for an
+    /// enforced (downloadable, non-base) locale, ``geoCoverageGapsStrict(for:)`` must THROW
+    /// ``LanguageCompletenessSupport/CompletenessError/geoPackUnreachable`` rather than degrading to a
+    /// pass. This is the synthetic gap that AC#2 requires the gate to catch.
+    func testStrictGeoPathThrowsOnSyntheticMissingPack() {
+        savedProvider = LanguagePackProviderHolder.active
+        LanguagePackProviderHolder.active = NilPackStubProvider()
+
+        XCTAssertThrowsError(
+            try LanguageCompletenessSupport.geoCoverageGapsStrict(for: .esES),
+            "strict geo path must fail when an enforced locale's pack is unreachable"
+        ) { error in
+            XCTAssertEqual(
+                error as? LanguageCompletenessSupport.CompletenessError,
+                .geoPackUnreachable(locale: AppLocale.esES.rawValue)
+            )
+        }
+    }
+
+    /// The LENIENT geo path must NOT be perturbed by the same nil-pack stub: it degrades to reporting
+    /// the whole geo set as gaps without throwing, confirming the strict/lenient split is intact.
+    func testLenientGeoPathDoesNotThrowOnSyntheticMissingPack() {
+        savedProvider = LanguagePackProviderHolder.active
+        LanguagePackProviderHolder.active = NilPackStubProvider()
+
+        // No throw, and a base locale still short-circuits to the empty report.
+        XCTAssertEqual(LanguageCompletenessSupport.geoCoverageGaps(for: .esMX), .empty)
+        let report = LanguageCompletenessSupport.geoCoverageGaps(for: .esES)
+        XCTAssertFalse(
+            report.geoEntitiesMissingName.isEmpty,
+            "lenient path with a nil-pack provider should report gaps, not crash or throw"
+        )
+    }
+}
+
+/// A test double that resolves NO geo pack for any locale (and routes string lookups to the main
+/// bundle), used to prove the strict completeness path FAILS on a synthetic gap. Restored in
+/// `tearDown` by the swapping test.
+private struct NilPackStubProvider: LanguagePackProvider {
+    func stringBundle(for _: AppLocale) -> Bundle {
+        .main
+    }
+
+    func geoNameData(for _: AppLocale) -> GeoNamePackData? {
+        nil
+    }
+
+    func state(for _: AppLocale) -> LanguagePackState {
+        .notDownloaded
     }
 }

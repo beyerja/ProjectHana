@@ -1,0 +1,205 @@
+/* Polish (Polski) */
+
+/* HomeView */
+"home.tagline" = "Jeden świat, jeden quiz na raz";
+"home.categories" = "Kategorie";
+"home.category.countries" = "Państwa";
+"home.category.rivers" = "Rzeki";
+"home.category.mountains" = "Góry";
+"home.category.seas" = "Morza";
+"home.view_progress" = "Zobacz postępy";
+"home.tile.new" = "Nowe";
+"home.tile.pending" = "Oczekujące";
+"home.tile.all_done" = "Wszystko ukończone";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Quiz na mapie";
+"quiz.mode.map_tap.desc" = "Dotknij właściwego państwa na mapie";
+"quiz.mode.type_capital.title" = "Wpisz stolicę";
+"quiz.mode.type_capital.desc" = "„Jaka jest stolica państwa X?”";
+"quiz.mode.name_feature.title" = "Odgadnij miejsce";
+"quiz.mode.name_feature.desc" = "Wpisz nazwę miejsca zaznaczonego na mapie";
+"quiz.mode.multiple_choice.title" = "Wielokrotny wybór";
+"quiz.mode.multiple_choice.desc" = "Wybierz stolicę spośród 4 opcji";
+"quiz.cards_due.singular" = "karta do powtórki";
+"quiz.cards_due.plural" = "kart do powtórki";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Ustawienia";
+"settings.section.general" = "Ogólne";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "Język";
+"settings.language.picker_title" = "Język aplikacji";
+"settings.language.downloading" = "Pobieranie…";
+"settings.language.download_failed" = "Pobieranie nie powiodło się";
+"settings.language.retry" = "Spróbuj ponownie";
+"settings.language.available" = "Dostępny";
+"settings.language.group.downloaded" = "Pobrane";
+"settings.language.search_placeholder" = "Szukaj języków";
+
+/* iCloud sync */
+"settings.sync.toggle" = "Synchronizacja iCloud";
+"settings.sync.status_label" = "Stan";
+"settings.sync.status.off" = "Wyłączona";
+"settings.sync.status.unavailable" = "Niedostępna";
+"settings.sync.status.on" = "Włączona";
+"settings.sync.status.syncing" = "Synchronizowanie…";
+"settings.sync.status.idle" = "Zaktualizowano";
+"settings.sync.status.error" = "Błąd";
+"settings.sync.unavailable_note" = "Synchronizacja iCloud jest niedostępna. Zaloguj się do iCloud i użyj wersji z włączoną synchronizacją.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Postępy wkrótce";
+"progress.placeholder_desc" = "Twoje statystyki nauki pojawią się tutaj.";
+"progress.title" = "Postępy";
+
+/* StatsView */
+"stats.title" = "Postępy";
+"stats.cards_reviewed" = "Powtórzone karty";
+"stats.due_today" = "Na dziś";
+"stats.day_streak" = "Dni z rzędu";
+"stats.by_category" = "Według kategorii";
+"stats.showing_language" = "Wyświetlanie:";
+"stats.by_language" = "Według języka";
+"stats.by_mode" = "Według typu quizu";
+"stats.category_header" = "Kategoria";
+"stats.mastery_tiers" = "Poziomy opanowania";
+"stats.tier.not_started" = "Nierozpoczęte";
+"stats.tier.reps_1_2" = "Powt. 1–2";
+"stats.tier.reps_3_4" = "Powt. 3–4";
+"stats.tier.mastered" = "Powt. ≥ 5, EF ≥ 2,0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Zmiany w czasie";
+"stats.charts.range.7d" = "7 dni";
+"stats.charts.range.30d" = "30 dni";
+"stats.charts.range.all" = "Zawsze";
+"stats.charts.category.all" = "Wszystkie";
+"stats.charts.mastery_growth" = "Wzrost opanowania";
+"stats.charts.reviews_completed" = "Ukończone powtórki";
+"stats.charts.cards_graduated" = "Ukończone karty";
+"stats.charts.streak_history" = "Seria";
+"stats.charts.series.review" = "Powtórka";
+"stats.charts.series.mastered" = "Opanowane";
+"stats.charts.empty" = "Ucz się dalej, aby zobaczyć tutaj zmiany swoich postępów.";
+
+/* LearningQuizView */
+"learn.title" = "Nauka";
+"learn.results" = "Wyniki";
+"learn.done" = "Gotowe";
+"learn.no_cards_title" = "Brak kart do nauki";
+"learn.no_cards_desc" = "Wszystkie karty są już w Twoim harmonogramie powtórek.";
+"learn.graduated_count" = "%d / %d ukończonych";
+"learn.active_count" = "%d aktywnych";
+"learn.complete_title" = "Nauka ukończona!";
+"learn.complete_desc" = "Wszystkie karty zostały dodane do Twojego harmonogramu powtórek.";
+"learn.cards_graduated" = "Ukończone karty";
+
+/* MapQuizView */
+"map_quiz.title" = "Quiz na mapie";
+"map_quiz.tap_on_map" = "Dotknij mapy";
+"map_quiz.nothing_due_title" = "Nic do powtórki";
+"map_quiz.nothing_due_desc" = "Obecnie nie ma kart do powtórki. Wróć później!";
+"map_quiz.feedback.correct" = "Poprawnie!";
+"map_quiz.feedback.incorrect_prefix" = "Źle — to było";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Wyniki";
+"quiz_summary.session_complete" = "Sesja ukończona!";
+"quiz_summary.cards_reviewed" = "Powtórzone karty";
+"quiz_summary.correct" = "Poprawne";
+"quiz_summary.next_review" = "Następna powtórka";
+"quiz_summary.done" = "Gotowe";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Nic do powtórki";
+"mcq_quiz.nothing_due_desc" = "Obecnie nie ma kart do powtórki.";
+"mcq_quiz.correct_count" = "%d poprawnych";
+"mcq_quiz.nav.country" = "Quiz o państwach";
+"mcq_quiz.nav.river" = "Quiz o rzekach";
+"mcq_quiz.nav.mountain" = "Quiz o górach";
+"mcq_quiz.nav.sea" = "Quiz o morzach";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Nic do powtórki";
+"capital_quiz.nothing_due_desc" = "Obecnie nie ma kart do powtórki.";
+"capital_quiz.check" = "Sprawdź";
+"capital_quiz.next" = "Dalej →";
+"capital_quiz.placeholder" = "Wpisz swoją odpowiedź…";
+"capital_quiz.feedback.correct" = "Poprawnie! ✓";
+"capital_quiz.feedback.wrong_prefix" = "Odpowiedź to:";
+"capital_quiz.nav.capital" = "Quiz o stolicach";
+"capital_quiz.nav.country" = "Quiz o państwach";
+"capital_quiz.correct_count" = "%d poprawnych";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Odgadnij to miejsce";
+"name_feature.nav" = "Odgadnij miejsce";
+"name_feature.nothing_due_title" = "Nic do powtórki";
+"name_feature.nothing_due_desc" = "Obecnie nie ma kart do powtórki.";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Quiz wkrótce";
+"quiz_placeholder.desc" = "Quiz „%@” będzie dostępny w następnej aktualizacji.";
+"quiz_placeholder.all_categories" = "Wszystkie kategorie";
+
+/* Continent labels */
+"continent.africa" = "Afryka";
+"continent.asia" = "Azja";
+"continent.europe" = "Europa";
+"continent.north_america" = "Ameryka Północna";
+"continent.oceania" = "Oceania";
+"continent.south_america" = "Ameryka Południowa";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "Jaka jest stolica państwa %@?";
+"quiz.prompt.continent_of" = "Na którym kontynencie leży %@?";
+"quiz.prompt.country_of_capital" = "Które państwo ma stolicę %@?";
+"quiz.prompt.sea_location" = "Który akwen znajduje się w pobliżu %@?";
+"quiz.region.north" = "Pn";
+"quiz.region.south" = "Pd";
+"quiz.region.east" = "W";
+"quiz.region.west" = "Z";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "Ucz się nowych kart";
+"learn.mode_picker.map.title" = "Quiz na mapie";
+"learn.mode_picker.map.desc" = "Dotknij właściwego państwa na mapie";
+"learn.mode_picker.mcq.title" = "Wielokrotny wybór";
+"learn.mode_picker.mcq.desc" = "Wybierz odpowiedź spośród 4 opcji";
+
+/* Map learning quiz */
+"learn_map.title" = "Nauka na mapie";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "Pytanie";
+"a11y.progress" = "Pytanie %d z %d";
+"a11y.score" = "%d poprawnych";
+"a11y.graduated" = "%d z %d ukończonych";
+"a11y.active" = "%d aktywnych";
+"a11y.answer_field.label" = "Odpowiedź";
+"a11y.answer_field.hint" = "Wpisz swoją odpowiedź, a następnie aktywuj Sprawdź.";
+"a11y.check.hint" = "Sprawdź swoją odpowiedź.";
+"a11y.next.hint" = "Przejdź do następnego pytania.";
+"a11y.option.hint" = "Stuknij dwukrotnie, aby wybrać tę odpowiedź.";
+"a11y.state.selected" = "wybrana";
+"a11y.state.correct" = "poprawna odpowiedź";
+"a11y.state.incorrect" = "błędna odpowiedź";
+"a11y.state.not_answered" = "bez odpowiedzi";
+"a11y.feedback.correct" = "Poprawnie";
+"a11y.feedback.incorrect" = "Źle";
+"a11y.summary.accuracy" = "%d procent poprawności";
+"a11y.summary.result_icon" = "Wynik sesji";
+"a11y.done.hint" = "Zamyka ten quiz.";
+"a11y.map.pin.hint" = "Stuknij dwukrotnie, aby wybrać to miejsce.";
+"a11y.map.prompt.label" = "Znajdź na mapie";
+"a11y.map.progress" = "Miejsce %d z %d";
+"a11y.map.streak" = "%d z 3 poprawnych z rzędu";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Nowe";
+"stats.tier.name.learning" = "Nauka";
+"stats.tier.name.review" = "Powtórka";
+"stats.tier.name.mastered" = "Opanowane";
+"a11y.back" = "Wstecz";

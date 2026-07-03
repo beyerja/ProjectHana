@@ -1,0 +1,182 @@
+/* Yucatec Maya (Màaya t'àan) — best-effort translation. Genuine gaps are deliberately left
+   untranslated and fall back through es-MX → en (fallback chain [yua, es-MX, en]). */
+
+/* HomeView */
+"home.tagline" = "Jump'éel yóok'ol kaab, jump'éelili' túumben tu jump'éel súutuk";
+"home.categories" = "Nu'ukulil";
+"home.category.countries" = "Lu'umo'ob";
+"home.category.rivers" = "Áaktuno'ob";
+"home.category.mountains" = "Puksó'obo'ob";
+"home.category.seas" = "K'áak'náabo'ob";
+"home.view_progress" = "Il a bin táanil";
+"home.tile.new" = "Túumben";
+"home.tile.pending" = "Pa'atik";
+"home.tile.all_done" = "Ts'o'ok tuláakal";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Túumben ich u mápail";
+"quiz.mode.map_tap.desc" = "Péekt le lu'um jach ich le mápae'";
+"quiz.mode.type_capital.title" = "Ts'íibt u noj kaajil";
+"quiz.mode.type_capital.desc" = "«Ba'ax u noj kaajil X?»";
+"quiz.mode.name_feature.title" = "K'aaba'tik le kúuchila'";
+"quiz.mode.name_feature.desc" = "Ts'íibt u k'aaba' le kúuchil chíikbesa'an ich le mápae'";
+"quiz.mode.multiple_choice.title" = "Ya'ab je'el u yéeyik";
+"quiz.mode.multiple_choice.desc" = "Yéey u noj kaajil ichil 4 je'elalo'ob";
+"quiz.cards_due.singular" = "ju'un pa'atik";
+"quiz.cards_due.plural" = "ju'uno'ob pa'atik";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Nu'ukbesajilo'ob";
+"settings.section.general" = "Tuláakal";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "T'àan";
+"settings.language.picker_title" = "U t'àanil le aplikasyóono'";
+"settings.language.downloading" = "Táan u éemsa'al…";
+"settings.language.download_failed" = "Ma' páajchaj u éemsa'al";
+"settings.language.retry" = "Káajbes tu ka'atéen";
+"settings.language.available" = "Yaan";
+"settings.language.group.downloaded" = "Ts'o'ok u sa'ato'ob";
+"settings.language.search_placeholder" = "Kaxant t'aano'ob";
+
+/* iCloud sync */
+/* NOTE: "settings.sync.toggle" is deliberately omitted from Yucatec Maya to exercise the fallback
+   chain yua → es-MX → en (see L10nBundleResolutionTests). It resolves to the es-MX value
+   ("Sincronización con iCloud") before reaching English. */
+"settings.sync.status_label" = "Bix yaanil";
+"settings.sync.status.off" = "Tu'upul";
+"settings.sync.status.unavailable" = "Mina'an";
+"settings.sync.status.on" = "T'aab";
+"settings.sync.status.syncing" = "Táan u nuktal…";
+"settings.sync.status.idle" = "Túumbenkunsa'an";
+"settings.sync.status.error" = "K'eban";
+"settings.sync.unavailable_note" = "Mina'an u nuktal yéetel iCloud. Ook ta iCloud yéetel meyajt jump'éel je'el ku béeytal u nuktal.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Le táanile' táan u taal";
+"progress.placeholder_desc" = "U xookilo'ob a kanik yaan u chíikpajal way.";
+"progress.title" = "Táanil";
+
+/* StatsView */
+"stats.title" = "Táanil";
+"stats.cards_reviewed" = "Ju'uno'ob ila'ano'ob";
+"stats.due_today" = "Pa'atik bejla'e'";
+"stats.day_streak" = "K'íino'ob ts'o'okol";
+"stats.by_category" = "Tu nu'ukulil";
+"stats.showing_language" = "Táan u ye'esa'al:";
+"stats.by_language" = "Tu t'àanil";
+"stats.category_header" = "Nu'ukulil";
+"stats.mastery_tiers" = "Múuch'ilo'ob kanaj";
+"stats.tier.not_started" = "Ma' káaja'ani'";
+"stats.tier.reps_1_2" = "1–2 ka'atéen";
+"stats.tier.reps_3_4" = "3–4 ka'atéen";
+"stats.tier.mastered" = "Ka'atéen ≥ 5, EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Bix u bin ich k'iino'ob";
+"stats.charts.range.7d" = "7 k'íin";
+"stats.charts.range.30d" = "30 k'íin";
+"stats.charts.range.all" = "Tuláakal k'iin";
+"stats.charts.category.all" = "Tuláakal";
+"stats.charts.mastery_growth" = "U nojochtal kanaj";
+"stats.charts.reviews_completed" = "Ila'ano'ob ts'o'oka'an";
+"stats.charts.cards_graduated" = "Ju'uno'ob ts'o'ok u kanik";
+"stats.charts.streak_history" = "Ts'o'okol";
+"stats.charts.series.review" = "Ilbil";
+"stats.charts.series.mastered" = "Kana'an";
+"stats.charts.empty" = "Seguer kanik utia'al a wilik bix a bin táanil way.";
+
+/* LearningQuizView */
+"learn.title" = "Kanik";
+"learn.results" = "Bix jóok'sajilo'ob";
+"learn.done" = "Ts'o'ok";
+"learn.no_cards_title" = "Mina'an ju'uno'ob ka kaanak";
+"learn.no_cards_desc" = "Tuláakal le ju'uno'obo' ts'o'ok yaantal ta nu'ukbesaj ilbil.";
+"learn.graduated_count" = "%d / %d ts'o'ok u kanik";
+"learn.active_count" = "%d meyaj";
+"learn.complete_title" = "Ts'o'ok le kanale'!";
+"learn.complete_desc" = "Tuláakal le ju'uno'obo' ts'o'ok u yantal ta nu'ukbesaj ilbil.";
+"learn.cards_graduated" = "Ju'uno'ob ts'o'ok u kanik";
+
+/* MapQuizView */
+"map_quiz.title" = "Túumben ich u mápail";
+"map_quiz.tap_on_map" = "Péekt ich le mápae'";
+"map_quiz.nothing_due_title" = "Mina'an ba'al pa'atik";
+"map_quiz.nothing_due_desc" = "Mina'an ju'uno'ob pa'atik bejla'e'. Suunak ka'atéen!";
+"map_quiz.feedback.correct" = "Jach beyo'!";
+"map_quiz.feedback.incorrect_prefix" = "Ma' jaaji' — leti'e'";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Bix jóok'sajilo'ob";
+"quiz_summary.session_complete" = "Ts'o'ok le meyajo'!";
+"quiz_summary.cards_reviewed" = "Ju'uno'ob ila'ano'ob";
+"quiz_summary.correct" = "Jach beyo'";
+"quiz_summary.next_review" = "U yuláak' ilbil";
+"quiz_summary.done" = "Ts'o'ok";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Mina'an ba'al pa'atik";
+"mcq_quiz.nothing_due_desc" = "Mina'an ju'uno'ob pa'atik bejla'e'.";
+"mcq_quiz.correct_count" = "%d jach beyo'";
+"mcq_quiz.nav.country" = "Túumben lu'umo'ob";
+"mcq_quiz.nav.river" = "Túumben áaktuno'ob";
+"mcq_quiz.nav.mountain" = "Túumben puksó'obo'ob";
+"mcq_quiz.nav.sea" = "Túumben k'áak'náabo'ob";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Mina'an ba'al pa'atik";
+"capital_quiz.nothing_due_desc" = "Mina'an ju'uno'ob pa'atik bejla'e'.";
+"capital_quiz.check" = "Ila'aj";
+"capital_quiz.next" = "U yuláak' →";
+"capital_quiz.placeholder" = "Ts'íibt a núukil…";
+"capital_quiz.feedback.correct" = "Jach beyo'! ✓";
+"capital_quiz.feedback.wrong_prefix" = "Le núukile' leti':";
+"capital_quiz.nav.capital" = "Túumben noj kaajilo'ob";
+"capital_quiz.nav.country" = "Túumben lu'umo'ob";
+"capital_quiz.correct_count" = "%d jach beyo'";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "K'aaba'tik le kúuchila'";
+"name_feature.nav" = "K'aaba'tik le kúuchila'";
+"name_feature.nothing_due_title" = "Mina'an ba'al pa'atik";
+"name_feature.nothing_due_desc" = "Mina'an ju'uno'ob pa'atik bejla'e'.";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Le túumbeno' táan u taal";
+"quiz_placeholder.desc" = "Le túumben %@ yaan u béeytal u meyaj ich u yuláak' túumbenkunsajil.";
+"quiz_placeholder.all_categories" = "Tuláakal nu'ukulil";
+
+/* Continent labels */
+"continent.africa" = "Áaprika";
+"continent.asia" = "Aasia";
+"continent.europe" = "Éuropa";
+"continent.north_america" = "Xaman Amerika";
+"continent.oceania" = "Oseanía";
+"continent.south_america" = "Nojol Amerika";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "Ba'ax u noj kaajil %@?";
+"quiz.prompt.continent_of" = "Tu'ux kontinente yaan %@?";
+"quiz.prompt.country_of_capital" = "Ba'ax lu'um yaan %@ bey u noj kaajil?";
+"quiz.prompt.sea_location" = "Ba'ax ja' yaan naats' ti' %@?";
+"quiz.region.north" = "X";
+"quiz.region.south" = "N";
+"quiz.region.east" = "L";
+"quiz.region.west" = "C";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "Kan túumben ju'uno'ob";
+"learn.mode_picker.map.title" = "Túumben ich u mápail";
+"learn.mode_picker.map.desc" = "Péekt le lu'um jach ich le mápae'";
+"learn.mode_picker.mcq.title" = "Ya'ab je'el u yéeyik";
+"learn.mode_picker.mcq.desc" = "Yéey le núukil ichil 4 je'elalo'ob";
+
+/* Map learning quiz */
+"learn_map.title" = "Kanik ich u mápail";
+"learn_map.streak" = "%d / 3";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Túumben";
+"stats.tier.name.learning" = "Táan u kanik";
+"stats.tier.name.review" = "Ka'a ila'";
+"stats.tier.name.mastered" = "Ts'o'ok u kanik";
+"a11y.back" = "Suunajil";

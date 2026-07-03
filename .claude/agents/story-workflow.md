@@ -12,6 +12,23 @@ just log start story-workflow "<story-id>" || true
 
 Run the following steps in order, spawning a dedicated sub-agent for each. Pass the story directory as context to every agent.
 
+**Resume idempotently — trust live state over any briefing.** A run may be re-spawned after an
+interruption (foreground session-token limits resume mid-feature), so a story you are handed may already
+be partly or fully done. Before acting, **read `<story-dir>/log.md` and the live git/gh state** (branch,
+`gh pr list --head story/<slug>/<story-id>`), and treat each step as a skip-if-already-done gate: don't
+re-break-tasks if `tasks.md` is complete, don't `create-pr` if a PR is already open (pick up at its
+review/merge state), don't re-merge a merged PR. Where the spawning briefing and live state disagree
+(e.g. the briefing says "no PR yet" but `gh` shows an open one), **the live git/gh state wins** — the
+briefing is a snapshot that may be stale. Record the resume point in `<story-dir>/log.md`.
+
+**Branch-behind resume case.** When a PR is already open but `gh pr view <n> --json mergeStateStatus`
+reports `BEHIND` (main advanced while the session was interrupted), bring it current before continuing:
+```sh
+gh pr update-branch <n> -R <owner/repo>
+```
+After update-branch, the head SHA changes, so CI must re-run and the `code-owner-review` gate check must
+be re-posted on the new SHA. Pick up at step 4 (wait-for-ci) with the updated PR.
+
 **PR-base contract (autonomous, no human gate):** each story PR targets **`main`** directly (not an
 intermediate feature branch), so it is CI-gated and goes through the independent-review loop below.
 There is no story→feature-branch PR and no human merge click anywhere in this loop — merge is automatic
@@ -20,7 +37,8 @@ merge a story PR.
 
 1. **Break tasks** — spawn `break-tasks` agent
 2. **Implement** — spawn `implement-story` agent
-3. **Create PR** — spawn `create-pr` agent
+3. **Create PR** — spawn `create-pr` agent (skip if a PR for this story branch is already open per the
+   resume check above; carry its number forward to step 4)
 4. **Wait for CI** — spawn `wait-for-ci` agent with the PR number from step 3 and the story-id
    - STATUS: FAIL → fix the failure (go to step 2 with CI failure as context), then re-push; repeat from step 4
    - STATUS: PASS → continue
@@ -30,8 +48,8 @@ merge a story PR.
    **3 rounds**.
 
    a. **Deep review + verdict** — spawn the `independent-review` agent (fresh, cold). It runs the deep
-      `/code-review` pass, posts inline comments + a summary, and emits STATUS. It does **NOT** submit the
-      formal bot review (invoking the `/code-review` skill ends its turn before it could).
+      `/code-review` pass, posts inline comments + a summary, and emits STATUS. It does **NOT** set the
+      formal gate check (invoking the `/code-review` skill ends its turn before it could).
       - STATUS: CHANGES_REQUESTED → spawn an `implement-story` agent (a **separate spawn, never a reviewer**)
         to address **every** inline comment, **reply to each review thread acknowledging the fix** (a reply
         alone does NOT resolve the thread on GitHub), run the project checks (`just lint`, `just test`), and
@@ -41,13 +59,14 @@ merge a story PR.
       distinct from BOTH the implementer and the `independent-review` agent). It re-verifies the diff a
       second time **without** the `/code-review` skill (so its turn completes), reaches its **own** verdict,
       runs the **CI self-heal** (re-trigger if the head has no required checks), and — through the bot
-      wrapper `scripts/gh-review-bot.sh` — submits the formal `Hanahuac-Bot` review state (with read-back
-      proof) and resolves addressed bot-authored threads via `resolveReviewThread`. When the bot token is
-      absent (wrapper exits non-zero), the formal state + thread resolution are SKIPPED and the loop
-      proceeds on STATUS alone.
+      wrapper `scripts/gh-review-bot.sh` — posts the required **`code-owner-review` status check**
+      (conclusion success/failure) on the PR head that gates merge, with app-id read-back proof. When the
+      bot credentials are absent (wrapper exits non-zero), the gate check is SKIPPED and the loop proceeds
+      on STATUS alone.
       - STATUS: CHANGES_REQUESTED → spawn an `implement-story` agent to address it and push, then go back to
         **5a** (re-spawn `independent-review`). Counts as one round.
-      - STATUS: APPROVED (and, when the bot token is present, the bot `APPROVE` posted) → continue to step 6.
+      - STATUS: APPROVED (and, when the bot credentials are present, the `code-owner-review` check posted as
+        success) → continue to step 6.
 
    After **3 rounds** without both reviewers reaching APPROVED, **STOP looping and ESCALATE to the user**
    (do not loop further); leave the PR open. (There is no human-review gate: the workflow never pauses for
@@ -55,6 +74,10 @@ merge a story PR.
 6. **Merge** — once **both** `independent-review` and `code-owner-review` emitted APPROVED **and** CI is
    green, spawn `merge-pr` **unconditionally**. Do not assume the user already merged and do not wait for a
    human merge click.
+   **Worktree lifecycle:** `merge-pr` deletes the story *branch* (via `--delete-branch`) but must NOT
+   remove or exit the worktree directory — the worktree must remain intact through step 7. When running
+   inside a dedicated feature worktree, only the feature-orchestrator's archive step may remove the
+   worktree, never story-workflow.
 7. **Verify** — spawn `verify-story` agent
    - STATUS: FAILED → go to step 2 (re-implement with failure context)
    - STATUS: DONE → finish

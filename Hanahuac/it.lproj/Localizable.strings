@@ -1,0 +1,205 @@
+/* Italian (Italiano) */
+
+/* HomeView */
+"home.tagline" = "Un mondo, un quiz alla volta";
+"home.categories" = "Categorie";
+"home.category.countries" = "Paesi";
+"home.category.rivers" = "Fiumi";
+"home.category.mountains" = "Montagne";
+"home.category.seas" = "Mari";
+"home.view_progress" = "Vedi i progressi";
+"home.tile.new" = "Nuovo";
+"home.tile.pending" = "In sospeso";
+"home.tile.all_done" = "Tutto completato";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Quiz sulla mappa";
+"quiz.mode.map_tap.desc" = "Tocca il paese corretto sulla mappa";
+"quiz.mode.type_capital.title" = "Scrivi la capitale";
+"quiz.mode.type_capital.desc" = "«Qual è la capitale di X?»";
+"quiz.mode.name_feature.title" = "Indovina il luogo";
+"quiz.mode.name_feature.desc" = "Scrivi il nome del luogo segnato sulla mappa";
+"quiz.mode.multiple_choice.title" = "Scelta multipla";
+"quiz.mode.multiple_choice.desc" = "Scegli la capitale tra 4 opzioni";
+"quiz.cards_due.singular" = "scheda da ripassare";
+"quiz.cards_due.plural" = "schede da ripassare";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Impostazioni";
+"settings.section.general" = "Generali";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "Lingua";
+"settings.language.picker_title" = "Lingua dell'app";
+"settings.language.downloading" = "Download in corso…";
+"settings.language.download_failed" = "Download non riuscito";
+"settings.language.retry" = "Riprova";
+"settings.language.available" = "Disponibile";
+"settings.language.group.downloaded" = "Scaricate";
+"settings.language.search_placeholder" = "Cerca lingue";
+
+/* iCloud sync */
+"settings.sync.toggle" = "Sincronizzazione iCloud";
+"settings.sync.status_label" = "Stato";
+"settings.sync.status.off" = "Disattivata";
+"settings.sync.status.unavailable" = "Non disponibile";
+"settings.sync.status.on" = "Attivata";
+"settings.sync.status.syncing" = "Sincronizzazione…";
+"settings.sync.status.idle" = "Aggiornato";
+"settings.sync.status.error" = "Errore";
+"settings.sync.unavailable_note" = "La sincronizzazione iCloud non è disponibile. Accedi a iCloud e usa una versione con la sincronizzazione abilitata.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Progressi in arrivo";
+"progress.placeholder_desc" = "Le tue statistiche di apprendimento appariranno qui.";
+"progress.title" = "Progressi";
+
+/* StatsView */
+"stats.title" = "Progressi";
+"stats.cards_reviewed" = "Schede ripassate";
+"stats.due_today" = "In scadenza oggi";
+"stats.day_streak" = "Giorni consecutivi";
+"stats.by_category" = "Per categoria";
+"stats.showing_language" = "Visualizzazione:";
+"stats.by_language" = "Per lingua";
+"stats.by_mode" = "Per tipo di quiz";
+"stats.category_header" = "Categoria";
+"stats.mastery_tiers" = "Livelli di padronanza";
+"stats.tier.not_started" = "Non iniziato";
+"stats.tier.reps_1_2" = "Rip. 1–2";
+"stats.tier.reps_3_4" = "Rip. 3–4";
+"stats.tier.mastered" = "Rip. ≥ 5, EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Andamento nel tempo";
+"stats.charts.range.7d" = "7 giorni";
+"stats.charts.range.30d" = "30 giorni";
+"stats.charts.range.all" = "Sempre";
+"stats.charts.category.all" = "Tutte";
+"stats.charts.mastery_growth" = "Crescita della padronanza";
+"stats.charts.reviews_completed" = "Ripassi completati";
+"stats.charts.cards_graduated" = "Schede completate";
+"stats.charts.streak_history" = "Serie";
+"stats.charts.series.review" = "Ripasso";
+"stats.charts.series.mastered" = "Padroneggiate";
+"stats.charts.empty" = "Continua a studiare per vedere qui l'andamento dei tuoi progressi.";
+
+/* LearningQuizView */
+"learn.title" = "Impara";
+"learn.results" = "Risultati";
+"learn.done" = "Fatto";
+"learn.no_cards_title" = "Nessuna scheda da imparare";
+"learn.no_cards_desc" = "Tutte le schede sono già nel tuo programma di ripasso.";
+"learn.graduated_count" = "%d / %d completate";
+"learn.active_count" = "%d attive";
+"learn.complete_title" = "Apprendimento completato!";
+"learn.complete_desc" = "Tutte le schede sono state aggiunte al tuo programma di ripasso.";
+"learn.cards_graduated" = "Schede completate";
+
+/* MapQuizView */
+"map_quiz.title" = "Quiz sulla mappa";
+"map_quiz.tap_on_map" = "Tocca la mappa";
+"map_quiz.nothing_due_title" = "Niente da ripassare";
+"map_quiz.nothing_due_desc" = "Non ci sono schede da ripassare al momento. Torna più tardi!";
+"map_quiz.feedback.correct" = "Corretto!";
+"map_quiz.feedback.incorrect_prefix" = "Sbagliato — era";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Risultati";
+"quiz_summary.session_complete" = "Sessione completata!";
+"quiz_summary.cards_reviewed" = "Schede ripassate";
+"quiz_summary.correct" = "Corrette";
+"quiz_summary.next_review" = "Prossimo ripasso";
+"quiz_summary.done" = "Fatto";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Niente da ripassare";
+"mcq_quiz.nothing_due_desc" = "Non ci sono schede da ripassare al momento.";
+"mcq_quiz.correct_count" = "%d corrette";
+"mcq_quiz.nav.country" = "Quiz sui paesi";
+"mcq_quiz.nav.river" = "Quiz sui fiumi";
+"mcq_quiz.nav.mountain" = "Quiz sulle montagne";
+"mcq_quiz.nav.sea" = "Quiz sui mari";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Niente da ripassare";
+"capital_quiz.nothing_due_desc" = "Non ci sono schede da ripassare al momento.";
+"capital_quiz.check" = "Verifica";
+"capital_quiz.next" = "Avanti →";
+"capital_quiz.placeholder" = "Scrivi la tua risposta…";
+"capital_quiz.feedback.correct" = "Corretto! ✓";
+"capital_quiz.feedback.wrong_prefix" = "La risposta è:";
+"capital_quiz.nav.capital" = "Quiz sulle capitali";
+"capital_quiz.nav.country" = "Quiz sui paesi";
+"capital_quiz.correct_count" = "%d corrette";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Indovina questo luogo";
+"name_feature.nav" = "Indovina il luogo";
+"name_feature.nothing_due_title" = "Niente da ripassare";
+"name_feature.nothing_due_desc" = "Non ci sono schede da ripassare al momento.";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Quiz in arrivo";
+"quiz_placeholder.desc" = "Il quiz su %@ sarà disponibile nel prossimo aggiornamento.";
+"quiz_placeholder.all_categories" = "Tutte le categorie";
+
+/* Continent labels */
+"continent.africa" = "Africa";
+"continent.asia" = "Asia";
+"continent.europe" = "Europa";
+"continent.north_america" = "America del Nord";
+"continent.oceania" = "Oceania";
+"continent.south_america" = "America del Sud";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "Qual è la capitale di %@?";
+"quiz.prompt.continent_of" = "In quale continente si trova %@?";
+"quiz.prompt.country_of_capital" = "Quale paese ha %@ come capitale?";
+"quiz.prompt.sea_location" = "Quale specchio d'acqua si trova vicino a %@?";
+"quiz.region.north" = "N";
+"quiz.region.south" = "S";
+"quiz.region.east" = "E";
+"quiz.region.west" = "O";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "Impara nuove schede";
+"learn.mode_picker.map.title" = "Quiz sulla mappa";
+"learn.mode_picker.map.desc" = "Tocca il paese corretto sulla mappa";
+"learn.mode_picker.mcq.title" = "Scelta multipla";
+"learn.mode_picker.mcq.desc" = "Scegli la risposta tra 4 opzioni";
+
+/* Map learning quiz */
+"learn_map.title" = "Apprendimento sulla mappa";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "Domanda";
+"a11y.progress" = "Domanda %d di %d";
+"a11y.score" = "%d corrette";
+"a11y.graduated" = "%d di %d completate";
+"a11y.active" = "%d attive";
+"a11y.answer_field.label" = "Risposta";
+"a11y.answer_field.hint" = "Scrivi la tua risposta, poi attiva Verifica.";
+"a11y.check.hint" = "Verifica la tua risposta.";
+"a11y.next.hint" = "Passa alla domanda successiva.";
+"a11y.option.hint" = "Tocca due volte per scegliere questa risposta.";
+"a11y.state.selected" = "selezionata";
+"a11y.state.correct" = "risposta corretta";
+"a11y.state.incorrect" = "risposta sbagliata";
+"a11y.state.not_answered" = "senza risposta";
+"a11y.feedback.correct" = "Corretto";
+"a11y.feedback.incorrect" = "Sbagliato";
+"a11y.summary.accuracy" = "%d per cento di precisione";
+"a11y.summary.result_icon" = "Risultato della sessione";
+"a11y.done.hint" = "Chiude questo quiz.";
+"a11y.map.pin.hint" = "Tocca due volte per scegliere questo luogo.";
+"a11y.map.prompt.label" = "Trova sulla mappa";
+"a11y.map.progress" = "Luogo %d di %d";
+"a11y.map.streak" = "%d di 3 corrette di fila";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Nuovo";
+"stats.tier.name.learning" = "In apprendimento";
+"stats.tier.name.review" = "Ripasso";
+"stats.tier.name.mastered" = "Padroneggiato";
+"a11y.back" = "Indietro";

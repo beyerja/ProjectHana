@@ -42,11 +42,6 @@ struct NameFeatureQuizView: View {
         content
             .navigationTitle(L10n["name_feature.nav"])
             .inlineNavigationTitle()
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(L10n["capital_quiz.exit"]) { dismiss() }
-                }
-            }
             .onAppear(perform: buildIfNeeded)
     }
 
@@ -190,7 +185,10 @@ struct NameFeatureQuizView: View {
         onCheck: @escaping (String) -> Void,
         onNext: @escaping () -> Void
     ) -> some View {
-        VStack(spacing: 0) {
+        // `spacing: 12` keeps a small gap between the reference map and the answer card so MapKit's
+        // auto-rendered "Apple Maps / Legal" attribution at the map's bottom-left edge stays visible
+        // and is not covered by the card — matching the bottom-attribution clearance on the Map quiz.
+        VStack(spacing: 12) {
             featureMap(feature: feature, revealed: answerState != .unanswered)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
@@ -213,7 +211,12 @@ struct NameFeatureQuizView: View {
                 )
             }
             .padding()
-            .background(Theme.Palette.surface, in: RoundedRectangle(cornerRadius: 20))
+            // Shared card corner radius (`Theme.Metrics.cardRadius`) for cross-quiz visual
+            // consistency with the Map-quiz overlay prompt card.
+            .background(
+                Theme.Palette.surface,
+                in: RoundedRectangle(cornerRadius: Theme.Metrics.cardRadius, style: .continuous)
+            )
             .padding(.horizontal)
             .padding(.bottom)
         }
@@ -257,6 +260,7 @@ struct NameFeatureQuizView: View {
                     .submitLabel(.done)
                     .autocorrectionDisabled()
                     .neverAutocapitalize()
+                    .accessibilityIdentifier("quiz.input")
                     .accessibilityLabel(L10n["a11y.answer_field.label"])
                     .accessibilityHint(L10n["a11y.answer_field.hint"])
                 Button(L10n["capital_quiz.check"]) { onCheck(inputText) }
@@ -269,6 +273,7 @@ struct NameFeatureQuizView: View {
                     )
                     .foregroundStyle(.white)
                     .disabled(inputText.isEmpty)
+                    .accessibilityIdentifier("quiz.submit")
                     .accessibilityHint(L10n["a11y.check.hint"])
             }
             .onAppear { fieldFocused = true }

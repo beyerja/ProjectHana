@@ -101,10 +101,14 @@ ci branch:
 lint: lint-swift lint-py lint-sh lint-nix lint-yaml l10n-check
     @echo "lint: all linters passed."
 
-# Static localization-completeness gate: every BASE (en, es-MX) and fully-translated downloadable
-# (de, fr, es-ES, ko) locale must contain the full canonical key set; nah is allowed to be partial
-# (it resolves missing keys via nah -> es-MX -> en fallback). Stdlib-only python; exits non-zero on
-# any missing required key. Folded into `just lint` so CI enforces completeness.
+# Static localization-completeness gate. Data-driven: the locales checked are discovered from the
+# Hanahuac/<code>.lproj dirs on disk, and each is assigned an enforcement role in the script's
+# ROLE_MAP. Every on-disk .lproj MUST have a declared role or the check FAILS (a new .lproj can never
+# be silently skipped). BASE (en, es-MX) and FULL (de, fr, es-ES, it, pl, nl, sr, ko — plus the
+# pre-declared future locales ja, zh-Hans, hi, ar, bn, pt-BR, ur once their .lproj lands) must
+# contain the full canonical key set; PARTIAL fallback-permitted locales (nah, yua, ca, eu) may be a
+# subset (gaps resolve via each locale's fallback chain). Stdlib-only python; exits non-zero on any
+# missing required key or an unclassified on-disk locale. Folded into `just lint` so CI enforces it.
 l10n-check:
     python3 scripts/check-l10n-completeness.py
 
@@ -231,3 +235,24 @@ screenshot-sim path:
         exit 1
     fi
     echo "Screenshot saved to {{path}}"
+
+# Drive the app with the data-driven XCUITest UI driver and collect per-step screenshot + element-dump
+# artifacts under `.workflow/ui-walkthrough/<run>/`. Builds + runs ONLY
+# HanahuacUITests/UIDriverTests/testRunUIScript against the booted `{{sim}}` (per-worktree DerivedData).
+#
+#   `script` — action-script JSON path (repo-relative or absolute);
+#              defaults to the committed `.workflow/ui-walkthrough/scripts/smoke.json`.
+#   `run`    — run directory name; defaults to "" so the recorder picks a UTC timestamp.
+#
+# Each run is a compiled `xcodebuild test` cycle (~tens of seconds), NOT a live frame-by-frame session:
+# write a script, run once, then read the emitted `NNN-step.png` + `NNN-step.json` pairs. The
+# JSON schema + supported actions are documented in `.workflow/ui-walkthrough/README.md`. The glue
+# (run-dir resolution, env-var plumbing, artifact-dir echo) lives in `scripts/ui-walkthrough.sh`.
+ui-walkthrough script=".workflow/ui-walkthrough/scripts/smoke.json" run="":
+    bash scripts/ui-walkthrough.sh '{{script}}' '{{run}}' '{{sim}}' '{{sim_dd}}'
+
+# Same as `ui-walkthrough`, but forces a right-to-left layout (sets HANA_FORCE_RTL) so the captured
+# artifacts show the mirrored RTL layout. Drives the greenfield RTL infrastructure (story 008) without
+# requiring ar/ur content; stories 009/010 use this to verify Arabic/Urdu render correctly mirrored.
+ui-walkthrough-rtl script=".workflow/ui-walkthrough/scripts/smoke.json" run="":
+    HANA_FORCE_RTL=1 bash scripts/ui-walkthrough.sh '{{script}}' '{{run}}' '{{sim}}' '{{sim_dd}}'

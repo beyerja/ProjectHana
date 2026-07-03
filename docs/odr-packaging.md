@@ -7,30 +7,32 @@ the reference for cutting a release whose packs are wired correctly.
 
 ## What ships where
 
+The two base languages (`en`, `es-MX`) are **always bundled** in the main app binary and carry **no ODR
+tag**, so the app is fully usable offline with zero packs downloaded: every non-base language's
+fallback chain ends at `es-MX`/`en` (see `LanguageCatalog`).
+
 | Language | Code | `.lproj` UI strings | Geo-name pack | Delivery |
 |----------|------|---------------------|---------------|----------|
 | English  | `en` | always bundled | — (resolver fallback) | in the app binary |
 | Spanish (Mexico) | `es-MX` | always bundled | — (bundled base) | in the app binary |
-| French | `fr` | ODR `lang-fr` | `fr-geo.json` (ODR `lang-fr`) | on demand |
-| German | `de` | ODR `lang-de` | `de-geo.json` (ODR `lang-de`) | on demand |
-| Korean | `ko` | ODR `lang-ko` | `ko-geo.json` (ODR `lang-ko`) | on demand |
-| Nāhuatl | `nah` | ODR `lang-nah` | `nah-geo.json` (ODR `lang-nah`) | on demand |
 
-The base languages (`en`, `es-MX`) are **always bundled** in the main app binary and carry **no ODR
-tag**, so the app is fully usable offline with zero packs downloaded: every non-base language's
-fallback chain ends at `es-MX`/`en` (see `LanguageCatalog`).
+The other **19** languages are **downloadable On-Demand Resource packs**, each delivered by exactly one
+`lang-<code>` tag carrying its `.lproj` UI strings plus its `<code>-geo.json` geo-name pack:
+`fr`, `de`, `es-ES`, `ca`, `eu`, `yua`, `it`, `pl`, `nl`, `sr`, `ko`, `nah`, `ja`, `zh-Hans`, `hi`,
+`ar`, `bn`, `pt-BR`, `ur`. For the full per-language native names, content contracts (complete vs
+best-effort), and the RTL set (`ar`, `ur`), see [Supported languages](supported-languages.md).
 
 ## The `lang-<code>` tag contract
 
-Each downloadable language is delivered by exactly one ODR tag named `lang-<code>`:
-`lang-fr`, `lang-de`, `lang-ko`, `lang-nah`. This string is the contract between the **build** and the
-**runtime**:
+Each downloadable language is delivered by exactly one ODR tag named `lang-<code>` (one per non-base
+language — `lang-fr`, `lang-de`, …, `lang-zh-Hans`, `lang-pt-BR`, `lang-ur`). This string is the
+contract between the **build** and the **runtime**:
 
 - Runtime: `LanguageDescriptor.odrTags` defaults to `["lang-<code>"]` for a `.downloadablePack`
   language and `[]` for a `.bundledBase` language (`Hanahuac/L10n/LanguageDescriptor.swift`). The
   `ODRLanguagePackProvider` keys its `NSBundleResourceRequest` off exactly these tags.
 - Build: `project.yml` assigns the same `lang-<code>` tag to that language's `.lproj` **and** its
-  `<code>-geo.json`.
+  `<code>-geo.json` (for all 19 non-base languages).
 
 The build's tags and the provider's requested tags must match exactly; both `scripts/verify-odr-packs.sh`
 and the async CI assert this.
@@ -40,15 +42,15 @@ and the async CI assert this.
 The Xcode project is **generated** by XcodeGen — never hand-edit `Hanahuac.xcodeproj`. In
 `project.yml`, the `Hanahuac` target:
 
-1. Pulls in the whole source tree (`sources: - path: Hanahuac`) but **excludes** the four non-base
-   `.lproj` and the four `<code>-geo.json`, so they are not auto-folded into the always-bundled
+1. Pulls in the whole source tree (`sources: - path: Hanahuac`) but **excludes** the 19 non-base
+   `.lproj` and the 19 `<code>-geo.json`, so they are not auto-folded into the always-bundled
    resources / a single `Localizable.strings` variant group.
 2. Re-adds each non-base `.lproj` as a **folder reference** (`type: folder`) and each
    `<code>-geo.json` as a resource, each with `resourceTags: [lang-<code>]` and
    `buildPhase: resources`.
 
 XcodeGen emits `ASSET_TAGS = ("lang-<code>")` on each tagged build file and a project-level
-`knownAssetTags = (lang-de, lang-fr, lang-ko, lang-nah)`. The `.lproj` folder references stay
+`knownAssetTags` listing one `lang-<code>` per non-base language. The `.lproj` folder references stay
 resolvable at runtime via `Bundle.main.path(forResource: code, ofType: "lproj")` once the pack is
 present.
 
@@ -66,12 +68,13 @@ JSON, generated from the bundled source data (`Hanahuac/Resources/{countries,riv
 into the `GeoNamePackData` schema (`Hanahuac/L10n/Packs/GeoNamePackData.swift`):
 
 ```sh
-just geo-packs         # regenerate Hanahuac/Resources/{fr,de,ko,nah}-geo.json
+just geo-packs         # regenerate Hanahuac/Resources/<code>-geo.json for every non-base language
 just geo-packs-check   # verify the committed packs are up to date (CI gate)
 ```
 
-Generator: `scripts/generate-geo-packs.py`. It emits one pack per downloadable language (`fr`, `de`,
-`ko`, `nah`) with deterministic, sorted output so regeneration produces a clean diff. The English base
+Generator: `scripts/generate-geo-packs.py`. It emits one pack per downloadable language (every non-base
+language in `PACK_LANGUAGES`) with deterministic, sorted output so regeneration produces a clean diff.
+The English base
 name is intentionally **not** in any pack — it lives on the geo model and is the resolver's final
 fallback. `es-MX` has no separate geo pack: it is a bundled base language. Each pack decodes and
 validates through `GeoNamePackLoader`; a malformed/unsupported pack degrades safely to the fallback

@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "Ha fallat la baixada";
 "settings.language.retry" = "Torna-ho a provar";
 "settings.language.available" = "Disponible";
+"settings.language.group.downloaded" = "Baixats";
+"settings.language.search_placeholder" = "Cerca idiomes";
 
 /* iCloud sync */
 /* NOTE: "settings.sync.toggle" is deliberately omitted from Catalan to exercise the
@@ -85,7 +87,6 @@
 /* LearningQuizView */
 "learn.title" = "Aprèn";
 "learn.results" = "Resultats";
-"learn.exit" = "Surt";
 "learn.done" = "Fet";
 "learn.no_cards_title" = "No hi ha targetes per aprendre";
 "learn.no_cards_desc" = "Totes les targetes ja són al teu pla de repàs.";
@@ -97,7 +98,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Prova al mapa";
-"map_quiz.exit" = "Surt";
 "map_quiz.tap_on_map" = "Toca el mapa";
 "map_quiz.nothing_due_title" = "Res pendent";
 "map_quiz.nothing_due_desc" = "No hi ha targetes pendents ara mateix. Torna més tard!";
@@ -115,7 +115,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Res pendent";
 "mcq_quiz.nothing_due_desc" = "No hi ha targetes pendents ara mateix.";
-"mcq_quiz.exit" = "Surt";
 "mcq_quiz.correct_count" = "%d correctes";
 "mcq_quiz.nav.country" = "Prova de països";
 "mcq_quiz.nav.river" = "Prova de rius";
@@ -125,7 +124,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Res pendent";
 "capital_quiz.nothing_due_desc" = "No hi ha targetes pendents ara mateix.";
-"capital_quiz.exit" = "Surt";
 "capital_quiz.check" = "Comprova";
 "capital_quiz.next" = "Següent →";
 "capital_quiz.placeholder" = "Escriu la teva resposta…";
@@ -158,6 +156,11 @@
 "quiz.prompt.capital_of" = "Quina és la capital de %@?";
 "quiz.prompt.continent_of" = "En quin continent es troba %@?";
 "quiz.prompt.country_of_capital" = "Quin país té %@ com a capital?";
+"quiz.prompt.sea_location" = "Quina massa d'aigua es troba a prop de %@?";
+"quiz.region.north" = "N";
+"quiz.region.south" = "S";
+"quiz.region.east" = "E";
+"quiz.region.west" = "O";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Aprèn targetes noves";
@@ -169,3 +172,10 @@
 /* Map learning quiz */
 "learn_map.title" = "Aprenentatge al mapa";
 "learn_map.streak" = "%d / 3";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Nou";
+"stats.tier.name.learning" = "Aprenent";
+"stats.tier.name.review" = "Repàs";
+"stats.tier.name.mastered" = "Dominat";
+"a11y.back" = "Enrere";

@@ -224,9 +224,18 @@ struct StatsView: View {
         HStack {
             Text(L10n["stats.category_header"]).frame(maxWidth: .infinity, alignment: .leading)
             ForEach(MasteryTier.allCases, id: \.self) { tier in
-                Image(systemName: tier.icon)
-                    .foregroundStyle(tier.color)
-                    .frame(width: 36)
+                VStack(spacing: 2) {
+                    Image(systemName: tier.icon)
+                        .foregroundStyle(tier.color)
+                    Text(tier.localizedName)
+                        .font(.system(size: 9, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                }
+                .frame(width: 40)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(tier.localizedName)
             }
         }
         .font(.caption.bold())
@@ -249,7 +258,8 @@ struct StatsView: View {
                 Text("\(count)")
                     .font(.subheadline.bold())
                     .foregroundStyle(count > 0 ? tier.color : Color.secondary)
-                    .frame(width: 36)
+                    .frame(width: 40)
+                    .accessibilityLabel("\(tier.localizedName): \(count)")
             }
         }
         .padding(.horizontal, 12)
@@ -270,7 +280,7 @@ struct StatsView: View {
                         Image(systemName: tier.icon)
                             .foregroundStyle(tier.color)
                             .frame(width: 20)
-                        Text(tier.rawValue)
+                        Text(tier.localizedName)
                             .font(.subheadline.bold())
                             .foregroundStyle(tier.color)
                         Spacer()
@@ -288,6 +298,17 @@ struct StatsView: View {
 }
 
 extension MasteryTier {
+    /// Short, localized column/legend name (new / learning / review / mastered). Replaces the
+    /// hardcoded English `rawValue` as user-visible and accessibility text.
+    var localizedName: String {
+        switch self {
+        case .new: L10n["stats.tier.name.new"]
+        case .learning: L10n["stats.tier.name.learning"]
+        case .review: L10n["stats.tier.name.review"]
+        case .mastered: L10n["stats.tier.name.mastered"]
+        }
+    }
+
     var description: String {
         switch self {
         case .new: L10n["stats.tier.not_started"]

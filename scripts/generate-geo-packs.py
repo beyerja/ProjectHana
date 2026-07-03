@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Generate per-language geo-name ODR pack JSON from the bundled geo source data.
 
-For each downloadable (non-base) language — fr, de, es-ES, ca, eu, ko, nah — this emits a
+For each downloadable (non-base) language — fr, de, es-ES, ca, eu, yua, it, pl, nl, sr, ko, nah, ja,
+zh-Hans, hi, ar, bn, pt-BR, ur — this emits a
 ``Hanahuac/Resources/<code>-geo.json`` file in the ``GeoNamePackData`` schema
 (see ``Hanahuac/L10n/Packs/GeoNamePackData.swift``):
 
@@ -45,7 +46,31 @@ PACK_VERSION = 1
 
 # Downloadable (non-base) languages that get an ODR geo pack. es-MX is a bundled base
 # language and en is the resolver fallback, so neither gets a generated pack.
-PACK_LANGUAGES = ["fr", "de", "es-ES", "ca", "eu", "ko", "nah"]
+#
+# The 7 content-pending languages (ja, zh-Hans, hi, ar, bn, pt-BR, ur) added by story 002 currently
+# emit an empty `"entries": {}` because the bundled source geo JSON has no name/capital column for
+# them yet; their content story (003-010) adds the column and the pack fills automatically.
+PACK_LANGUAGES = [
+    "fr",
+    "de",
+    "es-ES",
+    "ca",
+    "eu",
+    "yua",
+    "it",
+    "pl",
+    "nl",
+    "sr",
+    "ko",
+    "nah",
+    "ja",
+    "zh-Hans",
+    "hi",
+    "ar",
+    "bn",
+    "pt-BR",
+    "ur",
+]
 
 # Map an AppLocale code to the JSON field suffix used in the bundled source data.
 SUFFIX_BY_CODE = {
@@ -54,8 +79,20 @@ SUFFIX_BY_CODE = {
     "es-ES": "es_es",
     "ca": "ca",
     "eu": "eu",
+    "yua": "yua",
+    "it": "it",
+    "pl": "pl",
+    "nl": "nl",
+    "sr": "sr",
     "ko": "ko",
     "nah": "nah",
+    "ja": "ja",
+    "zh-Hans": "zh_hans",
+    "hi": "hi",
+    "ar": "ar",
+    "bn": "bn",
+    "pt-BR": "pt_br",
+    "ur": "ur",
 }
 
 REPO_ROOT = Path(__file__).resolve().parent.parent

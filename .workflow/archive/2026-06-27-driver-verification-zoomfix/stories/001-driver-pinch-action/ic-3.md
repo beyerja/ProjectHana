@@ -1,0 +1,1 @@
+**Non-blocking (doc consistency).** The Fields table's "Used by" column for `label` and `identifier` lists `tap`, `typeText`, `swipe`/`scroll` but omits `pinch`, even though `pinch` resolves a target by label/identifier (code) and the prose below documents it. Adding `pinch` here would keep the table in sync with the new capability.

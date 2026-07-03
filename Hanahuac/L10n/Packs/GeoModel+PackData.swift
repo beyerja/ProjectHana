@@ -15,8 +15,22 @@ extension Country {
         case .esES: nameEsEs
         case .ca: nameCa
         case .eu: nameEu
+        case .yua: nameYua
+        case .it: nameIt
+        case .pl: namePl
+        case .nl: nameNl
+        case .sr: nameSr
         case .ko: nameKo
         case .nah: nameNah
+        case .ja: nameJa
+        case .zhHans: nameZhHans
+        case .hi: nameHi
+        case .bn: nameBn
+        case .ptBR: namePtBr
+        case .ar: nameAr
+        case .ur: nameUr
+        // Content-pending languages (story 002): the bundled English base name is the resolver's final
+        // fallback, so the base locale needs no pack column.
         case .en: nil
         }
     }
@@ -29,8 +43,22 @@ extension Country {
         case .esES: capitalEsEs
         case .ca: capitalCa
         case .eu: capitalEu
+        case .yua: capitalYua
+        case .it: capitalIt
+        case .pl: capitalPl
+        case .nl: capitalNl
+        case .sr: capitalSr
         case .ko: capitalKo
         case .nah: capitalNah
+        case .ja: capitalJa
+        case .zhHans: capitalZhHans
+        case .hi: capitalHi
+        case .bn: capitalBn
+        case .ptBR: capitalPtBr
+        case .ar: capitalAr
+        case .ur: capitalUr
+        // Content-pending languages (story 002): the bundled English base capital is the resolver's
+        // final fallback, so the base locale needs no pack column.
         case .en: nil
         }
     }
@@ -45,8 +73,22 @@ extension River {
         case .esES: nameEsEs
         case .ca: nameCa
         case .eu: nameEu
+        case .yua: nameYua
+        case .it: nameIt
+        case .pl: namePl
+        case .nl: nameNl
+        case .sr: nameSr
         case .ko: nameKo
         case .nah: nameNah
+        case .ja: nameJa
+        case .zhHans: nameZhHans
+        case .hi: nameHi
+        case .bn: nameBn
+        case .ptBR: namePtBr
+        case .ar: nameAr
+        case .ur: nameUr
+        // Content-pending languages (story 002): the bundled English base name is the resolver's final
+        // fallback, so the base locale needs no pack column.
         case .en: nil
         }
     }
@@ -61,8 +103,22 @@ extension MountainRange {
         case .esES: nameEsEs
         case .ca: nameCa
         case .eu: nameEu
+        case .yua: nameYua
+        case .it: nameIt
+        case .pl: namePl
+        case .nl: nameNl
+        case .sr: nameSr
         case .ko: nameKo
         case .nah: nameNah
+        case .ja: nameJa
+        case .zhHans: nameZhHans
+        case .hi: nameHi
+        case .bn: nameBn
+        case .ptBR: namePtBr
+        case .ar: nameAr
+        case .ur: nameUr
+        // Content-pending languages (story 002): the bundled English base name is the resolver's final
+        // fallback, so the base locale needs no pack column.
         case .en: nil
         }
     }
@@ -77,8 +133,22 @@ extension Sea {
         case .esES: nameEsEs
         case .ca: nameCa
         case .eu: nameEu
+        case .yua: nameYua
+        case .it: nameIt
+        case .pl: namePl
+        case .nl: nameNl
+        case .sr: nameSr
         case .ko: nameKo
         case .nah: nameNah
+        case .ja: nameJa
+        case .zhHans: nameZhHans
+        case .hi: nameHi
+        case .bn: nameBn
+        case .ptBR: namePtBr
+        case .ar: nameAr
+        case .ur: nameUr
+        // Content-pending languages (story 002): the bundled English base name is the resolver's final
+        // fallback, so the base locale needs no pack column.
         case .en: nil
         }
     }

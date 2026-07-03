@@ -33,6 +33,8 @@
 "settings.language.download_failed" = "Ahmo huel motēmōh";
 "settings.language.retry" = "Oc ceppa";
 "settings.language.available" = "Ōncah";
+"settings.language.group.downloaded" = "Tlatemoltin";
+"settings.language.search_placeholder" = "Xictemo tlahtōlli";
 
 /* StatsView */
 "stats.tier.not_started" = "Ahmo pēhua";
@@ -40,26 +42,22 @@
 /* LearningQuizView */
 "learn.title" = "Momachtia";
 "learn.results" = "Tlanēxtīltin";
-"learn.exit" = "Xiquīza";
 "learn.done" = "Tlamic";
 
 /* MapQuizView */
 "map_quiz.title" = "Tlatēmōliztli īpan tlahcuilōlmāpan";
-"map_quiz.exit" = "Xiquīza";
 "map_quiz.feedback.correct" = "¡Cualli!";
 
 /* QuizSummaryView */
 "quiz_summary.done" = "Tlamic";
 
 /* MultipleChoiceQuizView */
-"mcq_quiz.exit" = "Xiquīza";
 "mcq_quiz.nav.country" = "Tlatēmōliztli āltepētl";
 "mcq_quiz.nav.river" = "Tlatēmōliztli ātōyātl";
 "mcq_quiz.nav.mountain" = "Tlatēmōliztli tepētl";
 "mcq_quiz.nav.sea" = "Tlatēmōliztli hueyātl";
 
 /* CapitalQuizView */
-"capital_quiz.exit" = "Xiquīza";
 "capital_quiz.check" = "Xicchīhua";
 "capital_quiz.feedback.correct" = "¡Cualli! ✓";
 
@@ -84,3 +82,10 @@
 "a11y.state.incorrect" = "ahmo cualli tēnānquiliztli";
 "a11y.feedback.correct" = "Cualli";
 "a11y.feedback.incorrect" = "Ahmo cualli";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Yancuic";
+"stats.tier.name.learning" = "Momachtia";
+"stats.tier.name.review" = "Tlachializtli";
+"stats.tier.name.mastered" = "Tlamachtilli";
+"a11y.back" = "Tlacuepa";

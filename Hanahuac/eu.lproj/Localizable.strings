@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "Deskargak huts egin du";
 "settings.language.retry" = "Saiatu berriro";
 "settings.language.available" = "Eskuragarri";
+"settings.language.group.downloaded" = "Deskargatuta";
+"settings.language.search_placeholder" = "Bilatu hizkuntzak";
 
 /* iCloud sync */
 /* NOTE: "settings.sync.toggle" is deliberately omitted from Basque to exercise the
@@ -85,7 +87,6 @@
 /* LearningQuizView */
 "learn.title" = "Ikasi";
 "learn.results" = "Emaitzak";
-"learn.exit" = "Irten";
 "learn.done" = "Eginda";
 "learn.no_cards_title" = "Ez dago txartelik ikasteko";
 "learn.no_cards_desc" = "Txartel guztiak zure berrikuspen-egutegian daude jada.";
@@ -97,7 +98,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Mapako proba";
-"map_quiz.exit" = "Irten";
 "map_quiz.tap_on_map" = "Sakatu mapan";
 "map_quiz.nothing_due_title" = "Ezer egiteke";
 "map_quiz.nothing_due_desc" = "Une honetan ez dago txartelik egiteke. Itzuli geroago!";
@@ -115,7 +115,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Ezer egiteke";
 "mcq_quiz.nothing_due_desc" = "Une honetan ez dago txartelik egiteke.";
-"mcq_quiz.exit" = "Irten";
 "mcq_quiz.correct_count" = "%d zuzen";
 "mcq_quiz.nav.country" = "Herrialdeen proba";
 "mcq_quiz.nav.river" = "Ibaien proba";
@@ -125,7 +124,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Ezer egiteke";
 "capital_quiz.nothing_due_desc" = "Une honetan ez dago txartelik egiteke.";
-"capital_quiz.exit" = "Irten";
 "capital_quiz.check" = "Egiaztatu";
 "capital_quiz.next" = "Hurrengoa →";
 "capital_quiz.placeholder" = "Idatzi zure erantzuna…";
@@ -158,6 +156,11 @@
 "quiz.prompt.capital_of" = "Zein da %@(r)en hiriburua?";
 "quiz.prompt.continent_of" = "Zein kontinentetan dago %@?";
 "quiz.prompt.country_of_capital" = "Zein herrialdek du %@ hiriburu?";
+"quiz.prompt.sea_location" = "Zein ur-masa dago %@ inguruan?";
+"quiz.region.north" = "I";
+"quiz.region.south" = "H";
+"quiz.region.east" = "E";
+"quiz.region.west" = "M";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Ikasi txartel berriak";
@@ -169,3 +172,10 @@
 /* Map learning quiz */
 "learn_map.title" = "Mapan ikasten";
 "learn_map.streak" = "%d / 3";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Berria";
+"stats.tier.name.learning" = "Ikasten";
+"stats.tier.name.review" = "Berrikuspena";
+"stats.tier.name.mastered" = "Menderatua";
+"a11y.back" = "Atzera";

@@ -1,0 +1,31 @@
+[
+  { "action": "wait", "seconds": 2 },
+  { "action": "dumpTree" },
+
+  { "action": "tap", "identifier": "home.mode.mapQuiz" },
+  { "action": "wait", "seconds": 3 },
+  { "action": "screenshot" },
+  { "action": "dumpTree" },
+
+  { "action": "pinch", "scale": 3.0 },
+  { "action": "wait", "seconds": 1 },
+  { "action": "screenshot" },
+  { "action": "dumpTree" },
+
+  { "action": "tap", "identifier": "map.tapCountry" },
+  { "action": "wait", "seconds": 1 },
+  { "action": "screenshot" },
+  { "action": "dumpTree" },
+
+  { "action": "wait", "seconds": 1 },
+  { "action": "screenshot" },
+  { "action": "dumpTree" },
+
+  { "action": "wait", "seconds": 1 },
+  { "action": "screenshot" },
+  { "action": "dumpTree" },
+
+  { "action": "wait", "seconds": 1 },
+  { "action": "screenshot" },
+  { "action": "dumpTree" }
+]

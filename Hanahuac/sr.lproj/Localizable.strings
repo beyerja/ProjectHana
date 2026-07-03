@@ -1,0 +1,205 @@
+/* Serbian (Српски) — Cyrillic */
+
+/* HomeView */
+"home.tagline" = "Један свет, један квиз по реду";
+"home.categories" = "Категорије";
+"home.category.countries" = "Државе";
+"home.category.rivers" = "Реке";
+"home.category.mountains" = "Планине";
+"home.category.seas" = "Мора";
+"home.view_progress" = "Прикажи напредак";
+"home.tile.new" = "Ново";
+"home.tile.pending" = "На чекању";
+"home.tile.all_done" = "Све готово";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "Квиз на карти";
+"quiz.mode.map_tap.desc" = "Додирни тачну државу на карти";
+"quiz.mode.type_capital.title" = "Укуцај главни град";
+"quiz.mode.type_capital.desc" = "„Који је главни град државе X?“";
+"quiz.mode.name_feature.title" = "Погоди место";
+"quiz.mode.name_feature.desc" = "Укуцај назив означеног места на карти";
+"quiz.mode.multiple_choice.title" = "Вишеструки избор";
+"quiz.mode.multiple_choice.desc" = "Изабери главни град између 4 понуђена";
+"quiz.cards_due.singular" = "картица за понављање";
+"quiz.cards_due.plural" = "картица за понављање";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "Подешавања";
+"settings.section.general" = "Опште";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "Језик";
+"settings.language.picker_title" = "Језик апликације";
+"settings.language.downloading" = "Преузимање…";
+"settings.language.download_failed" = "Преузимање није успело";
+"settings.language.retry" = "Покушај поново";
+"settings.language.available" = "Доступно";
+"settings.language.group.downloaded" = "Преузето";
+"settings.language.search_placeholder" = "Претражи језике";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud синхронизација";
+"settings.sync.status_label" = "Статус";
+"settings.sync.status.off" = "Искључено";
+"settings.sync.status.unavailable" = "Недоступно";
+"settings.sync.status.on" = "Укључено";
+"settings.sync.status.syncing" = "Синхронизовање…";
+"settings.sync.status.idle" = "Ажурирано";
+"settings.sync.status.error" = "Грешка";
+"settings.sync.unavailable_note" = "iCloud синхронизација није доступна. Пријави се на iCloud и користи верзију са омогућеном синхронизацијом.";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "Напредак ускоро";
+"progress.placeholder_desc" = "Овде ће се појавити твоја статистика учења.";
+"progress.title" = "Напредак";
+
+/* StatsView */
+"stats.title" = "Напредак";
+"stats.cards_reviewed" = "Поновљене картице";
+"stats.due_today" = "За данас";
+"stats.day_streak" = "Дана заредом";
+"stats.by_category" = "По категорији";
+"stats.showing_language" = "Приказ:";
+"stats.by_language" = "По језику";
+"stats.by_mode" = "По типу квиза";
+"stats.category_header" = "Категорија";
+"stats.mastery_tiers" = "Нивои савладаности";
+"stats.tier.not_started" = "Није почето";
+"stats.tier.reps_1_2" = "Понављања 1–2";
+"stats.tier.reps_3_4" = "Понављања 3–4";
+"stats.tier.mastered" = "Понављања ≥ 5, EF ≥ 2,0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "Кретање током времена";
+"stats.charts.range.7d" = "7 дана";
+"stats.charts.range.30d" = "30 дана";
+"stats.charts.range.all" = "Увек";
+"stats.charts.category.all" = "Све";
+"stats.charts.mastery_growth" = "Раст савладаности";
+"stats.charts.reviews_completed" = "Завршена понављања";
+"stats.charts.cards_graduated" = "Савладане картице";
+"stats.charts.streak_history" = "Низ";
+"stats.charts.series.review" = "Понављање";
+"stats.charts.series.mastered" = "Савладано";
+"stats.charts.empty" = "Настави са учењем да би овде видео свој напредак.";
+
+/* LearningQuizView */
+"learn.title" = "Учење";
+"learn.results" = "Резултати";
+"learn.done" = "Готово";
+"learn.no_cards_title" = "Нема картица за учење";
+"learn.no_cards_desc" = "Све картице су већ у твом распореду понављања.";
+"learn.graduated_count" = "%d / %d савладано";
+"learn.active_count" = "%d активно";
+"learn.complete_title" = "Учење завршено!";
+"learn.complete_desc" = "Све картице су додате у твој распоред понављања.";
+"learn.cards_graduated" = "Савладане картице";
+
+/* MapQuizView */
+"map_quiz.title" = "Квиз на карти";
+"map_quiz.tap_on_map" = "Додирни на карти";
+"map_quiz.nothing_due_title" = "Ништа за понављање";
+"map_quiz.nothing_due_desc" = "Тренутно нема картица за понављање. Врати се касније!";
+"map_quiz.feedback.correct" = "Тачно!";
+"map_quiz.feedback.incorrect_prefix" = "Нетачно — био је";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "Резултати";
+"quiz_summary.session_complete" = "Сесија завршена!";
+"quiz_summary.cards_reviewed" = "Поновљене картице";
+"quiz_summary.correct" = "Тачно";
+"quiz_summary.next_review" = "Следеће понављање";
+"quiz_summary.done" = "Готово";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "Ништа за понављање";
+"mcq_quiz.nothing_due_desc" = "Тренутно нема картица за понављање.";
+"mcq_quiz.correct_count" = "%d тачно";
+"mcq_quiz.nav.country" = "Квиз држава";
+"mcq_quiz.nav.river" = "Квиз река";
+"mcq_quiz.nav.mountain" = "Квиз планина";
+"mcq_quiz.nav.sea" = "Квиз мора";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "Ништа за понављање";
+"capital_quiz.nothing_due_desc" = "Тренутно нема картица за понављање.";
+"capital_quiz.check" = "Провери";
+"capital_quiz.next" = "Следеће →";
+"capital_quiz.placeholder" = "Укуцај свој одговор…";
+"capital_quiz.feedback.correct" = "Тачно! ✓";
+"capital_quiz.feedback.wrong_prefix" = "Одговор је:";
+"capital_quiz.nav.capital" = "Квиз главних градова";
+"capital_quiz.nav.country" = "Квиз држава";
+"capital_quiz.correct_count" = "%d тачно";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "Именуј ово место";
+"name_feature.nav" = "Погоди место";
+"name_feature.nothing_due_title" = "Ништа за понављање";
+"name_feature.nothing_due_desc" = "Тренутно нема картица за понављање.";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "Квиз ускоро";
+"quiz_placeholder.desc" = "Квиз „%@“ биће доступан у следећем ажурирању.";
+"quiz_placeholder.all_categories" = "Све категорије";
+
+/* Continent labels */
+"continent.africa" = "Африка";
+"continent.asia" = "Азија";
+"continent.europe" = "Европа";
+"continent.north_america" = "Северна Америка";
+"continent.oceania" = "Океанија";
+"continent.south_america" = "Јужна Америка";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "Који је главни град државе %@?";
+"quiz.prompt.continent_of" = "На ком континенту се налази %@?";
+"quiz.prompt.country_of_capital" = "Која држава има %@ као главни град?";
+"quiz.prompt.sea_location" = "Која водена површина се налази близу %@?";
+"quiz.region.north" = "С";
+"quiz.region.south" = "Ј";
+"quiz.region.east" = "И";
+"quiz.region.west" = "З";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "Учење нових картица";
+"learn.mode_picker.map.title" = "Квиз на карти";
+"learn.mode_picker.map.desc" = "Додирни тачну државу на карти";
+"learn.mode_picker.mcq.title" = "Вишеструки избор";
+"learn.mode_picker.mcq.desc" = "Изабери одговор између 4 понуђена";
+
+/* Map learning quiz */
+"learn_map.title" = "Учење на карти";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "Питање";
+"a11y.progress" = "Питање %d од %d";
+"a11y.score" = "%d тачно";
+"a11y.graduated" = "%d од %d савладано";
+"a11y.active" = "%d активно";
+"a11y.answer_field.label" = "Одговор";
+"a11y.answer_field.hint" = "Укуцај свој одговор, па активирај Провери.";
+"a11y.check.hint" = "Проверава твој одговор.";
+"a11y.next.hint" = "Прелази на следеће питање.";
+"a11y.option.hint" = "Двапут додирни да изабереш овај одговор.";
+"a11y.state.selected" = "изабрано";
+"a11y.state.correct" = "тачан одговор";
+"a11y.state.incorrect" = "нетачан одговор";
+"a11y.state.not_answered" = "без одговора";
+"a11y.feedback.correct" = "Тачно";
+"a11y.feedback.incorrect" = "Нетачно";
+"a11y.summary.accuracy" = "%d посто тачно";
+"a11y.summary.result_icon" = "Резултат сесије";
+"a11y.done.hint" = "Затвара овај квиз.";
+"a11y.map.pin.hint" = "Двапут додирни да изабереш ово место.";
+"a11y.map.prompt.label" = "Пронађи на карти";
+"a11y.map.progress" = "Место %d од %d";
+"a11y.map.streak" = "%d од 3 тачно заредом";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "Ново";
+"stats.tier.name.learning" = "Учење";
+"stats.tier.name.review" = "Преглед";
+"stats.tier.name.mastered" = "Савладано";
+"a11y.back" = "Назад";

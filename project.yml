@@ -22,12 +22,13 @@ targets:
       # Main source/resource tree. The non-base languages' resources are declared SEPARATELY below as
       # ODR-tagged sources, so they are excluded here to avoid being auto-enumerated into the
       # always-bundled Resources build phase:
-      #   - the seven `<code>-geo.json` geo-name packs (delivered on demand), and
-      #   - the fr/de/es-ES/ca/eu/ko/nah `.lproj` UI strings — excluded so XcodeGen does not fold them
-      #     into a single always-bundled `Localizable.strings` variant group; re-added below as
-      #     individually ODR-taggable `.lproj` folder references.
+      #   - the nineteen `<code>-geo.json` geo-name packs (delivered on demand), and
+      #   - the fr/de/es-ES/ca/eu/yua/it/pl/nl/sr/ko/nah/ja/zh-Hans/hi/ar/bn/pt-BR/ur `.lproj` UI
+      #     strings — excluded so XcodeGen does not fold them into a single always-bundled
+      #     `Localizable.strings` variant group; re-added below as individually ODR-taggable `.lproj`
+      #     folder references.
       # en/es-MX have no separate geo pack and stay always-bundled (their `.lproj` are auto-detected
-      # here), so only the seven non-base languages are excluded.
+      # here), so only the non-base languages are excluded.
       - path: Hanahuac
         excludes:
           # Declared explicitly below as an always-bundled resource; exclude here so it is not
@@ -38,20 +39,47 @@ targets:
           - "Resources/es-ES-geo.json"
           - "Resources/ca-geo.json"
           - "Resources/eu-geo.json"
+          - "Resources/yua-geo.json"
+          - "Resources/it-geo.json"
+          - "Resources/pl-geo.json"
+          - "Resources/nl-geo.json"
+          - "Resources/sr-geo.json"
           - "Resources/ko-geo.json"
           - "Resources/nah-geo.json"
+          - "Resources/ja-geo.json"
+          - "Resources/zh-Hans-geo.json"
+          - "Resources/hi-geo.json"
+          - "Resources/ar-geo.json"
+          - "Resources/bn-geo.json"
+          - "Resources/pt-BR-geo.json"
+          - "Resources/ur-geo.json"
           - "fr.lproj"
           - "de.lproj"
           - "es-ES.lproj"
           - "ca.lproj"
           - "eu.lproj"
+          - "yua.lproj"
+          - "it.lproj"
+          - "pl.lproj"
+          - "nl.lproj"
+          - "sr.lproj"
           - "ko.lproj"
           - "nah.lproj"
+          - "ja.lproj"
+          - "zh-Hans.lproj"
+          - "hi.lproj"
+          - "ar.lproj"
+          - "bn.lproj"
+          - "pt-BR.lproj"
+          - "ur.lproj"
       # Apple privacy manifest — always bundled (no resourceTags), copied into the app bundle's
       # Copy-Resources phase so the App Store toolchain finds PrivacyInfo.xcprivacy at the bundle root.
       - path: Hanahuac/PrivacyInfo.xcprivacy
         buildPhase: resources
-      # Non-base languages (fr, de, es-ES, ca, eu, ko, nah) are delivered as On-Demand Resources. Each
+      # Non-base languages (fr, de, es-ES, ca, eu, yua, it, pl, nl, sr, ko, nah, ja, zh-Hans, hi, ar,
+      # bn, pt-BR, ur) are delivered as On-Demand
+      # Resources.
+      # Each
       # language's
       # UI strings (.lproj) AND its geo-name pack JSON carry the same `lang-<code>` tag the provider
       # (ODRLanguagePackProvider, via LanguageDescriptor.odrTags) requests, so the build's ODR tag
@@ -98,6 +126,41 @@ targets:
       - path: Hanahuac/Resources/eu-geo.json
         buildPhase: resources
         resourceTags: [lang-eu]
+      - path: Hanahuac/yua.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-yua]
+      - path: Hanahuac/Resources/yua-geo.json
+        buildPhase: resources
+        resourceTags: [lang-yua]
+      - path: Hanahuac/it.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-it]
+      - path: Hanahuac/Resources/it-geo.json
+        buildPhase: resources
+        resourceTags: [lang-it]
+      - path: Hanahuac/pl.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-pl]
+      - path: Hanahuac/Resources/pl-geo.json
+        buildPhase: resources
+        resourceTags: [lang-pl]
+      - path: Hanahuac/nl.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-nl]
+      - path: Hanahuac/Resources/nl-geo.json
+        buildPhase: resources
+        resourceTags: [lang-nl]
+      - path: Hanahuac/sr.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-sr]
+      - path: Hanahuac/Resources/sr-geo.json
+        buildPhase: resources
+        resourceTags: [lang-sr]
       - path: Hanahuac/ko.lproj
         type: folder
         buildPhase: resources
@@ -112,6 +175,58 @@ targets:
       - path: Hanahuac/Resources/nah-geo.json
         buildPhase: resources
         resourceTags: [lang-nah]
+      # Content-pending languages (story 002): structurally identical ODR blocks to the established
+      # languages above. Their `.lproj` are placeholder and their `<code>-geo.json` packs are empty
+      # until the content story (003-010) fills them; the ODR tag wiring is final.
+      - path: Hanahuac/ja.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-ja]
+      - path: Hanahuac/Resources/ja-geo.json
+        buildPhase: resources
+        resourceTags: [lang-ja]
+      - path: Hanahuac/zh-Hans.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-zh-Hans]
+      - path: Hanahuac/Resources/zh-Hans-geo.json
+        buildPhase: resources
+        resourceTags: [lang-zh-Hans]
+      - path: Hanahuac/hi.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-hi]
+      - path: Hanahuac/Resources/hi-geo.json
+        buildPhase: resources
+        resourceTags: [lang-hi]
+      - path: Hanahuac/ar.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-ar]
+      - path: Hanahuac/Resources/ar-geo.json
+        buildPhase: resources
+        resourceTags: [lang-ar]
+      - path: Hanahuac/bn.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-bn]
+      - path: Hanahuac/Resources/bn-geo.json
+        buildPhase: resources
+        resourceTags: [lang-bn]
+      - path: Hanahuac/pt-BR.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-pt-BR]
+      - path: Hanahuac/Resources/pt-BR-geo.json
+        buildPhase: resources
+        resourceTags: [lang-pt-BR]
+      - path: Hanahuac/ur.lproj
+        type: folder
+        buildPhase: resources
+        resourceTags: [lang-ur]
+      - path: Hanahuac/Resources/ur-geo.json
+        buildPhase: resources
+        resourceTags: [lang-ur]
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.hanahuac.app
@@ -148,6 +263,22 @@ targets:
     dependencies:
       - target: Hanahuac
 
+  HanahuacUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: HanahuacUITests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.hanahuac.app.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        SUPPORTS_MACCATALYST: YES
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        SWIFT_VERSION: "5.10"
+    dependencies:
+      - target: Hanahuac
+
 schemes:
   Hanahuac:
     build:
@@ -159,6 +290,7 @@ schemes:
       config: Debug
       targets:
         - HanahuacTests
+        - HanahuacUITests
     profile:
       config: Release
     analyze:

@@ -34,6 +34,8 @@
 "settings.language.download_failed" = "Download failed";
 "settings.language.retry" = "Retry";
 "settings.language.available" = "Available";
+"settings.language.group.downloaded" = "Downloaded";
+"settings.language.search_placeholder" = "Search languages";
 
 /* iCloud sync */
 "settings.sync.toggle" = "iCloud Sync";
@@ -84,7 +86,6 @@
 /* LearningQuizView */
 "learn.title" = "Learn";
 "learn.results" = "Results";
-"learn.exit" = "Exit";
 "learn.done" = "Done";
 "learn.no_cards_title" = "No cards to learn";
 "learn.no_cards_desc" = "All cards are already in your review schedule.";
@@ -96,7 +97,6 @@
 
 /* MapQuizView */
 "map_quiz.title" = "Map Quiz";
-"map_quiz.exit" = "Exit";
 "map_quiz.tap_on_map" = "Tap on the map";
 "map_quiz.nothing_due_title" = "Nothing Due";
 "map_quiz.nothing_due_desc" = "No cards are due right now. Come back later!";
@@ -114,7 +114,6 @@
 /* MultipleChoiceQuizView */
 "mcq_quiz.nothing_due_title" = "Nothing Due";
 "mcq_quiz.nothing_due_desc" = "No cards are due right now.";
-"mcq_quiz.exit" = "Exit";
 "mcq_quiz.correct_count" = "%d correct";
 "mcq_quiz.nav.country" = "Country Quiz";
 "mcq_quiz.nav.river" = "Rivers Quiz";
@@ -124,7 +123,6 @@
 /* CapitalQuizView */
 "capital_quiz.nothing_due_title" = "Nothing Due";
 "capital_quiz.nothing_due_desc" = "No cards are due right now.";
-"capital_quiz.exit" = "Exit";
 "capital_quiz.check" = "Check";
 "capital_quiz.next" = "Next →";
 "capital_quiz.placeholder" = "Type your answer…";
@@ -157,6 +155,11 @@
 "quiz.prompt.capital_of" = "What is the capital of %@?";
 "quiz.prompt.continent_of" = "On which continent is %@ located?";
 "quiz.prompt.country_of_capital" = "Which country has %@ as its capital?";
+"quiz.prompt.sea_location" = "Which body of water is located near %@?";
+"quiz.region.north" = "N";
+"quiz.region.south" = "S";
+"quiz.region.east" = "E";
+"quiz.region.west" = "W";
 
 /* New-card mode picker (Countries) */
 "learn.mode_picker.title" = "Learn New Cards";
@@ -193,3 +196,10 @@
 "a11y.map.prompt.label" = "Find on the map";
 "a11y.map.progress" = "Place %d of %d";
 "a11y.map.streak" = "%d of 3 correct in a row";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "New";
+"stats.tier.name.learning" = "Learning";
+"stats.tier.name.review" = "Review";
+"stats.tier.name.mastered" = "Mastered";
+"a11y.back" = "Back";

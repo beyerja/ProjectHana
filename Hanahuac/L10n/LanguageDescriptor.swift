@@ -17,6 +17,16 @@ struct LanguageDescriptor: Equatable {
         case downloadablePack
     }
 
+    /// The script's writing direction. Drives the app's `layoutDirection` so the whole UI mirrors
+    /// when a right-to-left language is selected (Arabic, Urdu), independently of the device locale.
+    /// The single source of truth is this catalog field; ``AppLocale/isRTL`` reads it.
+    enum TextDirection: Equatable {
+        /// Left-to-right scripts (the default for every language except ar/ur).
+        case leftToRight
+        /// Right-to-left scripts (Arabic `ar`, Urdu `ur`).
+        case rightToLeft
+    }
+
     /// The language's stable code. Matches the corresponding ``AppLocale/rawValue`` (e.g. `"en"`,
     /// `"es-MX"`, `"nah"`) and the name of the language's `.lproj` resource directory.
     let code: String
@@ -24,6 +34,12 @@ struct LanguageDescriptor: Equatable {
     /// The language's native display name shown in the language picker (e.g. `"한국어"`,
     /// `"Español (México)"`). Presented in the language's own script, never translated.
     let displayName: String
+
+    /// The language's name in English (e.g. `"Korean"`, `"Japanese"`, `"Spanish (Mexico)"`). This is
+    /// NOT shown in the UI; it exists so the picker's incremental search can match a query typed in
+    /// English ("Japanese" → 日本語) in addition to the native-script ``displayName`` ("日本" → 日本語).
+    /// For a language whose native name already IS its English name (e.g. English), the two are equal.
+    let englishName: String
 
     /// The ordered chain of locales to consult when resolving a localized string, from most to
     /// least preferred. The first entry is always the language itself. Partially translated
@@ -43,17 +59,26 @@ struct LanguageDescriptor: Equatable {
     /// `"lang-<code>"` (e.g. `"lang-fr"`).
     let odrTags: Set<String>
 
+    /// The language's writing direction. Defaults to ``TextDirection/leftToRight``; only the RTL
+    /// languages (ar, ur) declare ``TextDirection/rightToLeft``. Read by ``AppLocale/isRTL`` to drive
+    /// the app's `layoutDirection`.
+    let textDirection: TextDirection
+
     init(
         code: String,
         displayName: String,
+        englishName: String,
         fallbackChain: [AppLocale],
         availability: Availability,
-        odrTags: Set<String>? = nil
+        odrTags: Set<String>? = nil,
+        textDirection: TextDirection = .leftToRight
     ) {
         self.code = code
         self.displayName = displayName
+        self.englishName = englishName
         self.fallbackChain = fallbackChain
         self.availability = availability
+        self.textDirection = textDirection
         // Base languages never carry tags; downloadable packs default to the conventional
         // `"lang-<code>"` tag when not given an explicit set.
         if let odrTags {

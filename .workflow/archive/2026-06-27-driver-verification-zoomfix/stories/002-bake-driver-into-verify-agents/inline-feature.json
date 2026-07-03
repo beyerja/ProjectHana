@@ -1,0 +1,7 @@
+{
+  "body": "Non-blocking (same as verify-story.md): the sim-unavailable fallback calls `just screenshot-sim .workflow/screenshots/feature-verify.png`, but the replaced steps did `mkdir -p .workflow/screenshots` first. `screenshot-sim` does not `mkdir -p` (it runs `xcrun simctl io booted screenshot` directly) and `.workflow/screenshots/` is gitignored, so on a fresh checkout the fallback screenshot write fails with a missing-parent error. Degraded-path only and it exits non-zero rather than passing silently, so no AC impact — but worth noting the parent dir must exist.",
+  "commit_id": "8705c07e2f6db6c1d79fce06959a889a804ffcfc",
+  "path": ".claude/agents/verify-feature.md",
+  "line": 95,
+  "side": "RIGHT"
+}

@@ -1,0 +1,205 @@
+/* Bengali (bn) — বাংলা */
+
+/* HomeView */
+"home.tagline" = "এক পৃথিবী, একবারে একটি কুইজ";
+"home.categories" = "বিভাগসমূহ";
+"home.category.countries" = "দেশ";
+"home.category.rivers" = "নদী";
+"home.category.mountains" = "পর্বত";
+"home.category.seas" = "সাগর";
+"home.view_progress" = "অগ্রগতি দেখুন";
+"home.tile.new" = "নতুন";
+"home.tile.pending" = "বিচারাধীন";
+"home.tile.all_done" = "সব সম্পন্ন";
+
+/* QuizModePickerView */
+"quiz.mode.map_tap.title" = "মানচিত্র স্পর্শ কুইজ";
+"quiz.mode.map_tap.desc" = "মানচিত্রে সঠিক দেশে আলতো চাপুন";
+"quiz.mode.type_capital.title" = "রাজধানী লিখুন";
+"quiz.mode.type_capital.desc" = "“X-এর রাজধানী কী?”";
+"quiz.mode.name_feature.title" = "স্থানটির নাম বলুন";
+"quiz.mode.name_feature.desc" = "মানচিত্রে চিহ্নিত স্থানের নাম লিখুন";
+"quiz.mode.multiple_choice.title" = "বহুনির্বাচনী";
+"quiz.mode.multiple_choice.desc" = "৪টি বিকল্প থেকে রাজধানী বেছে নিন";
+"quiz.cards_due.singular" = "কার্ড বাকি";
+"quiz.cards_due.plural" = "কার্ড বাকি";
+
+/* SettingsView / LanguagePickerView */
+"settings.title" = "সেটিংস";
+"settings.section.general" = "সাধারণ";
+"settings.section.icloud" = "iCloud";
+"settings.language" = "ভাষা";
+"settings.language.picker_title" = "অ্যাপের ভাষা";
+"settings.language.downloading" = "ডাউনলোড হচ্ছে…";
+"settings.language.download_failed" = "ডাউনলোড ব্যর্থ";
+"settings.language.retry" = "পুনরায় চেষ্টা করুন";
+"settings.language.available" = "উপলব্ধ";
+"settings.language.group.downloaded" = "ডাউনলোড করা হয়েছে";
+"settings.language.search_placeholder" = "ভাষা খুঁজুন";
+
+/* iCloud sync */
+"settings.sync.toggle" = "iCloud সিঙ্ক";
+"settings.sync.status_label" = "অবস্থা";
+"settings.sync.status.off" = "বন্ধ";
+"settings.sync.status.unavailable" = "অনুপলব্ধ";
+"settings.sync.status.on" = "চালু";
+"settings.sync.status.syncing" = "সিঙ্ক হচ্ছে…";
+"settings.sync.status.idle" = "হালনাগাদ";
+"settings.sync.status.error" = "ত্রুটি";
+"settings.sync.unavailable_note" = "iCloud সিঙ্ক অনুপলব্ধ। iCloud-এ সাইন ইন করুন এবং সিঙ্ক সক্রিয় করা একটি বিল্ড ব্যবহার করুন।";
+
+/* ProgressPlaceholderView */
+"progress.coming_soon" = "অগ্রগতি শীঘ্রই আসছে";
+"progress.placeholder_desc" = "আপনার শেখার পরিসংখ্যান এখানে দেখা যাবে।";
+"progress.title" = "অগ্রগতি";
+
+/* StatsView */
+"stats.title" = "অগ্রগতি";
+"stats.cards_reviewed" = "পর্যালোচিত কার্ড";
+"stats.due_today" = "আজ বাকি";
+"stats.day_streak" = "দিনের ধারা";
+"stats.by_category" = "বিভাগ অনুযায়ী";
+"stats.showing_language" = "দেখানো হচ্ছে:";
+"stats.by_language" = "ভাষা অনুযায়ী";
+"stats.by_mode" = "কুইজের ধরন অনুযায়ী";
+"stats.category_header" = "বিভাগ";
+"stats.mastery_tiers" = "দক্ষতার স্তর";
+"stats.tier.not_started" = "শুরু হয়নি";
+"stats.tier.reps_1_2" = "পুনরাবৃত্তি ১–২";
+"stats.tier.reps_3_4" = "পুনরাবৃত্তি ৩–৪";
+"stats.tier.mastered" = "পুনরাবৃত্তি ≥ 5, EF ≥ 2.0";
+
+/* StatsView — charts (trends over time) */
+"stats.charts.title" = "সময়ের সাথে প্রবণতা";
+"stats.charts.range.7d" = "৭ দিন";
+"stats.charts.range.30d" = "৩০ দিন";
+"stats.charts.range.all" = "সর্বকাল";
+"stats.charts.category.all" = "সব";
+"stats.charts.mastery_growth" = "দক্ষতার বৃদ্ধি";
+"stats.charts.reviews_completed" = "সম্পন্ন পর্যালোচনা";
+"stats.charts.cards_graduated" = "উত্তীর্ণ কার্ড";
+"stats.charts.streak_history" = "ধারা";
+"stats.charts.series.review" = "পর্যালোচনা";
+"stats.charts.series.mastered" = "আয়ত্ত";
+"stats.charts.empty" = "এখানে আপনার অগ্রগতির প্রবণতা দেখতে শেখা চালিয়ে যান।";
+
+/* LearningQuizView */
+"learn.title" = "শিখুন";
+"learn.results" = "ফলাফল";
+"learn.done" = "সম্পন্ন";
+"learn.no_cards_title" = "শেখার মতো কোনো কার্ড নেই";
+"learn.no_cards_desc" = "সব কার্ড ইতিমধ্যে আপনার পর্যালোচনা সূচিতে রয়েছে।";
+"learn.graduated_count" = "%d / %d উত্তীর্ণ";
+"learn.active_count" = "%d সক্রিয়";
+"learn.complete_title" = "শেখা সম্পন্ন!";
+"learn.complete_desc" = "সব কার্ড আপনার পর্যালোচনা সূচিতে যোগ করা হয়েছে।";
+"learn.cards_graduated" = "উত্তীর্ণ কার্ড";
+
+/* MapQuizView */
+"map_quiz.title" = "মানচিত্র কুইজ";
+"map_quiz.tap_on_map" = "মানচিত্রে আলতো চাপুন";
+"map_quiz.nothing_due_title" = "কিছু বাকি নেই";
+"map_quiz.nothing_due_desc" = "এখন কোনো কার্ড বাকি নেই। পরে আবার আসুন!";
+"map_quiz.feedback.correct" = "সঠিক!";
+"map_quiz.feedback.incorrect_prefix" = "ভুল — সেটি ছিল";
+
+/* QuizSummaryView */
+"quiz_summary.results" = "ফলাফল";
+"quiz_summary.session_complete" = "সেশন সম্পন্ন!";
+"quiz_summary.cards_reviewed" = "পর্যালোচিত কার্ড";
+"quiz_summary.correct" = "সঠিক";
+"quiz_summary.next_review" = "পরবর্তী পর্যালোচনা";
+"quiz_summary.done" = "সম্পন্ন";
+
+/* MultipleChoiceQuizView */
+"mcq_quiz.nothing_due_title" = "কিছু বাকি নেই";
+"mcq_quiz.nothing_due_desc" = "এখন কোনো কার্ড বাকি নেই।";
+"mcq_quiz.correct_count" = "%d সঠিক";
+"mcq_quiz.nav.country" = "দেশ কুইজ";
+"mcq_quiz.nav.river" = "নদী কুইজ";
+"mcq_quiz.nav.mountain" = "পর্বত কুইজ";
+"mcq_quiz.nav.sea" = "সাগর কুইজ";
+
+/* CapitalQuizView */
+"capital_quiz.nothing_due_title" = "কিছু বাকি নেই";
+"capital_quiz.nothing_due_desc" = "এখন কোনো কার্ড বাকি নেই।";
+"capital_quiz.check" = "যাচাই করুন";
+"capital_quiz.next" = "পরবর্তী →";
+"capital_quiz.placeholder" = "আপনার উত্তর লিখুন…";
+"capital_quiz.feedback.correct" = "সঠিক! ✓";
+"capital_quiz.feedback.wrong_prefix" = "উত্তরটি হলো:";
+"capital_quiz.nav.capital" = "রাজধানী কুইজ";
+"capital_quiz.nav.country" = "দেশ কুইজ";
+"capital_quiz.correct_count" = "%d সঠিক";
+
+/* NameFeatureQuizView */
+"name_feature.prompt" = "এই স্থানটির নাম বলুন";
+"name_feature.nav" = "স্থানটির নাম বলুন";
+"name_feature.nothing_due_title" = "কিছু বাকি নেই";
+"name_feature.nothing_due_desc" = "এখন কোনো কার্ড বাকি নেই।";
+
+/* QuizPlaceholderView */
+"quiz_placeholder.coming_soon" = "কুইজ শীঘ্রই আসছে";
+"quiz_placeholder.desc" = "%@ কুইজ পরবর্তী আপডেটে উপলব্ধ হবে।";
+"quiz_placeholder.all_categories" = "সব বিভাগ";
+
+/* Continent labels */
+"continent.africa" = "আফ্রিকা";
+"continent.asia" = "এশিয়া";
+"continent.europe" = "ইউরোপ";
+"continent.north_america" = "উত্তর আমেরিকা";
+"continent.oceania" = "ওশেনিয়া";
+"continent.south_america" = "দক্ষিণ আমেরিকা";
+
+/* Quiz prompts */
+"quiz.prompt.capital_of" = "%@-এর রাজধানী কী?";
+"quiz.prompt.continent_of" = "%@ কোন মহাদেশে অবস্থিত?";
+"quiz.prompt.country_of_capital" = "কোন দেশের রাজধানী %@?";
+"quiz.prompt.sea_location" = "%@-এর কাছে কোন জলরাশি অবস্থিত?";
+"quiz.region.north" = "উ";
+"quiz.region.south" = "দ";
+"quiz.region.east" = "পূ";
+"quiz.region.west" = "প";
+
+/* New-card mode picker (Countries) */
+"learn.mode_picker.title" = "নতুন কার্ড শিখুন";
+"learn.mode_picker.map.title" = "মানচিত্র কুইজ";
+"learn.mode_picker.map.desc" = "মানচিত্রে সঠিক দেশে আলতো চাপুন";
+"learn.mode_picker.mcq.title" = "বহুনির্বাচনী";
+"learn.mode_picker.mcq.desc" = "৪টি বিকল্প থেকে উত্তর বেছে নিন";
+
+/* Map learning quiz */
+"learn_map.title" = "মানচিত্র শিক্ষা";
+"learn_map.streak" = "%d / 3";
+
+/* Accessibility (VoiceOver) — quiz flows */
+"a11y.prompt.label" = "প্রশ্ন";
+"a11y.progress" = "%d-এর মধ্যে প্রশ্ন %d";
+"a11y.score" = "%d সঠিক";
+"a11y.graduated" = "%d-এর মধ্যে %d উত্তীর্ণ";
+"a11y.active" = "%d সক্রিয়";
+"a11y.answer_field.label" = "উত্তর";
+"a11y.answer_field.hint" = "আপনার উত্তর লিখুন, তারপর যাচাই করুন সক্রিয় করুন।";
+"a11y.check.hint" = "আপনার উত্তর যাচাই করে।";
+"a11y.next.hint" = "পরবর্তী প্রশ্নে যায়।";
+"a11y.option.hint" = "এই উত্তরটি বেছে নিতে ডাবল-ট্যাপ করুন।";
+"a11y.state.selected" = "নির্বাচিত";
+"a11y.state.correct" = "সঠিক উত্তর";
+"a11y.state.incorrect" = "ভুল উত্তর";
+"a11y.state.not_answered" = "উত্তর দেওয়া হয়নি";
+"a11y.feedback.correct" = "সঠিক";
+"a11y.feedback.incorrect" = "ভুল";
+"a11y.summary.accuracy" = "%d শতাংশ সঠিকতা";
+"a11y.summary.result_icon" = "সেশনের ফলাফল";
+"a11y.done.hint" = "এই কুইজটি বন্ধ করে।";
+"a11y.map.pin.hint" = "এই স্থানটি বেছে নিতে ডাবল-ট্যাপ করুন।";
+"a11y.map.prompt.label" = "মানচিত্রে খুঁজুন";
+"a11y.map.progress" = "%d-এর মধ্যে স্থান %d";
+"a11y.map.streak" = "পরপর %d / 3 সঠিক";
+
+/* Story 003 — Progress tier names + map back button (AC4 / AC7) */
+"stats.tier.name.new" = "নতুন";
+"stats.tier.name.learning" = "শিখছে";
+"stats.tier.name.review" = "পর্যালোচনা";
+"stats.tier.name.mastered" = "আয়ত্ত";
+"a11y.back" = "ফিরে যান";

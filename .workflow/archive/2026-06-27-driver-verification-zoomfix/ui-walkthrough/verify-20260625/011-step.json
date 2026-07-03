@@ -1,0 +1,398 @@
+[
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "Hanahuac",
+    "type" : "XCUIElementType(rawValue: 2)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 4)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 54,
+      "width" : 402,
+      "x" : 0,
+      "y" : 62
+    },
+    "identifier" : "Aprender",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 21)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 44,
+      "width" : 44,
+      "x" : 16,
+      "y" : 62
+    },
+    "identifier" : "BackButton",
+    "label" : "Back",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 36,
+      "width" : 57.33333333333334,
+      "x" : 76,
+      "y" : 66
+    },
+    "identifier" : "",
+    "label" : "Salir",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 36,
+      "width" : 57.33333333333334,
+      "x" : 76,
+      "y" : 66
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 36,
+      "width" : 57.33333333333333,
+      "x" : 75.99999999999999,
+      "y" : 66
+    },
+    "identifier" : "",
+    "label" : "Salir",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 20.66666666666667,
+      "width" : 74.66666666666666,
+      "x" : 163.66666666666666,
+      "y" : 73.66666666666666
+    },
+    "identifier" : "",
+    "label" : "Aprender",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 370,
+      "x" : 16,
+      "y" : 132
+    },
+    "identifier" : "",
+    "label" : "0 de 197 graduadas",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "10 activas"
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 122.33333333333331,
+      "x" : 16,
+      "y" : 132
+    },
+    "identifier" : "",
+    "label" : "0 \/ 197 graduadas",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 18,
+      "width" : 68.33333333333331,
+      "x" : 317.6666666666667,
+      "y" : 132
+    },
+    "identifier" : "",
+    "label" : "10 activas",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 724,
+      "width" : 402,
+      "x" : 0,
+      "y" : 150
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 46)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 394.33333333333326,
+      "width" : 402,
+      "x" : 0,
+      "y" : 150
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 97,
+      "width" : 370,
+      "x" : 16,
+      "y" : 166
+    },
+    "identifier" : "",
+    "label" : "Pregunta",
+    "type" : "XCUIElementType(rawValue: 48)",
+    "value" : "What is the capital of United States?"
+  },
+  {
+    "frame" : {
+      "height" : 52.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 283
+    },
+    "identifier" : "quiz.answer.0",
+    "label" : "Nassau",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 347.3333333333333
+    },
+    "identifier" : "quiz.answer.1",
+    "label" : "Kingstown",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52.333333333333314,
+      "width" : 370,
+      "x" : 16,
+      "y" : 411.66666666666663
+    },
+    "identifier" : "quiz.answer.2",
+    "label" : "Washington, D.C.",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 52.33333333333326,
+      "width" : 370,
+      "x" : 16,
+      "y" : 476
+    },
+    "identifier" : "quiz.answer.3",
+    "label" : "Saint John's",
+    "type" : "XCUIElementType(rawValue: 9)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 634,
+      "width" : 30,
+      "x" : 369,
+      "y" : 178
+    },
+    "identifier" : "",
+    "label" : "Vertical scroll bar, 1 page",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 %"
+  },
+  {
+    "frame" : {
+      "height" : 307.33333333333326,
+      "width" : 3,
+      "x" : 396,
+      "y" : 501.66666666666674
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 634,
+      "width" : 30,
+      "x" : 369,
+      "y" : 178
+    },
+    "identifier" : "",
+    "label" : "Vertical scroll bar, 1 page",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : "0 %"
+  },
+  {
+    "frame" : {
+      "height" : 307.33333333333326,
+      "width" : 3,
+      "x" : 396,
+      "y" : 501.66666666666674
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  },
+  {
+    "frame" : {
+      "height" : 874,
+      "width" : 402,
+      "x" : 0,
+      "y" : 0
+    },
+    "identifier" : "",
+    "label" : "",
+    "type" : "XCUIElementType(rawValue: 1)",
+    "value" : ""
+  }
+]

@@ -14,6 +14,10 @@ struct LanguagePickerView: View {
         localeList
             .navigationTitle(L10n["settings.language"])
             .inlineNavigationTitle()
+            .searchable(
+                text: $viewModel.query,
+                prompt: L10n["settings.language.search_placeholder"]
+            )
             .onAppear {
                 // Carry-over reconciliation: a persisted downloadable selection restored in
                 // LanguageManager.init never fired `current`'s didSet, so its ODR download was never
@@ -24,9 +28,11 @@ struct LanguagePickerView: View {
 
     private var localeList: some View {
         List {
-            Section(L10n["settings.language.picker_title"]) {
-                ForEach(viewModel.rows) { row in
-                    localeRow(row)
+            ForEach(viewModel.groups) { group in
+                Section(L10n[group.kind.titleKey]) {
+                    ForEach(group.rows) { row in
+                        localeRow(row)
+                    }
                 }
             }
         }

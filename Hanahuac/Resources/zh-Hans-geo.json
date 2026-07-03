@@ -1,0 +1,1019 @@
+{
+  "version": 1,
+  "code": "zh-Hans",
+  "entries": {
+    "AD": {
+      "name": "安道尔",
+      "capital": "安道尔城"
+    },
+    "AE": {
+      "name": "阿拉伯联合酋长国",
+      "capital": "阿布扎比"
+    },
+    "AF": {
+      "name": "阿富汗",
+      "capital": "喀布尔"
+    },
+    "AG": {
+      "name": "安提瓜和巴布达",
+      "capital": "圣约翰斯"
+    },
+    "AL": {
+      "name": "阿尔巴尼亚",
+      "capital": "地拉那"
+    },
+    "AM": {
+      "name": "亚美尼亚",
+      "capital": "埃里温"
+    },
+    "AO": {
+      "name": "安哥拉",
+      "capital": "罗安达"
+    },
+    "AR": {
+      "name": "阿根廷",
+      "capital": "布宜诺斯艾利斯"
+    },
+    "AT": {
+      "name": "奥地利",
+      "capital": "维也纳"
+    },
+    "AU": {
+      "name": "澳大利亚",
+      "capital": "堪培拉"
+    },
+    "AZ": {
+      "name": "阿塞拜疆",
+      "capital": "巴库"
+    },
+    "BA": {
+      "name": "波斯尼亚和黑塞哥维那",
+      "capital": "萨拉热窝"
+    },
+    "BB": {
+      "name": "巴巴多斯",
+      "capital": "布里奇敦"
+    },
+    "BD": {
+      "name": "孟加拉国",
+      "capital": "达卡"
+    },
+    "BE": {
+      "name": "比利时",
+      "capital": "布鲁塞尔"
+    },
+    "BF": {
+      "name": "布基纳法索",
+      "capital": "瓦加杜古"
+    },
+    "BG": {
+      "name": "保加利亚",
+      "capital": "索非亚"
+    },
+    "BH": {
+      "name": "巴林",
+      "capital": "麦纳麦"
+    },
+    "BI": {
+      "name": "布隆迪",
+      "capital": "基特加"
+    },
+    "BJ": {
+      "name": "贝宁",
+      "capital": "波多诺伏"
+    },
+    "BN": {
+      "name": "文莱",
+      "capital": "斯里巴加湾市"
+    },
+    "BO": {
+      "name": "玻利维亚",
+      "capital": "苏克雷"
+    },
+    "BR": {
+      "name": "巴西",
+      "capital": "巴西利亚"
+    },
+    "BS": {
+      "name": "巴哈马",
+      "capital": "拿骚"
+    },
+    "BT": {
+      "name": "不丹",
+      "capital": "廷布"
+    },
+    "BW": {
+      "name": "博茨瓦纳",
+      "capital": "哈博罗内"
+    },
+    "BY": {
+      "name": "白俄罗斯",
+      "capital": "明斯克"
+    },
+    "BZ": {
+      "name": "伯利兹",
+      "capital": "贝尔莫潘"
+    },
+    "CA": {
+      "name": "加拿大",
+      "capital": "渥太华"
+    },
+    "CD": {
+      "name": "刚果民主共和国",
+      "capital": "金沙萨"
+    },
+    "CF": {
+      "name": "中非共和国",
+      "capital": "班吉"
+    },
+    "CG": {
+      "name": "刚果共和国",
+      "capital": "布拉柴维尔"
+    },
+    "CH": {
+      "name": "瑞士",
+      "capital": "伯尔尼"
+    },
+    "CI": {
+      "name": "科特迪瓦",
+      "capital": "亚穆苏克罗"
+    },
+    "CL": {
+      "name": "智利",
+      "capital": "圣地亚哥"
+    },
+    "CM": {
+      "name": "喀麦隆",
+      "capital": "雅温得"
+    },
+    "CN": {
+      "name": "中国",
+      "capital": "北京"
+    },
+    "CO": {
+      "name": "哥伦比亚",
+      "capital": "波哥大"
+    },
+    "CR": {
+      "name": "哥斯达黎加",
+      "capital": "圣何塞"
+    },
+    "CU": {
+      "name": "古巴",
+      "capital": "哈瓦那"
+    },
+    "CV": {
+      "name": "佛得角",
+      "capital": "普拉亚"
+    },
+    "CY": {
+      "name": "塞浦路斯",
+      "capital": "尼科西亚"
+    },
+    "CZ": {
+      "name": "捷克",
+      "capital": "布拉格"
+    },
+    "DE": {
+      "name": "德国",
+      "capital": "柏林"
+    },
+    "DJ": {
+      "name": "吉布提",
+      "capital": "吉布提市"
+    },
+    "DK": {
+      "name": "丹麦",
+      "capital": "哥本哈根"
+    },
+    "DM": {
+      "name": "多米尼克",
+      "capital": "罗索"
+    },
+    "DO": {
+      "name": "多米尼加共和国",
+      "capital": "圣多明各"
+    },
+    "DZ": {
+      "name": "阿尔及利亚",
+      "capital": "阿尔及尔"
+    },
+    "EC": {
+      "name": "厄瓜多尔",
+      "capital": "基多"
+    },
+    "EE": {
+      "name": "爱沙尼亚",
+      "capital": "塔林"
+    },
+    "EG": {
+      "name": "埃及",
+      "capital": "开罗"
+    },
+    "ER": {
+      "name": "厄立特里亚",
+      "capital": "阿斯马拉"
+    },
+    "ES": {
+      "name": "西班牙",
+      "capital": "马德里"
+    },
+    "ET": {
+      "name": "埃塞俄比亚",
+      "capital": "亚的斯亚贝巴"
+    },
+    "FI": {
+      "name": "芬兰",
+      "capital": "赫尔辛基"
+    },
+    "FJ": {
+      "name": "斐济",
+      "capital": "苏瓦"
+    },
+    "FM": {
+      "name": "密克罗尼西亚联邦",
+      "capital": "帕利基尔"
+    },
+    "FR": {
+      "name": "法国",
+      "capital": "巴黎"
+    },
+    "GA": {
+      "name": "加蓬",
+      "capital": "利伯维尔"
+    },
+    "GB": {
+      "name": "英国",
+      "capital": "伦敦"
+    },
+    "GD": {
+      "name": "格林纳达",
+      "capital": "圣乔治"
+    },
+    "GE": {
+      "name": "格鲁吉亚",
+      "capital": "第比利斯"
+    },
+    "GH": {
+      "name": "加纳",
+      "capital": "阿克拉"
+    },
+    "GM": {
+      "name": "冈比亚",
+      "capital": "班珠尔"
+    },
+    "GN": {
+      "name": "几内亚",
+      "capital": "科纳克里"
+    },
+    "GQ": {
+      "name": "赤道几内亚",
+      "capital": "马拉博"
+    },
+    "GR": {
+      "name": "希腊",
+      "capital": "雅典"
+    },
+    "GT": {
+      "name": "危地马拉",
+      "capital": "危地马拉城"
+    },
+    "GW": {
+      "name": "几内亚比绍",
+      "capital": "比绍"
+    },
+    "GY": {
+      "name": "圭亚那",
+      "capital": "乔治敦"
+    },
+    "HN": {
+      "name": "洪都拉斯",
+      "capital": "特古西加尔巴"
+    },
+    "HR": {
+      "name": "克罗地亚",
+      "capital": "萨格勒布"
+    },
+    "HT": {
+      "name": "海地",
+      "capital": "太子港"
+    },
+    "HU": {
+      "name": "匈牙利",
+      "capital": "布达佩斯"
+    },
+    "ID": {
+      "name": "印度尼西亚",
+      "capital": "雅加达"
+    },
+    "IE": {
+      "name": "爱尔兰",
+      "capital": "都柏林"
+    },
+    "IL": {
+      "name": "以色列",
+      "capital": "耶路撒冷"
+    },
+    "IN": {
+      "name": "印度",
+      "capital": "新德里"
+    },
+    "IQ": {
+      "name": "伊拉克",
+      "capital": "巴格达"
+    },
+    "IR": {
+      "name": "伊朗",
+      "capital": "德黑兰"
+    },
+    "IS": {
+      "name": "冰岛",
+      "capital": "雷克雅未克"
+    },
+    "IT": {
+      "name": "意大利",
+      "capital": "罗马"
+    },
+    "JM": {
+      "name": "牙买加",
+      "capital": "金斯敦"
+    },
+    "JO": {
+      "name": "约旦",
+      "capital": "安曼"
+    },
+    "JP": {
+      "name": "日本",
+      "capital": "东京"
+    },
+    "KE": {
+      "name": "肯尼亚",
+      "capital": "内罗毕"
+    },
+    "KG": {
+      "name": "吉尔吉斯斯坦",
+      "capital": "比什凯克"
+    },
+    "KH": {
+      "name": "柬埔寨",
+      "capital": "金边"
+    },
+    "KI": {
+      "name": "基里巴斯",
+      "capital": "南塔拉瓦"
+    },
+    "KM": {
+      "name": "科摩罗",
+      "capital": "莫罗尼"
+    },
+    "KN": {
+      "name": "圣基茨和尼维斯",
+      "capital": "巴斯特尔"
+    },
+    "KP": {
+      "name": "朝鲜",
+      "capital": "平壤"
+    },
+    "KR": {
+      "name": "韩国",
+      "capital": "首尔"
+    },
+    "KW": {
+      "name": "科威特",
+      "capital": "科威特城"
+    },
+    "KZ": {
+      "name": "哈萨克斯坦",
+      "capital": "阿斯塔纳"
+    },
+    "LA": {
+      "name": "老挝",
+      "capital": "万象"
+    },
+    "LB": {
+      "name": "黎巴嫩",
+      "capital": "贝鲁特"
+    },
+    "LC": {
+      "name": "圣卢西亚",
+      "capital": "卡斯特里"
+    },
+    "LI": {
+      "name": "列支敦士登",
+      "capital": "瓦杜兹"
+    },
+    "LK": {
+      "name": "斯里兰卡",
+      "capital": "斯里贾亚瓦德纳普拉科特"
+    },
+    "LR": {
+      "name": "利比里亚",
+      "capital": "蒙罗维亚"
+    },
+    "LS": {
+      "name": "莱索托",
+      "capital": "马塞卢"
+    },
+    "LT": {
+      "name": "立陶宛",
+      "capital": "维尔纽斯"
+    },
+    "LU": {
+      "name": "卢森堡",
+      "capital": "卢森堡市"
+    },
+    "LV": {
+      "name": "拉脱维亚",
+      "capital": "里加"
+    },
+    "LY": {
+      "name": "利比亚",
+      "capital": "的黎波里"
+    },
+    "MA": {
+      "name": "摩洛哥",
+      "capital": "拉巴特"
+    },
+    "MC": {
+      "name": "摩纳哥",
+      "capital": "摩纳哥"
+    },
+    "MD": {
+      "name": "摩尔多瓦",
+      "capital": "基希讷乌"
+    },
+    "ME": {
+      "name": "黑山",
+      "capital": "波德戈里察"
+    },
+    "MG": {
+      "name": "马达加斯加",
+      "capital": "塔那那利佛"
+    },
+    "MH": {
+      "name": "马绍尔群岛",
+      "capital": "马朱罗"
+    },
+    "MK": {
+      "name": "北马其顿",
+      "capital": "斯科普里"
+    },
+    "ML": {
+      "name": "马里",
+      "capital": "巴马科"
+    },
+    "MM": {
+      "name": "缅甸",
+      "capital": "内比都"
+    },
+    "MN": {
+      "name": "蒙古",
+      "capital": "乌兰巴托"
+    },
+    "MR": {
+      "name": "毛里塔尼亚",
+      "capital": "努瓦克肖特"
+    },
+    "MT": {
+      "name": "马耳他",
+      "capital": "瓦莱塔"
+    },
+    "MU": {
+      "name": "毛里求斯",
+      "capital": "路易港"
+    },
+    "MV": {
+      "name": "马尔代夫",
+      "capital": "马累"
+    },
+    "MW": {
+      "name": "马拉维",
+      "capital": "利隆圭"
+    },
+    "MX": {
+      "name": "墨西哥",
+      "capital": "墨西哥城"
+    },
+    "MY": {
+      "name": "马来西亚",
+      "capital": "吉隆坡"
+    },
+    "MZ": {
+      "name": "莫桑比克",
+      "capital": "马普托"
+    },
+    "NA": {
+      "name": "纳米比亚",
+      "capital": "温得和克"
+    },
+    "NE": {
+      "name": "尼日尔",
+      "capital": "尼亚美"
+    },
+    "NG": {
+      "name": "尼日利亚",
+      "capital": "阿布贾"
+    },
+    "NI": {
+      "name": "尼加拉瓜",
+      "capital": "马那瓜"
+    },
+    "NL": {
+      "name": "荷兰",
+      "capital": "阿姆斯特丹"
+    },
+    "NO": {
+      "name": "挪威",
+      "capital": "奥斯陆"
+    },
+    "NP": {
+      "name": "尼泊尔",
+      "capital": "加德满都"
+    },
+    "NR": {
+      "name": "瑙鲁",
+      "capital": "亚伦"
+    },
+    "NZ": {
+      "name": "新西兰",
+      "capital": "惠灵顿"
+    },
+    "OM": {
+      "name": "阿曼",
+      "capital": "马斯喀特"
+    },
+    "PA": {
+      "name": "巴拿马",
+      "capital": "巴拿马城"
+    },
+    "PE": {
+      "name": "秘鲁",
+      "capital": "利马"
+    },
+    "PG": {
+      "name": "巴布亚新几内亚",
+      "capital": "莫尔兹比港"
+    },
+    "PH": {
+      "name": "菲律宾",
+      "capital": "马尼拉"
+    },
+    "PK": {
+      "name": "巴基斯坦",
+      "capital": "伊斯兰堡"
+    },
+    "PL": {
+      "name": "波兰",
+      "capital": "华沙"
+    },
+    "PS": {
+      "name": "巴勒斯坦",
+      "capital": "拉马拉"
+    },
+    "PT": {
+      "name": "葡萄牙",
+      "capital": "里斯本"
+    },
+    "PW": {
+      "name": "帕劳",
+      "capital": "恩吉鲁尔穆德"
+    },
+    "PY": {
+      "name": "巴拉圭",
+      "capital": "亚松森"
+    },
+    "QA": {
+      "name": "卡塔尔",
+      "capital": "多哈"
+    },
+    "RO": {
+      "name": "罗马尼亚",
+      "capital": "布加勒斯特"
+    },
+    "RS": {
+      "name": "塞尔维亚",
+      "capital": "贝尔格莱德"
+    },
+    "RU": {
+      "name": "俄罗斯",
+      "capital": "莫斯科"
+    },
+    "RW": {
+      "name": "卢旺达",
+      "capital": "基加利"
+    },
+    "SA": {
+      "name": "沙特阿拉伯",
+      "capital": "利雅得"
+    },
+    "SB": {
+      "name": "所罗门群岛",
+      "capital": "霍尼亚拉"
+    },
+    "SC": {
+      "name": "塞舌尔",
+      "capital": "维多利亚"
+    },
+    "SD": {
+      "name": "苏丹",
+      "capital": "喀土穆"
+    },
+    "SE": {
+      "name": "瑞典",
+      "capital": "斯德哥尔摩"
+    },
+    "SG": {
+      "name": "新加坡",
+      "capital": "新加坡"
+    },
+    "SI": {
+      "name": "斯洛文尼亚",
+      "capital": "卢布尔雅那"
+    },
+    "SK": {
+      "name": "斯洛伐克",
+      "capital": "布拉迪斯拉发"
+    },
+    "SL": {
+      "name": "塞拉利昂",
+      "capital": "弗里敦"
+    },
+    "SM": {
+      "name": "圣马力诺",
+      "capital": "圣马力诺"
+    },
+    "SN": {
+      "name": "塞内加尔",
+      "capital": "达喀尔"
+    },
+    "SO": {
+      "name": "索马里",
+      "capital": "摩加迪沙"
+    },
+    "SR": {
+      "name": "苏里南",
+      "capital": "帕拉马里博"
+    },
+    "SS": {
+      "name": "南苏丹",
+      "capital": "朱巴"
+    },
+    "ST": {
+      "name": "圣多美和普林西比",
+      "capital": "圣多美"
+    },
+    "SV": {
+      "name": "萨尔瓦多",
+      "capital": "圣萨尔瓦多"
+    },
+    "SY": {
+      "name": "叙利亚",
+      "capital": "大马士革"
+    },
+    "SZ": {
+      "name": "斯威士兰",
+      "capital": "姆巴巴纳"
+    },
+    "TD": {
+      "name": "乍得",
+      "capital": "恩贾梅纳"
+    },
+    "TG": {
+      "name": "多哥",
+      "capital": "洛美"
+    },
+    "TH": {
+      "name": "泰国",
+      "capital": "曼谷"
+    },
+    "TJ": {
+      "name": "塔吉克斯坦",
+      "capital": "杜尚别"
+    },
+    "TL": {
+      "name": "东帝汶",
+      "capital": "帝力"
+    },
+    "TM": {
+      "name": "土库曼斯坦",
+      "capital": "阿什哈巴德"
+    },
+    "TN": {
+      "name": "突尼斯",
+      "capital": "突尼斯市"
+    },
+    "TO": {
+      "name": "汤加",
+      "capital": "努库阿洛法"
+    },
+    "TR": {
+      "name": "土耳其",
+      "capital": "安卡拉"
+    },
+    "TT": {
+      "name": "特立尼达和多巴哥",
+      "capital": "西班牙港"
+    },
+    "TV": {
+      "name": "图瓦卢",
+      "capital": "富纳富提"
+    },
+    "TW": {
+      "name": "台湾",
+      "capital": "台北"
+    },
+    "TZ": {
+      "name": "坦桑尼亚",
+      "capital": "多多马"
+    },
+    "UA": {
+      "name": "乌克兰",
+      "capital": "基辅"
+    },
+    "UG": {
+      "name": "乌干达",
+      "capital": "坎帕拉"
+    },
+    "US": {
+      "name": "美国",
+      "capital": "华盛顿"
+    },
+    "UY": {
+      "name": "乌拉圭",
+      "capital": "蒙得维的亚"
+    },
+    "UZ": {
+      "name": "乌兹别克斯坦",
+      "capital": "塔什干"
+    },
+    "VA": {
+      "name": "梵蒂冈",
+      "capital": "梵蒂冈城"
+    },
+    "VC": {
+      "name": "圣文森特和格林纳丁斯",
+      "capital": "金斯敦"
+    },
+    "VE": {
+      "name": "委内瑞拉",
+      "capital": "加拉加斯"
+    },
+    "VN": {
+      "name": "越南",
+      "capital": "河内"
+    },
+    "VU": {
+      "name": "瓦努阿图",
+      "capital": "维拉港"
+    },
+    "WS": {
+      "name": "萨摩亚",
+      "capital": "阿皮亚"
+    },
+    "XK": {
+      "name": "科索沃",
+      "capital": "普里什蒂纳"
+    },
+    "YE": {
+      "name": "也门",
+      "capital": "萨那"
+    },
+    "ZA": {
+      "name": "南非",
+      "capital": "比勒陀利亚"
+    },
+    "ZM": {
+      "name": "赞比亚",
+      "capital": "卢萨卡"
+    },
+    "ZW": {
+      "name": "津巴布韦",
+      "capital": "哈拉雷"
+    },
+    "alps": {
+      "name": "阿尔卑斯山脉"
+    },
+    "altai": {
+      "name": "阿尔泰山脉"
+    },
+    "amazon": {
+      "name": "亚马逊河"
+    },
+    "amur": {
+      "name": "黑龙江"
+    },
+    "andes": {
+      "name": "安第斯山脉"
+    },
+    "appalachians": {
+      "name": "阿巴拉契亚山脉"
+    },
+    "arabian-sea": {
+      "name": "阿拉伯海"
+    },
+    "arctic": {
+      "name": "北冰洋"
+    },
+    "atlantic": {
+      "name": "大西洋"
+    },
+    "atlas": {
+      "name": "阿特拉斯山脉"
+    },
+    "bay-of-bengal": {
+      "name": "孟加拉湾"
+    },
+    "bering": {
+      "name": "白令海"
+    },
+    "black-sea": {
+      "name": "黑海"
+    },
+    "caribbean": {
+      "name": "加勒比海"
+    },
+    "carpathians": {
+      "name": "喀尔巴阡山脉"
+    },
+    "caspian-sea": {
+      "name": "里海"
+    },
+    "caucasus": {
+      "name": "高加索山脉"
+    },
+    "colorado": {
+      "name": "科罗拉多河"
+    },
+    "columbia": {
+      "name": "哥伦比亚河"
+    },
+    "congo": {
+      "name": "刚果河"
+    },
+    "coral-sea": {
+      "name": "珊瑚海"
+    },
+    "danube": {
+      "name": "多瑙河"
+    },
+    "dnieper": {
+      "name": "第聂伯河"
+    },
+    "drakensberg": {
+      "name": "德拉肯斯山脉"
+    },
+    "east-china": {
+      "name": "东海"
+    },
+    "eastern-rift-highlands": {
+      "name": "东非大裂谷高地"
+    },
+    "ethiopian-highlands": {
+      "name": "埃塞俄比亚高原"
+    },
+    "euphrates": {
+      "name": "幼发拉底河"
+    },
+    "ganges": {
+      "name": "恒河"
+    },
+    "great-dividing-range": {
+      "name": "大分水岭"
+    },
+    "gulf-of-mexico": {
+      "name": "墨西哥湾"
+    },
+    "himalayas": {
+      "name": "喜马拉雅山脉"
+    },
+    "hindu-kush": {
+      "name": "兴都库什山脉"
+    },
+    "indian": {
+      "name": "印度洋"
+    },
+    "indus": {
+      "name": "印度河"
+    },
+    "irrawaddy": {
+      "name": "伊洛瓦底江"
+    },
+    "karakoram": {
+      "name": "喀喇昆仑山脉"
+    },
+    "kunlun": {
+      "name": "昆仑山脉"
+    },
+    "lena": {
+      "name": "勒拿河"
+    },
+    "mediterranean": {
+      "name": "地中海"
+    },
+    "mekong": {
+      "name": "湄公河"
+    },
+    "mississippi": {
+      "name": "密西西比河"
+    },
+    "missouri": {
+      "name": "密苏里河"
+    },
+    "murray": {
+      "name": "墨累河"
+    },
+    "niger": {
+      "name": "尼日尔河"
+    },
+    "nile": {
+      "name": "尼罗河"
+    },
+    "north-sea": {
+      "name": "北海"
+    },
+    "ob": {
+      "name": "鄂毕河"
+    },
+    "orange": {
+      "name": "奥兰治河"
+    },
+    "orinoco": {
+      "name": "奥里诺科河"
+    },
+    "pacific": {
+      "name": "太平洋"
+    },
+    "pamir": {
+      "name": "帕米尔高原"
+    },
+    "parana": {
+      "name": "巴拉那河"
+    },
+    "persian-gulf": {
+      "name": "波斯湾"
+    },
+    "pyrenees": {
+      "name": "比利牛斯山脉"
+    },
+    "red-sea": {
+      "name": "红海"
+    },
+    "rhine": {
+      "name": "莱茵河"
+    },
+    "rockies": {
+      "name": "落基山脉"
+    },
+    "sao-francisco": {
+      "name": "圣弗朗西斯科河"
+    },
+    "scandinavian-mountains": {
+      "name": "斯堪的纳维亚山脉"
+    },
+    "senegal-river": {
+      "name": "塞内加尔河"
+    },
+    "sierra-nevada-us": {
+      "name": "内华达山脉"
+    },
+    "south-china": {
+      "name": "南海"
+    },
+    "southern": {
+      "name": "南冰洋"
+    },
+    "southern-alps": {
+      "name": "南阿尔卑斯山脉"
+    },
+    "tasman-sea": {
+      "name": "塔斯曼海"
+    },
+    "tian-shan": {
+      "name": "天山山脉"
+    },
+    "tigris": {
+      "name": "底格里斯河"
+    },
+    "tocantins": {
+      "name": "托坎廷斯河"
+    },
+    "volga": {
+      "name": "伏尔加河"
+    },
+    "yangtze": {
+      "name": "长江"
+    },
+    "yellow-river": {
+      "name": "黄河"
+    },
+    "yenisei": {
+      "name": "叶尼塞河"
+    },
+    "zagros": {
+      "name": "扎格罗斯山脉"
+    },
+    "zambezi": {
+      "name": "赞比西河"
+    }
+  }
+}

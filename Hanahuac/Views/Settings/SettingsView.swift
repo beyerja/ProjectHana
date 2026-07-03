@@ -13,14 +13,9 @@ struct SettingsView: View {
                 NavigationLink {
                     LanguagePickerView()
                 } label: {
-                    HStack {
-                        Text(L10n["settings.language"])
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                            .font(.footnote.weight(.semibold))
-                            .foregroundStyle(.tertiary)
-                    }
+                    Text(L10n["settings.language"])
                 }
+                .accessibilityIdentifier("settings.language")
             }
 
             Section {
@@ -30,6 +25,7 @@ struct SettingsView: View {
                 )) {
                     Text(L10n["settings.sync.toggle"])
                 }
+                .accessibilityIdentifier("settings.syncToggle")
                 .disabled(!SyncStatusPresentation.isToggleEnabled(for: sync.status))
 
                 HStack {

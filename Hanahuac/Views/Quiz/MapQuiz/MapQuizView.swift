@@ -17,16 +17,27 @@ struct MapQuizView: View {
     let category: CardCategory?
 
     @State private var session: MapQuizSession?
-    @State private var position: MapCameraPosition = .automatic
+    // Must NOT use .automatic: MapKit resolves .automatic by framing the union of ALL map content
+    // (annotations + featureOverlays). River polylines span 25–30° of latitude; large sea/mountain
+    // polygons can be continent-sized. Using .automatic as the initial value causes the first
+    // rendered frame to zoom out to a continental/global scale before buildSession() can apply the
+    // correct .region(...). We initialise to a zero-span region (not .automatic) so MapKit has no
+    // content-union framing to perform; buildSession() then immediately sets the real region before
+    // the Map view is first composed (session is nil until buildSession runs, so the Map only enters
+    // the view hierarchy after position has already been set to .region(s.mapRegion)).
+    @State private var position: MapCameraPosition = .region(MKCoordinateRegion())
     @State private var isAdvancing = false
     @State private var isPinching = false
+    /// Owned handle for the auto-advance Task so it can be cancelled when the view is torn down
+    /// (system back chevron / swipe-back). Prevents the dismiss-while-advancing crash (AC2).
+    @State private var advanceTask: Task<Void, Never>?
 
     var body: some View {
         Group {
             if let session {
                 if session.isFinished {
                     QuizSummaryView(
-                        reviewed: session.reviewedCount,
+                        reviewed: session.totalCards,
                         correct: session.correctCount,
                         nextDue: session.nextDueDate
                     )
@@ -39,12 +50,14 @@ struct MapQuizView: View {
         }
         .navigationTitle(L10n["map_quiz.title"])
         .inlineNavigationTitle()
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button(L10n["map_quiz.exit"]) { dismiss() }
-            }
-        }
         .onAppear { buildSession() }
+        .onDisappear {
+            // Cancel the in-flight advance so its post-sleep persist/snapshot never runs against a
+            // torn-down environment when the user exits via the system back chevron (AC2).
+            advanceTask?.cancel()
+            advanceTask = nil
+            isAdvancing = false
+        }
     }
 
     // MARK: – Quiz body
@@ -74,6 +87,7 @@ struct MapQuizView: View {
             }
             .mapStyle(.imagery(elevation: .flat))
             .ignoresSafeArea(edges: .horizontal)
+            .accessibilityIdentifier("map.tapCountry")
             .simultaneousGesture(
                 MagnificationGesture()
                     .onChanged { _ in isPinching = true }
@@ -93,24 +107,35 @@ struct MapQuizView: View {
         .onChange(of: session.answerState) { _, newState in
             guard newState != .unanswered, !isAdvancing else { return }
             isAdvancing = true
+            if case let .incorrect(tappedID, correctID) = newState {
+                let pins = session.annotationFeatures
+                    .filter { $0.id == tappedID || $0.id == correctID }
+                    .map { ($0.quizLat, $0.quizLon) }
+                let twoPin = QuizRegionMath.region(fittingPins: pins, jitter: .none)
+                withAnimation { position = .region(twoPin) }
+            }
             let delay: UInt64 = {
                 if case .correct = newState { return 1_500_000_000 }
                 return 2_000_000_000
             }()
-            Task {
-                try? await Task.sleep(nanoseconds: delay)
-                session.advance()
-                cardStore.persistCardChanges()
-                progressStatsStore?.recordSnapshot(
-                    allCards: cardStoreProvider.allCards,
-                    modeCards: cardStore.allCards,
-                    mode: .mapQuiz,
-                    streak: StreakTracker.currentStreak(language: cardStore.language)
-                )
-                if !session.isFinished {
-                    withAnimation { position = .region(session.mapRegion) }
+            advanceTask = Task {
+                let didRun = await QuizAdvanceScheduler.run(afterNanoseconds: delay) {
+                    session.advance()
+                    cardStore.persistCardChanges()
+                    progressStatsStore?.recordSnapshot(
+                        allCards: cardStoreProvider.allCards,
+                        modeCards: cardStore.allCards,
+                        mode: .mapQuiz,
+                        streak: StreakTracker.currentStreak(language: cardStore.language)
+                    )
                 }
-                isAdvancing = false
+                // Only mutate map/advance state if the advance ran (i.e. the exit did not cancel us).
+                if didRun {
+                    if !session.isFinished {
+                        withAnimation { position = .region(session.mapRegion) }
+                    }
+                    isAdvancing = false
+                }
             }
         }
         .onChange(of: session.currentIndex) { _, _ in
@@ -135,19 +160,26 @@ struct MapQuizView: View {
             Text(featureName)
                 .font(.title2.bold())
                 .multilineTextAlignment(.center)
-            Text("\(session.reviewedCount + 1) / \(session.cards.count)")
+            Text("\(session.correctCount) / \(session.totalCards)")
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
         .padding(.vertical, 12)
         .padding(.horizontal, 20)
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .background(
+            .regularMaterial,
+            in: RoundedRectangle(cornerRadius: Theme.Metrics.cardRadius, style: .continuous)
+        )
         .padding(.top, 8)
         .padding(.horizontal)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("\(L10n["a11y.map.prompt.label"]): \(featureName)")
         .accessibilityValue(
-            String(format: L10n["a11y.map.progress"], session.reviewedCount + 1, session.cards.count)
+            String(
+                format: L10n["a11y.map.progress"],
+                session.correctCount,
+                session.totalCards
+            )
         )
     }
 
@@ -173,8 +205,10 @@ struct MapQuizView: View {
             .multilineTextAlignment(.center)
             .padding(.horizontal, 24)
             .padding(.vertical, 14)
-            .background(color, in: RoundedRectangle(cornerRadius: 14))
-            .padding(.bottom, 24)
+            .background(color, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            // Clear MapKit's auto-rendered "Apple Maps / Legal" attribution, which sits at the map's
+            // bottom-left edge: extra bottom inset keeps the feedback banner from overlapping it.
+            .padding(.bottom, 40)
             .padding(.horizontal)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(feedbackAccessibilityLabel(session: session))

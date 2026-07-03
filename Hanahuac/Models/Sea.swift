@@ -9,8 +9,20 @@ struct Sea: Codable, Identifiable, Hashable {
     let nameEsEs: String?
     let nameCa: String?
     let nameEu: String?
+    let nameYua: String?
+    let nameIt: String?
+    let namePl: String?
+    let nameNl: String?
+    let nameSr: String?
     let nameKo: String?
     let nameNah: String?
+    let nameJa: String?
+    let nameZhHans: String?
+    let nameHi: String?
+    let nameBn: String?
+    let namePtBr: String?
+    let nameAr: String?
+    let nameUr: String?
     let lat: Double
     let lon: Double
 
@@ -25,8 +37,20 @@ struct Sea: Codable, Identifiable, Hashable {
         nameEsEs: String? = nil,
         nameCa: String? = nil,
         nameEu: String? = nil,
+        nameYua: String? = nil,
+        nameIt: String? = nil,
+        namePl: String? = nil,
+        nameNl: String? = nil,
+        nameSr: String? = nil,
         nameKo: String? = nil,
         nameNah: String? = nil,
+        nameJa: String? = nil,
+        nameZhHans: String? = nil,
+        nameHi: String? = nil,
+        nameBn: String? = nil,
+        namePtBr: String? = nil,
+        nameAr: String? = nil,
+        nameUr: String? = nil,
         lat: Double,
         lon: Double
     ) {
@@ -38,8 +62,20 @@ struct Sea: Codable, Identifiable, Hashable {
         self.nameEsEs = nameEsEs
         self.nameCa = nameCa
         self.nameEu = nameEu
+        self.nameYua = nameYua
+        self.nameIt = nameIt
+        self.namePl = namePl
+        self.nameNl = nameNl
+        self.nameSr = nameSr
         self.nameKo = nameKo
         self.nameNah = nameNah
+        self.nameJa = nameJa
+        self.nameZhHans = nameZhHans
+        self.nameHi = nameHi
+        self.nameBn = nameBn
+        self.namePtBr = namePtBr
+        self.nameAr = nameAr
+        self.nameUr = nameUr
         self.lat = lat
         self.lon = lon
     }
