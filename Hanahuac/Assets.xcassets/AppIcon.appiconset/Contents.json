@@ -3,12 +3,13 @@
     {
       "filename" : "AppIcon.png",
       "idiom" : "universal",
+      "platform" : "ios",
       "size" : "1024x1024"
     },
     {
       "filename" : "AppIcon.png",
-      "idiom" : "mac",
-      "scale" : "1x",
+      "idiom" : "universal",
+      "platform" : "mac",
       "size" : "1024x1024"
     }
   ],
