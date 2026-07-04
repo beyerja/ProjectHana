@@ -64,7 +64,7 @@ struct NameFeatureQuizView: View {
         if let session = pending {
             if session.isFinished {
                 QuizSummaryView(
-                    reviewed: session.reviewedCount,
+                    reviewed: session.totalQuestions,
                     correct: session.correctCount,
                     nextDue: session.nextDueDate
                 )
@@ -72,7 +72,7 @@ struct NameFeatureQuizView: View {
                 quizBody(
                     feature: feature,
                     answerState: session.answerState,
-                    progressText: "\(session.reviewedCount + 1) / \(session.questions.count)",
+                    progressText: "\(session.currentIndex + 1) / \(session.totalQuestions)",
                     onCheck: { session.checkAnswer($0) },
                     onNext: { advancePending(session) }
                 )
