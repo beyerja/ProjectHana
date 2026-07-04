@@ -10,6 +10,12 @@ Requires: story directory path.
 just log start story-workflow "<story-id>" || true
 ```
 
+**Autonomous execution — do NOT stop between steps.** After each sub-agent returns, immediately
+proceed to the next step in the same session. Never output "I'll wait for it to complete" or pause
+for user input mid-lifecycle — the full story lifecycle (break-tasks → implement → PR → CI → review
+→ merge → verify) runs in one uninterrupted session. Only stop when a step reaches an explicit
+escalation condition (the 3-round review cap, or a CI failure you cannot resolve after one retry).
+
 Run the following steps in order, spawning a dedicated sub-agent for each. Pass the story directory as context to every agent.
 
 **Resume idempotently — trust live state over any briefing.** A run may be re-spawned after an
