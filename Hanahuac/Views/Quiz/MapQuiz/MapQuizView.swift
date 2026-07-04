@@ -37,7 +37,7 @@ struct MapQuizView: View {
             if let session {
                 if session.isFinished {
                     QuizSummaryView(
-                        reviewed: session.totalCards,
+                        reviewed: session.reviewedCount,
                         correct: session.correctCount,
                         nextDue: session.nextDueDate
                     )
