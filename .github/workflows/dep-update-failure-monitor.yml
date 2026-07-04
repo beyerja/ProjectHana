@@ -1,0 +1,168 @@
+name: dep-update-failure-monitor
+
+# Monitors the dependency-update automations for FAILED runs and reports them
+# on a single rolling GitHub issue labeled `dep-update-failure`.
+#
+# Two detection paths are needed:
+#   (a) `workflow_run` on "Update flake.lock": a normal repo workflow, so a
+#       failed run triggers this monitor promptly. The job-level `if:` lets
+#       the workflow_run path proceed only when the triggering run's
+#       conclusion is `failure` (success/cancelled runs skip cleanly).
+#   (b) A daily scheduled sweep over the Actions API: the GitHub-internal
+#       "Dependabot Updates" workflow CANNOT fire `workflow_run` events, so
+#       its failures are only discoverable by querying its runs. The sweep
+#       covers BOTH workflows (last `lookback_days` days, default 7) so a
+#       missed workflow_run event is also caught eventually.
+#
+# Reporting model: exactly one OPEN issue labeled `dep-update-failure` at a
+# time (title marker `[dep-update-failure]`). If none is open, one is created
+# listing the failed run URLs; if one is open, a comment is added listing
+# ONLY newly detected runs. A run id already mentioned in the issue body or
+# any comment is never re-reported (both trigger paths flow through the same
+# dedup step, so a prompt workflow_run report is not duplicated by the next
+# day's sweep and vice versa). If nothing new is found, nothing is posted.
+#
+# `workflow_dispatch` takes a `lookback_days` input so post-merge
+# verification can widen the sweep window to pick up known old failed runs
+# (e.g. 28361869197 "Dependabot Updates", 28313717613 "Update flake.lock").
+#
+# Uses only the default GITHUB_TOKEN with the minimal permissions below.
+
+on:
+  workflow_run:
+    workflows: ["Update flake.lock"]
+    types: [completed]
+  schedule:
+    # Daily at 06:15 UTC — offset from the update workflows so a same-day
+    # failure is picked up on the next sweep at the latest.
+    - cron: "15 6 * * *"
+  workflow_dispatch:
+    inputs:
+      lookback_days:
+        description: >-
+          How many days back the sweep looks for failed runs (default 7).
+          Widen for verification, e.g. to cover known failed runs
+          28361869197 and 28313717613 which are older than 7 days.
+        required: false
+        default: "7"
+
+permissions:
+  issues: write
+  actions: read
+
+jobs:
+  monitor:
+    name: Detect and report failed dependency-update runs
+    # workflow_run path: only failed runs are worth reporting.
+    # schedule / workflow_dispatch always proceed (sweep decides).
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+
+    steps:
+      # Produces failed-runs.txt with one "run_id run_url workflow_name"
+      # line per failed run. Empty file => nothing to report.
+      - name: Collect failed runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          EVENT_NAME: ${{ github.event_name }}
+          TRIGGER_RUN_ID: ${{ github.event.workflow_run.id }}
+          TRIGGER_RUN_URL: ${{ github.event.workflow_run.html_url }}
+          TRIGGER_WORKFLOW_NAME: ${{ github.event.workflow_run.name }}
+          LOOKBACK_DAYS: ${{ inputs.lookback_days || '7' }}
+        run: |
+          : > failed-runs.txt
+          if [ "$EVENT_NAME" = "workflow_run" ]; then
+            # Job-level `if:` already guaranteed conclusion == failure.
+            printf '%s %s %s\n' "$TRIGGER_RUN_ID" "$TRIGGER_RUN_URL" "$TRIGGER_WORKFLOW_NAME" >> failed-runs.txt
+          else
+            # Sweep path (schedule/dispatch). Guard against a non-numeric
+            # lookback_days input.
+            case "$LOOKBACK_DAYS" in
+              ''|*[!0-9]*) LOOKBACK_DAYS=7 ;;
+            esac
+            since="$(date -u -d "$LOOKBACK_DAYS days ago" +%Y-%m-%d)"
+            echo "Sweeping for failed runs created since $since"
+            # Resolve each workflow by NAME: "Dependabot Updates" is
+            # GitHub-internal (dynamic/dependabot) but still listed by the
+            # workflows API. Tolerate absence gracefully.
+            for wf_name in "Update flake.lock" "Dependabot Updates"; do
+              wf_id="$(gh api "repos/$REPO/actions/workflows" --paginate \
+                --jq ".workflows[] | select(.name == \"$wf_name\") | .id" | head -n 1)"
+              if [ -z "$wf_id" ]; then
+                echo "Workflow '$wf_name' not found in $REPO — skipping."
+                continue
+              fi
+              gh api -X GET "repos/$REPO/actions/workflows/$wf_id/runs" \
+                --paginate \
+                -f status=completed \
+                -f "created=>=$since" \
+                -F per_page=100 \
+                --jq '.workflow_runs[] | select(.conclusion == "failure") | "\(.id) \(.html_url) \(.name)"' \
+                >> failed-runs.txt
+            done
+          fi
+          sort -u -o failed-runs.txt failed-runs.txt
+          if [ -s failed-runs.txt ]; then
+            echo "Detected failed run(s):"
+            cat failed-runs.txt
+          else
+            echo "No failed runs detected."
+          fi
+
+      # Single rolling issue: never create a second open issue with the
+      # label. Dedup per run id against the issue body AND all comments —
+      # run ids are matched as full numeric tokens, never as substrings of
+      # longer numbers.
+      - name: Report to rolling issue (dedup per run id)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          if [ ! -s failed-runs.txt ]; then
+            echo "No failed runs detected — nothing to report."
+            exit 0
+          fi
+          issue="$(gh issue list --repo "$REPO" --state open --label dep-update-failure \
+            --json number --jq '.[0].number // empty')"
+          : > reported.txt
+          if [ -n "$issue" ]; then
+            gh issue view "$issue" --repo "$REPO" --json body --jq '.body' > reported.txt
+            gh api "repos/$REPO/issues/$issue/comments" --paginate --jq '.[].body' >> reported.txt
+          fi
+          : > new-runs.txt
+          while IFS=' ' read -r run_id run_url wf_name; do
+            [ -n "$run_id" ] || continue
+            if grep -qE "(^|[^0-9])${run_id}([^0-9]|\$)" reported.txt; then
+              echo "Run $run_id already reported — skipping."
+            else
+              printf -- '- %s — %s\n' "$wf_name" "$run_url" >> new-runs.txt
+            fi
+          done < failed-runs.txt
+          if [ ! -s new-runs.txt ]; then
+            echo "All detected failed runs are already reported — nothing to post."
+            exit 0
+          fi
+          if [ -n "$issue" ]; then
+            {
+              echo "Newly detected failed dependency-update automation run(s):"
+              echo ""
+              cat new-runs.txt
+            } > comment-body.md
+            gh issue comment "$issue" --repo "$REPO" --body-file comment-body.md
+            echo "Commented on open issue #$issue."
+          else
+            {
+              echo "The **dep-update-failure-monitor** workflow detected failed run(s) of the dependency-update automations:"
+              echo ""
+              cat new-runs.txt
+              echo ""
+              echo "This is the single rolling issue for dependency-update automation failures:" \
+                "newly detected failed runs are appended here as comments (each run id is" \
+                "reported exactly once). Close this issue once the underlying failures are resolved."
+            } > issue-body.md
+            gh issue create --repo "$REPO" \
+              --title "[dep-update-failure] Failed dependency-update automation runs" \
+              --label dep-update-failure \
+              --body-file issue-body.md
+          fi
