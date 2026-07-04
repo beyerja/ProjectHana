@@ -15,17 +15,12 @@ updates:
     commit-message:
       prefix: "chore(ci)"
 
-  # Keep Swift Package Manager dependencies up to date
-  # (no external packages today — this config is ready for when packages are added)
-  - package-ecosystem: "swift"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "monday"
-      time: "09:00"
-      timezone: "UTC"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-    commit-message:
-      prefix: "chore(deps)"
+# NOTE: no `swift` package-ecosystem entry — deliberately.
+# The repo currently has zero SPM dependencies (no Package.swift, and no
+# Package.resolved inside the .xcodeproj/.xcworkspace), so a `swift` entry
+# fails every weekly run with `dependency_file_not_found`.
+# Re-add a `swift` entry (mirroring the github-actions one, with
+# commit-message prefix "chore(deps)") once the project gains its first SPM
+# dependency — Dependabot's swift ecosystem requires a Package.swift at the
+# configured directory, or a Package.resolved inside an
+# .xcodeproj/.xcworkspace.
