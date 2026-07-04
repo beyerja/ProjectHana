@@ -105,7 +105,7 @@ ci branch:
 
 # Run every linter (fail-on-violation). Mirrors the CI lint job; all tools come from the
 # flake dev shell via direnv (no hardcoded /nix paths).
-lint: lint-swift lint-py lint-sh lint-nix lint-yaml l10n-check
+lint: lint-swift lint-py lint-sh lint-nix lint-yaml lint-gha l10n-check
     @echo "lint: all linters passed."
 
 # Static localization-completeness gate. Data-driven: the locales checked are discovered from the
@@ -177,6 +177,29 @@ lint-yaml:
     if [[ ${#yamlfiles[@]} -eq 0 ]]; then echo "No tracked YAML files."; exit 0; fi
     direnv exec . yamllint "${yamlfiles[@]}"
     echo "yaml: clean."
+
+# Lint GitHub Actions config: actionlint (semantic workflow linter) over tracked
+# .github/workflows/*.yml|yaml, plus check-jsonschema validation of .github/dependabot.yml
+# against the vendored Dependabot schema. Both tools come from the flake dev shell via direnv.
+lint-gha:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    workflows=()
+    while IFS= read -r f; do workflows+=("$f"); done \
+        < <(git ls-files '.github/workflows/*.yml' '.github/workflows/*.yaml')
+    if [[ ${#workflows[@]} -eq 0 ]]; then
+        echo "No tracked workflow files."
+    else
+        echo "== actionlint =="
+        direnv exec . actionlint "${workflows[@]}"
+    fi
+    if [[ -f .github/dependabot.yml ]]; then
+        echo "== check-jsonschema (dependabot) =="
+        direnv exec . check-jsonschema --builtin-schema vendor.dependabot .github/dependabot.yml
+    else
+        echo "No .github/dependabot.yml — skipping schema validation."
+    fi
+    echo "gha: clean."
 
 # Activate the committed git hooks by setting core.hooksPath=.githooks (secret-scan + main guard).
 # Run once per clone. Idempotent.

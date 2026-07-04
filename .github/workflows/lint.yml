@@ -3,7 +3,8 @@ name: Lint
 # Fast, blocking, fail-on-violation lint gate for every PR (and pushes to main).
 #
 # Per the project's "split CI by speed" convention this holds only FAST linters
-# (swiftlint, swiftformat --lint, ruff, shellcheck, nixfmt --check, yamllint) — the slow
+# (swiftlint, swiftformat --lint, ruff, shellcheck, nixfmt --check, yamllint, actionlint,
+# check-jsonschema for dependabot.yml) — the slow
 # scanners (CodeQL etc.) stay on schedule/push-to-main in their own workflows and are NOT
 # part of this blocking per-PR path.
 #
@@ -61,27 +62,29 @@ jobs:
 
       - name: ShellCheck
         run: |
-          nix develop .#lint --command bash -c '
-            set -euo pipefail
-            files=$(git ls-files "*.sh")
-            [ -z "$files" ] && { echo "No shell scripts."; exit 0; }
-            shellcheck $files
-          '
+          mapfile -t files < <(git ls-files '*.sh')
+          if [ "${#files[@]}" -eq 0 ]; then echo "No shell scripts."; exit 0; fi
+          nix develop .#lint --command shellcheck "${files[@]}"
 
       - name: nixfmt (check)
         run: |
-          nix develop .#lint --command bash -c '
-            set -euo pipefail
-            files=$(git ls-files "*.nix")
-            [ -z "$files" ] && { echo "No Nix files."; exit 0; }
-            nixfmt --check $files
-          '
+          mapfile -t files < <(git ls-files '*.nix')
+          if [ "${#files[@]}" -eq 0 ]; then echo "No Nix files."; exit 0; fi
+          nix develop .#lint --command nixfmt --check "${files[@]}"
 
       - name: yamllint
         run: |
-          nix develop .#lint --command bash -c '
-            set -euo pipefail
-            files=$(git ls-files "*.yml" "*.yaml")
-            [ -z "$files" ] && { echo "No YAML files."; exit 0; }
-            yamllint $files
-          '
+          mapfile -t files < <(git ls-files '*.yml' '*.yaml')
+          if [ "${#files[@]}" -eq 0 ]; then echo "No YAML files."; exit 0; fi
+          nix develop .#lint --command yamllint "${files[@]}"
+
+      - name: actionlint
+        run: |
+          mapfile -t files < <(git ls-files '.github/workflows/*.yml' '.github/workflows/*.yaml')
+          if [ "${#files[@]}" -eq 0 ]; then echo "No workflow files."; exit 0; fi
+          nix develop .#lint --command actionlint "${files[@]}"
+
+      - name: check-jsonschema (dependabot)
+        run: >-
+          nix develop .#lint --command
+          check-jsonschema --builtin-schema vendor.dependabot .github/dependabot.yml
