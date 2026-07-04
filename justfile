@@ -217,6 +217,26 @@ test-bot-scripts:
 test-version-scripts:
     bash scripts/test-bump-version.sh
 
+# Run the release-check script tests (check-changelog.sh + check-tag-version.sh against temp
+# fixtures via --changelog/--project-yml; no repo file is read or mutated).
+test-release-scripts:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    bash scripts/test-check-changelog.sh
+    bash scripts/test-check-tag-version.sh
+
+# Verify CHANGELOG.md has a `## [X.Y.Z]` section for the version under check (explicit arg, or
+# derived from MARKETING_VERSION in project.yml when omitted). Composed into `release-check`
+# (story 003) and release.yml (story 004); release-time only, never a per-PR gate.
+check-changelog *args:
+    bash scripts/check-changelog.sh {{args}}
+
+# Verify a release tag (vX.Y.Z, optional semver prerelease suffix like v1.1.0-rc.1) matches
+# MARKETING_VERSION in project.yml. Composed into `release-check` (story 003) and release.yml
+# (story 004); release-time only, never a per-PR gate.
+check-tag-version tag:
+    bash scripts/check-tag-version.sh {{tag}}
+
 # Delegate to agent telemetry logger
 log *args:
     bash scripts/agent-log.sh {{args}}
