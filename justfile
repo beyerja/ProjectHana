@@ -19,6 +19,13 @@ _sfx := if wt == "" { "" } else { "-" + wt }
 mac_dd := "/tmp/Hanahuac-mac-build" + _sfx
 sim_dd := "/tmp/Hanahuac-sim-build" + _sfx
 
+# Per-worktree paths for the unsigned Release archive tooling (story 003): DerivedData for the
+# device archive build, Release-config Catalyst DerivedData for release-check's bundle
+# verification, and the directory that receives the .xcarchive / .ipa outputs.
+archive_dd := "/tmp/Hanahuac-archive-build" + _sfx
+mac_release_dd := "/tmp/Hanahuac-mac-release-build" + _sfx
+archive_out := "/tmp/Hanahuac-archive" + _sfx
+
 # Simulator destination name. Defaults to the shared "iPhone 17"; set HANA_SIM_NAME (or `just
 # sim="iPhone 17 (feat)" …`) to a per-worktree clone's name to avoid simulator contention.
 sim := env_var_or_default("HANA_SIM_NAME", "iPhone 17")
@@ -236,6 +243,103 @@ check-changelog *args:
 # (story 004); release-time only, never a per-PR gate.
 check-tag-version tag:
     bash scripts/check-tag-version.sh {{tag}}
+
+# Produce the UNSIGNED Release .xcarchive for generic iOS device plus an unsigned .ipa
+# (Payload zip via scripts/package-ipa.sh). Both proven empirically in story 003 (see its
+# log.md): no signing identity, provisioning profile, or Apple credentials are needed. The
+# .ipa is an installable-evidence artifact only (sideload / re-sign later); the signed device
+# archive activates once an Apple Developer account exists. Per-worktree isolation via
+# archive_dd/archive_out; emits the resulting .xcarchive and .ipa paths as final output.
+archive:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    xcodebuild archive \
+        -project Hanahuac.xcodeproj \
+        -scheme Hanahuac \
+        -configuration Release \
+        -destination 'generic/platform=iOS' \
+        -archivePath '{{archive_out}}/Hanahuac.xcarchive' \
+        -derivedDataPath '{{archive_dd}}' \
+        CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+        2>&1 | tail -3
+    bash scripts/package-ipa.sh '{{archive_out}}/Hanahuac.xcarchive' '{{archive_out}}/Hanahuac.ipa'
+    echo "Archive: {{archive_out}}/Hanahuac.xcarchive"
+    echo "IPA:     {{archive_out}}/Hanahuac.ipa"
+
+# Run the test suite on Mac Catalyst as ci.yml's Test step does (Debug config, unsigned
+# flags), with per-worktree DerivedData. The default `test` recipe uses the iOS Simulator;
+# this is the CI-parity variant release-check needs.
+#
+# HanahuacUITests is COMPILED here (xcodebuild test builds every test bundle in the scheme)
+# but its EXECUTION is skipped locally: launching the XCUITest runner against a Catalyst app
+# on a local Mac hangs before establishing a connection (needs UI-automation permissions this
+# environment doesn't grant — verified empirically in story 003, 2x reproducible, 532 unit
+# tests green either way). UI tests execute on Catalyst in CI (the required Build & Test
+# check) and locally on the simulator via `just ui-walkthrough`.
+test-mac:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    echo "note: HanahuacUITests compiled but skipped locally (Catalyst runner hangs w/o UI-automation perms; CI executes it)"
+    xcodebuild test \
+        -project Hanahuac.xcodeproj \
+        -scheme Hanahuac \
+        -destination 'platform=macOS,variant=Mac Catalyst' \
+        -configuration Debug \
+        -derivedDataPath '{{mac_dd}}' \
+        -skip-testing:HanahuacUITests \
+        CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+        2>&1 | grep -E "TEST SUCCEEDED|TEST FAILED|error:|Test Case.*failed" \
+             | grep -v "CoreData|simctl|appintents"
+
+# Build the Mac Catalyst app in Release configuration (unsigned, per-worktree DerivedData).
+# Release-config counterpart of build-mac; feeds verify-base-only-release.
+build-mac-release:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    xcodebuild build \
+        -project Hanahuac.xcodeproj \
+        -scheme Hanahuac \
+        -destination 'platform=macOS,variant=Mac Catalyst' \
+        -configuration Release \
+        -derivedDataPath '{{mac_release_dd}}' \
+        CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO \
+        2>&1 | tail -3
+
+# Validate the zero-packs offline base-only launch path against the RELEASE-config Mac Catalyst
+# build (the Debug counterpart is verify-base-only). Used by release-check step 5.
+verify-base-only-release: build-mac-release
+    bash scripts/verify-base-only-bundle.sh '{{mac_release_dd}}'
+
+# The full local release quality bar (story 003). Fails on the first broken step; prints a
+# per-step banner. Reuses existing recipes rather than duplicating commands. Optional `tag`
+# argument (e.g. `just release-check v1.2.3`) additionally runs check-tag-version; when
+# omitted that step is skipped with an explicit note. Nothing here requires signing or Apple
+# credentials.
+release-check tag="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    banner() { printf '\n==> release-check %s\n' "$1"; }
+    # Propagate the per-worktree id explicitly: a command-line `wt=…` override on this recipe
+    # would not survive into nested just invocations via the env-var default alone.
+    J=(just --justfile '{{justfile()}}' wt='{{wt}}')
+    banner "[1/6] lint suite"
+    "${J[@]}" lint
+    banner "[2/6] full test suite (Mac Catalyst, as ci.yml)"
+    "${J[@]}" test-mac
+    banner "[3/6] geo packs up to date"
+    "${J[@]}" geo-packs-check
+    banner "[4/6] ODR pack integrity"
+    "${J[@]}" verify-odr-packs
+    banner "[5/6] Release build + base-only bundle verification"
+    "${J[@]}" verify-base-only-release
+    banner "[6/6] changelog + version consistency"
+    "${J[@]}" check-changelog
+    if [[ -n '{{tag}}' ]]; then
+        "${J[@]}" check-tag-version '{{tag}}'
+    else
+        echo "no tag given — skipping check-tag-version (use 'just release-check vX.Y.Z' to include it)"
+    fi
+    printf '\nrelease-check: ALL CHECKS PASSED.\n'
 
 # Delegate to agent telemetry logger
 log *args:

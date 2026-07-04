@@ -12,11 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-07-05
+
 ### Added
 
-- Hanahuac geography-learning app (map quiz, multiple choice, flashcards) in its current
-  pre-release state: the app is at `MARKETING_VERSION` 1.0.0 with no tagged releases yet.
+- Hanahuac geography-learning app (map quiz, multiple choice, flashcards) — first release.
 - Versioning and bump tooling: `project.yml` is the single source of truth for the version;
   `just bump <major|minor|patch>` updates it and regenerates the Xcode project (story 001).
 - This changelog, plus scripted release-consistency checks (`scripts/check-changelog.sh`,
-  `scripts/check-tag-version.sh`) that later gate releases.
+  `scripts/check-tag-version.sh`) that gate releases.
+- Local release tooling: `just archive` (unsigned Release `.xcarchive` + unsigned `.ipa`)
+  and `just release-check` (the full local release quality bar) (story 003).
