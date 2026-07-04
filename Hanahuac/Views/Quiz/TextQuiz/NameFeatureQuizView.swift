@@ -64,7 +64,7 @@ struct NameFeatureQuizView: View {
         if let session = pending {
             if session.isFinished {
                 QuizSummaryView(
-                    reviewed: session.totalQuestions,
+                    reviewed: session.reviewedCount,
                     correct: session.correctCount,
                     nextDue: session.nextDueDate
                 )
