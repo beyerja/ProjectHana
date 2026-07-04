@@ -190,6 +190,10 @@ test-bot-scripts:
     bash scripts/test-gh-review-bot.sh
     bash scripts/test-secret-scan-hook.sh
 
+# Run the version-tooling tests (bump-version.py against temp fixture copies; no xcodegen run).
+test-version-scripts:
+    bash scripts/test-bump-version.sh
+
 # Delegate to agent telemetry logger
 log *args:
     bash scripts/agent-log.sh {{args}}
