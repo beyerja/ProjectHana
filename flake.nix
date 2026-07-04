@@ -27,6 +27,8 @@
           shellcheck # static analysis/linting for scripts/*.sh
           nixfmt # Nix formatter (RFC 166 / rfc-style); used in --check mode as a gate
           yamllint # YAML linter for workflows + project.yml
+          actionlint # GitHub Actions workflow semantic linter (.github/workflows/*.yml)
+          check-jsonschema # JSON-schema validator; validates .github/dependabot.yml (vendor.dependabot)
         ];
       in
       {
