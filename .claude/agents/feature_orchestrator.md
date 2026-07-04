@@ -55,6 +55,13 @@ before any other step:
    (see `scripts/agent-log.sh`), so cross-run aggregation keeps working. (When REUSING a pre-existing
    worktree, still run `direnv allow` once in it before the first `just` call for the same reason.)
 
+**Autonomous execution — do NOT stop between steps.** After each sub-agent returns,
+immediately proceed to the next step in the same session. Never output "I'll wait for it to complete"
+or pause for user input between steps — the full lifecycle (triage → clarify → stories → merge →
+evaluate → archive) runs in one uninterrupted agent session. Only stop to ask the user when a step
+reaches an explicit escalation condition (e.g. the 3-round review cap in story-workflow, or a CI
+failure you cannot resolve).
+
 Then run the following steps in order (from the worktree), spawning a dedicated
 sub-agent for each:
 
@@ -79,6 +86,10 @@ sub-agent for each:
 3. **Break stories** — spawn `break-stories` agent
 4. **Assess health** — spawn `assess-project-health` agent (may prepend setup stories)
 5. **Story loop** — for each story in `.workflow/stories.md` where status ≠ done:
+   - **Before spawning, check `<story-dir>/status.md` and `<story-dir>/log.md`** — if the story is
+     already marked done (merged PR, verified), skip it. A resume after interruption may re-present
+     steps that already completed; spawning them again wastes time (e.g. re-running `break-tasks` when
+     `tasks.md` already exists, or re-running `story-workflow` when the merge is confirmed).
    - Spawn `story-workflow` agent with the story's directory path
    - If the story comes back FAILED, re-run it (pass prior failure context)
 6. **Create PR** — **NOTE:** each `story-workflow` PR already targets `main` directly and merges
