@@ -31,6 +31,13 @@ generate:
 icon:
     xcrun swift scripts/make-icon.swift
 
+# Bump the app version (part = major|minor|patch): updates MARKETING_VERSION +
+# CURRENT_PROJECT_VERSION in project.yml (single source of truth) and regenerates the Xcode
+# project. Releases are annotated v<MAJOR>.<MINOR>.<PATCH> tags on main only — full convention
+# in the scripts/bump-version.py header.
+bump part:
+    python3 scripts/bump-version.py {{part}}
+
 # Regenerate the per-language geo-name ODR pack JSON (fr/de/ko/nah) from the bundled geo data.
 geo-packs:
     python3 scripts/generate-geo-packs.py
