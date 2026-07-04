@@ -119,6 +119,7 @@
 		99ACF5363A414EA1682FCA0B /* RiverPathLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F68D9014B6C092CCEE7005 /* RiverPathLoader.swift */; };
 		9A38525C1DEC1C139BA921AA /* MapFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99FAC06BE37F9329DF0FC70 /* MapFeatureTests.swift */; };
 		9A89BF6774EB44FC0EEA5D6E /* SyncStatusPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45793BEFAE16929E78F73B0A /* SyncStatusPresentationTests.swift */; };
+		9D52AAEA04B96755D23E58EE /* TextQuizSessionRetryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C499FE0776F0DBA8A8D077F6 /* TextQuizSessionRetryTests.swift */; };
 		9E799E4670DC8E021D1C97B9 /* MapQuizSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AE603D47A5DB8ED986C7F0 /* MapQuizSession.swift */; };
 		9E9712FFA9D51FB75B85A9E5 /* bn-geo.json in Resources */ = {isa = PBXBuildFile; fileRef = B8FFDE216FC250FDBC65B094 /* bn-geo.json */; settings = {ASSET_TAGS = ("lang-bn", ); }; };
 		9F0CD581EDE922EAF670F9A8 /* MapLearningTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F1EAFAEF32CEC4DE75DA8 /* MapLearningTests.swift */; };
@@ -353,6 +354,7 @@
 		C1E3ECFE4BCCD433B25C93D4 /* yua.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = yua.lproj; path = Hanahuac/yua.lproj; sourceTree = SOURCE_ROOT; };
 		C24D1F0D98466C85ACE2D994 /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
 		C412DC824A749D0667C05943 /* CountryBorderLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryBorderLoader.swift; sourceTree = "<group>"; };
+		C499FE0776F0DBA8A8D077F6 /* TextQuizSessionRetryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextQuizSessionRetryTests.swift; sourceTree = "<group>"; };
 		C4A287A2E1964EE9A8ECFAB7 /* AppLocale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLocale.swift; sourceTree = "<group>"; };
 		C56B267CB810DA87B1D70D42 /* GeographyDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeographyDataLoader.swift; sourceTree = "<group>"; };
 		C6AD4E60A0C8F84B62F231C0 /* ca.lproj */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ca.lproj; path = Hanahuac/ca.lproj; sourceTree = SOURCE_ROOT; };
@@ -465,6 +467,7 @@
 				FEF541ACBAE26DA234D3D5C3 /* SyncableStoreTests.swift */,
 				F5FAB09F881E3D291D9A5253 /* SyncCoordinatorTests.swift */,
 				45793BEFAE16929E78F73B0A /* SyncStatusPresentationTests.swift */,
+				C499FE0776F0DBA8A8D077F6 /* TextQuizSessionRetryTests.swift */,
 			);
 			path = HanahuacTests;
 			sourceTree = "<group>";
@@ -1071,6 +1074,7 @@
 				696206A61705E6338B07D623 /* SyncCoordinatorTests.swift in Sources */,
 				9A89BF6774EB44FC0EEA5D6E /* SyncStatusPresentationTests.swift in Sources */,
 				E1D9C05C5DE6C12A289E3C86 /* SyncableStoreTests.swift in Sources */,
+				9D52AAEA04B96755D23E58EE /* TextQuizSessionRetryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1130,7 +1134,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hanahuac.app;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = YES;
@@ -1257,7 +1261,7 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hanahuac.app;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = YES;
