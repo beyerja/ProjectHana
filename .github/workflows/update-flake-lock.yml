@@ -4,14 +4,29 @@ on:
   schedule:
     # Runs every Sunday at 02:00 UTC
     # Weekly cadence satisfies the 1-day delay supply-chain requirement:
-    # updates are never applied on day zero — a PR is opened and must be
-    # manually reviewed and merged before any change takes effect.
+    # updates are never applied on day zero — this workflow only pushes the
+    # update to a handoff branch and files an issue; a human-credentialed
+    # local triage flow opens, reviews, and merges the PR later, so at least
+    # 1 day elapses before any change takes effect. Nothing auto-merges.
     - cron: "0 2 * * 0"
   workflow_dispatch: {}
 
+# WHY this workflow does NOT open the PR itself:
+#   (a) The repo Actions setting `can_approve_pull_request_reviews` is
+#       deliberately `false` (hardened supply-chain posture): GitHub Actions
+#       is not permitted to create or approve pull requests, and we
+#       intentionally keep it that way.
+#   (b) Even if it were allowed, PRs created with the built-in GITHUB_TOKEN
+#       never trigger `pull_request` CI workflows, so the update would sit
+#       unverified.
+#   (c) Instead, this workflow force-pushes the update to the well-known
+#       branch `automated/update-flake-lock` and opens (or updates) a single
+#       handoff issue labeled `flake-lock-update`. The local triage flow
+#       (triage-dep-prs) opens the PR from that branch with the user's
+#       credentials — which DOES trigger CI — reviews it, and merges it.
 permissions:
   contents: write
-  pull-requests: write
+  issues: write
 
 jobs:
   update-flake-lock:
@@ -28,20 +43,57 @@ jobs:
       - name: Update flake.lock
         run: nix flake update
 
-      - name: Open PR if flake.lock changed
-        uses: peter-evans/create-pull-request@v8
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: automated/update-flake-lock
-          commit-message: "chore(nix): update flake.lock"
-          title: "chore(nix): update flake.lock"
-          body: |
-            Automated weekly update of `flake.lock`.
+      # If nothing changed, every later step is skipped and the run exits
+      # green with no side effects (no branch push, no issue).
+      - name: Detect flake.lock change
+        id: detect
+        run: |
+          if [ -n "$(git status --porcelain flake.lock)" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
 
-            This PR was opened by the [Update flake.lock](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) workflow.
+      # Branch push is permitted under `contents: write`. Force-push keeps
+      # the handoff branch fresh relative to current main even if a previous
+      # week's update was never merged.
+      - name: Push update to handoff branch
+        if: steps.detect.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add flake.lock
+          git commit -m "chore(nix): update flake.lock"
+          git push --force origin "HEAD:automated/update-flake-lock"
 
-            **Supply-chain safety**: this PR must be reviewed and manually merged — it is never auto-merged. At least 1 day elapses between the upstream change and it landing in this repo.
-
-            Review the diff in `flake.lock` to confirm the updated input revisions look legitimate before merging.
-          labels: dependencies
-          delete-branch: true
+      # Handoff issue: exactly one open issue labeled `flake-lock-update` at
+      # a time. If one is already open, comment with the new run URL instead
+      # of opening a duplicate. Issue creation via `issues: write` is
+      # permitted — only PR creation is blocked (see header comment).
+      - name: Open or update handoff issue
+        if: steps.detect.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          REPO: ${{ github.repository }}
+        run: |
+          existing="$(gh issue list --repo "$REPO" --state open --label flake-lock-update --json number --jq '.[0].number // empty')"
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --repo "$REPO" \
+              --body "A newer \`flake.lock\` update was force-pushed to \`automated/update-flake-lock\` by run: $RUN_URL"
+          else
+            {
+              echo "The scheduled **Update flake.lock** workflow found upstream input updates and pushed them to the branch \`automated/update-flake-lock\`."
+              echo ""
+              echo "- Branch: \`automated/update-flake-lock\`"
+              echo "- Workflow run: $RUN_URL"
+              echo ""
+              echo "**Handoff:** the local triage flow (triage-dep-prs) opens the PR from this branch" \
+                "with user credentials (so \`pull_request\` CI runs), reviews the \`flake.lock\` diff," \
+                "and merges it. Nothing auto-merges — the supply-chain 1-day delay is preserved."
+            } > issue-body.md
+            gh issue create --repo "$REPO" \
+              --title "[flake-lock-update] flake.lock update ready for triage" \
+              --label flake-lock-update \
+              --body-file issue-body.md
+          fi
