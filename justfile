@@ -224,13 +224,15 @@ test-bot-scripts:
 test-version-scripts:
     bash scripts/test-bump-version.sh
 
-# Run the release-check script tests (check-changelog.sh + check-tag-version.sh against temp
-# fixtures via --changelog/--project-yml; no repo file is read or mutated).
+# Run the release-check script tests (check-changelog.sh + check-tag-version.sh +
+# extract-changelog-section.sh against temp fixtures via --changelog/--project-yml; no repo
+# file is read or mutated).
 test-release-scripts:
     #!/usr/bin/env bash
     set -euo pipefail
     bash scripts/test-check-changelog.sh
     bash scripts/test-check-tag-version.sh
+    bash scripts/test-extract-changelog-section.sh
 
 # Verify CHANGELOG.md has a `## [X.Y.Z]` section for the version under check (explicit arg, or
 # derived from MARKETING_VERSION in project.yml when omitted). Composed into `release-check`

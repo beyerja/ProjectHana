@@ -1,0 +1,241 @@
+name: Release
+
+# Tag-triggered release pipeline: enforce the full quality bar, produce UNSIGNED inspectable
+# artifacts (zipped .xcarchive + .ipa + SHA-256 checksums), publish a GitHub Release, and carry
+# cleanly-skipped App Store Connect placeholders until an Apple Developer account exists.
+#
+# There is intentionally NO `pull_request` trigger: this workflow is slow (full Catalyst test
+# suite + Release builds on macOS) and is a release-time gate, not a per-PR one. The per-PR
+# blocking check set (ci.yml, lint.yml, secret-scan.yml) is untouched — everything here runs
+# ONLY on `v*` tag pushes or manual `workflow_dispatch`.
+#
+# Dry-run semantics: `workflow_dispatch` exposes a `dry_run` input (default true). A dry run
+# performs EVERYTHING — every gate, the archive, the .ipa, checksums, artifact upload — except
+# tag↔version consistency enforcement and Release creation/publication. The dry-run expression
+# used throughout is `github.event_name == 'workflow_dispatch' && inputs.dry_run`; on tag-push
+# events `inputs` is empty, so it evaluates false and the full pipeline (including publication)
+# runs. All xcodebuild invocations are unsigned (story 003 empirical proof: device Release
+# archive + plain-ditto .ipa need no signing identity, provisioning profile, or credentials).
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: >-
+          Dry run: execute every gate and produce all artifacts, but skip tag-consistency
+          enforcement and GitHub Release publication.
+        type: boolean
+        default: true
+
+# Default to read-only; the publish job alone escalates to `contents: write`.
+permissions:
+  contents: read
+
+# One release pipeline per ref. Unlike lint.yml this deliberately does NOT cancel in-progress
+# runs: an in-flight publish must never be killed halfway through creating a Release or
+# uploading its assets.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  gates-and-artifacts:
+    name: Release gates + unsigned artifacts
+    runs-on: macos-15
+    timeout-minutes: 90
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # Install Nix so `just`, xcodegen, direnv and every linter come from the flake dev
+      # shell — exact local parity, no hardcoded /nix paths (same pattern as lint.yml).
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+
+      # The just recipes invoke tools via `direnv exec .`; allowing the repo's .envrc once
+      # inside the dev shell makes those calls work on the runner.
+      - name: Allow direnv
+        run: nix develop --command direnv allow .
+
+      # Gate (a): the pushed tag must match MARKETING_VERSION in project.yml. Enforced only
+      # for real tag refs outside dry-run; the companion step below logs why it was skipped.
+      - name: 'Gate (a): tag matches project.yml version'
+        if: github.ref_type == 'tag' && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+        env:
+          TAG: ${{ github.ref_name }}
+        run: bash scripts/check-tag-version.sh "$TAG"
+
+      - name: 'Gate (a): skipped (explain why)'
+        if: github.ref_type != 'tag' || (github.event_name == 'workflow_dispatch' && inputs.dry_run)
+        run: |
+          if [ "${{ github.event_name == 'workflow_dispatch' && inputs.dry_run }}" = "true" ]; then
+            echo "Tag-consistency gate skipped: dry run (tag<->version enforcement is publish-time only)."
+          else
+            echo "Tag-consistency gate skipped: ref '${GITHUB_REF}' is not a tag."
+          fi
+
+      # Gate (b): CHANGELOG.md must contain a section for the version under release — the
+      # tag's X.Y.Z base on tag refs, otherwise MARKETING_VERSION derived from project.yml.
+      - name: 'Gate (b): CHANGELOG section present'
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            base="${TAG#v}"
+            base="${base%%-*}"
+            bash scripts/check-changelog.sh "$base"
+          else
+            bash scripts/check-changelog.sh
+          fi
+
+      # Gate (c): the full fail-on-violation lint suite, exactly as developers run it.
+      - name: 'Gate (c): full lint suite'
+        run: nix develop --command just lint
+
+      # Gate (d): regenerate the project from project.yml, then run the FULL test suite on
+      # Mac Catalyst exactly as ci.yml's Test step does (Debug config, unsigned flags, no
+      # -skip-testing: CI executes HanahuacUITests on Catalyst — established convention).
+      - name: 'Gate (d): generate Xcode project'
+        run: nix develop --command just generate
+
+      - name: 'Gate (d): full test suite (Mac Catalyst, as ci.yml)'
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Hanahuac.xcodeproj \
+            -scheme Hanahuac \
+            -destination 'platform=macOS,variant=Mac Catalyst' \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+
+      # Gate (e): committed geo packs must be up to date with the bundled source data.
+      - name: 'Gate (e): geo packs up to date'
+        run: nix develop --command just geo-packs-check
+
+      # Gate (f): ODR packs are data-only and the tag contract holds.
+      - name: 'Gate (f): ODR pack integrity'
+        run: nix develop --command just verify-odr-packs
+
+      # Gate (g): Release-config Catalyst build + zero-packs base-only bundle validation.
+      - name: 'Gate (g): Release build + base-only bundle validation'
+        run: nix develop --command just verify-base-only-release
+
+      # Unsigned Release device archive + unsigned .ipa via the story-003-proven `just
+      # archive` recipe (never re-implemented in YAML). HANA_FEATURE_SLUG is unset on the
+      # runner, so the outputs land at the legacy /tmp/Hanahuac-archive paths.
+      - name: Build unsigned .xcarchive + .ipa
+        run: nix develop --command just archive
+
+      # Zip the archive (--norsrc per story 003: avoids AppleDouble/__MACOSX pollution) and
+      # emit SHA-256 checksums with bare filenames (computed inside the staging dir).
+      - name: Package artifacts + SHA-256 checksums
+        run: |
+          set -o pipefail
+          ditto -c -k --norsrc --keepParent \
+            /tmp/Hanahuac-archive/Hanahuac.xcarchive \
+            /tmp/Hanahuac-archive/Hanahuac.xcarchive.zip
+          cd /tmp/Hanahuac-archive
+          shasum -a 256 Hanahuac.xcarchive.zip Hanahuac.ipa > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Upload release artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: release-artifacts
+          path: |
+            /tmp/Hanahuac-archive/Hanahuac.xcarchive.zip
+            /tmp/Hanahuac-archive/Hanahuac.ipa
+            /tmp/Hanahuac-archive/SHA256SUMS.txt
+          if-no-files-found: error
+
+  publish-release:
+    name: Publish GitHub Release
+    runs-on: ubuntu-latest
+    needs: gates-and-artifacts
+    # Publication happens ONLY for real tag refs outside dry-run.
+    if: github.ref_type == 'tag' && !(github.event_name == 'workflow_dispatch' && inputs.dry_run)
+    timeout-minutes: 15
+    # The single write grant in the workflow: creating the Release needs `contents: write`.
+    permissions:
+      contents: write
+
+    steps:
+      # Checked out for CHANGELOG.md + scripts/extract-changelog-section.sh.
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Download release artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: release-artifacts
+          path: dist
+
+      # The Release body is the CHANGELOG section for the tag's X.Y.Z base. gh passes it as
+      # the REST `body`, and with --generate-notes the API pre-pends it to the automatically
+      # generated notes (verified empirically — see the story 004 log).
+      - name: Build release body from CHANGELOG
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          base="${TAG#v}"
+          base="${base%%-*}"
+          bash scripts/extract-changelog-section.sh "$base" > /tmp/release-body.md
+          cat /tmp/release-body.md
+
+      # Suffixed tags (e.g. v1.1.0-rc.1) are marked prerelease. --verify-tag guards against
+      # gh auto-creating a tag from the default branch if the ref were somehow missing.
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          PRERELEASE: ${{ contains(github.ref_name, '-') }}
+        run: |
+          args=(--title "$TAG" --notes-file /tmp/release-body.md --generate-notes --verify-tag)
+          if [ "$PRERELEASE" = "true" ]; then
+            args+=(--prerelease)
+          fi
+          gh release create "$TAG" \
+            dist/Hanahuac.xcarchive.zip \
+            dist/Hanahuac.ipa \
+            dist/SHA256SUMS.txt \
+            "${args[@]}"
+
+      # ------------------------------------------------------------------------------------
+      # App Store Connect / TestFlight upload — PLACEHOLDER (activation point for the future
+      # Apple Developer account). No account exists today, so nothing below requires signing
+      # or Apple credentials. To activate: set the repo variable APPSTORE_UPLOAD_ENABLED to
+      # 'true' and provide the APP_STORE_CONNECT_KEY_ID / APP_STORE_CONNECT_ISSUER_ID /
+      # APP_STORE_CONNECT_PRIVATE_KEY secrets, then replace the echo below with a real signed
+      # archive + `xcrun altool`/`xcrun notarytool`/Transporter upload.
+      # ------------------------------------------------------------------------------------
+      - name: Upload to App Store Connect / TestFlight (placeholder)
+        if: >-
+          vars.APPSTORE_UPLOAD_ENABLED == 'true' &&
+          secrets.APP_STORE_CONNECT_KEY_ID != '' &&
+          secrets.APP_STORE_CONNECT_ISSUER_ID != '' &&
+          secrets.APP_STORE_CONNECT_PRIVATE_KEY != ''
+        run: |
+          echo "PLACEHOLDER: a real upload would now sign the Release archive with the"
+          echo "App Store distribution identity, export a signed .ipa, and push it to"
+          echo "App Store Connect / TestFlight via the API key (KEY_ID/ISSUER_ID/PRIVATE_KEY)."
+          echo "This step is a no-op until the Apple Developer account exists."
+
+      - name: App Store Connect upload skipped (explain why)
+        if: >-
+          vars.APPSTORE_UPLOAD_ENABLED != 'true' ||
+          secrets.APP_STORE_CONNECT_KEY_ID == '' ||
+          secrets.APP_STORE_CONNECT_ISSUER_ID == '' ||
+          secrets.APP_STORE_CONNECT_PRIVATE_KEY == ''
+        run: |
+          echo "App Store Connect / TestFlight upload SKIPPED: no Apple Developer account is"
+          echo "configured (repo variable APPSTORE_UPLOAD_ENABLED is not 'true' and/or the"
+          echo "APP_STORE_CONNECT_* API-key secrets are absent). The unsigned .xcarchive/.ipa"
+          echo "artifacts and the GitHub Release above are the complete release output."
