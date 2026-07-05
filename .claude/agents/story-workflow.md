@@ -16,6 +16,15 @@ for user input mid-lifecycle — the full story lifecycle (break-tasks → imple
 → merge → verify) runs in one uninterrupted session. Only stop when a step reaches an explicit
 escalation condition (the 3-round review cap, or a CI failure you cannot resolve after one retry).
 
+**Run all sub-agents foreground (never background).** Sub-agents spawned with `run_in_background: true`
+deliver their completion notification to the main conversation loop, not back to this agent. That
+breaks the sequential step chain and causes the lifecycle to stall. Always spawn sub-agents foreground.
+
+**If a sub-agent returns without a `STATUS:` line**, do not proceed to the next step. The agent may
+have spawned a background child that drained its context before completing. Re-read `<story-dir>/log.md`
+and live git/gh state to determine the actual outcome, then re-spawn that step's agent foreground if
+needed. Never assume a missing STATUS means success.
+
 Run the following steps in order, spawning a dedicated sub-agent for each. Pass the story directory as context to every agent.
 
 **Resume idempotently — trust live state over any briefing.** A run may be re-spawned after an
@@ -33,7 +42,10 @@ reports `BEHIND` (main advanced while the session was interrupted), bring it cur
 gh pr update-branch <n> -R <owner/repo>
 ```
 After update-branch, the head SHA changes, so CI must re-run and the `code-owner-review` gate check must
-be re-posted on the new SHA. Pick up at step 4 (wait-for-ci) with the updated PR.
+be re-posted on the new SHA. Pick up at step 4 (wait-for-ci) with the updated PR. Even if
+`independent-review` already emitted APPROVED before the branch fell behind, the gate check from that
+round is SHA-bound to the old head and no longer satisfies the gate — you MUST re-spawn `code-owner-review`
+on the updated PR so it posts a fresh check on the new SHA.
 
 **PR-base contract (autonomous, no human gate):** each story PR targets **`main`** directly (not an
 intermediate feature branch), so it is CI-gated and goes through the independent-review loop below.
