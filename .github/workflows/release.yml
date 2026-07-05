@@ -216,12 +216,27 @@ jobs:
       # APP_STORE_CONNECT_PRIVATE_KEY secrets, then replace the echo below with a real signed
       # archive + `xcrun altool`/`xcrun notarytool`/Transporter upload.
       # ------------------------------------------------------------------------------------
+      # The `secrets` context is not available in `if:` expressions (actionlint SC: only
+      # env/github/inputs/job/matrix/needs/runner/steps/strategy/vars are), so presence
+      # detection happens in a step that reads the three secrets through step-level `env:`
+      # and publishes a single `have_credentials` output consumed by the two steps below.
+      - name: Detect App Store Connect credentials
+        id: asc_credentials
+        env:
+          ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          ASC_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+        run: |
+          if [ -n "$ASC_KEY_ID" ] && [ -n "$ASC_ISSUER_ID" ] && [ -n "$ASC_PRIVATE_KEY" ]; then
+            echo "have_credentials=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "have_credentials=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Upload to App Store Connect / TestFlight (placeholder)
         if: >-
           vars.APPSTORE_UPLOAD_ENABLED == 'true' &&
-          secrets.APP_STORE_CONNECT_KEY_ID != '' &&
-          secrets.APP_STORE_CONNECT_ISSUER_ID != '' &&
-          secrets.APP_STORE_CONNECT_PRIVATE_KEY != ''
+          steps.asc_credentials.outputs.have_credentials == 'true'
         run: |
           echo "PLACEHOLDER: a real upload would now sign the Release archive with the"
           echo "App Store distribution identity, export a signed .ipa, and push it to"
@@ -231,9 +246,7 @@ jobs:
       - name: App Store Connect upload skipped (explain why)
         if: >-
           vars.APPSTORE_UPLOAD_ENABLED != 'true' ||
-          secrets.APP_STORE_CONNECT_KEY_ID == '' ||
-          secrets.APP_STORE_CONNECT_ISSUER_ID == '' ||
-          secrets.APP_STORE_CONNECT_PRIVATE_KEY == ''
+          steps.asc_credentials.outputs.have_credentials != 'true'
         run: |
           echo "App Store Connect / TestFlight upload SKIPPED: no Apple Developer account is"
           echo "configured (repo variable APPSTORE_UPLOAD_ENABLED is not 'true' and/or the"
