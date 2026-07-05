@@ -46,6 +46,15 @@ on:
         required: false
         default: "7"
 
+# Serialize monitor runs: the report step is check-then-act (list the open
+# issue, then create/comment), and the three triggers (workflow_run, daily
+# schedule, dispatch) can overlap. Queuing runs in one group prevents two
+# concurrent runs from both seeing "no open issue" (duplicate issues) or
+# both reporting the same run id (duplicate comments). No
+# cancel-in-progress: a cancelled sweep could drop a failure report.
+concurrency:
+  group: dep-update-failure-monitor
+
 permissions:
   issues: write
   actions: read
@@ -93,9 +102,12 @@ jobs:
                 echo "Workflow '$wf_name' not found in $REPO — skipping."
                 continue
               fi
+              # status=failure filters failed runs server-side (smaller
+              # payloads, fewer pages); the jq select is a redundant
+              # belt-and-suspenders guard.
               gh api -X GET "repos/$REPO/actions/workflows/$wf_id/runs" \
                 --paginate \
-                -f status=completed \
+                -f status=failure \
                 -f "created=>=$since" \
                 -F per_page=100 \
                 --jq '.workflow_runs[] | select(.conclusion == "failure") | "\(.id) \(.html_url) \(.name)"' \
