@@ -130,6 +130,12 @@ sha=$(gh -R <owner/repo> pr view <number> --json headRefOid --jq .headRefOid)
 On a **re-review round** the implementer pushes a new commit, which changes the head SHA. An old check on a
 superseded commit does NOT gate the new head — you MUST post a fresh check on the **new** head SHA each round.
 
+**After `gh pr update-branch`:** if the PR was brought up-to-date with main (via `gh pr update-branch`
+or a merge commit) between the previous `independent-review` run and now, the head SHA has already
+changed — any `code-owner-review` check posted on the old SHA is no longer valid. Always re-read the
+head SHA fresh at the start of Step 5 above (`gh pr view <n> --json headRefOid`) and post on that
+SHA, regardless of whether a prior check exists on an older commit.
+
 ### Verify the check actually posted — MANDATORY, never assume
 
 A wrapper call can exit zero and still not land the check (a transient API error, a permission/scope gap, or

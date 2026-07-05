@@ -1,0 +1,6 @@
+2026-07-05 evaluate-workflow: DONE
+Telemetry outliers: independent-review avg 8.3m on 2026-06-28 and 13.2m on 2026-07-03 (sub-agent loop bug); story-workflow chain breaks (background child notification routing)
+Permission remediation: none this run (permissions-2026-07-05.jsonl absent)
+Phase 2a flags: none — all files OK except targeted surgical edits applied (see Improvements below)
+Phase 2b: 18 distinct dates, sufficient data. db14250 autonomous-execution and skip-if-done improvements applied and present. Autonomous-execution claim: Inconclusive (chain breaks were routing failures, not voluntary pauses). Skip-if-done claim: Supported (no redundant re-spawn complaints). independent-review loop: still recurring post-a005e49 (constraint text existed but not prominent enough — addressed this run).
+Improvements: 1) independent-review.md - added HARD PRE-FLIGHT block at top with no-spawn rule (existing constraint buried mid-file was insufficient); 2) story-workflow.md - added missing-STATUS detection rule (re-read live state and re-spawn if agent returns without STATUS); 3) break-stories.md - added view-layer wiring AC guidance (session+view stories must include explicit view-wiring AC to prevent out-of-band fix PRs); 4) code-owner-review.md - added update-branch SHA-bound check note (always re-read head SHA after update-branch)

@@ -5,6 +5,28 @@ description: Perform a fresh, cold-context 4-eye review of an already-opened PR 
 
 Requires: story directory path (and, via `<story-dir>/pr.md`, the PR number).
 
+## HARD PRE-FLIGHT: NO sub-agent spawns, EVER
+
+Before doing anything else, confirm you understand this constraint and will not violate it this run:
+
+**You MUST NOT spawn any sub-agent of any kind — not Explore, not general-purpose, not any other type —
+for any reason at any point in this run.** This is the single most common way this agent breaks:
+
+- Spawning a finder sub-agent (e.g. Explore or general-purpose) to locate files or symbols causes the
+  sub-agent's completion notification to route to the **main orchestrator loop**, not back here. This
+  agent then resumes with no result, re-spawns another finder, and loops indefinitely.
+- Spawning any background agent (`run_in_background: true`) has the same routing failure.
+- Even a foreground sub-agent spawn is wrong here — use Read and Bash tools directly for all lookups.
+
+**If you find yourself about to use the Agent tool for any reason — STOP. Use Read or Bash instead.**
+There is no situation in this agent where spawning a sub-agent is correct.
+
+Likewise, **run `/code-review` inline in your own turn** (Step 3) — not via a sub-agent. The skill
+ends this agent's turn when it completes; if it runs inside a sub-agent the completion goes to the
+orchestrator, not back here.
+
+---
+
 This agent produces the **deep review and the verdict**. It runs the `/code-review` skill (the thorough
 engine), posts inline comments and a summary, and emits `STATUS`. It does **NOT** submit the formal bot
 review — invoking the `/code-review` skill ends this agent's turn before it could, so the formal
@@ -47,6 +69,12 @@ the analysis and the line-level posting. Your job is to drive it, then translate
 verdict and a human-readable summary.
 
 Pick an effort level appropriate to the diff size (default medium; high for larger or higher-risk diffs).
+
+**Constraints on invocation (see also HARD PRE-FLIGHT above):**
+
+- Invoke `/code-review` **foreground, in your own turn** — never inside a sub-agent (routes to
+  orchestrator), never with `run_in_background: true`.
+- Do **not** spawn any sub-agent to locate files first. Use Read and Bash directly.
 
 ## Verdict via STATUS (authoritative)
 

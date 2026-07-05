@@ -62,6 +62,11 @@ evaluate → archive) runs in one uninterrupted agent session. Only stop to ask 
 reaches an explicit escalation condition (e.g. the 3-round review cap in story-workflow, or a CI
 failure you cannot resolve).
 
+**Run all sub-agents foreground (never background).** Sub-agents spawned with `run_in_background: true`
+deliver their completion notification to the **main conversation loop**, not back to this orchestrator.
+That breaks the sequential step chain: the orchestrator never receives the result and the lifecycle
+stalls. Always spawn sub-agents foreground so each result comes back here and the next step can proceed.
+
 Then run the following steps in order (from the worktree), spawning a dedicated
 sub-agent for each:
 
