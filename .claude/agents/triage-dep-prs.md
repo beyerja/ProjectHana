@@ -77,9 +77,10 @@ run URLs of the dependency-update automations ("Update flake.lock", "Dependabot 
    `.workflow/log.md` entry describing the failure and the suggested story-level fix.
 4. On completion:
    - **All reported failures resolved:** write a summary to `$RUN_TMPDIR/dep-issue-close.md` via the
-     Write tool, then close the issue:
+     Write tool, then comment and close in two steps (`gh issue close` has no `--comment-file` flag):
      ```sh
-     gh -R <owner/repo> issue close <n> --comment-file $RUN_TMPDIR/dep-issue-close.md
+     gh -R <owner/repo> issue comment <n> --body-file $RUN_TMPDIR/dep-issue-close.md
+     gh -R <owner/repo> issue close <n>
      ```
    - **Anything unresolved:** leave the issue open and post a status comment describing what remains
      and why (body written via the Write tool to `$RUN_TMPDIR/dep-issue-status.md`):
@@ -105,6 +106,23 @@ instead of a PR. Detect and consume it:
    ```
    **Explicit no-handoff path:** neither a branch ahead of main nor an open issue → append
    "no flake.lock handoff" to `.workflow/log.md` (Edit tool) and continue to Step 2.
+
+   **Stale-handoff path (issue open, branch missing or not ahead of main):** do NOT silently skip.
+   Re-run the automation and give it one chance to push (single sleep + one re-check — no poll loop):
+   ```sh
+   gh -R <owner/repo> workflow run update-flake-lock.yml
+   sleep 90
+   git -C <worktree> fetch origin
+   git -C <worktree> rev-list --count origin/main..origin/automated/update-flake-lock
+   ```
+   - Branch now exists and is ahead of main → proceed with item 2 below as a normal handoff.
+   - Still missing / not ahead (or the workflow dispatch itself fails) → write a status comment
+     explaining the state (issue open but no branch; re-run attempted; result) to
+     `$RUN_TMPDIR/flake-stale-status.md` via the Write tool, post it and leave the issue open:
+     ```sh
+     gh -R <owner/repo> issue comment <n> --body-file $RUN_TMPDIR/flake-stale-status.md
+     ```
+     Append the outcome to `.workflow/log.md` (Edit tool), then continue to Step 2.
 2. If the branch exists and is ahead of main, open a PR from it with the user's plain `gh`
    credentials — NOT the bot wrapper — so CI triggers normally. Write the body via the Write tool to
    `$RUN_TMPDIR/flake-pr-body.md`, then:
@@ -113,9 +131,14 @@ instead of a PR. Detect and consume it:
    ```
 3. Treat that PR as a regular dep PR: add it to the Step 2 processing list and run it through the
    existing per-PR state machine (verify, lint/test, code-owner gate, CI, squash-merge).
-4. After the PR merges, close the `flake-lock-update` handoff issue with a summary comment (Write
-   tool file + `gh -R <owner/repo> issue close <n> --comment-file <file>`), and record it in
-   `.workflow/log.md`.
+4. After the PR merges, close the `flake-lock-update` handoff issue with a summary comment — write
+   the summary via the Write tool to `$RUN_TMPDIR/flake-issue-close.md`, then comment and close in
+   two steps (`gh issue close` has no `--comment-file` flag):
+   ```sh
+   gh -R <owner/repo> issue comment <n> --body-file $RUN_TMPDIR/flake-issue-close.md
+   gh -R <owner/repo> issue close <n>
+   ```
+   Record it in `.workflow/log.md`.
 
 ## Step 2 — For each qualifying PR, run the per-PR state machine
 
