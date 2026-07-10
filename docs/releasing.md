@@ -92,3 +92,55 @@ When the workflow finishes, check the Release on GitHub:
   `Hanahuac.ipa` (unsigned, installable-evidence artifact), and `SHA256SUMS.txt`.
 - Verify the checksums: download all three assets into one directory and run
   `shasum -a 256 -c SHA256SUMS.txt`.
+
+## Release quality gates
+
+`release.yml` runs the following gates, in order, on every tag push and every dry run. It is
+deliberately **not** a per-PR workflow (a full Catalyst test suite + Release builds on a macOS
+runner is slow); the per-PR blocking set (`ci.yml`, `lint.yml`, `secret-scan.yml`) is separate and
+untouched by releases.
+
+| Gate | What runs | What it protects |
+|------|-----------|------------------|
+| (a) Tag ↔ version consistency | `scripts/check-tag-version.sh <tag>` | A published Release can never claim a version different from the app's `MARKETING_VERSION` in `project.yml`. Enforced only on real tag refs; **skipped with an explicit explanation on dry runs** (tag enforcement is publish-time only). |
+| (b) CHANGELOG section present | `scripts/check-changelog.sh` | Every release ships human-readable release notes — no tag without a finalized `## [X.Y.Z]` changelog section. |
+| (c) Full lint suite | `just lint` | The release commit meets the same fail-on-violation lint bar (Swift/Python/shell/Nix/YAML/GHA + l10n completeness) as every PR. |
+| (d) Full test suite | `xcodebuild test` on Mac Catalyst, exactly as `ci.yml`'s Test step (Debug, unsigned flags) | No release from a commit whose tests don't pass; **UI tests execute in CI** on Catalyst. |
+| (e) Geo packs up to date | `just geo-packs-check` | The committed per-language geo-name ODR packs cannot drift from the bundled geo source data. |
+| (f) ODR pack integrity | `just verify-odr-packs` | ODR packs are data-only (no executable/Mach-O content) and the `lang-<code>` tag contract holds. |
+| (g) Release build + base-only validation | `just verify-base-only-release` | The Release-config app launches fully usable offline with zero packs downloaded (base languages bundled, non-base declared on-demand). |
+
+After the gates, the workflow builds the unsigned `.xcarchive` + `.ipa` via `just archive` (never
+re-implemented in YAML), zips the archive, emits `SHA256SUMS.txt`, and uploads everything as the
+`release-artifacts` workflow artifact. Only real (non-dry-run) tag refs then run the
+`publish-release` job.
+
+### Local equivalents
+
+Run the same quality bar locally before tagging:
+
+- **`just release-check [vX.Y.Z]`** — the full local release quality bar in 6 steps: (1) lint
+  suite, (2) full test suite on Mac Catalyst as `ci.yml`, (3) geo packs up to date, (4) ODR pack
+  integrity, (5) Release build + base-only bundle verification, (6) changelog presence — plus
+  tag↔version consistency when the optional tag argument is given (skipped with a note otherwise).
+- **`just archive`** — produces the unsigned Release `.xcarchive` (generic iOS device) and the
+  unsigned `.ipa` (`scripts/package-ipa.sh`), identical to what the workflow ships.
+
+### Story 003 empirical outcome (why unsigned works)
+
+The unsigned **iOS device Release archive is PROVEN**: `xcodebuild archive` against
+`generic/platform=iOS` with `CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO
+CODE_SIGNING_ALLOWED=NO` succeeds with **no signing identity, no provisioning profile, and no Apple
+credentials** — no Catalyst fallback was needed. The unsigned `.ipa` is produced from that archive
+by `scripts/package-ipa.sh` (plain Payload zip); it is an **installable-evidence artifact** only —
+suitable for sideloading or re-signing later, not App Store distribution.
+
+### Documented deviation: local UI-test execution
+
+`just test-mac` **compiles** `HanahuacUITests` (xcodebuild builds every test bundle in the scheme)
+but **skips its execution locally**: launching the XCUITest runner against a Catalyst app on a
+local Mac hangs deterministically before establishing a connection (it needs UI-automation
+permissions this environment doesn't grant — reproduced twice in story 003, with all unit tests
+green either way). CI is not affected: the required Build & Test check and gate (d) above execute
+the UI tests on Catalyst. The local UI path is `just ui-walkthrough`, which drives the app on the
+iOS simulator with screenshots + accessibility dumps per step.
