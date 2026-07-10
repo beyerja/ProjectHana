@@ -84,6 +84,22 @@ sub-agent for each:
    - **Resume after interruption mid-step-1**: if the worktree's `.workflow/log.md` shows triage started
      but not completed, check for any still-open dep PRs before proceeding. Re-spawn `triage-dep-prs` if
      PRs remain; skip triage entirely if the log shows it completed or all dep PRs are now merged.
+   - **Dep-update-failure issue check** — alongside triage, check for open self-healing issues filed by
+     the dependency-update failure monitor:
+     ```sh
+     gh -R beyerja/ProjectHana issue list --label dep-update-failure --state open --json number,title,url
+     gh -R beyerja/ProjectHana issue list --label flake-lock-update --state open --json number,title,url
+     ```
+     - **If any issue is found:** write a short comment body to a temp file via the Write tool
+       (content: "This feature-workflow run will take care of the failures reported here."), post it
+       with
+       `gh -R beyerja/ProjectHana issue comment <n> --body-file <file>`, record the issue number/URL in
+       `.workflow/log.md` (Edit tool append), and include the fix in the workflow scope — pass the issue
+       context to `clarify-feature`/`break-stories`, or prepend a dedicated story. (`triage-dep-prs`
+       also consumes these issues in its Step 1b/1c; any tooling fix lands on merge per Step 0 item 2.)
+     - **Explicit no-issue path:** when neither label has open issues, append a
+       "no open dep-update-failure / flake-lock-update issues" line to `.workflow/log.md` and continue —
+       no comment, no scope change.
 2. **Clarify** — spawn `clarify-feature` agent. **Skip it** only when the request already supplies
    unambiguous goal + acceptance criteria + root cause (e.g. a bug report that names the offending view
    and the established fix pattern, or a follow-up to a merged PR). In that case write `.workflow/feature.md`
