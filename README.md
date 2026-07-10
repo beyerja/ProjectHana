@@ -8,6 +8,9 @@ Hanahuac (*ha-na-wak*, "One World") is a personalized geography learning app for
 **Stack:** SwiftUI · SwiftData · MapKit · zero external dependencies
 
 ## Documentation
+- [Releasing](docs/releasing.md) — the end-to-end release runbook: versioning + `just bump`, the
+  bump-PR → annotated `v`-tag → release-workflow flow, every release quality gate and its local
+  equivalent, and the switch-on steps for a future Apple Developer account.
 - [Supported languages](docs/supported-languages.md) — the 21 in-app languages with native names +
   codes, the complete vs best-effort content contracts, the RTL set (ar, ur), how the two completeness
   gates enforce "no fallbacks", device-locale auto-selection, and the ODR delivery model.
