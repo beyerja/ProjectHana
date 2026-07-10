@@ -144,3 +144,63 @@ permissions this environment doesn't grant — reproduced twice in story 003, wi
 green either way). CI is not affected: the required Build & Test check and gate (d) above execute
 the UI tests on Catalyst. The local UI path is `just ui-walkthrough`, which drives the app on the
 iOS simulator with screenshots + accessibility dumps per step.
+
+## When the Apple Developer account exists
+
+> **⚠️ Switch-on checklist.** Everything above works today with zero Apple credentials. This
+> section lists the exact changes to make — and nothing more — once a paid Apple Developer account
+> is available. Until then, do not add any of these.
+
+### 1. Create the App Store Connect API-key secrets (HUMAN action)
+
+Create these three **repository secrets** with exactly these names (they are what
+`release.yml`'s credential-detection step reads):
+
+- `APP_STORE_CONNECT_KEY_ID` — the App Store Connect API key ID.
+- `APP_STORE_CONNECT_ISSUER_ID` — the API key's issuer ID.
+- `APP_STORE_CONNECT_PRIVATE_KEY` — the full content of the downloaded `.p8` private key.
+
+Per project convention, **creating secrets is a human action** — an agent must never handle or
+store these credentials; prepare the values in App Store Connect and enter them in the GitHub
+repository settings yourself.
+
+### 2. Flip the repo variable
+
+Set the repository **variable** (not secret) `APPSTORE_UPLOAD_ENABLED` to `'true'`. The upload
+step runs only when this variable is `'true'` **and** all three secrets are present, so a
+half-configured state safely stays a no-op (the workflow prints an explicit "upload SKIPPED"
+explanation).
+
+### 3. Add signing settings to `project.yml`
+
+The targets' build settings currently contain **no** signing configuration (builds are unsigned).
+Add to the settings block, then `just generate`:
+
+```yaml
+DEVELOPMENT_TEAM: <your 10-character team ID>
+CODE_SIGN_STYLE: Automatic   # or Manual with explicit profile settings
+```
+
+### 4. Add an ExportOptions plist
+
+`xcodebuild -exportArchive` needs an export-options plist (e.g. `ExportOptions.plist` with
+`method` set to `app-store-connect`, plus team/signing keys). Add it to the repo and reference it
+from the real upload step.
+
+### 5. Make the placeholder steps live
+
+In `release.yml`'s `publish-release` job, the activation point is already wired:
+
+- The **"Detect App Store Connect credentials"** step already reads the three secrets and
+  publishes a `have_credentials` output — it stays as is.
+- The **"Upload to App Store Connect / TestFlight (placeholder)"** echo step becomes the real
+  sequence: a **signed** Release archive (with the new signing settings), an
+  `xcodebuild -exportArchive` export using the ExportOptions plist, and an upload to App Store
+  Connect / TestFlight authenticated with the API key trio.
+- The "upload skipped (explain why)" step keeps guarding the not-configured case.
+
+> **⚠️ Re-verify the upload tooling at switch-on time — do not assume it from this doc.** The
+> exact upload mechanism (`xcodebuild -exportArchive` + `xcrun altool` / `xcrun notarytool` /
+> Transporter vs. fastlane) changes as Apple evolves its tooling; whichever is current when the
+> account exists must be verified empirically against Apple's then-current documentation before
+> being wired into the workflow.
