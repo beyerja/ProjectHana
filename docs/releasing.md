@@ -145,6 +145,23 @@ green either way). CI is not affected: the required Build & Test check and gate 
 the UI tests on Catalyst. The local UI path is `just ui-walkthrough`, which drives the app on the
 iOS simulator with screenshots + accessibility dumps per step.
 
+## Dry runs and the first proven run
+
+A manual `workflow_dispatch` of `release.yml` with `dry_run=true` (the default) executes **every**
+gate and produces all artifacts — the archive, the `.ipa`, the checksums, the artifact upload —
+but skips tag-consistency enforcement and Release publication. Use it to prove the pipeline
+without publishing anything:
+
+```sh
+gh -R beyerja/ProjectHana workflow run release.yml --ref main -f dry_run=true
+```
+
+**First proven run:** the pipeline's first green dry-run completed on 2026-07-10 —
+<https://github.com/beyerja/ProjectHana/actions/runs/29126126066> (conclusion: success; all gates
+(b)–(g) executed, gate (a) skipped with explanation as designed for dry runs, unsigned
+`.xcarchive` + `.ipa` + `SHA256SUMS.txt` uploaded as the `release-artifacts` artifact, publish job
+skipped).
+
 ## When the Apple Developer account exists
 
 > **⚠️ Switch-on checklist.** Everything above works today with zero Apple credentials. This
