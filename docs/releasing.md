@@ -38,3 +38,57 @@ There are no release branches. Semver prerelease suffixes are allowed — an ann
 `v1.1.0-rc.1` runs the same pipeline and the workflow marks the resulting GitHub Release as a
 prerelease (any tag containing `-`). The tag's `X.Y.Z` base must match `MARKETING_VERSION` in
 `project.yml`; gate (a) below enforces this at publish time.
+
+## Release runbook (step by step)
+
+### 1. Open the bump PR
+
+On a branch off `main`:
+
+```sh
+just bump <major|minor|patch>
+```
+
+Then finalize `CHANGELOG.md` (Keep-a-Changelog format): move the `## [Unreleased]` content under a
+new `## [X.Y.Z] - YYYY-MM-DD` heading matching the bumped `MARKETING_VERSION`, and leave a fresh
+empty `[Unreleased]` section on top. `scripts/check-changelog.sh` is the enforcement — the release
+pipeline fails if the section for the version under release is missing. Commit `project.yml`, the
+regenerated `Hanahuac.xcodeproj/project.pbxproj`, and `CHANGELOG.md`, and open the PR.
+
+### 2. Merge via the normal gate
+
+The bump PR merges through the standard merge gate like any other PR: per-PR CI (Build & Test,
+lint, secret scan) plus the SHA-bound `code-owner-review` status check. Nothing about a release
+bypasses or weakens this gate. Note that the review check is bound to a specific commit SHA —
+`gh pr update-branch` (or any new push) re-blocks the merge until the gate is re-posted on the new
+SHA.
+
+### 3. Create and push the annotated tag
+
+On the merge commit on `main`:
+
+```sh
+git checkout main
+git pull
+git tag -a vX.Y.Z -m "Release vX.Y.Z"
+git push origin vX.Y.Z
+```
+
+### 4. The tag push triggers the release pipeline
+
+Pushing the `v*` tag triggers `.github/workflows/release.yml`, which runs every quality gate,
+builds the unsigned artifacts, and publishes the GitHub Release. The workflow is also manually
+dispatchable (`workflow_dispatch`) with a `dry_run` input — a dry run executes every gate and
+produces all artifacts but skips tag-consistency enforcement and Release publication (see
+[Dry runs](#dry-runs-and-the-first-proven-run) below).
+
+### 5. Verify the GitHub Release
+
+When the workflow finishes, check the Release on GitHub:
+
+- **Title** equals the tag (e.g. `v1.2.0`); prerelease-suffixed tags are marked as prereleases.
+- **Body** is the tag's `CHANGELOG.md` section followed by the auto-generated notes.
+- **Assets**: `Hanahuac.xcarchive.zip` (the unsigned Release device archive),
+  `Hanahuac.ipa` (unsigned, installable-evidence artifact), and `SHA256SUMS.txt`.
+- Verify the checksums: download all three assets into one directory and run
+  `shasum -a 256 -c SHA256SUMS.txt`.
