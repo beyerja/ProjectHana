@@ -62,10 +62,24 @@ evaluate → archive) runs in one uninterrupted agent session. Only stop to ask 
 reaches an explicit escalation condition (e.g. the 3-round review cap in story-workflow, or a CI
 failure you cannot resolve).
 
-**Run all sub-agents foreground (never background).** Sub-agents spawned with `run_in_background: true`
-deliver their completion notification to the **main conversation loop**, not back to this orchestrator.
-That breaks the sequential step chain: the orchestrator never receives the result and the lifecycle
-stalls. Always spawn sub-agents foreground so each result comes back here and the next step can proceed.
+**Run all sub-agents foreground (never background).** Background sub-agents deliver their completion
+notification to the **main conversation loop**, not back to this orchestrator. That breaks the
+sequential step chain: the orchestrator never receives the result and the lifecycle stalls.
+**Background is the Agent tool's DEFAULT when `run_in_background` is omitted** — explicitly pass
+`run_in_background: false` on every Agent call, and never end a turn while a spawned child is still
+running. This applies recursively: `story-workflow` and every other coordinator you spawn must hold
+their own sub-spawns to the same rule.
+
+**Stay inside the granted permission envelope — redesign around denials, don't escalate.** Repo/org
+settings mutations (`gh api -X PUT/PATCH/DELETE` on repo settings, branch protection, Actions
+permissions, secrets) are workspace-level permission changes: auto-mode's classifier denies them and
+only the user may make them. Never let a step or story plan depend on one. When a planned action IS
+denied mid-run, first look for a design that avoids the capability entirely rather than asking the
+user to flip a setting — e.g. a workflow that could not open PRs (`can_approve_pull_request_reviews`
+flip denied) was redesigned to branch-push + a deduplicated handoff issue consumed by local triage,
+which needed no setting and also fixed the GITHUB_TOKEN-PRs-don't-trigger-CI trap. Record the denial
+and the redesign in `.workflow/log.md`; surface any genuinely-needed settings change only as an
+optional user follow-up.
 
 Then run the following steps in order (from the worktree), spawning a dedicated
 sub-agent for each:
@@ -87,13 +101,13 @@ sub-agent for each:
    - **Dep-update-failure issue check** — alongside triage, check for open self-healing issues filed by
      the dependency-update failure monitor:
      ```sh
-     gh -R beyerja/ProjectHana issue list --label dep-update-failure --state open --json number,title,url
-     gh -R beyerja/ProjectHana issue list --label flake-lock-update --state open --json number,title,url
+     gh issue list -R beyerja/ProjectHana --label dep-update-failure --state open --json number,title,url
+     gh issue list -R beyerja/ProjectHana --label flake-lock-update --state open --json number,title,url
      ```
      - **If any issue is found:** write a short comment body to a temp file via the Write tool
        (content: "This feature-workflow run will take care of the failures reported here."), post it
        with
-       `gh -R beyerja/ProjectHana issue comment <n> --body-file <file>`, record the issue number/URL in
+       `gh issue comment <n> -R beyerja/ProjectHana --body-file <file>`, record the issue number/URL in
        `.workflow/log.md` (Edit tool append), and include the fix in the workflow scope — pass the issue
        context to `clarify-feature`/`break-stories`, or prepend a dedicated story. (`triage-dep-prs`
        also consumes these issues in its Step 1b/1c; any tooling fix lands on merge per Step 0 item 2.)
@@ -170,8 +184,12 @@ At each step, note the outcome in `.workflow/log.md`. If a step sends the workfl
 The headline for orchestration: **avoid `cd`-prefixed compound Bash.** A `cd /abs/path && <cmd>` block
 can't be safely allowlisted and gets prompted every time (it was the single most-prompted signature in
 evaluation telemetry, and the top offenders are `cd ../ProjectHana-worktrees/<slug> && …` from parallel
-worktree runs). Run side-effecting tools at a path instead: `git -C <worktree> …`, `gh -R <owner/repo>
-…`, and `just -f <worktree>/justfile …` (the recipes are already worktree-aware). The worktrees parent
+worktree runs). Run side-effecting tools at a path instead: `git -C <worktree> …`, `gh … -R <owner/repo>`,
+and `just -f <worktree>/justfile …` (the recipes are already worktree-aware). For `gh`, place `-R`
+**after** the subcommand — `gh pr view <n> -R <owner/repo>`, never `gh -R <owner/repo> pr view <n>` —
+because the allowlist prefix-matches on `gh pr view *` / `gh run view *` / `gh issue list *` and a
+leading `-R` defeats the match (it was the single most-captured prompt signature of the last run,
+233 records). The worktrees parent
 is pre-authorized (Step 0), so you can read/write/run inside `../ProjectHana-worktrees/<slug>` directly
 with no `cd` and no prompt. Reserve `cd` for the rare tool with no path flag. Likewise: commit with
 `git commit -F <file>` (message written via the Write tool), open PRs with `gh pr create --body-file`,

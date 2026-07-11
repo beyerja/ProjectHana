@@ -1,0 +1,19 @@
+fix(ci): restructure Update flake.lock to branch-push + handoff issue
+
+The scheduled workflow failed every run with "GitHub Actions is not
+permitted to create or approve pull requests" — the repo deliberately keeps
+`can_approve_pull_request_reviews: false` (hardened posture), and even if
+allowed, GITHUB_TOKEN-created PRs never trigger pull_request CI.
+
+New design (no PR creation from Actions at all):
+- permissions: exactly `contents: write` + `issues: write` (drop
+  pull-requests: write; remove peter-evans/create-pull-request entirely)
+- on a lock change: commit + force-push to `automated/update-flake-lock`,
+  then open-or-comment a single deduplicated handoff issue labeled
+  `flake-lock-update` (comment with the new run URL if one is already open)
+- on no change: exit green with no side effects
+- the local triage flow (story 003) opens the PR from the branch with user
+  credentials, which does trigger CI; nothing auto-merges, preserving the
+  1-day supply-chain delay
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>

@@ -27,6 +27,15 @@ For any story that touches both a session/model type and a view that renders it,
 story only touches the session layer with no view changes, note that explicitly in the spec so the
 next story can pick up the wiring.
 
+**Permission-envelope pre-flight.** Before finalizing the story set, check every story's planned
+actions against the agent permission envelope: no story may depend on a repo/org settings mutation
+(`gh api -X PUT/PATCH/DELETE` on repo settings, branch protection, Actions permissions, secrets) or
+any other capability auto-mode reserves for the user — the classifier denies these mid-run and forces
+a replan after work has started. Redesign such a story to stay within already-granted capabilities
+(e.g. a branch-push + deduplicated handoff issue consumed by local triage, instead of flipping "Actions
+may create PRs"), and record a genuinely-needed settings change in the spec as an explicit **user
+follow-up**, never as a story step or acceptance criterion.
+
 For each story (numbered 001, 002, ...):
 - Create `.workflow/stories/<NNN>-<slug>/spec.md`: Title, Goal, Acceptance Criteria
 - Create `.workflow/stories/<NNN>-<slug>/status.md`: `status: pending`
