@@ -20,10 +20,14 @@ When verifying that a feature's code is present after its PR merged, do NOT read
 primary checkout's working tree (`/Users/Private/Documents/Code/ProjectHana/`). That local `main`
 may be diverged/stale and will make the feature appear absent even after a successful merge.
 Always fetch first, then use `git show origin/main:<relative-path>` to read the authoritative
-post-merge state:
+post-merge state — **from the feature worktree, never via `git -C <primary-checkout>`** (a worktree
+shares the primary's object store and remote refs, so `origin/main` is identical there). Use these
+exact shapes: `git -C <worktrees>/* fetch*` and plain `git show *` are allowlisted, whereas
+`git -C <primary-checkout> …` was the most-prompted git shape in permission telemetry (plain
+`git fetch` is NOT allowlisted — keep the `-C <feature-worktree>` on the fetch):
 ```sh
-git -C /Users/Private/Documents/Code/ProjectHana fetch origin
-git -C /Users/Private/Documents/Code/ProjectHana show origin/main:Hanahuac/SomeFile.swift
+git -C /Users/Private/Documents/Code/ProjectHana-worktrees/<slug> fetch origin
+git show origin/main:Hanahuac/SomeFile.swift
 ```
 `origin/main` after a fresh fetch is the source of truth once a PR merges; the local working tree is not.
 

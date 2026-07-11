@@ -39,8 +39,10 @@ fastlane/test_output
 Pods/
 Podfile.lock
 
-# Workflow telemetry (local only, never committed)
+# Workflow telemetry (local only, never committed — logged command text can
+# contain secret-shaped strings that trip the pre-commit secret scan/gitleaks)
 .workflow/telemetry/*.jsonl
+.workflow/archive/*/telemetry/
 
 # Workflow screenshots (binary, large, local only)
 .workflow/screenshots/

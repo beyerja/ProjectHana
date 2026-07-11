@@ -34,7 +34,9 @@ be partly or fully done. Before acting, **read `<story-dir>/log.md` and the live
 re-break-tasks if `tasks.md` is complete, don't `create-pr` if a PR is already open (pick up at its
 review/merge state), don't re-merge a merged PR. Where the spawning briefing and live state disagree
 (e.g. the briefing says "no PR yet" but `gh` shows an open one), **the live git/gh state wins** — the
-briefing is a snapshot that may be stale. Record the resume point in `<story-dir>/log.md`.
+briefing is a snapshot that may be stale. Record the resume point in `<story-dir>/log.md`, and log
+resumable identifiers (PR number, head SHA, dispatched CI run id) there the moment they exist —
+session-token interruptions are routine mid-lifecycle, and recovery depends on those ids being on disk.
 
 **Branch-behind resume case.** When a PR is already open but `gh pr view <n> --json mergeStateStatus`
 reports `BEHIND` (main advanced while the session was interrupted), bring it current before continuing:
