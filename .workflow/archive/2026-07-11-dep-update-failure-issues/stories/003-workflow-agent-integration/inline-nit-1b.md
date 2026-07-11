@@ -1,0 +1,3 @@
+**Non-blocking (nit):** Step 1b item 4 closes the `dep-update-failure` issue at triage time, but per feature_orchestrator Step 0 item 2 any tooling fix made here (workflow YAML, flake/nix config) only takes effect when the feature branch merges to `main` — and item 3 doesn't say where such fixes are committed (presumably the feature worktree branch). If the feature run is later abandoned, the issue ends up closed while the failure remains. Bounded because the monitor re-files a rolling issue on the next scheduled failure, so not blocking.
+
+Consider: (a) stating explicitly that automation fixes are committed on the feature worktree branch, and (b) having the close-summary note that the fix lands on feature-branch merge (or deferring closure until then).
