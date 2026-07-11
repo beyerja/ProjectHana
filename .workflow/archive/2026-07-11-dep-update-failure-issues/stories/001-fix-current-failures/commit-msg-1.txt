@@ -1,0 +1,11 @@
+fix(deps): remove by-construction-failing swift ecosystem from dependabot.yml
+
+The repo has zero SPM dependencies (no Package.swift, no Package.resolved in
+the xcodeproj), so the speculative `swift` package-ecosystem entry failed
+every weekly Dependabot run with `dependency_file_not_found`.
+
+Remove the entry and replace it with a guidance comment: re-add once the
+project gains its first SPM dependency. The `github-actions` entry is
+byte-identical to before.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>

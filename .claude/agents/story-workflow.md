@@ -16,9 +16,13 @@ for user input mid-lifecycle — the full story lifecycle (break-tasks → imple
 → merge → verify) runs in one uninterrupted session. Only stop when a step reaches an explicit
 escalation condition (the 3-round review cap, or a CI failure you cannot resolve after one retry).
 
-**Run all sub-agents foreground (never background).** Sub-agents spawned with `run_in_background: true`
-deliver their completion notification to the main conversation loop, not back to this agent. That
-breaks the sequential step chain and causes the lifecycle to stall. Always spawn sub-agents foreground.
+**Run all sub-agents foreground (never background).** Sub-agents spawned in the background deliver
+their completion notification to the main conversation loop, not back to this agent. That breaks the
+sequential step chain and causes the lifecycle to stall. **Background is the Agent tool's DEFAULT when
+`run_in_background` is omitted** — explicitly pass `run_in_background: false` on **every** Agent call,
+and never end your turn while a spawned child is still running (a story this rule previously only
+implied stalled exactly that way: helpers were spawned without the flag, the turn ended waiting on
+them, and the parent had to finish the relay).
 
 **If a sub-agent returns without a `STATUS:` line**, do not proceed to the next step. The agent may
 have spawned a background child that drained its context before completing. Re-read `<story-dir>/log.md`
@@ -102,7 +106,10 @@ merge a story PR.
    - STATUS: FAILED → go to step 2 (re-implement with failure context)
    - STATUS: DONE → finish
 
-Update `<story-dir>/status.md` at each transition. If returning to a prior step, note the reason in `<story-dir>/log.md`.
+Update `<story-dir>/status.md` at **every** phase boundary, BEFORE spawning the next step's agent — a
+current status.md is the resume anchor that makes session-token interruptions recoverable (one run was
+interrupted three times mid-story and recovered each time only because status.md matched reality). If
+returning to a prior step, note the reason in `<story-dir>/log.md`.
 
 **Telemetry — always run before exiting, even if a subagent handled the final step:**
 ```

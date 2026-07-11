@@ -63,17 +63,17 @@ run URLs of the dependency-update automations ("Update flake.lock", "Dependabot 
 
 1. List open issues:
    ```sh
-   gh -R <owner/repo> issue list --label dep-update-failure --state open --json number,title,url,body
+   gh issue list -R <owner/repo> --label dep-update-failure --state open --json number,title,url,body
    ```
    **Explicit no-issue path:** empty list → append "no open dep-update-failure issues" to
    `.workflow/log.md` (Edit tool) and continue to Step 1c.
 2. For each issue, collect every failed run URL/id reported in the body and comments:
    ```sh
-   gh -R <owner/repo> issue view <n> --comments
+   gh issue view <n> -R <owner/repo> --comments
    ```
    Diagnose each reported run:
    ```sh
-   gh -R <owner/repo> run view <run-id> --log-failed
+   gh run view <run-id> -R <owner/repo> --log-failed
    ```
 3. Fix what is fixable within triage scope — same minimal-fix bar as step 2e (config/call-site level,
    no architectural changes). Anything beyond that bar: escalate it into the feature scope with a
@@ -105,7 +105,7 @@ instead of a PR. Detect and consume it:
    Treat a missing remote branch (the `rev-list` errors) as "no handoff". Also check for an open
    handoff issue:
    ```sh
-   gh -R <owner/repo> issue list --label flake-lock-update --state open --json number,title,url
+   gh issue list -R <owner/repo> --label flake-lock-update --state open --json number,title,url
    ```
    **Explicit no-handoff path:** neither a branch ahead of main nor an open issue → append
    "no flake.lock handoff" to `.workflow/log.md` (Edit tool) and continue to Step 2.

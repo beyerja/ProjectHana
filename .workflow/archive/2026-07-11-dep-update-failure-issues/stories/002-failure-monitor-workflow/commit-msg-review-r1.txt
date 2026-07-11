@@ -1,0 +1,16 @@
+fix(monitor): serialize runs via concurrency group + server-side failure filter
+
+Address round-1 independent review findings on PR #227:
+
+- BLOCKING: add a workflow-level `concurrency: group: dep-update-failure-monitor`
+  so the three triggers (workflow_run, daily schedule, dispatch) queue instead
+  of overlapping. The report step is check-then-act (gh issue list, then
+  create/comment); overlapping runs could both see "no open issue" and create
+  two rolling issues, or double-post the same run id. No cancel-in-progress:
+  a cancelled sweep could drop a failure report.
+- NIT: sweep now queries the runs API with `status=failure` (server-side
+  filter — smaller payloads, fewer pages). The jq
+  `select(.conclusion == "failure")` stays as a redundant guard, so only
+  conclusion-failure runs are still collected.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>

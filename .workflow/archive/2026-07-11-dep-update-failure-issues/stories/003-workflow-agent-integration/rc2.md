@@ -1,0 +1,1 @@
+**Blocking — same nonexistent flag as Step 1b.** `gh issue close` does not support `--comment-file`; this close command fails with `unknown flag`. Use `gh -R <owner/repo> issue comment <n> --body-file <file>` followed by `gh -R <owner/repo> issue close <n>` (both allowlist-friendly).
