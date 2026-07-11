@@ -1,0 +1,3 @@
+**[non-blocking, reuse]** `read_marketing_version()` is duplicated verbatim here and in `scripts/check-changelog.sh` (lines 50-64), making it the third copy of the "exactly one quoted `MARKETING_VERSION`" parsing semantics alongside `scripts/bump-version.py`. If the `project.yml` version format or the single-match rule ever changes, three places must be updated in lockstep.
+
+Not blocking: the spec explicitly requires standalone, fully-delivered scripts, and the mirroring is documented in the function comment. If a later story adds a third shell consumer, consider extracting a sourced `scripts/release-lib.sh` (the `test-lib.sh` precedent) at that point.

@@ -147,19 +147,22 @@ Find an existing summary comment by its marker, then update it in place if prese
 # Find the existing marker comment's numeric id (empty if none yet). Select `.databaseId`, NOT `.id`:
 # the REST endpoint `repos/.../issues/comments/{id}` needs the numeric databaseId, whereas `.id` is the
 # GraphQL node id (`IC_kwDO…`) and would 404.
-existing=$(gh -R <owner/repo> pr view <number> --json comments \
+existing=$(gh pr view <number> -R <owner/repo> --json comments \
   -q '.comments[] | select(.body | contains("<!-- independent-review -->")) | .databaseId' | head -n1)
 
 if [ -n "$existing" ]; then
     # NB: `gh api` does NOT accept `-R` — the repo belongs in the endpoint path.
     gh api --method PATCH "repos/<owner/repo>/issues/comments/$existing" -F body=@<body-file>
 else
-    gh -R <owner/repo> pr comment <number> --body-file <body-file>
+    gh pr comment <number> -R <owner/repo> --body-file <body-file>
 fi
 ```
 Always use `--body-file` / `-F body=@<file>` for the comment body (never `cd … && gh …`, never
-`--body "$(…)"`). Use `gh -R <owner/repo>` for `gh pr …` subcommands; for `gh api` put the repo in the
-endpoint path instead (it rejects `-R`).
+`--body "$(…)"`). Place `-R <owner/repo>` **after** the `gh pr` subcommand (`gh pr view <n> -R
+<owner/repo>`, never `gh -R <owner/repo> pr view`): the allowlist prefix-matches `gh pr <sub> …`, so
+the subcommand-first shape runs prompt-free while `-R`-first is prompted every time (it was the
+top-prompted gh shape in permission telemetry). For `gh api` put the repo in the endpoint path
+instead (it rejects `-R`).
 
 ## Feedback-loop contract
 

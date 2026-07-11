@@ -53,7 +53,11 @@ For each unchecked task:
    just lint   # fail-on-violation lint gate (Swift/Python/Shell/Nix/YAML); blocks the PR in CI
    just test
    ```
-3. Fix any failures and retry until clean
+3. Fix any failures and retry until clean. **Checks count only on the final file state: re-run
+   `just lint` after your LAST edit, immediately before committing.** A green lint from earlier in the
+   task does not cover edits made after it (a real CI failure: 6 actionlint errors shipped because the
+   final workflow-file tweak was never re-linted) — never record "lint green" unless it ran on the
+   exact state being committed.
 4. Commit with a clear message. For a multi-line body, write the message to a file with the Write tool
    and `git commit -F <file>` (or `git -C <worktree> commit -F <file>`) — never `git commit -m "$(cat
    <<'EOF')"` or `commit -F - <<'EOF'` (heredocs/`$(…)` are always prompted; see CLAUDE.md → "Emit

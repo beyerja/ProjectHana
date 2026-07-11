@@ -1,0 +1,3 @@
+**[non-blocking] Third verbatim copy of `read_marketing_version` (+ the option-parsing scaffold).**
+
+This function is now duplicated byte-for-byte across `check-tag-version.sh`, `check-changelog.sh`, and this script (the `--changelog`/`--project-yml` arg loop and the strict-semver check are also near-identical). The repo already has the shared-source pattern for tests (`scripts/test-lib.sh`); a `scripts/release-lib.sh` sourced by the three release scripts would keep the "exactly one MARKETING_VERSION line" semantics in one place, so a future format change can't drift between copies. Fine to defer to a follow-up.

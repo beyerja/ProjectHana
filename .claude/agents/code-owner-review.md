@@ -55,7 +55,7 @@ Form your own verdict by reading the change, not by re-running the skill:
    **Read** tool for fuller file context where a hunk is not self-explanatory.
 2. Read `<story-dir>/spec.md` for the acceptance criteria the change must satisfy.
 3. Read the `independent-review` agent's output for this PR — its inline comments and its stable
-   `<!-- independent-review -->` summary comment (`gh -R <owner/repo> pr view <number> --json comments`).
+   `<!-- independent-review -->` summary comment (`gh pr view <number> -R <owner/repo> --json comments`).
    Treat these as input, not as your conclusion.
 
 Then decide **your own** verdict:
@@ -84,15 +84,15 @@ and the PR unmergeable:
 
 1. Read the head SHA and its check-runs:
    ```sh
-   sha=$(gh -R <owner/repo> pr view <number> --json headRefOid --jq .headRefOid)
+   sha=$(gh pr view <number> -R <owner/repo> --json headRefOid --jq .headRefOid)
    gh api repos/<owner/repo>/commits/$sha/check-runs --jq '[.check_runs[].name]'
    ```
 2. **If the required CI contexts (`Build & Test`, `gitleaks`) are entirely ABSENT** (the event-miss
    signature — *missing*, not merely `in_progress`/`queued`), re-trigger CI by closing and reopening the PR
    as the plain `gh` user (re-fires the default PR events without changing the head — no bot, no new commit):
    ```sh
-   gh -R <owner/repo> pr close <number>
-   gh -R <owner/repo> pr reopen <number>
+   gh pr close <number> -R <owner/repo>
+   gh pr reopen <number> -R <owner/repo>
    ```
    Then wait for the required checks to register and finish:
    ```sh
@@ -111,7 +111,7 @@ via the wrapper (which mints a short-lived App installation token). The check is
 read it fresh:
 
 ```sh
-sha=$(gh -R <owner/repo> pr view <number> --json headRefOid --jq .headRefOid)
+sha=$(gh pr view <number> -R <owner/repo> --json headRefOid --jq .headRefOid)
 ```
 
 - **APPROVED** → conclusion `success`:
@@ -177,7 +177,7 @@ fail-closed on absent creds). Do not read the Keychain or set `GH_TOKEN` yoursel
 When the Keychain creds are **absent**, the wrapper exits **non-zero** and does NOT run the underlying
 command. Detect that and fall back to a comment plus STATUS:
 - Write the summary body to a file, then post it as a normal PR comment **as the PR-opener** (no wrapper
-  needed): `gh -R <owner/repo> pr comment <number> --body-file <body-file>`.
+  needed): `gh pr comment <number> -R <owner/repo> --body-file <body-file>`.
 - Record in the summary comment and `<story-dir>/log.md` that the gate check was SKIPPED. The loop still
   functions on STATUS alone (a human/admin can merge via bypass, since `enforce_admins` is off).
 
@@ -197,15 +197,17 @@ other). Write the body to
 lingers as a stray). Find an existing marker comment by its `.databaseId` (NOT `.id` — the REST endpoint
 needs the numeric databaseId) and PATCH it in place, else create it:
 ```sh
-existing=$(gh -R <owner/repo> pr view <number> --json comments \
+existing=$(gh pr view <number> -R <owner/repo> --json comments \
   -q '.comments[] | select(.body | contains("<!-- code-owner-review -->")) | .databaseId' | head -n1)
 if [ -n "$existing" ]; then
     gh api --method PATCH "repos/<owner/repo>/issues/comments/$existing" -F body=@<body-file>
 else
-    gh -R <owner/repo> pr comment <number> --body-file <body-file>
+    gh pr comment <number> -R <owner/repo> --body-file <body-file>
 fi
 ```
-`gh api` does NOT accept `-R` — put the repo in the endpoint path; use `gh -R` only for `gh pr …`.
+`gh api` does NOT accept `-R` — put the repo in the endpoint path. For `gh pr …` place `-R <owner/repo>`
+**after** the subcommand (`gh pr view <n> -R …`, never `gh -R … pr view`): the allowlist prefix-matches
+`gh pr <sub> …`, so the subcommand-first shape runs prompt-free while `-R`-first is prompted every time.
 
 ## Steps
 

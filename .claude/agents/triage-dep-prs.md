@@ -33,14 +33,17 @@ Use `$RUN_TMPDIR/` for all temp files throughout this run (commit messages, comm
 
 ## Step 1 — Detect qualifying dep PRs
 
-Run the detection query. A PR qualifies when the author login contains `[bot]` AND it has a
-`dependencies` label or a `dependabot/` / `renovate/` branch-name prefix:
+Run the detection query. A PR qualifies when the author is a bot (`is_bot`, a `[bot]` login, or an
+`app/…` login — Dependabot can appear as `app/dependabot`) AND it has a `dependencies` label or a
+`dependabot/` / `renovate/` branch-name prefix. Two jq traps this query must avoid (both caused a real
+false "no dep PRs found" on 2026-07-03): `.labels[].name == "dependencies"` emits *nothing* on an empty
+labels array, poisoning the whole `or`; and `contains("[bot]")` misses the `app/dependabot` login form.
 
 ```sh
 gh pr list -R <owner/repo> --state open --json number,title,author,headRefName,labels \
   --jq '[.[] | select(
-    (.author.login | contains("[bot]")) and
-    ((.labels[].name == "dependencies") or
+    (.author.is_bot == true or (.author.login | test("\\[bot\\]|^app/"))) and
+    (((.labels | map(.name) | index("dependencies")) != null) or
      (.headRefName | startswith("dependabot/")) or
      (.headRefName | startswith("renovate/")))
   )]'
