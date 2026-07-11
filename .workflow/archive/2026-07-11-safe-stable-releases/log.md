@@ -79,3 +79,8 @@ Branch: `feat/safe-stable-releases` (cut from main @ b034573)
   (2490→4235, confounded by the large release.yml diffs, n=10); break-stories + story-workflow
   Insufficient data. SHA-bound-gate claim Inconclusive post-edit (no update-branch case after 07-05;
   story 002 pre-edit executed the codified behavior correctly).
+- 2026-07-11T20:22:12Z code-owner-review: APPROVED — closing-artifacts PR #237 independently re-verified
+  (jq fix semantics traced, gitignore rule + gh reordering + agent-file prose checked, archive move clean;
+  first reviewer's inline note non-blocking). `code-owner-review` check posted with conclusion success on
+  head 7fd95f4 (check-run id 86581392852, app id 4144849, read-back verified). mergeStateStatus BEHIND —
+  gate is SHA-bound; re-post on the new head after any update-branch.
